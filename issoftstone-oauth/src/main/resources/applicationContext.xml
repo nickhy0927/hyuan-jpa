@@ -79,6 +79,15 @@
 	</bean>
 	
 	<import resource="config/security/spring-security.xml"/>
+	<bean class="com.iss.interceptor.StaticResources">
+		<property name="urls">
+			<list>
+				<value>/static/**</value>
+				<value>/login.jsp</value>
+				<value>/login</value>
+			</list>
+		</property>
+	</bean>
 	
 	<!-- development 环境 -->
 	<beans profile="development">

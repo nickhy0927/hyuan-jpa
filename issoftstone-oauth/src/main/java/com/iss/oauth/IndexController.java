@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Maps;
+import com.iss.common.anno.AccessAuthority;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.SysContants;
+import com.iss.interceptor.OperateLog;
+import com.iss.interceptor.OperateType;
 import com.iss.platform.access.user.entity.User;
 import com.iss.platform.access.user.service.UserService;
 
@@ -27,6 +30,8 @@ public class IndexController {
 	private UserService userService;
 
 	@ResponseBody
+	@AccessAuthority(alias = "queryUserInfo")
+	@OperateLog(method = "queryUserInfo", optType = OperateType.OptType.QUERY, message = "查询用户信息", service = UserService.class)
 	@RequestMapping(value = "/queryUserInfo.json", method = RequestMethod.GET)
 	public MessageObject<User> queryUserInfo() {
 		Map<String, Object> paramMap = Maps.newConcurrentMap();
@@ -44,8 +49,8 @@ public class IndexController {
 		u.setNickName("系统管理员");
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
-			userService.deleteByLoginName(u.getLoginName());
-			userService.save(u);
+//			userService.deleteByLoginName(u.getLoginName());
+//			userService.save(u);
 			List<User> users = userService.queryByMap(paramMap);
 			messageObject.ok("查询用户列表成功", users);
 		} catch (ServiceException e) {

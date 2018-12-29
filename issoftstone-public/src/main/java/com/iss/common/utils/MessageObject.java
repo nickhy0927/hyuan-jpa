@@ -1,5 +1,10 @@
 package com.iss.common.utils;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
+
 public class MessageObject<T> {
 
 	private int status;
@@ -59,5 +64,20 @@ public class MessageObject<T> {
 
 	public String toJson(MessageObject<T> messageObject) {
 		return new JsonMapper().toJson(messageObject);
+	}
+
+	public void returnData(HttpServletResponse response, MessageObject<T> messageObject) throws IOException {
+		// 这句话的意思，是让浏览器用utf8来解析返回的数据
+		response.setHeader("Content-type", "text/html;charset=UTF-8");
+		// 这句话的意思，是告诉servlet用UTF-8转码，而不是用默认的ISO8859
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter writer = response.getWriter();
+		if (writer != null) {
+			writer.write(toJson(messageObject));
+			if (writer != null) {
+				writer.flush();
+				writer.close();
+			}
+		}
 	}
 }
