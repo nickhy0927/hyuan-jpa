@@ -5,6 +5,9 @@ import javax.persistence.Table;
 
 import com.iss.common.utils.IdEntity;
 
+/**
+ * 图标
+ */
 @Entity
 @Table(name = "t_p_a_icon")
 public class Icon extends IdEntity {

@@ -11,7 +11,7 @@ import com.iss.constant.AccessConstant;
 import com.iss.platform.access.icon.entity.Icon;
 
 /**
- * Created by Curtain on 2015/9/15.
+ * 菜单
  */
 @Entity
 @Table(name = "t_p_a_menu")
