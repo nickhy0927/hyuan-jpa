@@ -27,6 +27,7 @@ public class MenuTree {
 		this.pId = menu.getMenu() != null ? menu.getMenu().getId() : "";
 	}
 
+
 	public Menu getMenu() {
 		return menu;
 	}
