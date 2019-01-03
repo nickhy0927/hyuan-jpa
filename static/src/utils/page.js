@@ -79,6 +79,7 @@ function _init_table(settings) {
         // console.log('page', config)
     });
 }
+
 let page = {
     openWindow: function (options) {
         var settings = $.extend({
@@ -110,9 +111,12 @@ let page = {
             searchForm: '',
             filter: 'demo',
             groupBtn: {
-                add: function () {},
-                del: function () {},
-                search: function () {}
+                add: function () {
+                },
+                del: function () {
+                },
+                search: function () {
+                }
             },
             operates: {},
             url: '',
@@ -127,8 +131,10 @@ let page = {
                     data: res.rows.item //解析数据列表
                 };
             },
-            delete: function () {},
-            edit: function () {}
+            delete: function () {
+            },
+            edit: function () {
+            }
         }, option || {});
         _init_table(settings);
     },

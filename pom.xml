@@ -61,5 +61,6 @@
 		<module>issoftstone-news</module>
 		<module>issoftstone-auth-core</module>
 		<module>issoftstone-oauth</module>
-	</modules>
+        <module>issoftstone-webapp</module>
+    </modules>
 </project>

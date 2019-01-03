@@ -64,6 +64,11 @@
 						</a>
 						<dl class="layui-nav-child">
 							<dd>
+								<router-link to="/platform/access/icon/iconList">
+									<i class="fa fa-arrow-right" aria-hidden="true"></i>图标列表
+								</router-link>
+							</dd>
+							<dd>
 								<router-link to="/platform/access/menu/menuList">
 									<i class="fa fa-arrow-right" aria-hidden="true"></i>菜单列表
 								</router-link>

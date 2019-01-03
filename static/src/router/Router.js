@@ -12,6 +12,8 @@ import RoleList from '../components/platform/access/role/Role.vue'
 import OptlogList from '../components/platform/system/optlog/Optlog.vue'
 import ExceptionLogList from '../components/platform/system/exceptionlog/ExceptionLog.vue'
 import CreateMenu from '../components/platform/access/menu/CreaeteMenu.vue'
+import IconList from '../components/platform/access/icon/IconList.vue'
+import IconCraete from '../components/platform/access/icon/IconCraete.vue'
 import Login from '../components/Login'
 
 Vue.use(VueRouter);
@@ -39,6 +41,13 @@ let router = new VueRouter({
         },
         component: CreateMenu
     }, {
+        path: '/platform/access/icon/iconCreate',
+        name: 'IconCraete',
+        meta: {
+            requiresAuth: true
+        },
+        component: IconCraete
+    }, {
         path: '/index',
         name: 'Index',
         meta: {
@@ -52,6 +61,13 @@ let router = new VueRouter({
                 requiresAuth: true
             },
             component: Task
+        }, {
+            path: '/platform/access/icon/iconList',
+            name: 'IconList',
+            meta: {
+                requiresAuth: true
+            },
+            component: IconList
         }, {
             path: '/platform/access/user/userList',
             name: 'UserList',
@@ -101,9 +117,9 @@ router.beforeEach((to, from, next) => {
     if (to.meta.title) {
         document.title = to.meta.title;
     }
-    console.log('\n\n------ begin: oauth ------')
-    console.log(to.meta.requiresAuth)
-    console.log('------ end: oauth ------\n\n')
+    console.log('\n\n------ begin: oauth ------');
+    console.log(to.meta.requiresAuth);
+    console.log('------ end: oauth ------\n\n');
     next()
     /* if (to.matched.some(record => record.meta.requiresAuth)) {
         // this route requires auth, check if logged in

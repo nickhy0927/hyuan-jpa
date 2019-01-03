@@ -4,27 +4,17 @@
             <form class="layui-form layui-form-pane" id="search-form" lay-filter="search-form">
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">菜单名称</label>
+                        <label class="layui-form-label">图标名称</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="name" lay-verify="name" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">菜单别名</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="alias" lay-verify="alias" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">菜单地址</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="url" lay-verify="url" autocomplete="off" class="layui-input">
+                            <label>
+                                <input type="text" name="name" lay-verify="name" autocomplete="off" class="layui-input">
+                            </label>
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">启用</label>
                         <div class="layui-input-inline">
-                            <select name="interest" lay-filter="aihao">
+                            <select name="enable" lay-filter="enable">
                                 <option value></option>
                                 <option value="0">否</option>
                                 <option value="1" selected>是</option>
@@ -61,7 +51,7 @@
     import page from "../../../../utils/page.js";
 
     export default {
-        name: "Menu",
+        name: "Icom",
         data() {
             return {
                 message: "用户列表"
@@ -85,10 +75,10 @@
                 groupBtn: {
                     add: function () {
                         page.openWindow({
-                            title: "新增菜单",
-                            height: '80%',
-                            width: '70%',
-                            url: "/platform/access/menu/menuCreate",
+                            title: "新增图标",
+                            height: '35%',
+                            width: '50%',
+                            url: "/platform/access/icon/iconCreate",
                             callback: function (params) {
                                 console.log(params);
                                 console.log("关闭时执行...");
@@ -165,7 +155,7 @@
     .search-block {
         border: 1px solid #ddd;
         border-radius: 2px;
-        padding: 10px 10px 0px 10px;
+        padding: 10px 10px 0 10px;
     }
 
     .layui-form-item {

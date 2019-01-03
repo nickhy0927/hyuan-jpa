@@ -103,15 +103,6 @@
 		margin-top: -100px;
 	}
 
-	.admin-header {
-		margin-top: -100px;
-		margin-bottom: 20px;
-	}
-
-	.admin-logo {
-		width: 280px;
-	}
-
 	.admin-button {
 		margin-top: 20px;
 	}
