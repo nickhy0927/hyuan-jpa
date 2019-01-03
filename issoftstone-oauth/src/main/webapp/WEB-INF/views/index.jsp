@@ -25,7 +25,7 @@
             $(window).resize(function() {
                 $('#content').height($(document).height() - 60);
             });
-            $(".layui-nav-tree a").attr('href', 'javascript:void(0)');
+            $(".layui-nav-tree a").attr('href', 'javascript:void(0);');
             $(".layui-nav-tree a").each(function () {
                 $(this).unbind('click').bind('click', function () {
                     var url = $(this).attr('data-url');

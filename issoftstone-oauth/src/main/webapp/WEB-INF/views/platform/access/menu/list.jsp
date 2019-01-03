@@ -16,20 +16,22 @@
                 page: true, //开启分页
                 cols: [[
                     { type: "checkbox", fixed: "left" },
-                    { field: "id", title: "ID", fixed: "left",  unresize: true, sort: true, totalRowText: "合计行" },
-                    { field: "username", title: "用户名" },
-                    { field: "email",  title: "邮箱", edit: "text" },
-                    { field: "experience", title: "积分", sort: true,  totalRow: true },
-                    { field: "sex", title: "性别", width: 80,  edit: "text", sort: true  },
-                    { field: "logins", title: "登入次数", sort: true, totalRow: true },
-                    { field: "sign", title: "签名" },
-                    { field: "city", title: "城市"},
-                    { field: "ip", title: "IP"},
-                    { field: "joinTime", title: "加入时间"},
+                    { field: "username", title: "用户名", fixed: "left" , width: 140},
+                    { field: "email",  title: "邮箱", fixed: "left" , width: 220},
+                    { field: "sex", title: "性别", width: 80, sort: true  },
+                    { field: "sign", title: "签名", width: '38.5%'},
+                    { field: "city", title: "城市", width: 140},
+                    { field: "ip", title: "IP", width: 140},
+                    { field: "joinTime", title: "加入时间", width: 140},
                     { fixed: "right", title: "操作", align: "center",  toolbar: "#barDemo",  width: 120}
                 ]],
                 parseData: function(res) {
                     console.log("res", res);
+                    var toolH = $('.layui-table-tool').height();
+                    var pageH = $('.layui-table-page').height();
+                    $(".layui-table-box").height($(document).height() - 60 - toolH - pageH).css({
+                        "overflow-y":"auto"
+                    })
                     //将原始数据解析成 table 组件所规定的数据
                     return {
                         code: res.status, //解析接口状态
