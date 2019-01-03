@@ -54,9 +54,9 @@
 				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
 				<ul class="layui-nav layui-nav-tree" lay-shrink="all" lay-filter="layui-nav-tree">
 					<li class="layui-nav-item">
-						<a href="#/index/task" data-url="/task">
+						<router-link to="/index/task">
 							<i class="layui-icon layui-icon-home"></i> 主页
-						</a>
+						</router-link>
 					</li>
 					<li class="layui-nav-item layui-nav-itemed">
 						<a class href="javascript:void(0);">
@@ -64,19 +64,19 @@
 						</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="#/platform/access/menu/menuList">
+								<router-link to="/platform/access/menu/menuList">
 									<i class="fa fa-arrow-right" aria-hidden="true"></i>菜单列表
-								</a>
+								</router-link>
 							</dd>
 							<dd>
-								<a href="#/platform/access/role/roleList">
+								<router-link to="/platform/access/role/roleList">
 									<i class="fa fa-arrow-right" aria-hidden="true"></i>角色列表
-								</a>
+								</router-link>
 							</dd>
 							<dd>
-								<a href="#/platform/access/user/userList">
+								<router-link to="/platform/access/user/userList">
 									<i class="fa fa-arrow-right" aria-hidden="true"></i>用户管理
-								</a>
+								</router-link>
 							</dd>
 						</dl>
 					</li>
@@ -86,70 +86,16 @@
 						</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="#/platform/system/optlog/optlogList">
+								<router-link to="/platform/system/optlog/optlogList">
 									<i class="fa fa-arrow-right" aria-hidden="true"></i>操作日志管理
-								</a>
+								</router-link>
 							</dd>
 							<dd>
-								<a href="#/platform/system/exception/exceptionLogList">
+								<router-link to="/platform/system/exception/exceptionLogList">
 									<i class="fa fa-arrow-right" aria-hidden="true"></i>异常日志管理
-								</a>
+								</router-link>
 							</dd>
 						</dl>
-					</li>
-					<li class="layui-nav-item">
-						<a class href="javascript:void(0);">
-							<i class="layui-icon layui-icon-app"></i> 所有商品
-						</a>
-						<dl class="layui-nav-child">
-							<dd>
-								<a href="#/list1">
-									<i class="fa fa-arrow-right" aria-hidden="true"></i>列表一
-								</a>
-							</dd>
-							<dd>
-								<a href="javascript:void(0);">
-									<i class="fa fa-arrow-right" aria-hidden="true"></i>列表二
-								</a>
-							</dd>
-							<dd>
-								<a href="javascript:void(0);">
-									<i class="fa fa-arrow-right" aria-hidden="true"></i>超链接
-								</a>
-							</dd>
-						</dl>
-					</li>
-					<li class="layui-nav-item">
-						<a href="javascript:void(0);">
-							<i class="layui-icon layui-icon-app"></i> 解决方案
-						</a>
-						<dl class="layui-nav-child">
-							<dd>
-								<a href="javascript:void(0);">
-									<i class="fa fa-arrow-right" aria-hidden="true"></i>列表一
-								</a>
-							</dd>
-							<dd>
-								<a href="javascript:void(0);">
-									<i class="fa fa-arrow-right" aria-hidden="true"></i>列表二
-								</a>
-							</dd>
-							<dd>
-								<a href="javascript:void(0);">
-									<i class="fa fa-arrow-right" aria-hidden="true"></i>超链接
-								</a>
-							</dd>
-						</dl>
-					</li>
-					<li class="layui-nav-item">
-						<a href="javascript:void(0);">
-							<i class="layui-icon layui-icon-app"></i> 云市场
-						</a>
-					</li>
-					<li class="layui-nav-item">
-						<a href="javascript:void(0);">
-							<i class="layui-icon layui-icon-app"></i> 发布商品
-						</a>
 					</li>
 				</ul>
 			</div>

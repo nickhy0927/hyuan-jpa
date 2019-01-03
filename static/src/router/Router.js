@@ -17,7 +17,7 @@ import Login from '../components/Login'
 Vue.use(VueRouter);
 
 let router = new VueRouter({
-    // mode: 'history',
+    mode: 'history',
     routes: [{
         path: '/',
         meta: {
