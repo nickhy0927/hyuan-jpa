@@ -1,9 +1,5 @@
-<%@page import="java.util.Date"%>
-<%@page import="java.util.UUID"%>
-<%@page import="javax.servlet.http.HttpServletRequest" %>
-<%@page import="javax.servlet.http.HttpServletResponse" %>
-<%@page import="javax.servlet.http.HttpSession" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.Date"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://www.hy.include" prefix="hy" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set value="${pageContext.request.contextPath}" var="ctx"/>
@@ -25,12 +21,11 @@
 	<script type="text/javascript" src="${ctx}/static/jquery/jquery.js"></script>
 	<script type="text/javascript" src="${ctx}/static/jquery-ui/jquery-ui.js"></script>
 	<script type="text/javascript">  
-		/* console.log('${url}') */
-		var _topWin = window;    
-		while (_topWin != _topWin.parent.window) {    
+		var _topWin = window;
+		while (_topWin !== _topWin.parent.window) {
 		     _topWin = _topWin.parent.window;    
 		}    
-		if (window != _topWin)_topWin.document.location.href = '${ctx}//user/login.do?url=${url}';    
+		if (window !== _topWin)_topWin.document.location.href = '${ctx}//user/login.do?url=${url}';
 	    function open() {
 			$("#submitDialog").dialog({
 				closeOnEscape: false,
@@ -41,7 +36,7 @@
 	            draggable: false,
 	            modal: true,
 	            //隐藏默认的关闭按钮
-	            open: function (event, ui) {
+	            open: function () {
 	                $(".ui-dialog-titlebar-close", $(this).parent()).hide();
 	                $(".ui-dialog-titlebar").remove();
 	                $("#submitDialog").attr('style','width: auto;min-height: 0px;max-height: none;height: 30px;color:white')

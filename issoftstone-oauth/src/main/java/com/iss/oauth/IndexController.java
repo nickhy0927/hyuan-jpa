@@ -26,37 +26,49 @@ import com.iss.platform.access.user.service.UserService;
 @Controller
 public class IndexController {
 
-	@Autowired
-	private UserService userService;
+    private final UserService userService;
 
-	@ResponseBody
-	@AccessAuthority(alias = "queryUserInfo")
-	@OperateLog(method = "queryUserInfo", optType = OperateType.OptType.QUERY, message = "查询用户信息", service = UserService.class)
-	@RequestMapping(value = "/queryUserInfo.json", method = RequestMethod.GET)
-	public MessageObject<User> queryUserInfo() {
-		Map<String, Object> paramMap = Maps.newConcurrentMap();
-		User u = new User();
-		String salt = UUID.randomUUID().toString().replaceAll("-", "");
-		u.setBrithday(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-		u.setEmail("h_y_12@163.com");
-		u.setEnable(Boolean.TRUE);
-		u.setLocked(Boolean.FALSE);
-		u.setLoginName("admin");
-		u.setSalt(salt);
-		u.setStatus(SysContants.IsDelete._NO);
-		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
-		u.setPassword(encoder.encodePassword("123456", salt));
-		u.setNickName("系统管理员");
-		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
-		try {
-//			userService.deleteByLoginName(u.getLoginName());
-//			userService.save(u);
-			List<User> users = userService.queryByMap(paramMap);
-			messageObject.ok("查询用户列表成功", users);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			messageObject.error("查询用户列表失败");
-		}
-		return messageObject;
-	}
+    @Autowired
+    public IndexController(UserService userService) {
+        this.userService = userService;
+    }
+
+    /**
+     * 进入首页
+     * @return
+     */
+    @AccessAuthority(alias = "index")
+    @RequestMapping(value = "index.do", method = RequestMethod.GET)
+    public String index() {
+        return "index";
+    }
+
+    @ResponseBody
+    @AccessAuthority(alias = "queryUserInfo")
+    @OperateLog(method = "queryUserInfo", optType = OperateType.OptType.QUERY, message = "查询用户信息", service = UserService.class)
+    @RequestMapping(value = "/queryUserInfo.json", method = RequestMethod.GET)
+    public MessageObject<User> queryUserInfo() {
+        Map<String, Object> paramMap = Maps.newConcurrentMap();
+        User u = new User();
+        String salt = UUID.randomUUID().toString().replaceAll("-", "");
+        u.setBrithday(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        u.setEmail("h_y_12@163.com");
+        u.setEnable(Boolean.TRUE);
+        u.setLocked(Boolean.FALSE);
+        u.setLoginName("admin");
+        u.setSalt(salt);
+        u.setStatus(SysContants.IsDelete._NO);
+        Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+        u.setPassword(encoder.encodePassword("123456", salt));
+        u.setNickName("系统管理员");
+        MessageObject<User> messageObject = MessageObject.getDefaultInstance();
+        try {
+            List<User> users = userService.queryByMap(paramMap);
+            messageObject.ok("查询用户列表成功", users);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            messageObject.error("查询用户列表失败");
+        }
+        return messageObject;
+    }
 }

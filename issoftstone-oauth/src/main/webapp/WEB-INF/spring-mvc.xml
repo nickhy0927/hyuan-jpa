@@ -72,5 +72,5 @@
 		</property>
 	</bean>
 	<mvc:resources location="/static/" mapping="/static/**"/>
-	<mvc:view-controller path="/" view-name="/index.jsp"/>
+	<mvc:view-controller path="/" view-name="redirect:/index.do"/>
 </beans>
