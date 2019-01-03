@@ -11,6 +11,9 @@ import javax.persistence.Table;
 import com.iss.common.utils.IdEntity;
 import com.iss.platform.access.user.entity.User;
 
+/**
+ * 操作日志
+ */
 @Entity
 @Table(name = "t_p_s_optlog")
 public class OptLog extends IdEntity {
