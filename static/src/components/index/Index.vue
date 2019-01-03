@@ -17,13 +17,14 @@
 					<a href="javascript:void(0);">其它系统</a>
 					<dl class="layui-nav-child">
 						<dd>
-							<a href="#">邮件管理</a>
+							<a href="#">
+								<i class="fa fa-envelope-o fa-fw"></i>邮件管理
+							</a>
 						</dd>
 						<dd>
-							<a href="#">消息管理</a>
-						</dd>
-						<dd>
-							<a href="#">授权管理</a>
+							<a href="#">
+								<i class="fa fa-wechat fa-fw"></i>消息管理
+							</a>
 						</dd>
 					</dl>
 				</li>
@@ -64,17 +65,17 @@
 						<dl class="layui-nav-child">
 							<dd>
 								<a href="#/platform/access/menu/menuList">
-									<i class="layui-icon layui-icon-menu-fill"></i> 菜单列表
+									<i class="fa fa-arrow-right" aria-hidden="true"></i>菜单列表
 								</a>
 							</dd>
 							<dd>
 								<a href="#/platform/access/role/roleList">
-									<i class="layui-icon layui-icon-next"></i> 角色列表
+									<i class="fa fa-arrow-right" aria-hidden="true"></i>角色列表
 								</a>
 							</dd>
 							<dd>
 								<a href="#/platform/access/user/userList">
-									<i class="fa fa-user-o" aria-hidden="true"></i> 用户管理
+									<i class="fa fa-arrow-right" aria-hidden="true"></i>用户管理
 								</a>
 							</dd>
 						</dl>
@@ -86,27 +87,35 @@
 						<dl class="layui-nav-child">
 							<dd>
 								<a href="#/platform/system/optlog/optlogList">
-									<i class="fa fa-vcard fa-3x" aria-hidden="true"></i>操作日志管理
+									<i class="fa fa-arrow-right" aria-hidden="true"></i>操作日志管理
 								</a>
 							</dd>
 							<dd>
-								<a href="#/platform/system/exception/exceptionLogList">异常日志管理</a>
+								<a href="#/platform/system/exception/exceptionLogList">
+									<i class="fa fa-arrow-right" aria-hidden="true"></i>异常日志管理
+								</a>
 							</dd>
 						</dl>
 					</li>
-					<li class="layui-nav-item layui-nav-itemed">
+					<li class="layui-nav-item">
 						<a class href="javascript:void(0);">
 							<i class="layui-icon layui-icon-app"></i> 所有商品
 						</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="#/list1">列表一</a>
+								<a href="#/list1">
+									<i class="fa fa-arrow-right" aria-hidden="true"></i>列表一
+								</a>
 							</dd>
 							<dd>
-								<a href="javascript:void(0);">列表二</a>
+								<a href="javascript:void(0);">
+									<i class="fa fa-arrow-right" aria-hidden="true"></i>列表二
+								</a>
 							</dd>
 							<dd>
-								<a href="javascript:void(0);">超链接</a>
+								<a href="javascript:void(0);">
+									<i class="fa fa-arrow-right" aria-hidden="true"></i>超链接
+								</a>
 							</dd>
 						</dl>
 					</li>
@@ -116,13 +125,19 @@
 						</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:void(0);">列表一</a>
+								<a href="javascript:void(0);">
+									<i class="fa fa-arrow-right" aria-hidden="true"></i>列表一
+								</a>
 							</dd>
 							<dd>
-								<a href="javascript:void(0);">列表二</a>
+								<a href="javascript:void(0);">
+									<i class="fa fa-arrow-right" aria-hidden="true"></i>列表二
+								</a>
 							</dd>
 							<dd>
-								<a href="javascript:void(0);">超链接</a>
+								<a href="javascript:void(0);">
+									<i class="fa fa-arrow-right" aria-hidden="true"></i>超链接
+								</a>
 							</dd>
 						</dl>
 					</li>
@@ -226,5 +241,8 @@
 	}
 	.layui-nav-item i {
 		margin: 10px 10px 10px 0px;
+	}
+	.layui-layout-left .layui-nav-child a {
+		padding-left: 10px !important;
 	}
 </style>
