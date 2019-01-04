@@ -17,10 +17,12 @@ public class BaseBlock extends TagSupport {
 		this.name = name;
 	}
 
+	@Override
 	public int doStartTag() throws JspException {
 		return getOverriedContent() == null ? 1 : 0;
 	}
 
+	@Override
 	public int doEndTag() throws JspException {
 		String overriedContent = getOverriedContent();
 		if (overriedContent == null) {

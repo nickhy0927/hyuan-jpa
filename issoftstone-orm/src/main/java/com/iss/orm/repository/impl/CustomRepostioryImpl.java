@@ -40,14 +40,17 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 		this.entityClass = domainClass;
 	}
 
+	@Override
 	public List<T> queryByMap(Map<String, Object> map) {
 		return createCriteria(map).list();
 	}
 
+	@Override
 	public List<T> queryByCriteria(org.hibernate.Criteria criteria) {
 		return criteria.list();
 	}
 
+	@Override
 	public List<T> queryByMap(Map<String, Object> map, Sort sort) {
 		Criteria criteria = createCriteria(map);
 		Iterator<Sort.Order> it;
@@ -64,6 +67,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 		return criteria.list();
 	}
 
+	@Override
 	public List<T> queryByCriteria(Criteria criteria, Sort sort) {
 		Iterator<Sort.Order> it;
 		if (sort != null) {
@@ -79,6 +83,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 		return criteria.list();
 	}
 
+	@Override
 	public Page<T> queryPageByMap(Map<String, Object> map, Pageable pageable) {
 		Criteria criteria = createCriteria(map);
 		long total = countCriteriaResult(criteria);
@@ -98,6 +103,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 		return page;
 	}
 
+	@Override
 	public Page<T> queryPageByCriteria(Criteria criteria, Pageable pageable) {
 		long total = countCriteriaResult(criteria);
 		criteria.setFirstResult(pageable.getOffset()).setMaxResults(pageable.getPageSize());
@@ -116,6 +122,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 		return page;
 	}
 
+	@Override
 	public Criteria createCriteria(Map<String, Object> map) {
 		Set<Map.Entry<String, Object>> set = map.entrySet();
 		Criteria c = getSession().createCriteria(this.entityClass);
@@ -129,6 +136,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 		return c;
 	}
 
+	@Override
 	public Disjunction createdDisjunction(Map<String, Object> map) {
 		Set<Map.Entry<String, Object>> set = map.entrySet();
 		Disjunction or = Restrictions.disjunction();
@@ -144,26 +152,36 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 
 	private Criterion mapEntryToCriterion(String key, Object value) {
 		String[] k = key.split("_");
-		if (k.length < 2)
+		if (k.length < 2) {
 			return Restrictions.eq(k[0], value);
-		if (StringUtils.equals("eq", k[1]))
+		}
+		if (StringUtils.equals("eq", k[1])) {
 			return Restrictions.eq(k[0], value);
-		if (StringUtils.equals("ne", k[1]))
+		}
+		if (StringUtils.equals("ne", k[1])) {
 			return Restrictions.ne(k[0], value);
-		if (StringUtils.equals("lt", k[1]))
+		}
+		if (StringUtils.equals("lt", k[1])) {
 			return Restrictions.lt(k[0], value);
-		if (StringUtils.equals("le", k[1]))
+		}
+		if (StringUtils.equals("le", k[1])) {
 			return Restrictions.le(k[0], value);
-		if (StringUtils.equals("gt", k[1]))
+		}
+		if (StringUtils.equals("gt", k[1])) {
 			return Restrictions.gt(k[0], value);
-		if (StringUtils.equals("ge", k[1]))
+		}
+		if (StringUtils.equals("ge", k[1])) {
 			return Restrictions.ge(k[0], value);
-		if (StringUtils.equals("li", k[1]))
+		}
+		if (StringUtils.equals("li", k[1])) {
 			return Restrictions.like(k[0], "%" + value + "%");
-		if (StringUtils.equals("nl", k[1]))
+		}
+		if (StringUtils.equals("nl", k[1])) {
 			return Restrictions.not(Restrictions.like(k[0], "%" + value + "%"));
-		if (StringUtils.equals("in", k[1]))
+		}
+		if (StringUtils.equals("in", k[1])) {
 			return Restrictions.in(k[0], (List) value);
+		}
 		if (StringUtils.equals("ni", k[1])) {
 			return Restrictions.not(Restrictions.in(k[0], (List) value));
 		}
@@ -174,6 +192,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 		return 0;
 	}
 
+	@Override
 	public int nativeSqlUpdate(String sql, Object... values) {
 		SQLQuery query = getSession().createSQLQuery(sql);
 		if (values != null) {
@@ -184,13 +203,16 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 		return query.executeUpdate();
 	}
 
+	@Override
 	public int nativeSqlUpdate(String sql, Map<String, ?> values) {
 		SQLQuery query = getSession().createSQLQuery(sql);
-		if (values != null)
+		if (values != null) {
 			query.setProperties(values);
+		}
 		return query.executeUpdate();
 	}
 
+	@Override
 	public T saveEntity(T entity) {
 		if ((entity instanceof IdEntity)) {
 			((IdEntity) entity).setUpdateTime(new Date());
@@ -244,6 +266,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 		return criteria.list();
 	}
 
+	@Override
 	public List<T> queryByCriteria(Criteria criteria, int limit) {
 		return criteria.setFirstResult(0).setMaxResults(limit).list();
 	}
@@ -289,6 +312,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 		return (Session) this.entityManager.getDelegate();
 	}
 
+	@Override
 	public void insertInBatch(List<T> entitys) {
 		for (int i = 0; i < entitys.size(); i++) {
 			this.entityManager.persist(entitys.get(i));
@@ -299,6 +323,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 		}
 	}
 
+	@Override
 	public Page<T> queryByPage(Pageable pageable) {
 		Criteria criteria = getSession().createCriteria(this.entityClass);
 		long total = countCriteriaResult(criteria);
@@ -318,6 +343,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 		return page;
 	}
 
+	@Override
 	public List<T> findByEntityList(Map<String, Object> paramMap) {
 		Criteria criteria = createCriteria(paramMap);
 		return queryByCriteria(criteria);

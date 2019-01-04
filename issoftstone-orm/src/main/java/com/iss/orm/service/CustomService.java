@@ -12,27 +12,35 @@ import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.PageSupport;
 import com.iss.common.utils.PagerInfo;
 
-public abstract interface CustomService<E, ID extends Serializable> {
+/**
+ * @author Administrator
+ */
+public interface CustomService<E, ID extends Serializable> {
 
-	abstract void delete(ID id) throws ServiceException;
+	/**
+	 *
+	 * @param id
+	 * @throws ServiceException
+	 */
+	void delete(ID id) throws ServiceException;
 
-	abstract void delete(Iterable<E> paramIterable) throws ServiceException;
+	void delete(Iterable<E> paramIterable) throws ServiceException;
 
-	abstract void deleteAll() throws ServiceException;
+	void deleteAll() throws ServiceException;
 
-	abstract void deleteBatch(ID[] ids) throws ServiceException;
+	void deleteBatch(ID[] ids) throws ServiceException;
 
-	abstract List<E> findAll() throws ServiceException;
+	List<E> findAll() throws ServiceException;
 
-	abstract E get(ID id) throws ServiceException;
+	E get(ID id) throws ServiceException;
 
-	abstract List<E> queryByMap(Map<String, Object> paramMap) throws ServiceException;
+	List<E> queryByMap(Map<String, Object> paramMap) throws ServiceException;
 
-	abstract List<E> queryByMap(Map<String, Object> paramMap, Sort sort) throws ServiceException;
+	List<E> queryByMap(Map<String, Object> paramMap, Sort sort) throws ServiceException;
 
-	abstract Page<E> queryPageByMap(Map<String, Object> paramMap, Pageable paramPageable) throws ServiceException;
+	Page<E> queryPageByMap(Map<String, Object> paramMap, Pageable paramPageable) throws ServiceException;
 
-	abstract PagerInfo<E> queryPageByMap(Map<String, Object> map, PageSupport support) throws ServiceException;
+	PagerInfo<E> queryPageByMap(Map<String, Object> map, PageSupport support) throws ServiceException;
 
-	abstract E save(E entity) throws ServiceException;
+	E save(E entity) throws ServiceException;
 }

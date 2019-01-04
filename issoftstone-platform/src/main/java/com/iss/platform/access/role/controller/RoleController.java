@@ -54,8 +54,9 @@ public class RoleController {
 	public MessageObject<Role> roleSave(@RequestBody Role role) {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
 		try {
-			if (StringUtils.isNotEmpty(role.getParentId()))
+			if (StringUtils.isNotEmpty(role.getParentId())) {
 				role.setRole(roleService.get(role.getParentId()));
+			}
 			roleService.save(role);
 			messageObject.ok("新增角色成功");
 		} catch (ServiceException e) {
@@ -83,8 +84,8 @@ public class RoleController {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
 		try {
-			map.put("status_eq", IsDelete._NO);
-			map.put("locked_eq", Locked._NO);
+			map.put("status_eq", IsDelete.NO);
+			map.put("locked_eq", Locked.NO);
 			PagerInfo<Role> tools = roleService.queryPageByMap(map, support);
 			messageObject.ok("查询菜单成功", tools);
 		} catch (ServiceException e) {

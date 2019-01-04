@@ -17,7 +17,9 @@ import com.iss.common.utils.IdEntity;
 import com.iss.platform.access.menu.entity.Menu;
 
 /**
- * Created by Curtain on 2015/9/21.
+ *
+ * @author Curtain
+ * @date 2015/9/21
  */
 @Entity
 @Table(name = "t_p_a_role")
@@ -29,7 +31,7 @@ public class Role extends IdEntity {
 
 	private List<Menu> menus = new ArrayList<Menu>();
 
-	private String parentId;//
+	private String parentId;
 
 	public String getCode() {
 		return code;

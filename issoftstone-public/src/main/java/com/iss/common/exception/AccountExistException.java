@@ -1,5 +1,8 @@
 package com.iss.common.exception;
 
+/**
+ * @author Administrator
+ */
 @SuppressWarnings("serial")
 public class AccountExistException extends RuntimeException {
 	public AccountExistException() {

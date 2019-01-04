@@ -11,36 +11,44 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public abstract interface CustomRepostiory<T, ID extends Serializable> extends JpaRepository<T, ID> {
+/**
+ * @author Administrator
+ */
+public interface CustomRepostiory<T, ID extends Serializable> extends JpaRepository<T, ID> {
 
-	abstract List<T> queryByMap(Map<String, Object> paramMap);
+	/**
+	 *
+	 * @param paramMap
+	 * @return
+	 */
+	List<T> queryByMap(Map<String, Object> paramMap);
 
-	abstract List<T> queryByCriteria(Criteria paramCriteria);
+	List<T> queryByCriteria(Criteria paramCriteria);
 
-	abstract List<T> queryByCriteria(Criteria paramCriteria, int paramInt);
+	List<T> queryByCriteria(Criteria paramCriteria, int paramInt);
 
-	abstract List<T> queryByCriteria(Criteria paramCriteria, Sort paramSort);
+	List<T> queryByCriteria(Criteria paramCriteria, Sort paramSort);
 
-	abstract Page<T> queryByPage(Pageable paramPageable);
+	Page<T> queryByPage(Pageable paramPageable);
 
-	abstract Page<T> queryPageByMap(Map<String, Object> paramMap, Pageable paramPageable);
+	Page<T> queryPageByMap(Map<String, Object> paramMap, Pageable paramPageable);
 
-	abstract Page<T> queryPageByCriteria(Criteria paramCriteria, Pageable paramPageable);
+	Page<T> queryPageByCriteria(Criteria paramCriteria, Pageable paramPageable);
 
-	abstract Criteria createCriteria(Map<String, Object> paramMap);
+	Criteria createCriteria(Map<String, Object> paramMap);
 
-	abstract Disjunction createdDisjunction(Map<String, Object> paramMap);
+	Disjunction createdDisjunction(Map<String, Object> paramMap);
 
-	abstract int nativeSqlUpdate(String paramString, Object... paramVarArgs);
+	int nativeSqlUpdate(String paramString, Object... paramVarArgs);
 
-	abstract int nativeSqlUpdate(String paramString, Map<String, ?> paramMap);
+	int nativeSqlUpdate(String paramString, Map<String, ?> paramMap);
 
-	abstract T saveEntity(T paramT);
+	T saveEntity(T paramT);
 
-	abstract void insertInBatch(List<T> paramList);
+	void insertInBatch(List<T> paramList);
 
-	abstract List<T> findByEntityList(Map<String, Object> paramMap);
+	List<T> findByEntityList(Map<String, Object> paramMap);
 	
-	abstract List<T> queryByMap(Map<String, Object> paramMap,Sort sort);
+	List<T> queryByMap(Map<String, Object> paramMap,Sort sort);
 
 }

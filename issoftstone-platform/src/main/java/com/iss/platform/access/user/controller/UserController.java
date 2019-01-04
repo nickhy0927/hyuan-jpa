@@ -1,11 +1,15 @@
 package com.iss.platform.access.user.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.iss.common.encryption.Md5Encryption;
+import com.iss.common.exception.ServiceException;
+import com.iss.common.utils.MessageObject;
+import com.iss.common.utils.PageSupport;
+import com.iss.common.utils.PagerInfo;
+import com.iss.common.utils.WebUtils;
+import com.iss.platform.access.role.entity.Role;
+import com.iss.platform.access.role.service.RoleService;
+import com.iss.platform.access.user.entity.User;
+import com.iss.platform.access.user.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,16 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.iss.common.encryption.MD5Encryption;
-import com.iss.common.exception.ServiceException;
-import com.iss.common.utils.MessageObject;
-import com.iss.common.utils.PageSupport;
-import com.iss.common.utils.PagerInfo;
-import com.iss.common.utils.WebUtils;
-import com.iss.platform.access.role.entity.Role;
-import com.iss.platform.access.role.service.RoleService;
-import com.iss.platform.access.user.entity.User;
-import com.iss.platform.access.user.service.UserService;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class UserController {
@@ -51,7 +49,7 @@ public class UserController {
 	public MessageObject<User> userSave(@RequestBody User user) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
-			user.setPassword(MD5Encryption.MD5(user.getPassword()));
+			user.setPassword(Md5Encryption.MD5(user.getPassword()));
 			user = userService.save(user);
 			messageObject.ok("保存用户成功", user);
 		} catch (Exception e) {

@@ -136,10 +136,15 @@ public class FileTools {
 		return s;
 	}
 
-	// 递归 获取文件夹的的大小
+	/**
+	 * 递归 获取文件夹的的大小
+	 * @param f
+	 * @return
+	 * @throws Exception
+	 */
 	public static long getFileSize(File f) throws Exception {
 		long size = 0;
-		File flist[] = f.listFiles();
+		File[] flist = f.listFiles();
 		for (int i = 0; i < flist.length; i++) {
 			if (flist[i].isDirectory()) {
 				size = size + getFileSize(flist[i]);
@@ -179,7 +184,7 @@ public class FileTools {
 	 */
 	public static long getlist(File f) {// 递归求取目录文件个数
 		long size = 0;
-		File flist[] = f.listFiles();
+		File[] flist = f.listFiles();
 		size = flist.length;
 		for (int i = 0; i < flist.length; i++) {
 			if (flist[i].isDirectory()) {
