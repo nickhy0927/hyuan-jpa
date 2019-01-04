@@ -5,55 +5,103 @@
 <hy:extends name="title">菜单列表</hy:extends>
 <hy:extends name="javascript">
     <script type="text/javascript">
-        $(function() {
-            page.dataTable({
-                id: "tableList",
+	    function initTable() {
+	    	page.dataTable({
+            	id: "tableList",
                 elem: "#tableList",
                 title: "用户数据表",
                 filter: "tableList",
-                toolbar: "#toolbarDemo",
-                url: "${ctx}/data/menu.json",
-                page: true, //开启分页
+                searchForm: "search-form",
+                toolbar: "#operate-btn",
+                method: "POST",
+                url: "${ctx}/platform/access/menu/list.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
-                    { field: "username", title: "用户名", fixed: "left" , width: 140},
-                    { field: "email",  title: "邮箱", fixed: "left" , width: 220},
-                    { field: "sex", title: "性别", width: 80, sort: true  },
-                    { field: "sign", title: "签名", width: '38.5%'},
-                    { field: "city", title: "城市", width: 140},
-                    { field: "ip", title: "IP", width: 140},
-                    { field: "joinTime", title: "加入时间", width: 140},
-                    { fixed: "right", title: "操作", align: "center",  toolbar: "#barDemo",  width: 120}
+                    { field: "name", title: "菜单名称", fixed: "left" , width: 160},
+                    { field: "alias",  title: "菜单别名", fixed: "left" , width: 230},
+                    { field: "parentName",  title: "上级菜单", fixed: "left" , width: 220},
+                    { field: "localCode", title: "国际化编码", width: '20%'},
+                    { field: "url", title: "访问地址", width: '25%', sort: true  },
+                    { field: "enableName", align: "center",  title: "是否启用", width: 120},
+                    { field: "lockedName", align: "center",  title: "是否锁定", width: 120},
+                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operates",  width: 155}
                 ]],
-                parseData: function(res) {
-                    console.log("res", res);
-                    var toolH = $('.layui-table-tool').height();
-                    var pageH = $('.layui-table-page').height();
-                    $(".layui-table-box").height($(document).height() - 60 - toolH - pageH).css({
-                        "overflow-y":"auto"
-                    })
-                    //将原始数据解析成 table 组件所规定的数据
-                    return {
-                        code: res.status, //解析接口状态
-                        msg: res.message, //解析提示文本
-                        count: res.total, //解析数据长度
-                        data: res.rows.item //解析数据列表
-                    };
+                groupBtn: {
+                    add: function () {
+                        page.openWindow({
+                            title: "新增菜单",
+                            url: "${ctx}/platform/access/menu/create.do"
+                        });
+                    },
+                    del: function () {
+                        console.log("del", "点击了删除");
+                    },
+                    search: function () {
+                        console.log("search", "点击了搜索");
+                    }
                 }
             });
+		}
+        $(function() {
+            initTable();
         })
     </script>
 </hy:extends>
 <hy:extends name="body">
-    <table id="tableList" lay-filter="tableList"></table>
-    <div style="display:none" class="layui-btn-container" id="toolbarDemo">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+	<div class="search-block">
+        <form class="layui-form layui-form-pane" id="search-form" lay-filter="search-form">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">菜单名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="name" lay-verify="name" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">菜单别名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="alias" lay-verify="alias" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">菜单地址</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="url" lay-verify="url" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">是否启用</label>
+                    <div class="layui-input-inline">
+                        <select name="interest" lay-filter="aihao">
+                            <option value="">请选择菜单状态</option>
+                            <option value="0">否</option>
+                            <option value="1" selected>是</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-    <div style="display:none" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <table id="tableList" lay-filter="tableList"></table>
+    <div id="laypage"></div>
+    <div style="display:none" class="layui-btn-container" id="operate-btn">
+        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="add">
+            <i class="layui-icon">&#xe608;</i> 新增
+        </button>
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del">
+            <i class="layui-icon">&#xe640;</i>删除
+        </button>
+        <button class="layui-btn layui-btn-sm" lay-event="search">
+            <i class="layui-icon">&#xe615;</i>搜索
+        </button>
+    </div>
+    <div style="display:none" id="operates">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">
+            <i class="layui-icon">&#xe642;</i>编辑
+        </a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">
+            <i class="layui-icon">&#xe640;</i>删除
+        </a>
     </div>
 </hy:extends>
 <jsp:include page="/page/basepage.jsp" />

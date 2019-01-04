@@ -65,6 +65,9 @@ public class PageSupport {
 	}
 
 	public int getPage() {
+		if (page > 0) {
+			page = page - 1;
+		}
 		return page;
 	}
 

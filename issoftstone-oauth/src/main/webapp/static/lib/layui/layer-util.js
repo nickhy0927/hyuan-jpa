@@ -46,16 +46,13 @@ function _closeLoading() {
 
 function _openLoading(msg) {
     layui.use("layer", function () {
-        var msg = msg ? msg : "";
+        var msg = msg ? msg : '正在保存数据，请稍等...';
         layer.msg(msg, {icon: 16, time: 1000 * 10000, shade: [0.3, '#000']});
     });
 
 }
 
 function _openTip(content, isAlert, callback, title) {
-    layui.use("layer", function () {
-
-    });
     layui.use("layer", function () {
         if (isAlert) { // skin: 'layui-layer-molv' //样式类名  自定义样式
             layer.alert(content, {
@@ -83,6 +80,49 @@ function _openTip(content, isAlert, callback, title) {
             });
         }
     });
+}
+function _tip(result, isAlert, callback, title) {
+	layui.use("layer", function () {
+		if (isAlert) { // skin: 'layui-layer-molv' //样式类名  自定义样式
+			if(result.status == 0) {
+				var index = layer.alert(result.message, {
+					title: title ? title : '提示信息',
+					skin: 'layui-layer-molv', //样式类名  自定义样式
+					anim: 1, //动画类型
+					icon: 6,    // icon
+					closeBtn: 0
+				}, function () {
+					$.closeLoading();
+					if (callback !== undefined) {
+						callback(layer, index);
+					}
+				});
+			} else {
+				layer.alert(result.message, {
+					title: title ? title : '提示信息',
+					skin: 'layui-layer-molv', //样式类名  自定义样式
+					anim: 1, //动画类型
+					icon: 6,    // icon
+					closeBtn: 0
+				}, function () {
+					$.closeLoading();
+					return false;
+				});
+			}
+		} else {
+			layer.confirm(content, {
+				skin: 'layui-layer-molv', //样式类名  自定义样式
+				title: title ? title : '提示信息',
+				closeBtn: 0,
+				btn: ['确定', '取消'] //按钮
+			}, function () {
+				_closeLoading();
+				callback();
+			}, function () {
+				_closeLoading();
+			});
+		}
+	});
 }
 
 Date.prototype.format = function (fmt) {
@@ -148,6 +188,7 @@ function _parentOpenWindow(title, width, height, url, callback) {
 
 $.extend({
     openTip: _openTip,
+    tip: _tip,
     openLoading: _openLoading,
     closeLoading: _closeLoading,
     dateSimpleFormat: _date_format,

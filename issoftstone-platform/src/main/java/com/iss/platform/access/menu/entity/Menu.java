@@ -28,8 +28,10 @@ public class Menu extends IdEntity {
 
 	// 附加字段
 	private String parentId;
+	private String parentName;
 	private String enableName;// 是否显示 true 显示 false 隐藏
 	private String lockedName; // 是否锁定 true 是 false 否
+	private String iconClass;
 
 	@ManyToOne
 	@JoinColumn(name = "icon_id")
@@ -123,5 +125,29 @@ public class Menu extends IdEntity {
 	public String getLockedName() {
 		lockedName = AccessConstant.Locked.getName(locked);
 		return lockedName;
+	}
+	
+	@Transient
+	public String getIconClass() {
+		if (icon != null) {
+			iconClass = icon.getIconClass();
+		}
+		return iconClass;
+	}
+	
+	public void setIconClass(String iconClass) {
+		this.iconClass = iconClass;
+	}
+	
+	@Transient
+	public String getParentName() {
+		if (menu != null) {
+			parentName = menu.getParentName();
+		}
+		return parentName;
+	}
+	
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
 	}
 }

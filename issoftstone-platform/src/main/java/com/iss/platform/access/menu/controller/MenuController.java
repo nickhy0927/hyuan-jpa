@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Maps;
+import com.iss.common.anno.AccessAuthority;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.PageSupport;
@@ -36,6 +37,7 @@ public class MenuController {
 	private MenuService menuService;
 
 	@ResponseBody
+	@AccessAuthority(alias = "menu-create-json")
 	@RequestMapping(value = "/platform/access/menu/create.json", method = RequestMethod.GET)
 	public MessageObject<Menu> menuCreate() {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
@@ -56,6 +58,7 @@ public class MenuController {
 	}
 
 	@ResponseBody
+	@AccessAuthority(alias = "menu-save-json")
 	@RequestMapping(value = "/platform/access/menu/save.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuSave(Menu menu) {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
@@ -63,6 +66,7 @@ public class MenuController {
 			if (StringUtils.isNotEmpty(menu.getParentId())) {
 				menu.setMenu(menuService.get(menu.getParentId()));
 			}
+			menu.setStatus(IsDelete.NO);
 			menuService.save(menu);
 			messageObject.ok("新增菜单成功");
 		} catch (ServiceException e) {
@@ -72,6 +76,7 @@ public class MenuController {
 	}
 
 	@ResponseBody
+	@AccessAuthority(alias = "menu-edit-json")
 	@RequestMapping(value = "/platform/access/menu/edit.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuEdit(String id) {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
@@ -85,13 +90,13 @@ public class MenuController {
 	}
 
 	@ResponseBody
+	@AccessAuthority(alias = "menu-list-json")
 	@RequestMapping(value = "/platform/access/menu/list.json", method = { RequestMethod.POST })
 	public MessageObject<Menu> menuList(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
 		try {
 			map.put("status_eq", IsDelete.NO);
-			map.put("locked_eq", Locked.NO);
 			PagerInfo<Menu> tools = menuService.queryPageByMap(map, support);
 			messageObject.ok("查询菜单成功", tools);
 		} catch (ServiceException e) {
@@ -102,6 +107,7 @@ public class MenuController {
 	}
 
 	@ResponseBody
+	@AccessAuthority(alias = "menu-delete-json")
 	@RequestMapping(value = "/platform/access/menu/delete.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuDelete(@RequestBody String[] ids) {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();

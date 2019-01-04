@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.common.collect.Maps;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.MessageObject;
+import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.platform.access.user.entity.User;
 import com.iss.platform.access.user.service.UserService;
 
@@ -36,6 +37,22 @@ public class IndexController {
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			messageObject.error("查询用户列表失败");
+		}
+		return messageObject;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/platform/access/user/userlist.json", method = RequestMethod.GET)
+	public MessageObject<User> userList() {
+		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
+		Map<String, Object> paramMap = Maps.newConcurrentMap();
+		paramMap.put("status_eq", IsDelete.NO);
+		try {
+			List<User> list = userService.queryByMap(paramMap);
+			messageObject.ok("查询用户信息成功", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+			messageObject.error("查询用户信息失败");
 		}
 		return messageObject;
 	}
