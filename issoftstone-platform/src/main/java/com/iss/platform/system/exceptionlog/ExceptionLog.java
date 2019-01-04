@@ -15,8 +15,14 @@ import com.iss.common.utils.IdEntity;
 @Table(name = "t_p_s_exce_log")
 public class ExceptionLog extends IdEntity {
 
-	private String methodName; // 方法名称
-	private String exceMsg;// 异常信息
+	/**
+	 * 方法名称
+	 */
+	private String methodName;
+	/**
+	 * 异常信息
+	 */
+	private String exceMsg;
 	private String message;// 完整的异常信息
 	private Integer exceptionType; // 异常信息类型
 

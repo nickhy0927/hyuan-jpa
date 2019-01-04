@@ -43,8 +43,9 @@ public class MenuController {
 			Map<String, Object> params = Maps.newConcurrentMap();
 			List<Menu> list = menuService.findAll();
 			List<MenuTree> menuTrees = new ArrayList<MenuTree>();
-			for (Menu menu : list)
+			for (Menu menu : list) {
 				menuTrees.add(new MenuTree(menu));
+			}
 			params.put("menuTrees", menuTrees);
 			messageObject.ok("新增菜单", params);
 		} catch (ServiceException e) {
@@ -59,8 +60,9 @@ public class MenuController {
 	public MessageObject<Menu> menuSave(Menu menu) {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
 		try {
-			if (StringUtils.isNotEmpty(menu.getParentId()))
+			if (StringUtils.isNotEmpty(menu.getParentId())) {
 				menu.setMenu(menuService.get(menu.getParentId()));
+			}
 			menuService.save(menu);
 			messageObject.ok("新增菜单成功");
 		} catch (ServiceException e) {
@@ -88,8 +90,8 @@ public class MenuController {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
 		try {
-			map.put("status_eq", IsDelete._NO);
-			map.put("locked_eq", Locked._NO);
+			map.put("status_eq", IsDelete.NO);
+			map.put("locked_eq", Locked.NO);
 			PagerInfo<Menu> tools = menuService.queryPageByMap(map, support);
 			messageObject.ok("查询菜单成功", tools);
 		} catch (ServiceException e) {

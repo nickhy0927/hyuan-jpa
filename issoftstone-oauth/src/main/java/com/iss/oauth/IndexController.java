@@ -57,7 +57,7 @@ public class IndexController {
         u.setLocked(Boolean.FALSE);
         u.setLoginName("admin");
         u.setSalt(salt);
-        u.setStatus(SysContants.IsDelete._NO);
+        u.setStatus(SysContants.IsDelete.NO);
         Md5PasswordEncoder encoder = new Md5PasswordEncoder();
         u.setPassword(encoder.encodePassword("123456", salt));
         u.setNickName("系统管理员");

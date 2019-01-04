@@ -49,6 +49,10 @@ public class PageSupport {
 	}
 
 	public enum Sortable {
+		/**
+		 *  DESC 倒序
+		 *  ASC 顺序
+		 */
 		DESC, ASC
 	}
 

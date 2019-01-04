@@ -25,8 +25,6 @@ public class UsernamePasswordAuthentication extends UsernamePasswordAuthenticati
 	public static final String VALIDATE_CODE = "verifyCode";
 
 	public UsernamePasswordAuthentication() {
-//		AntPathRequestMatcher requestMatcher = new AntPathRequestMatcher("/login", "POST");
-//		this.setRequiresAuthenticationRequestMatcher(requestMatcher);
 		SimpleUrlAuthenticationFailureHandler failedHandler = (SimpleUrlAuthenticationFailureHandler) getFailureHandler();
 		failedHandler.setDefaultFailureUrl("/login.jsp?error=2");
 		this.setAuthenticationManager(getAuthenticationManager());
@@ -57,8 +55,9 @@ public class UsernamePasswordAuthentication extends UsernamePasswordAuthenticati
 			return;
 		}
 		if (isOpenValidateCode) {
-			if (!checkValidateCode(req, res))
+			if (!checkValidateCode(req, res)) {
 				return;
+			}
 		}
 		chain.doFilter(request, response);
 	}

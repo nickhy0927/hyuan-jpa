@@ -3,6 +3,8 @@ package com.iss.common.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.util.regex.Pattern.*;
+
 /**
  * @Title: Underline2Camel.java  
  * @Package com.mybatis.code.util 
@@ -27,7 +29,7 @@ public class Underline2Camel {
 			return "";
 		}
 		StringBuffer sb = new StringBuffer();
-		Pattern pattern = Pattern.compile("([A-Za-z\\d]+)(_)?");
+		Pattern pattern = compile("([A-Za-z\\d]+)(_)?");
 		Matcher matcher = pattern.matcher(line);
 		while (matcher.find()) {
 			String word = matcher.group();
@@ -55,7 +57,7 @@ public class Underline2Camel {
 		}
 		line = String.valueOf(line.charAt(0)).toUpperCase().concat(line.substring(1));
 		StringBuffer sb = new StringBuffer();
-		Pattern pattern = Pattern.compile("[A-Z]([a-z\\d]+)?");
+		Pattern pattern = compile("[A-Z]([a-z\\d]+)?");
 		Matcher matcher = pattern.matcher(line);
 		while (matcher.find()) {
 			String word = matcher.group();
@@ -70,7 +72,7 @@ public class Underline2Camel {
 		}
 		line = String.valueOf(line.charAt(0)).toUpperCase().concat(line.substring(1));
 		StringBuffer sb = new StringBuffer();
-		Pattern pattern = Pattern.compile("[A-Z]([a-z\\d]+)?");
+		Pattern pattern = compile("[A-Z]([a-z\\d]+)?");
 		Matcher matcher = pattern.matcher(line);
 		while (matcher.find()) {
 			String word = matcher.group();

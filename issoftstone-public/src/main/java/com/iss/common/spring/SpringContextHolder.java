@@ -63,7 +63,7 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
 					+ SpringContextHolder.applicationContext);
 		}
 
-		SpringContextHolder.applicationContext = applicationContext; // NOSONAR
+		SpringContextHolder.applicationContext = applicationContext;
 	}
 
 	/**

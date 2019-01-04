@@ -12,10 +12,12 @@ public class BaseExtends extends BodyTagSupport {
 		this.name = name;
 	}
 
+	@Override
 	public int doStartTag() throws JspException {
 		return isOverrided() ? 0 : 2;
 	}
 
+	@Override
 	public int doEndTag() throws JspException {
 		if (isOverrided()) {
 			return 6;

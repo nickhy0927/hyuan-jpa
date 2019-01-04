@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 public class WebUtils {
 
 	public static Map<String, Object> getRequestToMap(HttpServletRequest request) {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		Enumeration<String> paramNames = request.getParameterNames();
 		while (paramNames.hasMoreElements()) {
 			String paramName = paramNames.nextElement();
