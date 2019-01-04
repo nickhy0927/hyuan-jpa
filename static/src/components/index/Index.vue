@@ -176,14 +176,14 @@
 	.layui-body::-webkit-scrollbar-thumb {
 		/*滚动条里面小方块*/
 		border-radius: 10px;
-		-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+		box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 		background: #3d86a8;
 	}
 
 	.layui-nav-tree::-webkit-scrollbar-track,
 	.layui-body::-webkit-scrollbar-track {
 		/*滚动条里面轨道*/
-		-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+		box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 		border-radius: 10px;
 		background: #ededed;
 	}
