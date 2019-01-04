@@ -18,8 +18,12 @@ import com.iss.platform.access.user.service.UserService;
 @Controller
 public class IndexController {
 
+	private final UserService userService;
+
 	@Autowired
-	private UserService userService;
+	public IndexController(UserService userService) {
+		this.userService = userService;
+	}
 
 	@ResponseBody
 	@RequestMapping(value = "/queryUserInfo.json", method = RequestMethod.GET)
