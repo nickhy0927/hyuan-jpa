@@ -26,6 +26,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	private CustomRepostiory<E, ID> dao;
 
 	
+	@Override
 	@Transactional(readOnly = false)
 	public void delete(ID id) throws ServiceException {
 		E t = get(id);
@@ -35,16 +36,19 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	}
 
 	
+	@Override
 	public void delete(Iterable<E> entities) throws ServiceException {
 		this.dao.delete(entities);
 	}
 
+	@Override
 	@Transactional(readOnly = false)
 	public void deleteAll() throws ServiceException {
 		this.dao.deleteAll();
 	}
 
 	
+	@Override
 	public void deleteBatch(ID[] ids) throws ServiceException {
 		if (ids != null && ids.length > 0) {
 			for (int i = 0; i < ids.length; i++) {
@@ -55,31 +59,37 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	}
 
 	
+	@Override
 	public List<E> findAll() throws ServiceException {
 		return dao.findAll();
 	}
 
 	
+	@Override
 	public E get(ID id) throws ServiceException {
 		return this.dao.findOne(id);
 	}
 
 	
+	@Override
 	public List<E> queryByMap(Map<String, Object> map) throws ServiceException {
 		return this.dao.queryByMap(map);
 	}
 
 	
+	@Override
 	public List<E> queryByMap(Map<String, Object> paramMap, Sort sort) throws ServiceException {
 		return dao.queryByMap(paramMap, sort);
 	}
 
 	
+	@Override
 	public Page<E> queryPageByMap(Map<String, Object> map, Pageable pageable) throws ServiceException {
 		return this.dao.queryPageByMap(map, pageable);
 	}
 
 	
+	@Override
 	public PagerInfo<E> queryPageByMap(Map<String, Object> map, PageSupport support) throws ServiceException {
 		support.setTotalRecord(queryByMap(map).size());
 		Sort sort = new Sort(Sort.Direction.ASC, support.getOrder());
@@ -93,6 +103,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	}
 
 	
+	@Override
 	@Transactional(readOnly = false)
 	public E save(E entity) throws ServiceException {
 		return this.dao.saveEntity(entity);
