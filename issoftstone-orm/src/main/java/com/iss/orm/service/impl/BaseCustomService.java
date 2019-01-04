@@ -20,7 +20,7 @@ import com.iss.orm.repository.CustomRepostiory;
 import com.iss.orm.service.CustomService;
 
 @Transactional(readOnly = true)
-public abstract class DefaultCustomService<E, ID extends Serializable> implements CustomService<E, ID> {
+public abstract class BaseCustomService<E, ID extends Serializable> implements CustomService<E, ID> {
 
 	@Autowired
 	private CustomRepostiory<E, ID> dao;
