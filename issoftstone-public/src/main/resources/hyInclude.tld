@@ -5,15 +5,15 @@
 	<tlib-version>1.0</tlib-version>
 	<short-name>hy</short-name>
 	<uri>http://www.hy.include</uri>
-	<description>标签的继承</description>
+	<!-- <description>标签的继承</description> -->
 	<tag>
 		<name>block</name>
 		<tag-class>com.iss.common.utils.BaseBlock</tag-class>
-		<description>空标签</description>
+		<!-- <description>空标签</description> -->
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>name</name>
-			<description>标签的名称</description>
+			<!-- <description>标签的名称</description> -->
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -24,7 +24,7 @@
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>name</name>
-			<description>描述标签的名称，继承标签的名称</description>
+			<!-- <description>描述标签的名称，继承标签的名称</description> -->
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
