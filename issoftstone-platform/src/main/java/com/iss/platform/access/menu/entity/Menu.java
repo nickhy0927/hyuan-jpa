@@ -1,5 +1,6 @@
 package com.iss.platform.access.menu.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,8 +21,8 @@ public class Menu extends IdEntity {
 	private String name;
 	private String url;// 访问地址
 	private String alias;// 别名
-	private Boolean enable;// 是否显示 true 显示 false 隐藏
-	private Boolean locked; // 是否锁定 true 是 false 否
+	private String enable;// 是否显示 true 显示 false 隐藏
+	private String locked; // 是否锁定 true 是 false 否
 	private String localCode;// 国际化编码
 	private Menu menu;
 	private Icon icon; // 菜单图标
@@ -77,19 +78,21 @@ public class Menu extends IdEntity {
 		this.url = url;
 	}
 
-	public Boolean getEnable() {
+	@Column(length = 1)
+	public String getEnable() {
 		return enable;
 	}
 
-	public void setEnable(Boolean enable) {
+	public void setEnable(String enable) {
 		this.enable = enable;
 	}
 
-	public Boolean getLocked() {
+	@Column(length = 1)
+	public String getLocked() {
 		return locked;
 	}
 
-	public void setLocked(Boolean locked) {
+	public void setLocked(String locked) {
 		this.locked = locked;
 	}
 

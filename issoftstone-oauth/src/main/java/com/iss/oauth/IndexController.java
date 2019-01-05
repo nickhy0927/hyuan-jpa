@@ -53,8 +53,8 @@ public class IndexController {
         String salt = UUID.randomUUID().toString().replaceAll("-", "");
         u.setBrithday(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         u.setEmail("h_y_12@163.com");
-        u.setEnable(Boolean.TRUE);
-        u.setLocked(Boolean.FALSE);
+        u.setEnable(String.valueOf(1));
+        u.setLocked(String.valueOf(0));
         u.setLoginName("admin");
         u.setSalt(salt);
         u.setStatus(SysContants.IsDelete.NO);

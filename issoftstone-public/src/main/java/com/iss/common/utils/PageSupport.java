@@ -1,16 +1,17 @@
 package com.iss.common.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class PageSupport {
 	private int limit = 10; // 分页大小
 	private int totalRecord;// 总记录数
 	private int totalPage;// 总页数
 	private int page;// 当前页
+	private String sort_;
 	private String order = "createTime";
 	private String sort = Sortable.DESC.toString().toLowerCase();
 
-	public PageSupport() {
-
-	}
+	public PageSupport() { }
 
 	public void setTotalRecord(int totalRecord) {
 		if (totalRecord > 0) {
@@ -50,8 +51,7 @@ public class PageSupport {
 
 	public enum Sortable {
 		/**
-		 *  DESC 倒序
-		 *  ASC 顺序
+		 * DESC 倒序 ASC 顺序
 		 */
 		DESC, ASC
 	}
@@ -74,5 +74,20 @@ public class PageSupport {
 	public void setPage(int page) {
 		this.page = page;
 	}
-	
+
+	public String getSort_() {
+		return sort_;
+	}
+
+	public void setSort_(String sort_) {
+		String[] s = sort_.split(":");
+		this.sort_ = sort_;
+		if (s.length > 1) {
+			order = s[0];
+			if (StringUtils.equals(s[1].toLowerCase(), Sortable.ASC.name().toLowerCase()))
+				sort = Sortable.ASC.name().toLowerCase();
+			else
+				sort = Sortable.DESC.name().toLowerCase();
+		}
+	}
 }

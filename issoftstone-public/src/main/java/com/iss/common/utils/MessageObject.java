@@ -7,9 +7,11 @@ import javax.servlet.http.HttpServletResponse;
 
 public class MessageObject<T> {
 
-	private int status;
+	private String status;
+	private int code;
 	private String message;
-	private Object object;
+	private Object data;
+	private long totals;
 
 	private MessageObject() {
 	}
@@ -18,7 +20,7 @@ public class MessageObject<T> {
 		return new MessageObject<>();
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
@@ -26,12 +28,12 @@ public class MessageObject<T> {
 		return message;
 	}
 
-	public Object getObject() {
-		return object;
+	public Object getData() {
+		return data;
 	}
 
-	public void setObject(Object object) {
-		this.object = object;
+	public void setData(Object data) {
+		this.data = data;
 	}
 
 	public static class ResultCode {
@@ -43,23 +45,43 @@ public class MessageObject<T> {
 
 	public void error(String errMsg) {
 		this.message = errMsg;
-		this.status = ResultCode.FAILIAR;
+		this.code = ResultCode.FAILIAR;
 	}
 
 	public void unauth() {
 		this.message = "你没有权限访问，详情请联系管理员";
-		this.status = ResultCode.UNAUTH;
+		this.code = ResultCode.UNAUTH;
 	}
 
 	public void ok(String successMsg) {
 		this.message = successMsg;
-		this.status = ResultCode.SUCCESS;
+		this.status = String.valueOf(ResultCode.SUCCESS);
 	}
 
-	public void ok(String successMsg, Object object) {
+	public void ok(String successMsg, Object data) {
 		this.message = successMsg;
-		this.status = ResultCode.SUCCESS;
-		this.object = object;
+		this.status = String.valueOf(ResultCode.SUCCESS);
+		this.data = data;
+	}
+	
+	public void ok(String successMsg, PagerInfo<T> data) {
+		this.message = successMsg;
+		this.status = "success";
+		this.data = data.getContent();
+		this.totals = data.getTotalRecord();
+	}
+
+	public int getCode() {
+		this.status = code == ResultCode.SUCCESS ? "success" : "fail";
+		return code;
+	}
+
+	public long getTotals() {
+		return totals;
+	}
+
+	public void setTotals(long totals) {
+		this.totals = totals;
 	}
 
 	public String toJson(MessageObject<T> messageObject) {

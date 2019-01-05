@@ -69,8 +69,8 @@ public class UserServiceImpl extends BaseCustomService<User, String> implements 
 			user.setBrithday("2009-11-21");
 			user.setSalt("ef44af4b79d04bd6b329e1879c5d9791");
 			user.setEmail("h_y_12@163.com");
-			user.setEnable(true);
-			user.setLocked(false);
+			user.setEnable(String.valueOf(1));
+			user.setLocked(String.valueOf(0));
 			user.setStatus(SysContants.IsDelete.NO);
 			return user;
 		}

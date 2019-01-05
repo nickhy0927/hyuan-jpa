@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,9 +25,11 @@ public class UserDetailsServiceImpl implements UserDetailsService, CredentialsCo
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userService.findUserByLoginName(username);
 		Collection<GrantedAuthority> authorities = getAuthorities();
+		Boolean locked = StringUtils.equals(user.getLocked(), "1");
+		Boolean enable = StringUtils.equals(user.getEnable(), "1");
 		UserPrincipal userdetails = new UserPrincipal(username, 
-				user.getPassword(), user.getEnable(), true,
-				true, !user.getLocked(), authorities);
+				user.getPassword(), enable, true,
+				true, !locked, authorities);
 		userdetails.setSalt(user.getSalt());
 		return userdetails;
 	}

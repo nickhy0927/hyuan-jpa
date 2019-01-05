@@ -26,12 +26,14 @@ import com.iss.platform.access.menu.entity.Menu;
 public class Role extends IdEntity {
 	private String code;
 	private String name;
+	private String remark;
 
 	private Role role;
 
 	private List<Menu> menus = new ArrayList<Menu>();
 
 	private String parentId;
+	private String parentName;
 
 	public String getCode() {
 		return code;
@@ -59,7 +61,7 @@ public class Role extends IdEntity {
 		this.role = role;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "t_p_a_role_menu", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "menu_id"))
 	public List<Menu> getMenus() {
 		return menus;
@@ -76,5 +78,23 @@ public class Role extends IdEntity {
 
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
+	}
+	
+	public String getRemark() {
+		return remark;
+	}
+	
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	
+	@Transient
+	public String getParentName() {
+		parentName = role != null ? role.getName() : ""; 
+		return parentName;
+	}
+	
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
 	}
 }
