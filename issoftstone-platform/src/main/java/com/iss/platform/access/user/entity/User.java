@@ -31,8 +31,8 @@ public class User extends IdEntity {
 	private String email;// 电子邮箱
 	private String loginName;// 登录名称
 	private String nickName;// 用户昵称
-	private Boolean locked; // 锁定 true 是 false 否
-	private Boolean enable; // 启用 true 是 false 否
+	private String locked; // 锁定 true 是 false 否
+	private String enable; // 启用 true 是 false 否
 	private String password;// 登录密码
 	private String userTag;// 用户手机端的标识
 	private List<Role> roles = new ArrayList<Role>();
@@ -103,19 +103,21 @@ public class User extends IdEntity {
 		this.roles = roles;
 	}
 
-	public Boolean getLocked() {
+	@Column(length = 1)
+	public String getLocked() {
 		return locked;
 	}
 
-	public void setLocked(Boolean locked) {
+	public void setLocked(String locked) {
 		this.locked = locked;
 	}
 
-	public Boolean getEnable() {
+	@Column(length = 1)
+	public String getEnable() {
 		return enable;
 	}
 
-	public void setEnable(Boolean enable) {
+	public void setEnable(String enable) {
 		this.enable = enable;
 	}
 

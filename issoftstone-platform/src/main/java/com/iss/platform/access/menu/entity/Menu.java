@@ -1,6 +1,9 @@
 package com.iss.platform.access.menu.entity;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -20,18 +23,29 @@ public class Menu extends IdEntity {
 	private String name;
 	private String url;// 访问地址
 	private String alias;// 别名
-	private Boolean enable;// 是否显示 true 显示 false 隐藏
-	private Boolean locked; // 是否锁定 true 是 false 否
-	private String localCode;// 国际化编码
+	private String enable;// 是否显示 true 显示 false 隐藏
+	private String locked; // 是否锁定 true 是 false 否
+	/**
+	 * 国际化编码
+	 */
+	private String localCode;
+	/**
+	 * 上级菜单
+	 */
 	private Menu menu;
-	private Icon icon; // 菜单图标
+	/**
+	 * 菜单图标
+	 */
+	private Icon icon; 
+	
+	private Integer orders;
 
 	// 附加字段
 	private String parentId;
 	private String parentName;
 	private String enableName;// 是否显示 true 显示 false 隐藏
 	private String lockedName; // 是否锁定 true 是 false 否
-	private String iconClass;
+	private String iconId;
 
 	@ManyToOne
 	@JoinColumn(name = "icon_id")
@@ -43,7 +57,7 @@ public class Menu extends IdEntity {
 		this.icon = icon;
 	}
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "p_id")
 	public Menu getMenu() {
 		return menu;
@@ -77,19 +91,21 @@ public class Menu extends IdEntity {
 		this.url = url;
 	}
 
-	public Boolean getEnable() {
+	@Column(length = 1)
+	public String getEnable() {
 		return enable;
 	}
 
-	public void setEnable(Boolean enable) {
+	public void setEnable(String enable) {
 		this.enable = enable;
 	}
 
-	public Boolean getLocked() {
+	@Column(length = 1)
+	public String getLocked() {
 		return locked;
 	}
 
-	public void setLocked(Boolean locked) {
+	public void setLocked(String locked) {
 		this.locked = locked;
 	}
 
@@ -126,28 +142,33 @@ public class Menu extends IdEntity {
 		lockedName = AccessConstant.Locked.getName(locked);
 		return lockedName;
 	}
-	
+
 	@Transient
-	public String getIconClass() {
-		if (icon != null) {
-			iconClass = icon.getIconClass();
-		}
-		return iconClass;
+	public String getIconId() {
+		return iconId;
 	}
-	
-	public void setIconClass(String iconClass) {
-		this.iconClass = iconClass;
+
+	public void setIconId(String iconId) {
+		this.iconId = iconId;
 	}
-	
+
 	@Transient
 	public String getParentName() {
 		if (menu != null) {
-			parentName = menu.getParentName();
+			parentName = menu.getName();
 		}
 		return parentName;
 	}
-	
+
 	public void setParentName(String parentName) {
 		this.parentName = parentName;
+	}
+	
+	public Integer getOrders() {
+		return orders;
+	}
+	
+	public void setOrders(Integer orders) {
+		this.orders = orders;
 	}
 }

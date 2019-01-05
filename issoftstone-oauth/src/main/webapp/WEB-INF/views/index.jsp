@@ -121,7 +121,7 @@
                                 </a>
                             </dd>
                             <dd>
-                                <a href="#/platform/access/role/roleList">
+                                <a href="#" data-url="/platform/access/role/list.do">
                                     <i class="fa fa-arrow-right" aria-hidden="true"></i>角色列表
                                 </a>
                             </dd>

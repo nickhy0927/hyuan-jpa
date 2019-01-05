@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.iss.common.anno.AccessAuthority;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.PageSupport;
 import com.iss.common.utils.PagerInfo;
 import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.WebUtils;
-import com.iss.constant.AccessConstant.Locked;
 import com.iss.platform.access.role.entity.Role;
 import com.iss.platform.access.role.service.RoleService;
 
@@ -36,6 +36,7 @@ public class RoleController {
 	private RoleService roleService;
 
 	@ResponseBody
+	@AccessAuthority(alias = "role-create-json")
 	@RequestMapping(value = "/platform/access/role/create.json", method = RequestMethod.GET)
 	public MessageObject<Role> roleCreate() {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
@@ -50,8 +51,9 @@ public class RoleController {
 	}
 
 	@ResponseBody
+	@AccessAuthority(alias = "role-save-json")
 	@RequestMapping(value = "/platform/access/role/save.json", method = RequestMethod.POST)
-	public MessageObject<Role> roleSave(@RequestBody Role role) {
+	public MessageObject<Role> roleSave(Role role) {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
 		try {
 			if (StringUtils.isNotEmpty(role.getParentId())) {
@@ -66,37 +68,39 @@ public class RoleController {
 	}
 
 	@ResponseBody
+	@AccessAuthority(alias = "role-edit-json")
 	@RequestMapping(value = "/platform/access/role/edit.json", method = RequestMethod.POST)
 	public MessageObject<Role> roleEdit(@RequestBody String id) {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
 		try {
-			messageObject.ok("修改查询角色成功", roleService.get(id));
+			messageObject.ok("修改角色成功", roleService.get(id));
 		} catch (ServiceException e) {
 			e.printStackTrace();
-			messageObject.error("修改查询角色异常");
+			messageObject.error("修改角色异常");
 		}
 		return messageObject;
 	}
 
 	@ResponseBody
+	@AccessAuthority(alias = "role-list-json")
 	@RequestMapping(value = "/platform/access/role/list.json", method = { RequestMethod.POST })
 	public MessageObject<Role> roleList(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
 		try {
 			map.put("status_eq", IsDelete.NO);
-			map.put("locked_eq", Locked.NO);
-			PagerInfo<Role> tools = roleService.queryPageByMap(map, support);
-			messageObject.ok("查询菜单成功", tools);
+			PagerInfo<Role> pagerInfo = roleService.queryPageByMap(map, support);
+			messageObject.ok("查询角色成功", pagerInfo);
 		} catch (ServiceException e) {
 			e.printStackTrace();
-			messageObject.error("查询菜单异常");
+			messageObject.error("查询角色异常");
 			logger.error(e.getMessage());
 		}
 		return messageObject;
 	}
 
 	@ResponseBody
+	@AccessAuthority(alias = "role-delete-json")
 	@RequestMapping(value = "/platform/access/role/delete.json", method = { RequestMethod.POST })
 	public MessageObject<Role> roleDelete(@RequestBody String[] ids) {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();

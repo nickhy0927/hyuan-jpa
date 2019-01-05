@@ -3,6 +3,8 @@ package com.iss.constant;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.iss.common.utils.JsonMapper;
@@ -19,8 +21,8 @@ public class AccessConstant {
 		public static Boolean YES = Boolean.TRUE;
 		public static Boolean NO = Boolean.FALSE;
 
-		public static String getName(Boolean code) {
-			if (code) {
+		public static String getName(String code) {
+			if (StringUtils.equals(code, "1")) {
 				return "是";
 			} else {
 				return "否";
@@ -51,8 +53,8 @@ public class AccessConstant {
 		public static Boolean YES = Boolean.TRUE;
 		public static Boolean NO = Boolean.FALSE;
 		
-		public static String getName(Boolean code) {
-			if (code) {
+		public static String getName(String code) {
+			if (StringUtils.equals(code, "0")) {
 				return "是";
 			} else {
 				return "否";

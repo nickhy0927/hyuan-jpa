@@ -1,47 +1,19 @@
 package com.iss.platform.access.menu.entity;
 
+import java.util.List;
+
 public class MenuTree {
 
-	private String name;// 菜单名称
 	private String id;
+	private String name;// 菜单名称
 	private String alias;
-	private boolean open;
-	private String pId;
-	private Menu menu;
-	private String url;
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public MenuTree(Menu menu) {
-		this.menu = menu.getMenu();
+	private List<MenuTree> children;
+	
+	public MenuTree(Menu menu, List<MenuTree> children) {
+		this.children = children;
 		this.id = menu.getId();
 		this.name = menu.getName();
 		this.alias = menu.getAlias();
-		this.url = menu.getUrl();
-		this.pId = menu.getMenu() != null ? menu.getMenu().getId() : "";
-	}
-
-
-	public Menu getMenu() {
-		return menu;
-	}
-
-	public void setMenu(Menu menu) {
-		this.menu = menu;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getId() {
@@ -52,6 +24,14 @@ public class MenuTree {
 		this.id = id;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getAlias() {
 		return alias;
 	}
@@ -60,20 +40,12 @@ public class MenuTree {
 		this.alias = alias;
 	}
 
-	public boolean isOpen() {
-		return open;
+	public List<MenuTree> getChildren() {
+		return children;
 	}
 
-	public void setOpen(boolean open) {
-		this.open = open;
-	}
-
-	public String getpId() {
-		return pId;
-	}
-
-	public void setpId(String pId) {
-		this.pId = pId;
+	public void setChildren(List<MenuTree> children) {
+		this.children = children;
 	}
 
 }

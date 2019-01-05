@@ -9,21 +9,23 @@
     <meta http-equiv="x-ua-compatible" content="IE=Edge">
     <link rel="icon" href="${ctx}/favicon.ico">
     <link rel="stylesheet" href="${ctx}/static/lib/layui/dist/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/lib/grid-mamage/css/gm.css">
     <link rel="stylesheet" href="${ctx}/static/lib/layui/dist/css/index.css">
     <link rel="stylesheet" href="${ctx}/static/lib/fontawesome/css/font-awesome.min.css">
     <script src="${ctx}/static/lib/jquery/dist/jquery.min.js"></script>
     <script src="${ctx}/static/lib/layui/dist/layui.js"></script>
     <script src="${ctx}/static/lib/layui/layer-util.js"></script>
+    <script type="text/javascript" src="${ctx}/static/lib/grid-mamage/js/gm.js"></script>
     <script src="${ctx}/static/lib/layui/page.js"></script>
     <title>
         <hy:block name="title"></hy:block>
     </title>
     <script type="text/javascript">
-    	/* $(function() {
+    	$(function() {
     		$("body").css({
 				'overflow-y':'auto'
 			})
-    	}) */
+    	}) 
     </script>
     <hy:block name="javascript"></hy:block>
     <hy:block name="css"></hy:block>

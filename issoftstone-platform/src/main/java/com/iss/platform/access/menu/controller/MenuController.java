@@ -1,6 +1,5 @@
 package com.iss.platform.access.menu.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +21,8 @@ import com.iss.common.utils.PageSupport;
 import com.iss.common.utils.PagerInfo;
 import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.WebUtils;
-import com.iss.constant.AccessConstant.Locked;
+import com.iss.platform.access.icon.entity.Icon;
+import com.iss.platform.access.icon.service.IconService;
 import com.iss.platform.access.menu.entity.Menu;
 import com.iss.platform.access.menu.entity.MenuTree;
 import com.iss.platform.access.menu.service.MenuService;
@@ -36,6 +36,9 @@ public class MenuController {
 	@Autowired
 	private MenuService menuService;
 
+	@Autowired
+	private IconService iconService;
+
 	@ResponseBody
 	@AccessAuthority(alias = "menu-create-json")
 	@RequestMapping(value = "/platform/access/menu/create.json", method = RequestMethod.GET)
@@ -43,14 +46,12 @@ public class MenuController {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
 		try {
 			Map<String, Object> params = Maps.newConcurrentMap();
-			List<Menu> list = menuService.findAll();
-			List<MenuTree> menuTrees = new ArrayList<MenuTree>();
-			for (Menu menu : list) {
-				menuTrees.add(new MenuTree(menu));
-			}
+			List<MenuTree> menuTrees = menuService.queryMenuTree();
+			List<Icon> icons = iconService.queryByMap(params);
 			params.put("menuTrees", menuTrees);
+			params.put("icons", icons);
 			messageObject.ok("新增菜单", params);
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			messageObject.error("进入新增菜单异常");
 		}
@@ -63,8 +64,12 @@ public class MenuController {
 	public MessageObject<Menu> menuSave(Menu menu) {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
 		try {
+			menu.setStatus(IsDelete.NO);
 			if (StringUtils.isNotEmpty(menu.getParentId())) {
 				menu.setMenu(menuService.get(menu.getParentId()));
+			}
+			if (StringUtils.isNotEmpty(menu.getIconId())) {
+				menu.setIcon(iconService.get(menu.getIconId()));
 			}
 			menu.setStatus(IsDelete.NO);
 			menuService.save(menu);
@@ -81,7 +86,14 @@ public class MenuController {
 	public MessageObject<Menu> menuEdit(String id) {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
 		try {
-			messageObject.ok("修改查询菜单成功", menuService.get(id));
+			Map<String, Object> params = Maps.newConcurrentMap();
+			List<MenuTree> menuTrees = menuService.queryMenuTree();
+			List<Icon> icons = iconService.queryByMap(params);
+			params.put("menuTrees", menuTrees);
+			params.put("icons", icons);
+			Menu menu = menuService.get(id);
+			params.put("menu", menu);
+			messageObject.ok("修改查询菜单成功", params);
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			messageObject.error("修改查询菜单异常");
