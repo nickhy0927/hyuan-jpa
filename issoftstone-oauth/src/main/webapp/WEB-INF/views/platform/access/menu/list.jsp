@@ -136,9 +136,23 @@
                     </div>
                 </div>
             </div>
+            <div class="layui-form-item">
+            	<div class="layui-btn-container" id="operate-btn">
+			        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="add">
+			            <i class="layui-icon">&#xe608;</i> 新增
+			        </button>
+			        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del">
+			            <i class="layui-icon">&#xe640;</i>删除
+			        </button>
+			        <button class="layui-btn layui-btn-sm" lay-submit lay-filter="formDemo">
+			            <i class="layui-icon">&#xe615;</i>搜索
+			        </button>
+			    </div>
+            </div>
         </form>
     </div>
     <section class="grid-main">
+<<<<<<< HEAD
     	<div class="layui-form-item">
           	<div class="layui-btn-container" id="operate-btn">
 		        <button onclick="create()" class="layui-btn layui-btn-sm layui-btn-normal" id="add">
@@ -152,6 +166,8 @@
 		        </button>
 		    </div>
         </div>
+=======
+>>>>>>> refs/remotes/origin/master
         <table id="tableList"></table>
     </section>
 </hy:extends>
