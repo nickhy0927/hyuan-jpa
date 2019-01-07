@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.iss.common.utils.MessageObject;
 
+/**
+ * @author Administrator
+ */
 @Controller
 @RequestMapping(value = "/user")
 public class LoginController {
@@ -32,10 +35,12 @@ public class LoginController {
 		username = username.trim();
 		try {
 			UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
-			Authentication authentication = authenticationManager.authenticate(authRequest); // 调用loadUserByUsername
+			// 调用loadUserByUsername
+			Authentication authentication = authenticationManager.authenticate(authRequest);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			HttpSession session = request.getSession();
-			session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext()); // 这个非常重要，否则验证后将无法登陆
+			// 这个非常重要，否则验证后将无法登陆
+			session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
 			messageObject.ok("登陆成功", authentication.getName());
 			return messageObject;
 		} catch (LockedException e) {
