@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +21,8 @@ import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.SysContants;
 import com.iss.interceptor.OperateLog;
 import com.iss.interceptor.OperateType;
+import com.iss.platform.access.menu.entity.MenuTree;
+import com.iss.platform.access.menu.service.MenuService;
 import com.iss.platform.access.user.entity.User;
 import com.iss.platform.access.user.service.UserService;
 
@@ -27,10 +30,12 @@ import com.iss.platform.access.user.service.UserService;
 public class IndexController {
 
     private final UserService userService;
+    private final MenuService menuService;
 
     @Autowired
-    public IndexController(UserService userService) {
+    public IndexController(UserService userService, MenuService menuService) {
         this.userService = userService;
+        this.menuService = menuService;
     }
 
     /**
@@ -39,7 +44,9 @@ public class IndexController {
      */
     @AccessAuthority(alias = "index")
     @RequestMapping(value = "index.do", method = RequestMethod.GET)
-    public String index() {
+    public String index(Model model) {
+    	List<MenuTree> menuTrees = menuService.queryMenuTree();
+    	model.addAttribute("menus", menuTrees);
         return "index";
     }
 

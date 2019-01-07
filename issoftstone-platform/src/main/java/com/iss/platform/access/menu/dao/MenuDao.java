@@ -12,9 +12,9 @@ import com.iss.platform.access.menu.entity.Menu;
  */
 public interface MenuDao extends CustomRepostiory<Menu,String> {
 
-	@Query("select m from Menu m where m.menu.id is null and m.status = 0")
+	@Query("select m from Menu m where m.menu.id is null and m.status = 0 order by m.orders")
 	List<Menu> queryTopMenuList();
 	
-	@Query("select m from Menu m where m.menu.id = ?1 and m.status = 0")
+	@Query("select m from Menu m where m.menu.id = ?1 and m.status = 0 order by m.orders")
 	List<Menu> queryMenuListByParentId(String parentId);
 }

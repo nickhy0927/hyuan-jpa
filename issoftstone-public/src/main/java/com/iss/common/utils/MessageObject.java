@@ -2,6 +2,7 @@ package com.iss.common.utils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,6 +13,9 @@ public class MessageObject<T> {
 	private String message;
 	private Object data;
 	private long totals;
+	
+	private long total;
+	private List<T> rows;
 
 	private MessageObject() {
 	}
@@ -69,6 +73,8 @@ public class MessageObject<T> {
 		this.status = "success";
 		this.data = data.getContent();
 		this.totals = data.getTotalRecord();
+		this.total = data.getTotalRecord();
+		this.rows = data.getContent();
 	}
 
 	public int getCode() {
@@ -101,5 +107,13 @@ public class MessageObject<T> {
 				writer.close();
 			}
 		}
+	}
+	
+	public List<T> getRows() {
+		return rows;
+	}
+	
+	public long getTotal() {
+		return total;
 	}
 }

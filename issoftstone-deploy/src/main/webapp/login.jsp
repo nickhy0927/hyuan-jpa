@@ -4,10 +4,7 @@
 <c:set value="${pageContext.request.contextPath}" var="ctx"/>
 <hy:extends name="title">单点登录系统</hy:extends>
 <hy:extends name="css">
-    <link href="${ctx}/assset/hui/css/H-ui.min.css" rel="stylesheet" type="text/css">
-    <link href="${ctx}/assets/hui/css/H-ui.login.css" rel="stylesheet" type="text/css">
-    <link href="${ctx}/assets/hui/css/style.css" rel="stylesheet" type="text/css">
-    <link href="${ctx}/assets/lib/Hui-iconfont/1.0.8/iconfont.css" rel="stylesheet" type="text/css"/>
+    <link href="${ctx}/assets/css/H-ui.login.css" rel="stylesheet" type="text/css">
     <style type="text/css">
         img {
             height: 40px;
