@@ -324,8 +324,15 @@
 	<build>
 		<resources>
 			<resource>
-				<directory>${project.basedir}/src/main/resources</directory>
+				<directory>${project.basedir}/src/main/resources/assets</directory>
+				<targetPath>${project.build.outputDirectory}/META-INF/resources/assets</targetPath>
+			</resource>
+			<resource>
+				<directory>${project.basedir}/src/main/resources/tld</directory>
 				<targetPath>${project.build.outputDirectory}/META-INF</targetPath>
+                <excludes>
+                    <exclude>/assets/**</exclude>
+                </excludes>
 			</resource>
 		</resources>
 	</build>
