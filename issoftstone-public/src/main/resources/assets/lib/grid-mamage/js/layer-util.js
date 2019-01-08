@@ -73,7 +73,6 @@ function _openLoading(msg) {
         var msg = msg ? msg : '正在保存数据，请稍等...';
         layer.msg(msg, {icon: 16, time: 1000 * 10000, shade: [0.3, '#000']});
     });
-
 }
 
 function _openTip(content, isAlert, callback, title) {
@@ -109,7 +108,7 @@ function _tip(result, isAlert, callback, title) {
 	layui.use("layer", function () {
 		if (isAlert) { // skin: 'layui-layer-molv' //样式类名  自定义样式
 			if(result.status == 0) {
-				var index = layer.alert(result.message, {
+				layer.alert(result.message, {
 					title: title ? title : '提示信息',
 					skin: 'layui-layer-molv', //样式类名  自定义样式
 					anim: 1, //动画类型
@@ -118,7 +117,7 @@ function _tip(result, isAlert, callback, title) {
 				}, function () {
 					$.closeLoading();
 					if (callback !== undefined) {
-						callback(layer, index);
+						callback();
 					}
 				});
 			} else {

@@ -38,6 +38,9 @@
 <hy:extends name="javascript">
 	<script type="text/javascript">
 		$(function () {
+			var result = {
+				status: 0
+			}
 			$("body").css({
 				'overflow':'auto'
 			})
@@ -52,13 +55,11 @@
 				    	data: data.field,
 				    	dataType : "json",
 				    	success: function(result) {
-				    		setTimeout(function() {
-				    			$.tip(result, true, function(layer, index) {
-				    				var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-				    				parent.layer.close(index); //再执行关闭
-									window.parent.refresh();
-								})
-							}, 3000);
+				    		$.tip(result, true, function(layer, index) {
+			    				var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+			    				parent.layer.close(index); //再执行关闭
+								window.parent.refresh();
+							})
 			    		}
 			    	});
                 	return false;

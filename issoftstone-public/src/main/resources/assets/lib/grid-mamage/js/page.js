@@ -39,15 +39,12 @@ var tableManager = undefined;
 			var options = '<option value="">' + setting.holder +'</option>';
         	if (setting.data && setting.data.length > 0) {
         		$.each(setting.data, function(index, item){
-        			console.log(item, index)
-        			console.log(setting.defaultValue)
         			if(setting.defaultValue == item[setting.fields.val]) 
         				options += '<option selected="selected" value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
         			else
         				options += '<option value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
         		})
         	}
-        	console.log(options)
         	_this.html(options)
 		}
 	}

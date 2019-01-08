@@ -11,6 +11,7 @@ import com.iss.common.anno.AccessAuthority;
 @Controller
 public class RoleViewController {
 
+	@AccessAuthority(alias = "role-create-do")
     @RequestMapping(value = "/platform/access/role/create.do")
     public String create() {
         return "platform/access/role/create";
