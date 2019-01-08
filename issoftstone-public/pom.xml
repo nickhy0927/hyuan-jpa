@@ -304,6 +304,21 @@
 			<version>2.2</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180813</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.51</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gitee.qdbp.thirdparty</groupId>
+			<artifactId>ueditor</artifactId>
+			<version>1.4.3.3</version>
+		</dependency>
 		<!-- 测试 begin -->
 		<!-- junit -->
 		<dependency>
@@ -330,9 +345,9 @@
 			<resource>
 				<directory>${project.basedir}/src/main/resources/tld</directory>
 				<targetPath>${project.build.outputDirectory}/META-INF</targetPath>
-                <excludes>
-                    <exclude>/assets/**</exclude>
-                </excludes>
+				<excludes>
+					<exclude>/assets/**</exclude>
+				</excludes>
 			</resource>
 		</resources>
 	</build>

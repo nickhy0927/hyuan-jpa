@@ -101,6 +101,7 @@
 	border-right: 1px solid #ddd;
 	background: #DDDDDD
 }
+
 /* 角色管理 */
 .role-nav-l {
 	height: auto;
@@ -148,6 +149,7 @@
 .tbl-pd {
 	padding: 0px !important;
 }
+
 /* 财务指标监控 */
 .row-rad {
 	/* width: 18%;
@@ -238,6 +240,7 @@
 	padding: 0px 10px;
 	font-size: 12px;
 }
+
 /*机构管理*/
 .text-ow {
 	width: 370px;
@@ -269,6 +272,7 @@
 	border: 1px solid #dddddd;
 	margin-left: 10px;
 }
+
 /* .new-dept span{
 	position: relative;
 }
@@ -305,6 +309,7 @@
 	color: #ccc;
 	font-size: 12px;
 }
+
 /* 导入xlsx */
 .excelName {
 	width: auto;
@@ -312,6 +317,7 @@
 	line-height: 30px;
 	float: left;
 }
+
 /*宏观经济分析*/
 .c-greenligh {
 	color: #33FF00
@@ -339,20 +345,20 @@
 	border: 1px solid #ddd;
 	border-radius: 10px;
 	/* min-height: 100px;
-	margin: 13px 2%;
-	padding: 10px 30px; */
+    margin: 13px 2%;
+    padding: 10px 30px; */
 }
 
 .p-data {
 	width: 100%;
 	/* height: 30px;
-	line-height: 30px; */
+    line-height: 30px; */
 }
 
 .p-data span {
 	width: 50%;
 	/* height: 40px;
-	line-height: 40px; */
+    line-height: 40px; */
 	text-align: left;
 	display: block;
 	float: left;
@@ -408,6 +414,7 @@ table thead .sort {
 table thead .actCls {
 	background-color: #e0effc;
 }
+
 /* 授权认证 */
 .user-info {
 	margin-top: 10px;
@@ -445,6 +452,7 @@ table thead .actCls {
 	float: left;
 	padding-left: 10px;
 }
+
 /* 客户管理 */
 .linet {
 	border-bottom: solid 1px #ccc;
@@ -475,10 +483,12 @@ table thead .actCls {
 	box-sizing: border-box;
 	border: 1px solid #ddd;
 }
+
 /* 项目管理 */
 .cashflow-intr p {
 	
 }
+
 /* RORAC/EVA数据测算 */
 .eva-warp {
 	height: 580px;
@@ -664,6 +674,7 @@ table thead .actCls {
 	width: 60px;
 	text-align: center;
 }
+
 /* 进度条样式 */
 .progress-box {
 	height: 25px;
@@ -717,7 +728,7 @@ table thead .actCls {
 }
 
 /* 多分辨率 */
-@media screen and ( min-width : 1400px) {
+@media screen and ( min-width: 1400px) {
 	.container {
 		width: 95%
 	}
@@ -726,7 +737,7 @@ table thead .actCls {
 	}
 }
 
-@media screen and ( min-width : 1300px) {
+@media screen and ( min-width: 1300px) {
 	.container {
 		width: 1270px
 	}
@@ -744,7 +755,7 @@ table thead .actCls {
 	}
 }
 
-@media screen and ( min-width : 1200px) {
+@media screen and ( min-width: 1200px) {
 	.container {
 		width: 1170px
 	}
@@ -766,7 +777,7 @@ table thead .actCls {
 	}
 }
 
-@media screen and ( min-width : 1023px) {
+@media screen and ( min-width: 1023px) {
 	.tabBar span {
 		width: 24.5%;
 	}
@@ -775,7 +786,7 @@ table thead .actCls {
 	}
 }
 
-@media screen and ( min-width : 992px) {
+@media screen and ( min-width: 992px) {
 	.container {
 		width: 970px
 	}
@@ -797,7 +808,7 @@ table thead .actCls {
 	}
 }
 
-@media screen and ( min-width : 767px) {
+@media screen and ( min-width: 767px) {
 	.container {
 		width: 750px
 	}
@@ -838,7 +849,7 @@ table thead .actCls {
 	}
 }
 
-@media screen and ( max-width : 768px) {
+@media screen and ( max-width: 768px) {
 	/**报表查询**/
 	.row-rad {
 		width: 74%;
@@ -878,13 +889,13 @@ table thead .actCls {
 	}
 }
 
-@media screen and (max-width:421px) {
+@media screen and (max-width: 421px) {
 	.tabBar span {
 		width: 27%;
 	}
 }
 
-@media screen and (max-width:415px) {
+@media screen and (max-width: 415px) {
 	.tabBar span {
 		width: 24%;
 	}
@@ -898,13 +909,13 @@ table thead .actCls {
 	}
 }
 
-@media screen and (max-width:376px) {
+@media screen and (max-width: 376px) {
 	.table-font thead th {
 		font-size: 7px;
 	}
 }
 
-@media screen and (max-width:361px) {
+@media screen and (max-width: 361px) {
 	.table-font thead th {
 		font-size: 7px;
 	}
@@ -913,7 +924,7 @@ table thead .actCls {
 	}
 }
 
-@media screen and (max-width:321px) {
+@media screen and (max-width: 321px) {
 	.tabBar span {
 		width: 22%;
 	}
@@ -1051,32 +1062,17 @@ table thead .actCls {
 
 .form-item
 .col-12
- 
 .form-item-content
- 
-table
-,
-.form-item
+table, .form-item
 .col-12
- 
 .form-item-content
- 
-.view
-,
-.form-item
+.view, .form-item
 .col-12
- 
 .form-item-content
- 
-.iframe-box
-,
-{
-width
-:
-90%;
-
-
+.iframe-box {
+	width: 90%;
 }
+
 .approve {
 	padding: 10px;
 }
@@ -1170,27 +1166,151 @@ width
 }
 
 .search-block {
-	border-bottom: 1px dashed #ddd;
 	border-radius: 2px;
-	margin: 10px 0px 0 15px;
+	padding: 10px 0px 0 15px;
 }
 
 table {
-    width: auto;
+	width: auto;
 }
+
 .datagrid-btable tr td, .datagrid-htable tr td {
 	font-size: 14px;
 	width: auto;
 }
+
 .datagrid-btable {
 	width: 100%;
 }
+
 .layui-btn-container {
 	margin-top: 10px;
 }
+
 .panel {
 	margin: 10px 0px 10px 15px !important;
 }
+
 .layui-form-item {
 	margin-bottom: 0px !important;
+}
+
+.grid-main {
+	margin-left: 15px;
+}
+
+.create-form {
+	padding: 10px 10px 0 10px;
+}
+
+.create-form .layui-form-pane .layui-form-label {
+	text-overflow: clip;
+	text-align: right;
+	width: 160px !important;
+}
+
+.layui-form-pane .layui-input-block {
+	margin-left: 160px !important;
+}
+
+.create-form label i {
+	width: 10px;
+	color: red;
+	padding: 5px;
+}
+
+.layui-form-item {
+	margin-bottom: 5px !important;
+}
+
+.layui-form-item .layui-inline {
+	width: 387px;
+}
+
+.search-block .layui-input-inline input, .search-block.layui-input-inline select,
+	.search-block .layui-select-title, .search-block .layui-form-select {
+	width: 270px;
+}
+
+.plugin-action {
+	display: inline-block;
+	color: steelblue;
+	margin-right: 10px;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.plugin-action:hover {
+	text-decoration: underline;
+}
+
+.search-area {
+	padding: 10px 20px;
+	border: 1px solid #ccc;
+	background: #efefef;
+	margin-bottom: 15px;
+}
+
+.search-area .sa-ele {
+	display: inline-block;
+	margin-right: 20px;
+	font-size: 12px;
+}
+
+.search-area .sa-ele .se-title {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.search-area .sa-ele .se-con {
+	display: inline-block;
+	width: 180px;
+	height: 24px;
+	border: 1px solid #ccc;
+	padding: 0 4px;
+	line-height: 24px;
+}
+
+.search-area .sa-ele .search-action, .search-area .sa-ele .reset-action
+	{
+	display: inline-block;
+	width: 80px;
+	height: 26px;
+	border: 1px solid #ccc;
+	background: #e8e8e8;
+	padding: 0 4px;
+	line-height: 26px;
+	text-align: center;
+	cursor: pointer;
+	margin-right: 10px;
+}
+
+.search-area .sa-ele .search-action:hover, .search-area .sa-ele .reset-action:hover
+	{
+	opacity: 0.7;
+}
+
+.void-template {
+	height: 300px;
+	line-height: 300px;
+	text-align: center;
+	font-size: 24px;
+	color: #ccc;
+}
+
+.layui-btn-container {
+	margin-bottom: 10px;
+}
+
+.layui-btn-container .layui-btn {
+	margin-bottom: 0px;
+}
+
+.hr-line {
+	border-bottom: 1px dashed cadetblue;
+	margin: 0 0 0 15px
+}
+
+.td-content {
+	padding-left: 15px;
 }

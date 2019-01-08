@@ -28,8 +28,8 @@
     <link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/webuploader/0.1.5/webuploader.css">
     <link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/webuploader/webloader.css">
     <link rel="stylesheet" type="text/css" href="${basePath}/assets/css/style.css"/> <!-- 自定义样式 -->
-	<link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/easyui/themes/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/easyui/themes/icon.css">
+	<%--<link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/easyui/themes/icon.css">--%>
 	<style type="text/css">
 	   .ui-widget-overlay {
 	       opacity: .5;
@@ -72,17 +72,19 @@
 	<script type="text/javascript" src="${basePath}/assets/js/jquery.core.ajaxtable.js"></script> <!-- table插件 -->
 	<script type="text/javascript" src="${basePath}/assets/js/codeTool.js"></script> <!-- 公共编解码 定制方法 -->
 	<script type="text/javascript" src="${basePath}/assets/js/jquery.pagination.js"></script> <!-- 翻页插件 -->
-	<script type="text/javascript" src="${basePath}/assets/lib/jquery-ui/iss-util.js"></script> <!-- 信息提示框 -->
-	<script type="text/javascript" src="${basePath}/assets/lib/jquery-ui/iss-util-editer.js"></script> <!-- 信息提示框 -->
 	<script type="text/javascript" src="${basePath}/assets/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
-	<script type="text/javascript" src="${basePath}/assets/lib/easyui/js/jquery.easyui.min.js"></script>
-	<script type="text/javascript" src="${basePath}/assets/lib/easyui/locale/easyui-lang-zh_CN.js"></script>
+	<%--<script type="text/javascript" src="${basePath}/assets/lib/easyui/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="${basePath}/assets/lib/easyui/locale/easyui-lang-zh_CN.js"></script>--%>
 	<!-- 表单验证插件 -->
 	<script type="text/javascript" src="${basePath}/assets/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 	<!-- 表单验证插件 -->
 	<script type="text/javascript" src="${basePath}/assets/lib/jquery.validation/1.14.0/messages_zh.js"></script> <!-- 表单验证插件 -->
 	<script type="text/javascript" src="${basePath}/assets/js/common/tools.js"></script>
    	<script type="text/javascript" src="${basePath}/assets/js/hooks.js"></script>
+	<link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/grid-mamage/css/gm.css">
+	<script type="text/javascript" src="${basePath}/assets/lib/grid-mamage/js/gm.js"></script>
+	<script type="text/javascript" src="${basePath}/assets/lib/grid-mamage/js/layer-util.js"></script>
+	<script type="text/javascript" src="${basePath}/assets/lib/grid-mamage/js/page.js"></script>
    	<script type="text/javascript">
    	</script>
     <title>

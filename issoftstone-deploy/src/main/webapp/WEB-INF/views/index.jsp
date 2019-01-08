@@ -247,7 +247,7 @@
         <div id="iframe_box" class="Hui-article">
             <div class="show_iframe">
                 <div style="display:none" class="loading"></div>
-                <iframe scrolling="yes" frameborder="0" src="${basePath}/main.do"></iframe>
+                <iframe scrolling="yes" frameborder="0" src="${basePath}/platform/access/menu/list.do"></iframe>
             </div>
         </div>
     </section>
