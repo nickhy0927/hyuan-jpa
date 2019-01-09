@@ -16,7 +16,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.iss</groupId>
-		<artifactId>issoftstone-auth-core</artifactId>
+			<artifactId>issoftstone-auth-core</artifactId>
 		</dependency>
 	</dependencies>
 	<build>

@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Maps;
+import com.iss.anno.OperateLog;
 import com.iss.common.anno.AccessAuthority;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.SysContants;
-import com.iss.interceptor.OperateLog;
-import com.iss.interceptor.OperateType;
+import com.iss.constant.OperateType;
 import com.iss.platform.access.menu.entity.MenuTree;
 import com.iss.platform.access.menu.service.MenuService;
 import com.iss.platform.access.user.entity.User;

@@ -1,4 +1,4 @@
-package com.iss.interceptor;
+package com.iss.anno;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

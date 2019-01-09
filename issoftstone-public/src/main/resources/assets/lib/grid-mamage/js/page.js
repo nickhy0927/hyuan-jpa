@@ -68,6 +68,8 @@ var tableManager = undefined;
 		var h = $(window).height() - (sh || 0);
 		var pageSize = option.pageSize || 10;
 		if(h > 800) pageSize = 14;
+		if(h < 500) pageSize = 5;
+		if(h < 800 && h > 650) pageSize = 13;
 		console.log(h, pageSize)
 		var setting = $.extend({
 			gridManagerName: '',
@@ -172,3 +174,7 @@ var tableManager = undefined;
 		$(this).GM(setting);
 	};   
 })(jQuery);
+
+$(window).resize(function() {
+	location.reload()
+});

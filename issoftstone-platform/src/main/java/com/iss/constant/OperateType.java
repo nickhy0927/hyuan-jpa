@@ -1,4 +1,4 @@
-package com.iss.interceptor;
+package com.iss.constant;
 
 public class OperateType {
 

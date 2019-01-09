@@ -18,7 +18,6 @@
                 url: '${ctx}/user/login.json',
                 data: $("#loginForm").serializeArray(),
                 loadSuccess: function(res) {
-	                console.log('res:', res);
 	                if (res.code == 403) {
 						$("#errmsg").text(res.message);
 						setTimeout(function() {
@@ -37,8 +36,6 @@
             $('#doLogin').click(function () {
                 doLogin();
             })
-            /* alert($("input[name='username']").width())
-            $("#doLogin").width($("input[name='username']").width()); */
         })
     </script>
 </hy:extends>
@@ -63,7 +60,7 @@
                 <div class="row cl">
                     <label class="form-label col-xs-3"></label>
                     <div class="formControls col-xs-8">
-                        <input class="input-text size-L" type="text" placeholder="请输入登录验证码"
+                        <input autocomplete="off"  class="input-text size-L" type="text" placeholder="请输入登录验证码"
                                value="" style="width:150px;" name="code">
                         <img src="${ctx}/auth/authCode.image">
                         <a id="kanbuq" href="javascript:;">看不清，换一张</a>

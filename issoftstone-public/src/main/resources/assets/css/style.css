@@ -1314,3 +1314,11 @@ table {
 .td-content {
 	padding-left: 15px;
 }
+
+.layui-btn-container .layui-btn {
+	line-height: 30px !important;
+}
+
+pre {
+    line-height: 0px;
+}

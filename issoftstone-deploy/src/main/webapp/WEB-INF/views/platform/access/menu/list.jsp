@@ -36,7 +36,7 @@
 				align: 'left',
 				sorting: 'DESC',
                 template: function (nodeData, rowData) {
-                    return '<span class="td-content" title="' + nodeData + '">' + nodeData + '</span>'
+                    return '<span class="td-content" title="' + nodeData + '">' + (nodeData ? nodeData : '') + '</span>'
                 }
 			},{
 				key: 'alias',
@@ -44,7 +44,7 @@
 				remind: '菜单别名',
 				text: '菜单别名',
                 template: function (nodeData, rowData) {
-                    return '<span class="td-content" title="' + nodeData + '">' + nodeData + '</span>'
+                    return '<span class="td-content" title="' + nodeData + '">' + (nodeData ? nodeData : '') + '</span>'
                 }
 			},{
 				key: 'parentName',
@@ -52,7 +52,7 @@
 				text: '上级菜单',
 				align: 'left',
                 template: function (nodeData, rowData) {
-                    return '<span class="td-content" title="' + nodeData + '">' + nodeData + '</span>'
+                    return '<span class="td-content" title="' + nodeData + '">' + (nodeData ? nodeData : '') + '</span>'
                 }
 			},{
 				key: 'localCode',
@@ -60,7 +60,7 @@
 				align: 'left',
 				text: '国际化编码',
                 template: function (nodeData, rowData) {
-                    return '<span class="td-content" title="' + nodeData + '">' + nodeData + '</span>'
+                    return '<span class="td-content" title="' + nodeData + '">' + (nodeData ? nodeData : '') + '</span>'
                 }
 			},{
 				key: 'url',
@@ -69,7 +69,7 @@
 				text: '访问地址',
 				align: 'left',
                 template: function (nodeData, rowData) {
-                    return '<span class="td-content" title="' + nodeData + '">' + nodeData + '</span>'
+                    return '<span class="td-content" title="' + nodeData + '">' + (nodeData ? nodeData : '') + '</span>'
                 }
 			},{
 				key: 'enableName',
@@ -114,18 +114,10 @@
 			    refresh();
 			})
 		});
-		$(window).resize(function() {
-			var table = $('#tableList');
-			tableManager.GM('refreshGrid', false, function () {
-				console.log(1);
-			});
-		});
 	})
-	
 	
     function refresh() {
         var query = $("#search-form").serializeObject();
-        console.log(query)
         tableManager.GM("setQuery", query);
     }
 </script>
@@ -137,28 +129,44 @@
 			<div class="layui-inline">
 				<label class="layui-form-label">菜单名称</label>
 				<div class="layui-input-inline">
-					<input type="text" name="name_li" autocomplete="off" class="layui-input">
+					<input type="text" name="name_li" 
+						placeholder="请输入菜单名称"
+						autocomplete="off" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-inline">
 				<label class="layui-form-label">菜单别名</label>
 				<div class="layui-input-inline">
-					<input type="text" name="alias_li" autocomplete="off" class="layui-input">
+					<input type="text" name="alias_li" 
+						placeholder="请输入菜单别名"
+						autocomplete="off" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-inline">
 				<label class="layui-form-label">菜单地址</label>
 				<div class="layui-input-inline">
-					<input type="text" name="url_li" autocomplete="off" class="layui-input">
+					<input type="text" name="url_li" 
+						placeholder="请输入菜单地址"
+						autocomplete="off" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-inline">
 				<label class="layui-form-label">是否启用</label>
 				<div class="layui-input-inline">
 					<select name="enable_eq" lay-filter="enable">
-						<option value="">请选择菜单状态</option>
+						<option value=""></option>
 						<option value="0">否</option>
-						<option value="1" selected>是</option>
+						<option value="1">是</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">是否锁定</label>
+				<div class="layui-input-inline">
+					<select name="locked_eq" lay-filter="locked">
+						<option value=""></option>
+						<option value="0">否</option>
+						<option value="1">是</option>
 					</select>
 				</div>
 			</div>
