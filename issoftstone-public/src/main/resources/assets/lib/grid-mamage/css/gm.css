@@ -780,7 +780,8 @@ table[grid-manager].GridManager-ready {
     table-layout: fixed;
     word-wrap: break-word;
     text-align: center;
-    width: calc(100% - 30px);
+    /* width: calc(100% - 30px); */
+    width: 100%;
     border-collapse: collapse;
     margin-top: -40px
 }

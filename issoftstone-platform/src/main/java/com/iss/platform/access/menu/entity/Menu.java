@@ -57,7 +57,7 @@ public class Menu extends IdEntity {
 		this.icon = icon;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "p_id")
 	public Menu getMenu() {
 		return menu;

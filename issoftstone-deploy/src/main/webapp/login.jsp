@@ -14,12 +14,22 @@
 <hy:extends name="javascript">
     <script type="text/javascript">
         function doLogin() {
-            $.requestAjax({
+            $.ajax({
                 url: '${ctx}/user/login.json',
                 data: $("#loginForm").serializeArray(),
-            }, function(res) {
-                console.log('res:', res);
-                window.location.href = "${ctx}/index.do?jsessionid=<%=request.getSession().getId()%>"
+                loadSuccess: function(res) {
+	                console.log('res:', res);
+	                if (res.code == 403) {
+						$("#errmsg").text(res.message);
+						setTimeout(function() {
+							$("#errmsg").text('')
+						}, 3000);
+						return;
+					}
+	                window.location.href = "${ctx}/index.do?JSESSIONID=<%=request.getSession().getId()%>";
+            	}, error: function(res) {
+					console.log(res);
+				}
             })
         }
 
@@ -27,6 +37,8 @@
             $('#doLogin').click(function () {
                 doLogin();
             })
+            /* alert($("input[name='username']").width())
+            $("#doLogin").width($("input[name='username']").width()); */
         })
     </script>
 </hy:extends>
@@ -39,20 +51,20 @@
                 <div class="row cl">
                     <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
                     <div class="formControls col-xs-8">
-                        <input name="username" type="text" placeholder="账户" class="input-text size-L">
+                        <input name="username" type="text" placeholder="请输入登录账户" class="input-text size-L">
                     </div>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60e;</i></label>
                     <div class="formControls col-xs-8">
-                        <input id="" name="password" type="password" placeholder="密码" class="input-text size-L">
+                        <input id="" name="password" type="password" placeholder="请输入登录密码" class="input-text size-L">
                     </div>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-3"></label>
                     <div class="formControls col-xs-8">
-                        <input class="input-text size-L" type="text" placeholder="请输入验证码"
-                               value="" style="width:150px;">
+                        <input class="input-text size-L" type="text" placeholder="请输入登录验证码"
+                               value="" style="width:150px;" name="code">
                         <img src="${ctx}/auth/authCode.image">
                         <a id="kanbuq" href="javascript:;">看不清，换一张</a>
                     </div>
@@ -61,15 +73,20 @@
                     <div class="formControls col-xs-8 col-xs-offset-3">
                         <label for="online">
                             <input type="checkbox" name="online" id="online" value="">
-                            使我保持登录状态</label>
+                        	使我保持登录状态
+                        </label>
                     </div>
                 </div>
                 <div class="row cl">
-                    <div class="formControls col-xs-8 col-xs-offset-3">
-                        <input name="" type="button" id="doLogin" class="btn btn-success radius size-L"
+                   	<label class="form-label col-xs-3"></label>
+                    <div class="formControls col-xs-8">
+                        <input style="width: 90%" name="" type="button" id="doLogin" class="btn btn-success radius size-XL input-text"
                                value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
-                        <input name="" type="reset" class="btn btn-default radius size-L"
-                               value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <div class="formControls col-xs-12">
+                        <div style="text-align: center;height: 40px;line-height: 40px;color: red;" id="errmsg"></div>
                     </div>
                 </div>
             </form>

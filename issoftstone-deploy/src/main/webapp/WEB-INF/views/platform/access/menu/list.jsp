@@ -28,7 +28,7 @@
 			query: {
 				pluginId: 1
 			},
-			pageSize: 10,
+			showFooterCheckedInfo: true,
 			columnData: [{
 				key: 'name',
 				remind: '菜单显示的名称',
@@ -114,8 +114,15 @@
 			    refresh();
 			})
 		});
+		$(window).resize(function() {
+			var table = $('#tableList');
+			tableManager.GM('refreshGrid', false, function () {
+				console.log(1);
+			});
+		});
 	})
-
+	
+	
     function refresh() {
         var query = $("#search-form").serializeObject();
         console.log(query)

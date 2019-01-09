@@ -1299,7 +1299,7 @@ table {
 }
 
 .layui-btn-container {
-	margin-bottom: 10px;
+    margin-bottom: -5px;
 }
 
 .layui-btn-container .layui-btn {

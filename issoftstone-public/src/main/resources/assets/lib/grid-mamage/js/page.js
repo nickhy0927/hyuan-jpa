@@ -64,6 +64,11 @@ var tableManager = undefined;
 	};
 	$.fn.dataTable = function(option) {   
 		tableManager = $(this);
+		var sh = $(".search-block").height();
+		var h = $(window).height() - (sh || 0);
+		var pageSize = option.pageSize || 10;
+		if(h > 800) pageSize = 14;
+		console.log(h, pageSize)
 		var setting = $.extend({
 			gridManagerName: '',
 			disableCache: true,
@@ -91,7 +96,8 @@ var tableManager = undefined;
 			query: {
 				pluginId: 1
 			},
-			pageSize:10,
+			sizeData: [1 * pageSize, 2 * pageSize, 3 * pageSize, 4 * pageSize, 5 * pageSize, 10 * pageSize],
+			pageSize: pageSize,
 			ajax_success:function(res) {
 				console.log("ajax_success: ", eval('(' + res + ')'));
 			},

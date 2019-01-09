@@ -80,10 +80,9 @@
 	<!-- 表单验证插件 -->
 	<script type="text/javascript" src="${basePath}/assets/lib/jquery.validation/1.14.0/messages_zh.js"></script> <!-- 表单验证插件 -->
 	<script type="text/javascript" src="${basePath}/assets/js/common/tools.js"></script>
-   	<script type="text/javascript" src="${basePath}/assets/js/hooks.js"></script>
 	<link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/grid-mamage/css/gm.css">
 	<script type="text/javascript" src="${basePath}/assets/lib/grid-mamage/js/gm.js"></script>
-	<script type="text/javascript" src="${basePath}/assets/lib/grid-mamage/js/layer-util.js"></script>
+	<script type="text/javascript" src="${basePath}/assets/js/layer-util.js"></script>
 	<script type="text/javascript" src="${basePath}/assets/lib/grid-mamage/js/page.js"></script>
    	<script type="text/javascript">
    	</script>

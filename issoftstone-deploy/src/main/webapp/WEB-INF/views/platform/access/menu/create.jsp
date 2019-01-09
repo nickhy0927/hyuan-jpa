@@ -48,20 +48,17 @@
                 var form = layui.form;
                 //监听提交
                 form.on('submit(create-form)', function (data) {
-                	$.openLoading('正在保存数据，请稍等...');
                 	$.ajax({
-				    	type: 'POST',
-				    	url: '${ctx}/platform/access/menu/save.json',//发送请求
+                		url: '${ctx}/platform/access/menu/save.json',//发送请求
 				    	data: data.field,
-				    	dataType : "json",
-				    	success: function(result) {
-				    		$.tip(result, true, function(layer, index) {
-			    				var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-			    				parent.layer.close(index); //再执行关闭
-								window.parent.refresh();
-							})
-			    		}
-			    	});
+				    	openType: 'alert',
+				    	loadSuccess: function(result) {
+				    		console.log('执行回调函数...')
+	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+		    				parent.layer.close(index); //再执行关闭
+							window.parent.refresh();
+				    	}
+					})
                 	return false;
                 });
                 form.verify({
@@ -72,8 +69,7 @@
                     url: "${ctx}/platform/access/menu/create.json",
                     contentType: "application/json; charset=utf-8",
                     data: {},
-                    dataType: "json",
-                    success: function (res) {
+			    	loadSuccess: function(res) {
 		            	$('#iconId').select({
 		            		data: res.data['icons'],
 		        			holder: '请选择图标样式',
