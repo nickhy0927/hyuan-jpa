@@ -15,6 +15,6 @@ public interface PerformanceDao extends CustomRepostiory<Performance, String>{
 	@Query("select p from Performance p where p.alias = ?1")
 	List<Performance> queryPerformanceByalias(String alias);
 	
-	@Query("select AVG(p.executeTime) from Performance p where p.alias = ?1 and p.createTime like ?2")
-	Long queryAccessList(String alias, String time);
+	@Query("select AVG(p.executeTime) from Performance p where p.alias = ?1 and p.createDate = ?2")
+	Long queryAccessList(String alias, String createDate);
 }

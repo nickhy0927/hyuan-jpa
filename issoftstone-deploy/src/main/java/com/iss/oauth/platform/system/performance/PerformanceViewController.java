@@ -25,42 +25,58 @@ public class PerformanceViewController {
 	@Autowired
 	private PerformanceService performanceService;
 
+	@AccessAuthority(alias = "performance-list-page-do", name = "性能分页页面")
+	@RequestMapping(value = "/platform/system/performance/list.do", method = RequestMethod.GET)
+	public String list(String alias, Model model) {
+		model.addAttribute("alias", alias);
+		return "platform/system/performance/list";
+	}
+	
 	@AccessAuthority(alias = "performance-list-do", name = "性能统计页面")
 	@RequestMapping(value = "/platform/system/performance/performance-list.do", method = RequestMethod.GET)
 	public String performanceList(Model model) throws ParseException {
 		int days = getCurrentMonthLastDay();
 		List<String> list = performanceService.queryPerformanceGroup();
 		List<Map<String, Object>> maps = Lists.newArrayList();
+		List<String> dayList = Lists.newArrayList();
+		for (int day = 1; day <= days; day++) {
+			dayList.add(getDay(day));
+		}
 		for (String alias : list) {
 			Map<String, Object> map = Maps.newConcurrentMap();
-			map.put("name", alias);
+			map.put("name", performanceService.queryPerformanceByalias(alias));
+			map.put("alias", alias);
 			Long[] avg = new Long[days];
 			for (int day = 1; day <= days; day++) {
-				Long executeTimeAvg = performanceService.queryAccessList("performance-list-do", getDay(day));
-				avg[day - 1] = executeTimeAvg;
+				Long executeTimeAvg = performanceService.queryAccessList(alias, getDay(day));
+				if (executeTimeAvg != null) {
+					System.out.println("executeTimeAvg:" + executeTimeAvg);
+				}
+				avg[day - 1] = executeTimeAvg == null ? 0 : executeTimeAvg;
 			}
 			map.put("data", avg);
 			maps.add(map);
 		}
 		model.addAttribute("datas", new JsonMapper().toJson(maps));
+		model.addAttribute("dayList", new JsonMapper().toJson(dayList));
 		return "platform/system/performance/performance-list";
 	}
 
 	public static String getDay(int day) throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = sdf.parse(firstDay(day));
+		Date date = sdf.parse(firstDay());
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
-		calendar.add(Calendar.DAY_OF_MONTH, day);
+		calendar.add(Calendar.DAY_OF_MONTH, day - 1);
 		date = calendar.getTime();
 		System.out.println(sdf.format(date));
 		return sdf.format(date);
 	}
 
-	public static String firstDay(int day) {
+	public static String firstDay() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar cal_1 = Calendar.getInstance();// 获取当前日期
-		cal_1.set(Calendar.DAY_OF_MONTH, day);// 设置为1号,当前日期既为本月第一天
+		cal_1.set(Calendar.DAY_OF_MONTH, 1);// 设置为1号,当前日期既为本月第一天
 		String firstDay = format.format(cal_1.getTime());
 		System.out.println("-----1------firstDay:" + firstDay);
 		return firstDay;

@@ -1,5 +1,7 @@
 package com.iss.interceptor;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,6 +61,7 @@ public class TimerInterceptor implements HandlerInterceptor {
     			entity.setExecuteTime(executeTime);
     			entity.setAlias(accessAuthority.alias());
     			entity.setName(accessAuthority.name());
+    			entity.setCreateDate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
     			entity.setStatus(IsDelete.NO);
     			entity.setUrl(reqUrl);
     			performanceService.saveEntity(entity);

@@ -19,8 +19,8 @@ public class PerformanceServiceImpl extends BaseCustomService<Performance, Strin
 	private PerformanceDao performanceDao;
 
 	@Override
-	public Long queryAccessList(String alias, String time) {
-		return performanceDao.queryAccessList(alias, time);
+	public Long queryAccessList(String alias, String createDate) {
+		return performanceDao.queryAccessList(alias, createDate);
 	}
 
 	@Override
@@ -29,7 +29,8 @@ public class PerformanceServiceImpl extends BaseCustomService<Performance, Strin
 	}
 	
 	@Override
-	public List<Performance> queryPerformanceByalias(String alias) {
-		return performanceDao.queryPerformanceByalias(alias);
+	public String queryPerformanceByalias(String alias) {
+		List<Performance> list = performanceDao.queryPerformanceByalias(alias);
+		return list != null && list.size() > 0 ? list.get(0).getName() : "";
 	}
 }

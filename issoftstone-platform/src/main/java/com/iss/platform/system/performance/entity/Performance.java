@@ -30,6 +30,16 @@ public class Performance extends IdEntity {
 	private String alias;
 	
 	private String name;
+	
+	private String createDate;
+	
+	public String getCreateDate() {
+		return createDate;
+	}
+	
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
 
 	public String getUrl() {
 		return url;
