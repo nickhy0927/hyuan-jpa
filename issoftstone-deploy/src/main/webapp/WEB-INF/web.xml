@@ -3,6 +3,25 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
+	<!-- druid监控 -->
+	<servlet>
+		<servlet-name>DruidStatView</servlet-name>
+		<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+		<init-param>
+			<!-- 用户名 -->
+			<param-name>loginUsername</param-name>
+			<param-value>admin</param-value>
+		</init-param>
+		<init-param>
+			<!-- 密码 -->
+			<param-name>loginPassword</param-name>
+			<param-value>123456</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DruidStatView</servlet-name>
+		<url-pattern>/druid/*</url-pattern>
+	</servlet-mapping>
 	<filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -30,19 +49,18 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	<filter>  
-        <filter-name>springSecurityFilterChain</filter-name>  
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>  
-    </filter>  
-    <filter-mapping>  
-        <filter-name>springSecurityFilterChain</filter-name>  
-        <url-pattern>/*</url-pattern>  
-    </filter-mapping>
-    <!-- 限制单个用户登录 -->
-    <listener>
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- 限制单个用户登录 -->
+	<listener>
 		<listener-class>
-		    org.springframework.security.web.session.HttpSessionEventPublisher
-		</listener-class>
+			org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
 	</listener>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>

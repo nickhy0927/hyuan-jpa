@@ -15,6 +15,10 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
         	<mvc:mapping path="/**"/>
+        	<bean class="com.iss.interceptor.TimerInterceptor" />
+        </mvc:interceptor>
+		<mvc:interceptor>
+        	<mvc:mapping path="/**"/>
         	<bean class="com.iss.interceptor.AuthorityInterceptor" />
         </mvc:interceptor>
 		<mvc:interceptor>

@@ -17,6 +17,8 @@
 		function edit(id) {
 			$.openWindow({
 				title: '修改图标',
+				height: '230px',
+				width: '700px',
 				url: '${ctx}/platform/access/icon/edit.do?id=' + id
 			})
 			return false;
@@ -34,7 +36,7 @@
 					key: 'name',
 					remind: '图标显示的名称',
 					text: '图标名称',
-					width: '120px',
+					width: '180px',
 					align: 'left',
 					sorting: 'DESC',
 	                template: function (nodeData, rowData) {
@@ -68,16 +70,13 @@
 	                }
 				},{
 					key: 'action',
-					width: "170px",
+					width: "140px",
 					align: 'center',
 					text: '操作',
 					template: function(action, rowObject){
 						return '<div id="operates">' +
 									'<a onclick="edit(\'' + rowObject.id + '\')" class="layui-btn layui-btn-xs" lay-event="edit">' +
 										'<i class="layui-icon">&#xe642;</i>编辑' +
-									'</a>' +
-									'<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">' +
-										'<i class="layui-icon">&#xe640;</i>删除' +
 									'</a>' +
 								'</div>';
 					}
@@ -102,9 +101,7 @@
 </hy:extends>
 <hy:extends name="css">
 	<style>
-		.table-wrap .table-div table[grid-manager] tbody tr td {
-		    padding: 2px 4px;
-		}
+		
 	</style>	
 </hy:extends>
 <hy:extends name="body">
@@ -129,9 +126,9 @@
 			<button onclick="create()" class="layui-btn layui-btn-sm layui-btn-normal" id="add">
 				<i class="layui-icon">&#xe608;</i> 新增
 			</button>
-			<button class="layui-btn layui-btn-sm layui-btn-danger" id="del">
+			<!-- <button class="layui-btn layui-btn-sm layui-btn-danger" id="del">
 				<i class="layui-icon">&#xe640;</i>删除
-			</button>
+			</button> -->
 			<button class="layui-btn layui-btn-sm" id="search">
 				<i class="layui-icon">&#xe615;</i>搜索
 			</button>

@@ -53,7 +53,6 @@
 				    	data: data.field,
 				    	openType: 'alert',
 				    	loadSuccess: function(result) {
-				    		console.log('执行回调函数...')
 	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 		    				parent.layer.close(index); //再执行关闭
 							window.parent.refresh();
@@ -62,7 +61,7 @@
                 	return false;
                 });
                 form.verify({
-                    alias: [/^[a-zA-Z0-9_-]{4,16}$/, '别名由字母，数字，下划线，减号组成']
+                    alias: [/^[a-zA-Z_-]+$/, '别名由字母，减号组成']
                 });
                 $.ajax({
                 	type: "GET",
@@ -150,10 +149,10 @@
 		        <div class="layui-input-block">
 		            <div class="layui-unselect layui-form-select downpanel">
 		                <div class="layui-select-title">
-		                   <!--  <span class="layui-input layui-unselect" id="treeclass"></span> -->
-		                    <select name="treeclass" id="treeclass" lay-verType="tips">
+		                   <span class="layui-input layui-unselect" id="treeclass">请选择上级菜单</span>
+		                   <!--  <select name="treeclass" id="treeclass" lay-verType="tips">
 		                    	<option value="">请选择上级菜单</option>
-		                    </select>
+		                    </select> -->
 		                    <input type="hidden" name="parentId" value="">
 		                    <i class="layui-edge"></i>
 		                </div>

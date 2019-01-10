@@ -9,6 +9,7 @@ public class MenuTree {
 	private String alias;
 	private String url;
 	private String localCode;
+	private String iconClass;
 	private List<MenuTree> children;
 	
 	public MenuTree(Menu menu, List<MenuTree> children) {
@@ -16,6 +17,7 @@ public class MenuTree {
 		this.id = menu.getId();
 		this.url = menu.getUrl();
 		this.name = menu.getName();
+		this.iconClass = menu.getIcon() != null ? menu.getIcon().getIconClass() : "";
 		this.alias = menu.getAlias();
 		this.localCode = menu.getLocalCode();
 	}
@@ -66,5 +68,13 @@ public class MenuTree {
 	
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	
+	public String getIconClass() {
+		return iconClass;
+	}
+	
+	public void setIconClass(String iconClass) {
+		this.iconClass = iconClass;
 	}
 }

@@ -7,8 +7,8 @@
     <script type="text/javascript">
         var config = {
             gridManagerName: 'roleList',
+            height: 'auto',
             ajax_data: '${ctx}/platform/access/role/list.json',
-            pageSize:10,
             columnData: [{
                 key: 'code',
                 remind: '角色编号',
@@ -44,12 +44,18 @@
                 }
             },{
                 key: 'action',
-                width: 120,
+                width: 180,
                 align: 'center',
                 text: '操作',
                 template: function(action, rowObject){
-                    return '<span class="plugin-action edit-action" learnLink-id="'+rowObject.id+'">编辑</span>'
-                          +'<span class="plugin-action del-action" learnLink-id="'+rowObject.id+'">删除</span>';
+                	return '<div id="operates">' +
+								'<a onclick="edit(\'' + rowObject.id + '\')" class="layui-btn layui-btn-xs" lay-event="edit">' +
+									'<i class="layui-icon">&#xe642;</i>编辑' +
+								'</a>' +
+								'<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">' +
+									'<i class="layui-icon">&#xe640;</i>删除' +
+								'</a>' +
+							'</div>';
                 }
             }]
         };

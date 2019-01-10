@@ -50,16 +50,12 @@
 				    	type: 'POST',
 				    	url: '${ctx}/platform/access/menu/save.json',//发送请求
 				    	data: data.field,
-				    	dataType : "json",
-				    	success: function(res) {
-				    		setTimeout(function() {
-				    			$.tip(res, true, function(layer, index) {
-				    				var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-				    				parent.layer.close(index); //再执行关闭
-									window.parent.refresh();
-								})
-							}, 3000);
-			    		}
+				    	openType: 'alert',
+				    	loadSuccess: function(result) {
+	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+		    				parent.layer.close(index); //再执行关闭
+							window.parent.refresh();
+				    	}
 			    	});
                 	return false;
                 });

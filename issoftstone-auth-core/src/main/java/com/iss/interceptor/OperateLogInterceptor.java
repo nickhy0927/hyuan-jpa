@@ -56,7 +56,7 @@ public class OperateLogInterceptor implements HandlerInterceptor {
                     log.setData(new JsonMapper().toJson(parameterMap));
                 }
             	OptLogService optLogService = SpringContextHolder.getBean(OptLogService.class);
-            	optLogService.save(log);
+            	optLogService.saveEntity(log);
             	if (handlerMethod.getMethod().getName().toLowerCase().contains("insert")) {
             		Method method = bean.getClass().getMethod("insert", new Class[] { Object.class });
             		Class<?>[] parameterTypes = method.getParameterTypes();

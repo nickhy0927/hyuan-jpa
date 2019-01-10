@@ -42,7 +42,7 @@ public class MenuController {
 	private IconService iconService;
 
 	@ResponseBody
-	@AccessAuthority(alias = "menu-create-json")
+	@AccessAuthority(alias = "menu-create-json", name = "新增菜单")
 	@RequestMapping(value = "/platform/access/menu/create.json", method = RequestMethod.GET)
 	public MessageObject<Menu> menuCreate() {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
@@ -61,12 +61,13 @@ public class MenuController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "menu-save-json")
+	@AccessAuthority(alias = "menu-save-json", name = "保存菜单")
 	@OperateLog(message = "新增菜单信息", method = "save", optType = OperateType.OptType.INSERT, service = MenuService.class)
 	@RequestMapping(value = "/platform/access/menu/save.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuSave(Menu menu) {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
 		try {
+			String id = menu.getId();
 			menu.setStatus(IsDelete.NO);
 			if (StringUtils.isNotEmpty(menu.getParentId())) {
 				menu.setMenu(menuService.get(menu.getParentId()));
@@ -75,8 +76,11 @@ public class MenuController {
 				menu.setIcon(iconService.get(menu.getIconId()));
 			}
 			menu.setStatus(IsDelete.NO);
-			menuService.save(menu);
+			menuService.saveEntity(menu);
 			messageObject.ok("新增菜单成功");
+			if (StringUtils.isNotEmpty(id)) {
+				messageObject.ok("修改菜单成功");
+			}
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
@@ -84,7 +88,7 @@ public class MenuController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "menu-edit-json")
+	@AccessAuthority(alias = "menu-edit-json", name = "修改菜单")
 	@OperateLog(message = "修改菜单信息", method = "edit", optType = OperateType.OptType.UPDATE, service = MenuService.class)
 	@RequestMapping(value = "/platform/access/menu/edit.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuEdit(String id) {
@@ -106,7 +110,7 @@ public class MenuController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "menu-list-json")
+	@AccessAuthority(alias = "menu-list-json", name = "菜单列表")
 	@RequestMapping(value = "/platform/access/menu/list.json", method = { RequestMethod.POST })
 	public MessageObject<Menu> menuList(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
@@ -123,7 +127,7 @@ public class MenuController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "menu-delete-json")
+	@AccessAuthority(alias = "menu-delete-json", name = "删除菜单")
 	@OperateLog(message = "删除菜单信息", method = "delete", optType = OperateType.OptType.DELETE, service = MenuService.class)
 	@RequestMapping(value = "/platform/access/menu/delete.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuDelete(@RequestBody String[] ids) {

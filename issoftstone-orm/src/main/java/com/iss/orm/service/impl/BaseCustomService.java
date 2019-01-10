@@ -25,9 +25,14 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	@Autowired
 	private CustomRepostiory<E, ID> dao;
 
+	@Override
+	@Transactional
+	public E saveEntity(E entity) throws ServiceException {
+		return this.dao.saveEntity(entity);
+	}
 	
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional
 	public void delete(ID id) throws ServiceException {
 		E t = get(id);
 		if (t != null) {
@@ -37,18 +42,20 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 
 	
 	@Override
+	@Transactional
 	public void delete(Iterable<E> entities) throws ServiceException {
 		this.dao.delete(entities);
 	}
 
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional
 	public void deleteAll() throws ServiceException {
 		this.dao.deleteAll();
 	}
 
 	
 	@Override
+	@Transactional
 	public void deleteBatch(ID[] ids) throws ServiceException {
 		if (ids != null && ids.length > 0) {
 			for (int i = 0; i < ids.length; i++) {
@@ -101,11 +108,5 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 		PagerInfo<E> pagerInfo = new PagerInfo<E>(support, pageInfo.getContent());
 		return pagerInfo;
 	}
-
 	
-	@Override
-	@Transactional(readOnly = false)
-	public E save(E entity) throws ServiceException {
-		return this.dao.saveEntity(entity);
-	}
 }

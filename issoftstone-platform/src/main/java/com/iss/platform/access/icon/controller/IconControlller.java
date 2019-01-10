@@ -33,15 +33,15 @@ public class IconControlller {
 	private IconService iconService;
 	
 	@ResponseBody
-	@AccessAuthority(alias = "icon-save-json")
-	@OperateLog(message = "新增图标信息", method = "save", optType = OperateType.OptType.INSERT, service = IconService.class)
+	@AccessAuthority(alias = "icon-save-json", name = "保存图标")
+	@OperateLog(message = "保存图标信息", method = "save", optType = OperateType.OptType.INSERT, service = IconService.class)
 	@RequestMapping(value = "/platform/access/icon/save.json", method = RequestMethod.POST)
 	public MessageObject<Icon> iconSave(Icon icon) {
 		MessageObject<Icon> messageObject = MessageObject.getDefaultInstance();
 		try {
+			icon.setIconClass("<i class=\"layui-icon " + icon.getClassName() + "\"></i> ");
 			icon.setStatus(IsDelete.NO);
-			icon.setStatus(IsDelete.NO);
-			iconService.save(icon);
+			iconService.saveEntity(icon);
 			messageObject.ok("新增图标成功");
 		} catch (ServiceException e) {
 			e.printStackTrace();
@@ -50,7 +50,7 @@ public class IconControlller {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "icon-edit-json")
+	@AccessAuthority(alias = "icon-edit-json", name = "修改图标")
 	@OperateLog(message = "修改图标信息", method = "edit", optType = OperateType.OptType.UPDATE, service = IconService.class)
 	@RequestMapping(value = "/platform/access/icon/edit.json", method = RequestMethod.POST)
 	public MessageObject<Icon> iconEdit(String id) {
@@ -66,7 +66,7 @@ public class IconControlller {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "icon-list-json")
+	@AccessAuthority(alias = "icon-list-json", name = "图标列表")
 	@RequestMapping(value = "/platform/access/icon/list.json", method = { RequestMethod.POST })
 	public MessageObject<Icon> iconList(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
@@ -83,7 +83,7 @@ public class IconControlller {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "icon-delete-json")
+	@AccessAuthority(alias = "icon-delete-json", name = "删除图标")
 	@OperateLog(message = "删除图标信息", method = "delete", optType = OperateType.OptType.DELETE, service = IconService.class)
 	@RequestMapping(value = "/platform/access/icon/delete.json", method = RequestMethod.POST)
 	public MessageObject<Icon> iconDelete(@RequestBody String[] ids) {

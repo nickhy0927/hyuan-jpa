@@ -38,7 +38,7 @@ public class RoleController {
 	private RoleService roleService;
 
 	@ResponseBody
-	@AccessAuthority(alias = "role-create-json")
+	@AccessAuthority(alias = "role-create-json", name = "新增角色")
 	@RequestMapping(value = "/platform/access/role/create.json", method = RequestMethod.GET)
 	public MessageObject<Role> roleCreate() {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
@@ -53,7 +53,7 @@ public class RoleController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "role-save-json")
+	@AccessAuthority(alias = "role-save-json", name = "保存角色")
 	@OperateLog(message = "新增角色信息", method = "save", optType = OperateType.OptType.INSERT, service = RoleService.class)
 	@RequestMapping(value = "/platform/access/role/save.json", method = RequestMethod.POST)
 	public MessageObject<Role> roleSave(Role role) {
@@ -62,7 +62,7 @@ public class RoleController {
 			if (StringUtils.isNotEmpty(role.getParentId())) {
 				role.setRole(roleService.get(role.getParentId()));
 			}
-			roleService.save(role);
+			roleService.saveEntity(role);
 			messageObject.ok("新增角色成功");
 		} catch (ServiceException e) {
 			e.printStackTrace();
@@ -71,7 +71,7 @@ public class RoleController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "role-edit-json")
+	@AccessAuthority(alias = "role-edit-json", name = "修改角色")
 	@OperateLog(message = "修改角色信息", method = "edit", optType = OperateType.OptType.UPDATE, service = RoleService.class)
 	@RequestMapping(value = "/platform/access/role/edit.json", method = RequestMethod.POST)
 	public MessageObject<Role> roleEdit(@RequestBody String id) {
@@ -86,7 +86,7 @@ public class RoleController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "role-list-json")
+	@AccessAuthority(alias = "role-list-json", name = "角色列表")
 	@RequestMapping(value = "/platform/access/role/list.json", method = { RequestMethod.POST })
 	public MessageObject<Role> roleList(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
@@ -104,7 +104,7 @@ public class RoleController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "role-delete-json")
+	@AccessAuthority(alias = "role-delete-json", name = "删除角色")
 	@OperateLog(message = "删除角色信息", method = "delete", optType = OperateType.OptType.DELETE, service = RoleService.class)
 	@RequestMapping(value = "/platform/access/role/delete.json", method = { RequestMethod.POST })
 	public MessageObject<Role> roleDelete(@RequestBody String[] ids) {

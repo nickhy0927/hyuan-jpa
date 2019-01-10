@@ -10,6 +10,7 @@
     <!-- 不需要被拦截的请求 -->
     <security:http pattern="/static/**" security="none"/>
     <security:http pattern="/assets/**" security="none"/>
+    <security:http pattern="/druid/**" security="none"/>
     <security:http pattern="/auth/authCode.image" security="none"/>
     <security:http pattern="/login.jsp" security="none"/>
     <security:http pattern="/user/login.json" security="none"/>
@@ -27,7 +28,7 @@
                 password-parameter="password"
                 username-parameter="username"
                 always-use-default-target="true"/>
-        <security:custom-filter ref="usernamePasswordAuthentication" before="FORM_LOGIN_FILTER"/>
+        <!-- <security:custom-filter ref="usernamePasswordAuthentication" before="FORM_LOGIN_FILTER"/> -->
         <security:intercept-url pattern="/**" access="hasRole('ADMIN')"/>
         <!-- <security:csrf request-matcher-ref="csrfSecurityRequestMatcher"/> -->
         <security:csrf disabled="true"/>
@@ -52,9 +53,9 @@
     <security:authentication-manager alias="authenticationManager">
         <security:authentication-provider ref="authenticationProvider"/>
     </security:authentication-manager>
-    <bean id="usernamePasswordAuthentication" class="com.iss.oauth.password.UsernamePasswordAuthentication">
+    <!-- <bean id="usernamePasswordAuthentication" class="com.iss.oauth.password.UsernamePasswordAuthentication">
         <property name="authenticationManager" ref="authenticationManager"/>
-    </bean>
+    </bean> -->
 
     <!-- Md5加密 -->
     <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>

@@ -38,9 +38,6 @@
 <hy:extends name="javascript">
 	<script type="text/javascript">
 		$(function () {
-			var result = {
-				status: 0
-			}
 			$("body").css({
 				'overflow':'auto'
 			})
@@ -48,8 +45,7 @@
                 var form = layui.form;
                 //监听提交
                 form.on('submit(create-form)', function (data) {    
-                	console.log($('form').serializeObject())
-                	debugger;
+                	// console.log($('form').serializeObject())
                 	$.ajax({
                 		url: '${ctx}/platform/access/icon/save.json',//发送请求
 				    	data: $('form').serializeObject(),
@@ -97,7 +93,7 @@
                            autocomplete="on" class="layui-input">
                 </div>
             </div>
-            <div class="layui-form-item">
+            <!-- <div class="layui-form-item">
                 <label class="layui-form-label"><i>*</i>图标用法</label>
                 <div class="layui-input-block">
                     <input type="text" name="iconClass"
@@ -105,7 +101,7 @@
                            required lay-verify="required" placeholder="请输入图标别名"
                            autocomplete="on" class="layui-input">
                 </div>
-            </div>
+            </div> -->
             <div class="layui-form-item" style="text-align: right">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit lay-filter="create-form">立即提交</button>

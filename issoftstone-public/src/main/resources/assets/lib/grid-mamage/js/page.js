@@ -65,12 +65,16 @@ var tableManager = undefined;
 	$.fn.dataTable = function(option) {   
 		tableManager = $(this);
 		var sh = $(".search-block").height();
-		var h = $(window).height() - (sh || 0);
+		var sc = $(".layui-btn-container").height();
+		var h = $(window).height() - (sh || 0) - (sc || 0);
 		var pageSize = option.pageSize || 10;
-		if(h > 800) pageSize = 14;
-		if(h < 500) pageSize = 5;
-		if(h < 800 && h > 650) pageSize = 13;
-		console.log(h, pageSize)
+		if(h <= 500) pageSize = 5;
+		if(h < 550 && h > 500) pageSize = 10;
+		if(h <= 700 && h > 550) pageSize = 12;
+		if(h <= 800 && h > 700) pageSize = 14;
+		if(h > 800 && h < 850) pageSize = 17;
+		if(h > 850) pageSize = 20;
+		console.log(h, sh)
 		var setting = $.extend({
 			gridManagerName: '',
 			disableCache: true,

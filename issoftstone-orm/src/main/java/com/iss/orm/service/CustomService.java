@@ -42,5 +42,5 @@ public interface CustomService<E, ID extends Serializable> {
 
 	PagerInfo<E> queryPageByMap(Map<String, Object> map, PageSupport support) throws ServiceException;
 
-	E save(E entity) throws ServiceException;
+	E saveEntity(E entity) throws ServiceException;
 }

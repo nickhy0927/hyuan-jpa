@@ -16,6 +16,7 @@
 	function edit(id) {
 		$.openWindow({
 			title: '修改菜单',
+			height: '480px',
 			url: '${ctx}/platform/access/menu/edit.do?id=' + id
 		})
 		return false;
@@ -28,7 +29,6 @@
 			query: {
 				pluginId: 1
 			},
-			showFooterCheckedInfo: true,
 			columnData: [{
 				key: 'name',
 				remind: '菜单显示的名称',

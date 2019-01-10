@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class MenuViewController {
 	
-	@AccessAuthority(alias = "menu-create-do")
+	@AccessAuthority(alias = "menu-create-do", name = "菜单新增页面")
 	@RequestMapping(value = "/platform/access/menu/create.do", method = RequestMethod.GET)
 	public String create() {
 		return "platform/access/menu/create";
 	}
 	
-	@AccessAuthority(alias = "menu-edit-do")
+	@AccessAuthority(alias = "menu-edit-do", name = "菜单修改页面")
 	@RequestMapping(value = "/platform/access/menu/edit.do", method = RequestMethod.GET)
 	public String edit(String id, Model model) {
 		model.addAttribute("id", id);
 		return "platform/access/menu/edit";
 	}
 
-	@AccessAuthority(alias = "menu-list-do")
+	@AccessAuthority(alias = "menu-list-do", name = "菜单列表页面")
 	@RequestMapping(value = "/platform/access/menu/list.do", method = RequestMethod.GET)
 	public String list() {
 		return "platform/access/menu/list";

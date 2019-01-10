@@ -17,4 +17,6 @@ import java.lang.annotation.Target;
 public @interface AccessAuthority {
 
 	String alias() default "";
+	
+	String name();
 }

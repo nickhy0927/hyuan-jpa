@@ -53,7 +53,7 @@ public class UserController {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
 			user.setPassword(Md5Encryption.MD5(user.getPassword()));
-			user = userService.save(user);
+			user = userService.saveEntity(user);
 			messageObject.ok("保存用户成功", user);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -135,7 +135,7 @@ public class UserController {
 				User user = userService.get(id);
 				if (user != null) {
 					user.setRoles(roles);
-					userService.save(user);
+					userService.saveEntity(user);
 					message.ok("保存角色信息成功", null);
 				} else {
 					message.error("保存角色信息失败");

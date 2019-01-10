@@ -16,7 +16,7 @@ public class RoleViewController {
         return "platform/access/role/create";
     }
 
-    @AccessAuthority(alias = "role-list-do")
+    @AccessAuthority(alias = "role-list-do", name = "角色列表页面")
     @RequestMapping(value = "/platform/access/role/list.do")
     public String list() {
         return "platform/access/role/list";

@@ -37,14 +37,14 @@ public class IndexController {
      * 进入首页
      * @return
      */
-    @AccessAuthority(alias = "index")
+    @AccessAuthority(alias = "index", name = "主页")
     @RequestMapping(value = "index.do", method = RequestMethod.GET)
     public String index() {
         return "index";
     }
 
     @ResponseBody
-    @AccessAuthority(alias = "queryUserInfo")
+    @AccessAuthority(alias = "queryUserInfo", name = "查询用户信息")
     @OperateLog(method = "queryUserInfo", optType = OperateType.OptType.QUERY, message = "查询用户信息", service = UserService.class)
     @RequestMapping(value = "/queryUserInfo.json", method = RequestMethod.GET)
     public MessageObject<User> queryUserInfo() {

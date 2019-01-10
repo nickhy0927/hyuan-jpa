@@ -49,6 +49,7 @@
                     	<c:forEach items="${menus}" var="menu" varStatus="index">
                     		<li class="navbar-levelone <c:if test="${index.index ==0}">current</c:if>">
 	                           <a href="javascript:;">
+	                              	<c:if test="${not empty menu.iconClass}">${menu.iconClass}</c:if>
 	                              	${menu.name}
 	                           </a>
 	                       	</li>
