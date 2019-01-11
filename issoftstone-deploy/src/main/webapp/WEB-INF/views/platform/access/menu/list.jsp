@@ -3,6 +3,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set value="${pageContext.request.contextPath}" var="ctx"></c:set>
 <hy:extends name="title">菜单列表</hy:extends>
+<hy:extends name="css">
+	<style type="text/css">
+		table td{
+			word-break: keep-all !important;
+			/* white-space:nowrap !important; */
+			text-overflow : ellipsis;
+		}
+		table th{word-break: keep-all !important;white-space:nowrap !important;}
+	</style>
+</hy:extends>
 <hy:extends name="javascript">
 <script type="text/javascript">
 	function create() {
@@ -22,89 +32,44 @@
 		return false;
 	}
 	function initTable() {
-		$('table').dataTable({
-			gridManagerName: 'menuList',
-			height: 'auto',
-			ajax_data: '${ctx}/platform/access/menu/list.json',
-			query: {
-				pluginId: 1
-			},
-			columnData: [{
-				key: 'name',
-				remind: '菜单显示的名称',
-				text: '菜单名称',
-				align: 'left',
-				sorting: 'DESC',
-                template: function (nodeData, rowData) {
-                    return '<span class="td-content" title="' + nodeData + '">' + (nodeData ? nodeData : '') + '</span>'
-                }
-			},{
-				key: 'alias',
-				align: 'left',
-				remind: '菜单别名',
-				text: '菜单别名',
-                template: function (nodeData, rowData) {
-                    return '<span class="td-content" title="' + nodeData + '">' + (nodeData ? nodeData : '') + '</span>'
-                }
-			},{
-				key: 'parentName',
-				remind: '上级菜单名称',
-				text: '上级菜单',
-				align: 'left',
-                template: function (nodeData, rowData) {
-                    return '<span class="td-content" title="' + nodeData + '">' + (nodeData ? nodeData : '') + '</span>'
-                }
-			},{
-				key: 'localCode',
-				remind: '国际化编码，进行国际化使用',
-				align: 'left',
-				text: '国际化编码',
-                template: function (nodeData, rowData) {
-                    return '<span class="td-content" title="' + nodeData + '">' + (nodeData ? nodeData : '') + '</span>'
-                }
-			},{
-				key: 'url',
-				remind: '菜单访问地址',
-				disableCustomize: true,
-				text: '访问地址',
-				align: 'left',
-                template: function (nodeData, rowData) {
-                    return '<span class="td-content" title="' + nodeData + '">' + (nodeData ? nodeData : '') + '</span>'
-                }
-			},{
-				key: 'enableName',
-				remind: '菜单是否启用状态',
-				align: 'center',
-                width: 80,
-				text: '启用'
-			},{
-				key: 'lockedName',
-				remind: '菜单是否锁定状态',
-				text: '锁定',
-				width: 80,
-				align: 'center',
-			},{
-				key: 'orders',
-				text: '排序',
-				width: 60,
-				align: 'center',
-			},{
-				key: 'action',
-				width: "170px",
-				align: 'center',
-				text: '操作',
-				template: function(action, rowObject){
-					return '<div id="operates">' +
-								'<a onclick="edit(\'' + rowObject.id + '\')" class="layui-btn layui-btn-xs" lay-event="edit">' +
-									'<i class="layui-icon">&#xe642;</i>编辑' +
-								'</a>' +
-								'<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">' +
-									'<i class="layui-icon">&#xe640;</i>删除' +
-								'</a>' +
-							'</div>';
-				}
-			}]
-		})
+		$("#dataGridList").dataGrid({
+            url: '${ctx}/platform/access/menu/list.json',
+            title: '图标管理列表',
+            method: 'POST',
+            checkbox: true,
+            pageSize: 12,
+            orderField: 'createTime',
+            sort: 'desc',
+            searchButtonId: '#searchButton',
+            queryParamsId: ['#name', "#attr"],
+            tableId: '#dataGridList',
+            columns: [
+                {field: 'id', className: 'text-c'},
+                {field: 'name', width: 100, className: 'text-l', description: '菜单名称 ', sort: true},
+                {field: 'alias', width: 160,  className: 'text-l', description: '菜单别名', sort: true},
+                {field: 'parentName',width: 100, className: 'text-l', description: '上级菜单'},
+                {field: 'localCode',width: 160, className: 'text-l', description: '国际化编码'},
+                {field: 'url',width: 180, className: 'text-l', description: '访问地址', paramFormatter: function (row) {
+                	var url = row.url;
+                	/* console.log(url)*/
+                	if(url && url.length > 20) {
+                		url = url.substring(0, 20) + '...';
+                	} 
+                	return url;
+                }},
+                {field: 'enableName',width: 60, className: 'text-c', description: '显示'},
+                {field: 'lockedName',width: 60,  className: 'text-c', description: '显示'},
+                {field: 'orders',width: 60,  className: 'text-c', description: '排序'},
+                {field: 'operate',width: 140,  className: 'text-c', description: '操作', paramFormatter: function (row) {
+                    return  '<a onclick="edit(\'' + row.id + '\')" class="layui-btn layui-btn-xs" lay-event="edit">' +
+								'<i class="layui-icon">&#xe642;</i>编辑' +
+							'</a>' +
+							'<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">' +
+								'<i class="layui-icon">&#xe640;</i>删除' +
+							'</a>';
+                }}
+            ]
+        });
 	}
 
 	$(function () {
@@ -188,7 +153,9 @@
 			</button>
 		</div>
 	</div>
-	<table id="tableList"></table>
+	<div class="mt-5">
+        <table id="dataGridList" class="table table-border table-bordered table-hover table-bg table-sort"></table>
+    </div>
 </div>
 </hy:extends>
 <jsp:include page="/page/basepage.jsp" />

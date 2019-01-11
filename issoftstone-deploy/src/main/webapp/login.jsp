@@ -17,7 +17,7 @@
             $.ajax({
                 url: '${ctx}/user/login.json',
                 data: $("#loginForm").serializeArray(),
-                loadSuccess: function(res) {
+                success: function(res) {
 	                if (res.code == 403) {
 						$("#errmsg").text(res.message);
 						setTimeout(function() {

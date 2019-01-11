@@ -175,14 +175,13 @@ $(document).ready(function () {
     	var res = JSON.parse(xhr.responseText);
     	if(settings.openType) {
     		var bool = settings.openType == 'alert';
-    		$.tip(res.message, bool, function() {
-    			var fn = eval(settings.loadSuccess);
+    		$.openTip(res.message, bool, function() {
+    			var fn = eval(settings.success);
                 fn.call(this, res);
     		});
     	}  else {
     		$.closeLoading();
-    		console.log(settings.loadSuccess)
-    		var fn = eval(settings.loadSuccess);
+    		var fn = eval(settings.success);
             fn.call(this, res);
     	}
     }).ajaxError(function () {
@@ -192,7 +191,7 @@ $(document).ready(function () {
 });
 
 $.extend({
-    tip: _openTip,
+	openTip: _openTip,
     openLoading: _openLoading,
     closeLoading: _closeLoading,
     dateSimpleFormat: _date_format,

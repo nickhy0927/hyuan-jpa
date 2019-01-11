@@ -11680,3 +11680,7 @@ a.modal-close:hover {
 .page-404 .error-info {
 	font-size: 14px
 }
+
+.table {
+	width: 100%;
+}

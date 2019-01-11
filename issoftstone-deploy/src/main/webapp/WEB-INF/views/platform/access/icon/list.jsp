@@ -24,64 +24,36 @@
 			return false;
 		}
 		function initTable() {
-			$('table').dataTable({
-				gridManagerName: 'iconList',
-				height: 'auto',
-				ajax_data: '${ctx}/platform/access/icon/list.json',
-				query: {
-					pluginId: 1
-				},
-				showFooterCheckedInfo: true,
-				columnData: [{
-					key: 'name',
-					remind: '图标显示的名称',
-					text: '图标名称',
-					width: '180px',
-					align: 'left',
-					sorting: 'DESC',
-	                template: function (nodeData, rowData) {
-	                    return '<span class="td-content" title="' + nodeData + '">' + (nodeData ? nodeData : '') + '</span>'
-	                }
-				},{
-					key: 'className',
-					remind: '图标样式名称',
-					width: '270px',
-					text: '样式名称',
-					align: 'left',
-	                template: function (nodeData, rowData) {
-	                    return '<code class="td-content">' + (nodeData ? nodeData : '') + '</code>'
-	                }
-				},{
-					key: 'icon',
-					width: '80px',
-					text: '图标',
-					align: 'center',
-	                template: function (nodeData, rowData) {
-	                    return '<span>' + (nodeData ? nodeData : '') + '</span>'
-	                }
-				},{
-					key: 'iconClass',
-					remind: '图标使用的方法',
-					disableCustomize: true,
-					text: '图标样式',
-					align: 'left',
-	                template: function (nodeData, rowData) {
-	                    return '<pre class="td-content"><xmp>' + (nodeData ? nodeData : '') + '</xmp></pre>'
-	                }
-				},{
-					key: 'action',
-					width: "140px",
-					align: 'center',
-					text: '操作',
-					template: function(action, rowObject){
-						return '<div id="operates">' +
-									'<a onclick="edit(\'' + rowObject.id + '\')" class="layui-btn layui-btn-xs" lay-event="edit">' +
-										'<i class="layui-icon">&#xe642;</i>编辑' +
-									'</a>' +
-								'</div>';
-					}
-				}]
-			})
+			$("#dataGridList").dataGrid({
+                url: '${ctx}/platform/access/icon/list.json',
+                title: '图标管理列表',
+                method: 'POST',
+                checkbox: true,
+                pageSize: 12,
+                orderField: 'createTime',
+                sort: 'desc',
+                searchButtonId: '#searchButton',
+                queryParamsId: ['#name', "#attr"],
+                tableId: '#dataGridList',
+                columns: [
+                    {field: 'id', className: 'text-c'},
+                    {field: 'name', className: 'text-l', description: '图标名称 ', sort: true},
+                    {field: 'className', className: 'text-l', description: '样式名称 ', sort: true},
+                    {field: 'icon', className: 'text-c', description: '图标'},
+                    {field: 'iconClass', className: 'text-l', description: '使用方法', paramFormatter: function (row) {
+                    		return '<pre><xmp>' + row.iconClass + '</xmp></pre>';
+                    	},
+                    },
+                    {field: 'operate',width: 140,  className: 'text-c', description: '操作', paramFormatter: function (row) {
+                        return  '<a onclick="edit(\'' + row.id + '\')" class="layui-btn layui-btn-xs" lay-event="edit">' +
+									'<i class="layui-icon">&#xe642;</i>编辑' +
+								'</a>' +
+								'<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">' +
+									'<i class="layui-icon">&#xe640;</i>删除' +
+								'</a>';
+                    }}
+                ]
+            });
 		}
 	
 		$(function () {
@@ -95,14 +67,8 @@
 		
 	    function refresh() {
 	        var query = $("#search-form").serializeObject();
-	        tableManager.GM("setQuery", query);
 	    }
 	</script>
-</hy:extends>
-<hy:extends name="css">
-	<style>
-		
-	</style>	
 </hy:extends>
 <hy:extends name="body">
 <div class="search-block">
@@ -126,15 +92,14 @@
 			<button onclick="create()" class="layui-btn layui-btn-sm layui-btn-normal" id="add">
 				<i class="layui-icon">&#xe608;</i> 新增
 			</button>
-			<!-- <button class="layui-btn layui-btn-sm layui-btn-danger" id="del">
-				<i class="layui-icon">&#xe640;</i>删除
-			</button> -->
 			<button class="layui-btn layui-btn-sm" id="search">
 				<i class="layui-icon">&#xe615;</i>搜索
 			</button>
 		</div>
 	</div>
-	<table id="tableList"></table>
+    <div class="mt-5">
+        <table id="dataGridList" class="table table-border table-bordered table-hover table-bg table-sort"></table>
+    </div>
 </div>
 </hy:extends>
 <jsp:include page="/page/basepage.jsp" />

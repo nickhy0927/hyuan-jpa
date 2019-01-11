@@ -103,7 +103,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 		if (StringUtils.equals(support.getSort().toUpperCase(), Sortable.DESC.toString().toUpperCase())) {
 			sort = new Sort(Sort.Direction.DESC, support.getOrder());
 		}
-		PageRequest pageable = new PageRequest(support.getPage(), support.getLimit(), sort);
+		PageRequest pageable = new PageRequest(support.getPage() - 1, support.getLimit(), sort);
 		Page<E> pageInfo = queryPageByMap(map, pageable);
 		PagerInfo<E> pagerInfo = new PagerInfo<E>(support, pageInfo.getContent());
 		return pagerInfo;
