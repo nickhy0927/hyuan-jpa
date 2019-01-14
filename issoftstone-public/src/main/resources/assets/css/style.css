@@ -1167,7 +1167,7 @@ table, .form-item
 
 .search-block {
 	border-radius: 2px;
-	padding: 10px 0px 0 15px;
+	padding: 10px 0 0 0;
 }
 
 table {
@@ -1196,7 +1196,7 @@ table {
 }
 
 .grid-main {
-	padding-left: 15px;
+	margin-left: 15px;
 }
 
 .create-form {
@@ -1308,7 +1308,7 @@ table {
 
 .hr-line {
 	border-bottom: 1px dashed cadetblue;
-	margin: 0 0 0 15px
+	margin: 0 0 0 0px
 }
 
 .td-content {
