@@ -224,8 +224,7 @@
             </dl>
         </div>
     </aside>
-    <div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a>
-    </div>
+    <div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
     <section class="Hui-article-box">
         <div id="Hui-tabNav" class="Hui-tabNav hidden-xs">
             <div class="Hui-tabNav-wp">
@@ -252,7 +251,6 @@
             </div>
         </div>
     </section>
-
     <div class="contextMenu" id="Huiadminmenu">
         <ul>
             <li id="closethis">关闭当前</li>
