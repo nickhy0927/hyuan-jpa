@@ -163,6 +163,7 @@ $.extend({
                 className: 'text-l',
                 description: '',
                 sort: false,
+                width: undefined,
                 paramFormatter: function () {
                     return '';
                 }
@@ -195,7 +196,6 @@ $.extend({
         _create_table_head(settings);
         if (settings.searchButtonId) {
             $(settings.searchButtonId).on('click', function () {
-                $.openLoading("正在搜索数据,请稍等...");
                 var tableId = settings.tableId.substring(1);
                 $("#" + tableId + "_currentPage").val(1);
                 setTimeout(function () {
@@ -204,7 +204,6 @@ $.extend({
                 }, 500);
             });
         }
-        $.openLoading('正在加载数据，请稍等...');
         location.hash.replace('#!currentPage=', '')
         setTimeout(function () {
             _query_data_ajxa(settings);
@@ -242,10 +241,10 @@ var _create_table_head = function (settings) {
                 if (array[i].sortField) {
                     key = array[i].sortField
                 }
-                th += "<th class=\"" + className + "\">" + description + "&nbsp;&nbsp;<a data-field=\""
+                th += "<th style=\"width:" + array[i].width + "px\" class=\"" + className + "\">" + description + "&nbsp;&nbsp;<a data-field=\""
                     + key + "\" class=\"sort sorting\" href=\"#\"></a></th>";
             } else
-                th += "<th class=\"" + className + "\">" + description + "</th>";
+                th += "<th style=\"width:" + array[i].width + "px\" class=\"" + className + "\">" + description + "</th>";
         }
     }
     var tableId = settings.tableId.substring(1);
@@ -292,7 +291,6 @@ var _order_by_sort = function (settings, theadId) {
                     settings.sort = 'desc';
                 }
                 settings.orderField = $(a).attr('data-field');
-                $.openLoading('正在加载数据，请稍等...');
                 setTimeout(function () {
                     _query_data_ajxa(settings);
                     _select_checkbox_all();
@@ -321,7 +319,7 @@ var _get_query_condition = function (settings) {
     }
     jsonStr = (jsonStr.length > 1 ? jsonStr.substring(0, jsonStr.length - 1) : jsonStr) + "}";
     var object = eval("(" + jsonStr + ")");
-    var orderField = settings.orderField.replace(/([A-Z])/g, "_$1").toLowerCase();
+    var orderField = settings.orderField;
     object.order = orderField;
     object.sort = settings.sort;
     return object;
@@ -330,8 +328,8 @@ var _get_query_condition = function (settings) {
 var _query_data_ajxa = function (settings) {
     var params = _get_query_condition(settings);
     var tableId = settings.tableId.substring(1);
-    params.pageSize = settings.pageSize;
-    params.currentPage = $("#" + tableId + "_currentPage").val();
+    params.limit = settings.pageSize;
+    params.page = $("#" + tableId + "_currentPage").val();
     $.ajax({
         method: settings.method,
         url: settings.url,
@@ -339,7 +337,6 @@ var _query_data_ajxa = function (settings) {
         data: params,
         dataType: settings.dataType,
         success: function (data) {
-            $.closeLoading();
             if (data.code == 200) {
                 data = data.object;
                 _create_grid_table(data, settings);
@@ -447,18 +444,19 @@ var _create_grid_table = function (data, settings) {
     }
     layui.use(['laypage', 'layer'], function () {
         var laypage = layui.laypage;
+        console.log(data)
+        console.log(data.page)
         laypage.render({
             elem: 'paged',
-            count: data['totalRecord'],
+            count: data['totals'],
             theme: '#1E9FFF',
             limit: settings.pageSize,
             limits: settings.limits,
-            curr: data.currentPage,
+            curr: data.page,
             layout: ['prev', 'page', 'next', 'limit', 'refresh', 'skip'],
             jump: function (obj, first) {
                 if (!first) {
                     $("#" + tableId + "_currentPage").val(obj.curr);
-                    $.openLoading('正在加载数据，请稍等...');
                     setTimeout(function () {
                         settings.pageSize = obj.limit;
                         _query_data_ajxa(settings);

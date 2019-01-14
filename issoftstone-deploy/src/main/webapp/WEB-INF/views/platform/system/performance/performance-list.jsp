@@ -6,9 +6,7 @@
 <hy:extends name="css">
 	<style type="text/css">
 		#container {
-			min-width: 310px;
 			height: 400px;
-			margin: 0 auto
 		}
 	</style>
 </hy:extends>
@@ -57,7 +55,7 @@
 			                    $.openWindow({
 									title: '查看请求响应时间列表',
 									height: '95%',
-									width: '90%',
+									width: '99%',
 									url: '${basePath}/platform/system/performance/list.do?alias=' + datas[e.point.colorIndex]['alias']
 								})
 			                }

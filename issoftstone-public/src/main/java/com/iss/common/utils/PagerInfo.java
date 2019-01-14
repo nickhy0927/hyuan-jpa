@@ -3,10 +3,10 @@ package com.iss.common.utils;
 import java.util.List;
 
 public class PagerInfo<T> {
-	private long size = 10; // 分页大小
-	private long totalRecord;// 总记录数
+	private long limit = 10; // 分页大小
+	private long totals;// 总记录数
 	private long totalPage;// 总页数
-	private long currentPage;// 当前页
+	private long page;// 当前页
 
 	private List<T> content;
 
@@ -14,27 +14,15 @@ public class PagerInfo<T> {
 	}
 
 	public PagerInfo(PageSupport support, List<T> content) {
-		this.size = support.getLimit();
-		this.currentPage = support.getPage();
-		this.totalRecord = support.getTotalRecord();
+		this.limit = support.getLimit();
+		this.page = support.getPage();
+		this.totals = support.getTotals();
 		this.totalPage = support.getTotalPage();
 		this.content = content;
 	}
 
-	public long getSize() {
-		return size;
-	}
-
-	public void setSize(long size) {
-		this.size = size;
-	}
-
-	public long getTotalRecord() {
-		return totalRecord;
-	}
-
-	public void setTotalRecord(long totalRecord) {
-		this.totalRecord = totalRecord;
+	public long getTotals() {
+		return totals;
 	}
 
 	public long getTotalPage() {
@@ -45,12 +33,20 @@ public class PagerInfo<T> {
 		this.totalPage = totalPage;
 	}
 
-	public long getCurrentPage() {
-		return currentPage == 0 ? 1 : currentPage;
+	public long getPage() {
+		return page == 0 ? 1 : page;
 	}
 
-	public void setCurrentPage(long currentPage) {
-		this.currentPage = currentPage;
+	public void setPage(long page) {
+		this.page = page;
+	}
+
+	public long getLimit() {
+		return limit;
+	}
+
+	public void setLimit(long limit) {
+		this.limit = limit;
 	}
 
 	public List<T> getContent() {
@@ -59,11 +55,5 @@ public class PagerInfo<T> {
 
 	public void setContent(List<T> content) {
 		this.content = content;
-	}
-
-	@Override
-	public String toString() {
-		return "Pager [size=" + size + ", totalRecord=" + totalRecord + ", totalPage=" + totalPage + ", currentPage="
-				+ currentPage + ", content=" + content + "]";
 	}
 }
