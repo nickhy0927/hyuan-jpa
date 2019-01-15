@@ -54,6 +54,10 @@
     </script>
 </hy:extends>
 <hy:extends name="body">
+	<script id="iconBar" type="text/html">
+  		<h3>1111</h3>
+	</script>
+	<div id="view"></div>
     <div class="grid-main">
     	<div class="search-block">
 	        <form class="layui-form layui-form-pane" id="search-form" lay-filter="search-form">
