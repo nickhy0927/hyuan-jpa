@@ -191,9 +191,8 @@ function _init_table(settings) {
 		var config = $.extend({
 			totalRow : false,
 			height : "full", // 高度最大化减去差值
-			size : h < 1000 ? 'sm' : 'lg', // 小尺寸的表格
+			size : 'lg', // 小尺寸的表格
 			parseData : function(res) {
-				console.log("res--", res);
 				return {
             		"code": res.code, //解析接口状态
             		"msg": res.message, //解析提示文本
@@ -218,7 +217,6 @@ function _init_table(settings) {
 				none : '暂无相关数据' // 默认：无数据。注：该属性为 layui 2.2.5 开始新增
 			}
 		}, settings || {});
-		console.log('config', config);
 		// 第一个实例
 		var tableInstance = table.render(config);
 		table.on('toolbar(' + config.filter + ')', function(obj) {

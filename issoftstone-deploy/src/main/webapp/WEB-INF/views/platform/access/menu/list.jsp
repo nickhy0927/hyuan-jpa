@@ -16,21 +16,29 @@
                 url: "${ctx}/platform/access/menu/list.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
-                    { field: "name", title: '菜单名称', width: 140, fixed: "left"},
-                    { field: "alias",  title: "菜单别名", width: 160, fixed: "left"},
-                    { field: "parentName", title: "上级菜单", width: 120},
-                    { field: "icon", title: "图标", width: 120, tempalt: '<div>a</div>'},
-                    { field: "url", title: "访问地址", width: 340},
-                    { field: "localCode", title: "国际化编码", width: 240},
-                    { field: "enableName", title: "显示", width: 80, align: 'center'},
-                    { field: "lockedName", title: "锁定", width: 80, align: 'center'},
-                    { fixed: "right", title: "操作", align: "center",  toolbar: "#barDemo",  width: 120}
+                    { field: "name", title: '菜单名称', width: '10%', fixed: "left", unresize: true},
+                    { field: "alias",  title: "菜单别名", width: '10%', fixed: "left", unresize: true},
+                    { field: "parentName", title: "上级菜单", width: '10%', unresize: true},
+                    { title: "图标", width: '10%', tempalt: '#iconBar', unresize: true},
+                    { field: "url", title: "访问地址", width: '24.5%'},
+                    { field: "localCode", title: "国际化编码", width: '15%'},
+                    { field: "enableName", title: "显示", width: '8%', align: 'center', unresize: true},
+                    { field: "lockedName", title: "锁定", width: '8%', align: 'center', unresize: true},
+                    { fixed: "right", title: "操作", align: "center",  toolbar: "#barDemo",  width: '12%', unresize: true}
                 ]]
             });
         })
+        //第三步：渲染模版
+		var data = { //数据
+		  	"title":"Layui常用模块"
+		}
     </script>
 </hy:extends>
 <hy:extends name="body">
+	<script id="iconBar" type="text/html">
+  		<h3>1111</h3>
+	</script>
+	<div id="view"></div>
     <div class="grid-main">
     	<div class="search-block">
 	        <form class="layui-form layui-form-pane" id="search-form" lay-filter="search-form">
