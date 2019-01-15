@@ -38,9 +38,6 @@
 <hy:extends name="javascript">
 	<script type="text/javascript">
 		$(function () {
-			var result = {
-				status: 0
-			}
 			$("body").css({
 				'overflow':'auto'
 			})
@@ -52,7 +49,7 @@
                 		url: '${ctx}/platform/access/menu/save.json',//发送请求
 				    	data: data.field,
 				    	openType: 'alert',
-				    	loadSuccess: function(result) {
+				    	success: function(result) {
 	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 		    				parent.layer.close(index); //再执行关闭
 							window.parent.refresh();
@@ -68,9 +65,10 @@
                     url: "${ctx}/platform/access/menu/create.json",
                     contentType: "application/json; charset=utf-8",
                     data: {},
-			    	loadSuccess: function(res) {
+                    success: function(res) {
+                    	console.log(res);
 		            	$('#iconId').select({
-		            		data: res.data['icons'],
+		            		data: res.content['icons'],
 		        			holder: '请选择图标样式',
 		        			fields: {
 		        				val: 'id', // value值的名称
@@ -78,9 +76,10 @@
 		        			},
 		                });
                     	form.render('select');
+                    	$("#classtree").html("");
          	         	layui.tree({
                             elem: "#classtree",
-                            nodes: res.data['menuTrees'],
+                            nodes: res.content['menuTrees'],
                             click: function (node) {
                             	var $select = $($(this)[0].elem).parents(".layui-form-select");
                                 $select.removeClass("layui-form-selected").find(".layui-select-title span").html(node.name).end().find("input:hidden[name='parentId']").val(node.id);
