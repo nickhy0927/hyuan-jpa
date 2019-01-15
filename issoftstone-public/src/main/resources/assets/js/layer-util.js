@@ -173,17 +173,19 @@ $(document).ready(function () {
         $.openLoading();
     }).ajaxSuccess(function (event, xhr, settings) {
     	var res = JSON.parse(xhr.responseText);
-    	if(settings.openType) {
-    		var bool = settings.openType == 'alert';
-    		$.openTip(res.message, bool, function() {
-    			var fn = eval(settings.success);
-                fn.call(this, res);
-    		});
-    	}  else {
-    		$.closeLoading();
-    		var fn = eval(settings.success);
-            fn.call(this, res);
-    	}
+    	setTimeout(function() {
+    		if(settings.openType) {
+	    		var bool = settings.openType == 'alert';
+	    		$.openTip(res.message, bool, function() {
+	    			var fn = eval(settings.success);
+	                fn.call(this, res);
+	    		});
+	    	}  else {
+	    		$.closeLoading();
+	    		var fn = eval(settings.success);
+	            fn.call(this, res);
+	    	}
+    	}, 1000)
     }).ajaxError(function () {
         $.closeLoading();
         console.log('全局错误处理...')
