@@ -1,4 +1,4 @@
-package com.iss.platform.system.exceptionlog;
+package com.iss.platform.system.exceptionlog.entity;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -16,6 +16,10 @@ import com.iss.common.utils.IdEntity;
 public class ExceptionLog extends IdEntity {
 
 	/**
+	 * 访问地址
+	 */
+	private String url;
+	/**
 	 * 方法名称
 	 */
 	private String methodName;
@@ -23,8 +27,16 @@ public class ExceptionLog extends IdEntity {
 	 * 异常信息
 	 */
 	private String exceMsg;
-	private String message;// 完整的异常信息
-	private Integer exceptionType; // 异常信息类型
+	
+	/**
+	 * 完整的异常信息
+	 */
+	private String message;
+	
+	/**
+	 * 异常信息类型
+	 */
+	private Integer exceptionType; 
 
 	public String getMethodName() {
 		return methodName;
@@ -58,5 +70,13 @@ public class ExceptionLog extends IdEntity {
 
 	public void setExceptionType(Integer exceptionType) {
 		this.exceptionType = exceptionType;
+	}
+	
+	public String getUrl() {
+		return url;
+	}
+	
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }

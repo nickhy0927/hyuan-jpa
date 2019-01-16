@@ -1,17 +1,11 @@
 package com.iss.platform.access.user.controller;
 
-import com.iss.anno.OperateLog;
-import com.iss.common.encryption.Md5Encryption;
-import com.iss.common.exception.ServiceException;
-import com.iss.common.utils.MessageObject;
-import com.iss.common.utils.PageSupport;
-import com.iss.common.utils.PagerInfo;
-import com.iss.common.utils.WebUtils;
-import com.iss.constant.OperateType;
-import com.iss.platform.access.role.entity.Role;
-import com.iss.platform.access.role.service.RoleService;
-import com.iss.platform.access.user.entity.User;
-import com.iss.platform.access.user.service.UserService;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.iss.anno.OperateLog;
+import com.iss.common.encryption.Md5Encryption;
+import com.iss.common.exception.ServiceException;
+import com.iss.common.utils.MessageObject;
+import com.iss.common.utils.PageSupport;
+import com.iss.common.utils.PagerInfo;
+import com.iss.common.utils.WebUtils;
+import com.iss.constant.DataType;
+import com.iss.platform.access.role.entity.Role;
+import com.iss.platform.access.role.service.RoleService;
+import com.iss.platform.access.user.entity.User;
+import com.iss.platform.access.user.service.UserService;
 
 @Controller
 public class UserController {
@@ -47,7 +49,7 @@ public class UserController {
 	}
 
 	@ResponseBody
-	@OperateLog(message = "新增用户信息", method = "save", optType = OperateType.OptType.INSERT, service = UserService.class)
+	@OperateLog(message = "新增用户信息", method = "save", optType = DataType.OptType.INSERT, service = UserService.class)
 	@RequestMapping(value = "/platform/access/user/save.json", method = RequestMethod.POST)
 	public MessageObject<User> userSave(@RequestBody User user) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
@@ -64,7 +66,7 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping(value = "/platform/access/user/edit.do")
-	@OperateLog(message = "修改用户信息", method = "edit", optType = OperateType.OptType.UPDATE, service = UserService.class)
+	@OperateLog(message = "修改用户信息", method = "edit", optType = DataType.OptType.UPDATE, service = UserService.class)
 	public MessageObject<User> userEdit(@RequestBody String id) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -116,7 +118,7 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping(value = "/platform/access/user/role.json", method = RequestMethod.POST)
-	@OperateLog(message = "用户添加权限信息", method = "saveRole", optType = OperateType.OptType.UPDATE, service = UserService.class)
+	@OperateLog(message = "用户添加权限信息", method = "saveRole", optType = DataType.OptType.UPDATE, service = UserService.class)
 	public MessageObject<User> addRole(String id, HttpServletRequest request) {
 		MessageObject<User> message = MessageObject.getDefaultInstance();
 		try {

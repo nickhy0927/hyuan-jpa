@@ -23,7 +23,7 @@ import com.iss.common.utils.PageSupport;
 import com.iss.common.utils.PagerInfo;
 import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.WebUtils;
-import com.iss.constant.OperateType;
+import com.iss.constant.DataType;
 import com.iss.platform.access.role.entity.Role;
 import com.iss.platform.access.role.service.RoleService;
 
@@ -54,7 +54,7 @@ public class RoleController {
 
 	@ResponseBody
 	@AccessAuthority(alias = "role-save-json", name = "保存角色")
-	@OperateLog(message = "新增角色信息", method = "save", optType = OperateType.OptType.INSERT, service = RoleService.class)
+	@OperateLog(message = "新增角色信息", method = "save", optType = DataType.OptType.INSERT, service = RoleService.class)
 	@RequestMapping(value = "/platform/access/role/save.json", method = RequestMethod.POST)
 	public MessageObject<Role> roleSave(Role role) {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
@@ -72,7 +72,7 @@ public class RoleController {
 
 	@ResponseBody
 	@AccessAuthority(alias = "role-edit-json", name = "修改角色")
-	@OperateLog(message = "修改角色信息", method = "edit", optType = OperateType.OptType.UPDATE, service = RoleService.class)
+	@OperateLog(message = "修改角色信息", method = "edit", optType = DataType.OptType.UPDATE, service = RoleService.class)
 	@RequestMapping(value = "/platform/access/role/edit.json", method = RequestMethod.POST)
 	public MessageObject<Role> roleEdit(@RequestBody String id) {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
@@ -105,7 +105,7 @@ public class RoleController {
 
 	@ResponseBody
 	@AccessAuthority(alias = "role-delete-json", name = "删除角色")
-	@OperateLog(message = "删除角色信息", method = "delete", optType = OperateType.OptType.DELETE, service = RoleService.class)
+	@OperateLog(message = "删除角色信息", method = "delete", optType = DataType.OptType.DELETE, service = RoleService.class)
 	@RequestMapping(value = "/platform/access/role/delete.json", method = { RequestMethod.POST })
 	public MessageObject<Role> roleDelete(@RequestBody String[] ids) {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();

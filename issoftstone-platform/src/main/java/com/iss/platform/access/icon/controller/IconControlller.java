@@ -19,7 +19,7 @@ import com.iss.common.utils.PageSupport;
 import com.iss.common.utils.PagerInfo;
 import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.WebUtils;
-import com.iss.constant.OperateType;
+import com.iss.constant.DataType;
 import com.iss.platform.access.icon.entity.Icon;
 import com.iss.platform.access.icon.service.IconService;
 
@@ -34,7 +34,7 @@ public class IconControlller {
 	
 	@ResponseBody
 	@AccessAuthority(alias = "icon-save-json", name = "保存图标")
-	@OperateLog(message = "保存图标信息", method = "save", optType = OperateType.OptType.INSERT, service = IconService.class)
+	@OperateLog(message = "保存图标信息", method = "save", optType = DataType.OptType.INSERT, service = IconService.class)
 	@RequestMapping(value = "/platform/access/icon/save.json", method = RequestMethod.POST)
 	public MessageObject<Icon> iconSave(Icon icon) {
 		MessageObject<Icon> messageObject = MessageObject.getDefaultInstance();
@@ -51,7 +51,7 @@ public class IconControlller {
 
 	@ResponseBody
 	@AccessAuthority(alias = "icon-edit-json", name = "修改图标")
-	@OperateLog(message = "修改图标信息", method = "edit", optType = OperateType.OptType.UPDATE, service = IconService.class)
+	@OperateLog(message = "修改图标信息", method = "edit", optType = DataType.OptType.UPDATE, service = IconService.class)
 	@RequestMapping(value = "/platform/access/icon/edit.json", method = RequestMethod.POST)
 	public MessageObject<Icon> iconEdit(String id) {
 		MessageObject<Icon> messageObject = MessageObject.getDefaultInstance();
@@ -84,7 +84,7 @@ public class IconControlller {
 
 	@ResponseBody
 	@AccessAuthority(alias = "icon-delete-json", name = "删除图标")
-	@OperateLog(message = "删除图标信息", method = "delete", optType = OperateType.OptType.DELETE, service = IconService.class)
+	@OperateLog(message = "删除图标信息", method = "delete", optType = DataType.OptType.DELETE, service = IconService.class)
 	@RequestMapping(value = "/platform/access/icon/delete.json", method = RequestMethod.POST)
 	public MessageObject<Icon> iconDelete(@RequestBody String[] ids) {
 		MessageObject<Icon> messageObject = MessageObject.getDefaultInstance();

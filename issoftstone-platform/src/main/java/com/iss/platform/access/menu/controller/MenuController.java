@@ -21,8 +21,8 @@ import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.PageSupport;
 import com.iss.common.utils.PagerInfo;
 import com.iss.common.utils.SysContants.IsDelete;
-import com.iss.constant.OperateType;
 import com.iss.common.utils.WebUtils;
+import com.iss.constant.DataType;
 import com.iss.platform.access.icon.entity.Icon;
 import com.iss.platform.access.icon.service.IconService;
 import com.iss.platform.access.menu.entity.Menu;
@@ -62,7 +62,7 @@ public class MenuController {
 
 	@ResponseBody
 	@AccessAuthority(alias = "menu-save-json", name = "保存菜单")
-	@OperateLog(message = "新增菜单信息", method = "save", optType = OperateType.OptType.INSERT, service = MenuService.class)
+	@OperateLog(message = "新增菜单信息", method = "save", optType = DataType.OptType.INSERT, service = MenuService.class)
 	@RequestMapping(value = "/platform/access/menu/save.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuSave(Menu menu) {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
@@ -89,7 +89,7 @@ public class MenuController {
 
 	@ResponseBody
 	@AccessAuthority(alias = "menu-edit-json", name = "修改菜单")
-	@OperateLog(message = "修改菜单信息", method = "edit", optType = OperateType.OptType.UPDATE, service = MenuService.class)
+	@OperateLog(message = "修改菜单信息", method = "edit", optType = DataType.OptType.UPDATE, service = MenuService.class)
 	@RequestMapping(value = "/platform/access/menu/edit.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuEdit(String id) {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
@@ -128,7 +128,7 @@ public class MenuController {
 
 	@ResponseBody
 	@AccessAuthority(alias = "menu-delete-json", name = "删除菜单")
-	@OperateLog(message = "删除菜单信息", method = "delete", optType = OperateType.OptType.DELETE, service = MenuService.class)
+	@OperateLog(message = "删除菜单信息", method = "delete", optType = DataType.OptType.DELETE, service = MenuService.class)
 	@RequestMapping(value = "/platform/access/menu/delete.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuDelete(@RequestBody String[] ids) {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();

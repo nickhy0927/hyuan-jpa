@@ -19,7 +19,7 @@ import com.iss.common.anno.AccessAuthority;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.SysContants;
-import com.iss.constant.OperateType;
+import com.iss.constant.DataType;
 import com.iss.platform.access.user.entity.User;
 import com.iss.platform.access.user.service.UserService;
 
@@ -45,7 +45,7 @@ public class IndexController {
 
     @ResponseBody
     @AccessAuthority(alias = "queryUserInfo", name = "查询用户信息")
-    @OperateLog(method = "queryUserInfo", optType = OperateType.OptType.QUERY, message = "查询用户信息", service = UserService.class)
+    @OperateLog(method = "queryUserInfo", optType = DataType.OptType.QUERY, message = "查询用户信息", service = UserService.class)
     @RequestMapping(value = "/queryUserInfo.json", method = RequestMethod.GET)
     public MessageObject<User> queryUserInfo() {
         Map<String, Object> paramMap = Maps.newConcurrentMap();
