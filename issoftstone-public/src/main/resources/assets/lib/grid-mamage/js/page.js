@@ -78,6 +78,7 @@ function _init_table(settings) {
 			height : "full", // 高度最大化减去差值
 			size : 'lg', // 小尺寸的表格
 			groupBtn: {},
+			operate: {},
 			parseData : function(res) {
 				return {
             		"code": res.code, //解析接口状态
@@ -94,56 +95,24 @@ function _init_table(settings) {
 		var tableInstance = table.render(config);
 		table.on('toolbar(' + config.filter + ')', function(obj) {
 			var func = config.groupBtn[obj.event];
-			switch (obj.event) {
-			case 'createAction':
-				if (func)
-					eval(func).call(this);
-				break;
-			case 'deleteAction':
-				if (func)
-					eval(func).call(this);
-				break;
-			case 'searchAction':
-				var search = $("#" + config.searchForm).getForm();
-				var searchObj = $("#" + config.searchForm).serialize();
-				console.log(searchObj)
-				layer.msg('你点击了搜索按钮');
-				tableInstance.reload({
-					where : config.method.toUpperCase() == 'POST' ? search : searchObj
-				});
-				break;
+			var checkStatus = table.checkStatus(config.id);
+			var data = checkStatus.data;
+			var array = [];
+			if (!data) data = [];
+			else {
+				$.each(data, function(index, item) {
+					array.push(item.id);
+				})
 			}
+			if(func)
+				eval(func).call(this, tableInstance, array);
 		});
 
 		// 监听行工具事件
 		table.on('tool(' + config.filter + ')', function(obj) {
-			var data = obj.data;
-			console.log('obj', obj);
-			// console.log(obj)
-			if (obj.event === 'del') {
-				layer.confirm('确认删除吗？', function(index) {
-					// config.devare();
-					obj.del()
-					// 这里以搜索为例
-					tableInstance.reload({
-						where : { // 设定异步数据接口的额外参数，任意设
-							aaaaaa : 'xxx',
-							bbb : 'yyy'
-						}
-					});
-					layer.close(index);
-				});
-			} else if (obj.event === 'edit') {
-				layer.prompt({
-					formType : 2,
-					value : data.email
-				}, function(value, index) {
-					obj.update({
-						email : value
-					});
-					layer.close(index);
-				});
-			}
+			var func = config.operate[obj.event];
+			if(func)
+				eval(func).call(this, tableInstance, obj.data);
 		});
 	});
 }

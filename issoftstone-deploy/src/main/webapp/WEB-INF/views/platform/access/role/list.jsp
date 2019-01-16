@@ -5,8 +5,8 @@
 <hy:extends name="title">菜单列表</hy:extends>
 <hy:extends name="javascript">
     <script type="text/javascript">
-        $(function() {
-            page.dataTable({
+    	function refresh() {
+    		page.dataTable({
             	elem: '#tableList',
                 title: "用户数据表",
                 filter: "tableList",
@@ -19,15 +19,14 @@
                     { field: "code", title: '角色编号', width: '15%', fixed: "left", unresize: true},
                     { field: "name", title: '角色名称', width: '15%', fixed: "left", unresize: true},
                     { field: "parentName", title: "上级角色", width: '15%', unresize: true},
-                    { field: "remark", title: "备注", width: '36%'},
+                    { field: "remark", title: "备注", width: '40%'},
                     { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: '15%', unresize: true}
                 ]]
             });
-        })
-        //第三步：渲染模版
-		var data = { //数据
-		  	"title":"Layui常用模块"
 		}
+        $(function() {
+            refresh();
+        })
     </script>
 </hy:extends>
 <hy:extends name="body">
@@ -59,11 +58,11 @@
         	</button>
 	    </div>
 	    <div style="display:none" id="operateBar">
-	        <a class="layui-btn layui-btn-xs" lay-event="editAction">
-	        	<i class="Hui-iconfont Hui-iconfont-edit"></i>编辑
-	        </a>
-	        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delAction">
-	        	<i class="Hui-iconfont Hui-iconfont-del2"></i>删除
+	         <a class="btn btn-secondary-outline radius size-S">
+	        	<i class="Hui-iconfont Hui-iconfont-edit"></i>
+	        </a>&nbsp;&nbsp;
+	        <a class="btn btn-danger-outline radius size-S" lay-event="delAction">
+	        	<i class="Hui-iconfont Hui-iconfont-del2"></i>
 	        </a>
 	    </div>
     </div>

@@ -39,7 +39,7 @@ public class IconControlller {
 	public MessageObject<Icon> iconSave(Icon icon) {
 		MessageObject<Icon> messageObject = MessageObject.getDefaultInstance();
 		try {
-			icon.setIconClass("<i class=\"layui-icon " + icon.getClassName() + "\"></i> ");
+			icon.setIconClass("<i class=\"Hui-iconfont " + icon.getClassName() + "\"></i> ");
 			icon.setStatus(IsDelete.NO);
 			iconService.saveEntity(icon);
 			messageObject.ok("新增图标成功");

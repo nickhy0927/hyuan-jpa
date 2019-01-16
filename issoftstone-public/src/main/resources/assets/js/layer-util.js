@@ -134,7 +134,7 @@ function _openWindow(options) {
         type: 2,
         title: options.title || '新建窗口',
         area: [options.width || '80%', options.height || '95%'],
-        fixed: false, //不固定
+        fixed: true, //不固定
         move: false,
         shadeClose: false,
         shade: 0.6,

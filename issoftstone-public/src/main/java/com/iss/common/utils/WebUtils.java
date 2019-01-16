@@ -27,4 +27,17 @@ public class WebUtils {
 		}
 		return map;
 	}
+	public static Map<String, Object> getRequestParamterToMap(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<>();
+		Enumeration<String> paramNames = request.getParameterNames();
+		while (paramNames.hasMoreElements()) {
+			String paramName = paramNames.nextElement();
+			String[] paramValues = request.getParameterValues(paramName);
+			if (paramValues.length == 1) {
+				String paramValue = paramValues[0];
+				map.put(paramName, paramValue);
+			}
+		}
+		return map;
+	}
 }

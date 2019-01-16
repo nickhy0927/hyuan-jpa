@@ -31,7 +31,7 @@ public class OperateLogInterceptor implements HandlerInterceptor {
             OperateLog operateLog = handlerMethod.getMethodAnnotation(OperateLog.class);
             if (operateLog != null) {
             	OptLog log = new OptLog();
-            	Map<String, Object> parameterMap = WebUtils.getRequestToMap(request);
+            	Map<String, Object> parameterMap = WebUtils.getRequestParamterToMap(request);
             	log.setClazz(handlerMethod.getMethod().getDeclaringClass().getName() + "." + handlerMethod.getMethod().getName());
             	log.setMessage(operateLog.message());
             	log.setOptType(operateLog.optType());

@@ -49,7 +49,7 @@
                 		url: '${ctx}/platform/access/icon/save.json',//发送请求
 				    	data: $('form').serializeObject(),
 				    	openType: 'alert',
-				    	loadSuccess: function(result) {
+				    	success: function(result) {
 	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 		    				parent.layer.close(index); //再执行关闭
 							window.parent.refresh();
@@ -60,13 +60,12 @@
                 $.ajax({
 			    	url: '${ctx}/platform/access/icon/edit.json',//发送请求
 			    	data: {id : '${id}'},
-			    	loadSuccess: function(res) {
-			    		console.log(res);
+			    	success: function(res) {
 			    		form.val("edit-form", {
-		    			  	"id": res.data['id'],
-		    			  	"name": res.data['name'],
-		    			  	"iconClass": res.data['iconClass'],
-		    			  	"className": res.data['className']
+		    			  	"id": res.content['id'],
+		    			  	"name": res.content['name'],
+		    			  	"iconClass": res.content['iconClass'],
+		    			  	"className": res.content['className']
 		    			})
                     	form.render('select');
 			    	}
@@ -118,7 +117,9 @@
             </div>
             <div class="layui-form-item" style="text-align: right">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit lay-filter="create-form">立即提交</button>
+                    <button class="layui-btn" lay-submit lay-filter="create-form">
+                    	<i class="Hui-iconfont Hui-iconfont-save"></i>&nbsp;立即提交
+                    </button>
                     <button type="reset" onclick="reset()" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>

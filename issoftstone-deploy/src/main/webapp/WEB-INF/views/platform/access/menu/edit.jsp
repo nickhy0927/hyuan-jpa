@@ -68,31 +68,31 @@
 			    	data: {id : '${id}'},
 			    	dataType : "json",
 			    	success: function(res) {
-			    		console.log(res);
-			    		res.data.menu.menu ? $("#treeclass").text(res.data.menu.menu.name) : ''
-		    			res.data.menu.menu ? $("#parentId").val(res.data.menu.menu.id) : ''
-			    		form.val("edit-form", {		    			  	"id": res.data.menu['id'],
-		    			  	"name": res.data.menu['name'],
-		    			  	"alias": res.data.menu['alias'],
-		    			  	"url": res.data.menu['url'],
-		    			  	"enable": res.data.menu['enable'],
-		    			  	"locked": res.data.menu['locked'],
-		    			  	"localCode": res.data.menu['localCode'],
-		    			  	"orders": res.data.menu['orders'],
+			    		res.content.menu.menu ? $("#treeclass").text(res.content.menu.menu.name) : ''
+		    			res.content.menu.menu ? $("#parentId").val(res.content.menu.menu.id) : ''
+			    		form.val("edit-form", {		    			  	"id": res.content.menu['id'],
+		    			  	"name": res.content.menu['name'],
+		    			  	"alias": res.content.menu['alias'],
+		    			  	"url": res.content.menu['url'],
+		    			  	"enable": res.content.menu['enable'],
+		    			  	"locked": res.content.menu['locked'],
+		    			  	"localCode": res.content.menu['localCode'],
+		    			  	"orders": res.content.menu['orders'],
 		    			})
 		    			$('#iconId').select({
-		            		data: res.data['icons'],
+		            		data: res.content['icons'],
 		        			holder: '请选择图标样式',
-		        			defaultValue: res.data.menu.icon ? res.data.menu.icon['id']: "",
+		        			defaultValue: res.content.menu.icon ? res.content.menu.icon['id']: "",
 		        			fields: {
 		        				val: 'id', // value值的名称
 		        				name: 'name' // name值的名称
 		        			},
 		                });
                     	form.render('select');
+                    	$('#classtree').html('');
          	         	layui.tree({
                             elem: "#classtree",
-                            nodes: res.data['menuTrees'],
+                            nodes: res.content['menuTrees'],
                             click: function (node) {
                             	var $select = $($(this)[0].elem).parents(".layui-form-select");
                                 $select.removeClass("layui-form-selected").find(".layui-select-title span").html(node.name).end().find("input:hidden[name='parentId']").val(node.id);

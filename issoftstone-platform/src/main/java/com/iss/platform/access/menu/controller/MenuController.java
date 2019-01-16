@@ -130,10 +130,11 @@ public class MenuController {
 	@AccessAuthority(alias = "menu-delete-json", name = "删除菜单")
 	@OperateLog(message = "删除菜单信息", method = "delete", optType = DataType.OptType.DELETE, service = MenuService.class)
 	@RequestMapping(value = "/platform/access/menu/delete.json", method = RequestMethod.POST)
-	public MessageObject<Menu> menuDelete(@RequestBody String[] ids) {
+	public MessageObject<Menu> menuDelete(String id) {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
 		try {
-			if (ids.length > 0) {
+			if (StringUtils.isNotEmpty(id)) {
+				String[] ids = id.split(",");
 				menuService.deleteBatch(ids);
 				messageObject.ok("删除菜单成功");
 			}

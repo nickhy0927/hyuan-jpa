@@ -48,9 +48,9 @@
                 	// console.log($('form').serializeObject())
                 	$.ajax({
                 		url: '${ctx}/platform/access/icon/save.json',//发送请求
-				    	data: $('form').serializeObject(),
+				    	data: $('form').getForm(),
 				    	openType: 'alert',
-				    	loadSuccess: function(result) {
+				    	success: function(result) {
 	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 		    				parent.layer.close(index); //再执行关闭
 							window.parent.refresh();
@@ -104,7 +104,9 @@
             </div> -->
             <div class="layui-form-item" style="text-align: right">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit lay-filter="create-form">立即提交</button>
+                    <button class="layui-btn" lay-submit lay-filter="create-form">
+                    	<i class="Hui-iconfont Hui-iconfont-save"></i>&nbsp;立即提交
+                    </button>
                     <button type="reset" onclick="reset()" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>

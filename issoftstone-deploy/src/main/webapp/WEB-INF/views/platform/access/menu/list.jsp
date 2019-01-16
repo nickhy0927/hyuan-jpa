@@ -5,11 +5,12 @@
 <hy:extends name="title">菜单列表</hy:extends>
 <hy:extends name="javascript">
     <script type="text/javascript">
-        $(function() {
-            page.dataTable({
+    	function refresh() {
+    		page.dataTable({
             	elem: '#tableList',
                 title: "用户数据表",
                 filter: "tableList",
+                id: 'tableList',
                 loading: true,
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
@@ -26,8 +27,21 @@
                     { field: "localCode", title: "国际化编码", width: '15%'},
                     { field: "enableName", title: "显示", width: '8%', align: 'center', unresize: true},
                     { field: "lockedName", title: "锁定", width: '8%', align: 'center', unresize: true},
-                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: '14%', unresize: true}
+                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: '10%', unresize: true}
                 ]],
+                operate: {
+                	editAction: function (tableInstance, data) {
+                		$.openWindow({
+							title: '修改菜单',
+							height: '450px',
+							width: '90%',
+							url: '${ctx}/platform/access/menu/edit.do?id=' + data.id
+						})
+					},
+					delAction: function (tableInstance, data) {
+						console.log("del=== ", data)
+					}
+                },
                 groupBtn: {
                 	createAction: function () {
                 		$.openWindow({
@@ -37,26 +51,36 @@
 							url: '${ctx}/platform/access/menu/create.do'
 						})
 					},
-					deleteAction: function () {
-						$.openWindow({
-							title: '修改图标',
-							height: '230px',
-							width: '700px',
-							url: '${ctx}/platform/access/icon/edit.do?id=' + id
+					deleteAction: function (tableInstance, data) {
+						console.log(data);
+						$.openTip('你确定删除吗？', false, function () {
+							$.ajax({
+								url:'${ctx}/platform/access/menu/delete.json',
+								data: {id: data.join(",")},
+								success: function (res) {
+									console.log(res);
+									$.openTip(res.message, true, function () {
+										layer.closeAll();
+										refresh();
+									})
+								}
+							})
 						})
 					},
-					searchAction: function () {
-						alert('搜索菜单')
+					searchAction: function (tableInstance) {
+						tableInstance.reload({
+							where : $("#search-form").getForm()
+						});
 					}
                 }
             });
+		}
+        $(function() {
+            refresh();
         })
     </script>
 </hy:extends>
 <hy:extends name="body">
-	<script id="iconBar" type="text/html">
-  		<h3>1111</h3>
-	</script>
 	<div id="view"></div>
     <div class="grid-main">
     	<div class="search-block">
@@ -108,11 +132,11 @@
         	</button>
 	    </div>
 	    <div style="display:none" id="operateBar">
-	        <a class="layui-btn layui-btn-xs" lay-event="editAction">
-	        	<i class="Hui-iconfont Hui-iconfont-edit"></i>编辑
-	        </a>
-	        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delAction">
-	        	<i class="Hui-iconfont Hui-iconfont-del2"></i>删除
+	        <a class="btn btn-secondary-outline radius size-S">
+	        	<i class="Hui-iconfont Hui-iconfont-edit"></i>
+	        </a>&nbsp;&nbsp;
+	        <a class="btn btn-danger-outline radius size-S" lay-event="delAction">
+	        	<i class="Hui-iconfont Hui-iconfont-del2"></i>
 	        </a>
 	    </div>
     </div>
