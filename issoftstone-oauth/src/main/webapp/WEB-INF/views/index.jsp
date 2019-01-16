@@ -84,8 +84,8 @@
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
                     <a href="javascript:void(0);">
-                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img" alt>
-                        系统管理员
+                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                        	系统管理员
                     </a>
                     <dl class="layui-nav-child">
                         <dd>
@@ -111,7 +111,7 @@
                         </a>
                     </li>
                     <li class="layui-nav-item layui-nav-itemed">
-                        <a class href="javascript:void(0);">
+                        <a href="javascript:void(0);">
                             <i class="layui-icon layui-icon-app"></i> 权限管理
                         </a>
                         <dl class="layui-nav-child">
