@@ -6,7 +6,7 @@
 <hy:extends name="css">
 	<style>
 		pre, xmp {
-		    padding: 3px 5px;
+		    padding: 3px 5px 0 5px;
 		}
 	</style>
 </hy:extends>
@@ -23,13 +23,13 @@
                 url: "${ctx}/platform/access/icon/list.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
-                    { field: "name", title: '图标名称', width: '13%', fixed: "left", unresize: true},
-                    { field: "icon",  title: "图标", width: '10%', align: 'center', fixed: "left", unresize: true},
-                    { field: "className",  title: "图标样式", width: '20%', fixed: "left", unresize: true},
-                    { title: "使用方法", width: '7%', unresize: true, width: '49%', templet: function (d) {
+                    { field: "name", title: '图标名称', width: 160, fixed: "left", unresize: true},
+                    { field: "icon",  title: "图标", width: 80, align: 'center', fixed: "left", unresize: true},
+                    { field: "className",  title: "图标样式", width: 160, fixed: "left", unresize: true},
+                    { title: "使用方法", unresize: true, templet: function (d) {
 						return '<pre><xmp>' + d.iconClass + '</xmp></pre>';
 					}},
-                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: '10%', unresize: true}
+                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 120, unresize: true}
                 ]],
                 operate: {
                 	editAction: function (tableInstance, data) {

@@ -17,17 +17,17 @@
                 url: "${ctx}/platform/access/menu/list.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
-                    { field: "name", title: '菜单名称', width: '10%', fixed: "left", unresize: true},
-                    { field: "alias",  title: "菜单别名", width: '10%', fixed: "left", unresize: true},
-                    { field: "parentName", title: "上级菜单", width: '10%', unresize: true},
-                    { title: "图标", width: '7%', unresize: true, align: 'center', templet: function (d) {
+                    { field: "name", title: '菜单名称', width: 120, fixed: "left", unresize: true},
+                    { field: "alias",  title: "菜单别名", width: 200, fixed: "left", unresize: true},
+                    { field: "parentName", title: "上级菜单", width: 120, unresize: true},
+                    { title: "图标", width: 80, unresize: true, align: 'center', templet: function (d) {
 						return d.icon ? d.icon.iconClass : "";
 					}},
-                    { field: "url", title: "访问地址", width: '24.5%'},
-                    { field: "localCode", title: "国际化编码", width: '15%'},
-                    { field: "enableName", title: "显示", width: '8%', align: 'center', unresize: true},
-                    { field: "lockedName", title: "锁定", width: '8%', align: 'center', unresize: true},
-                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: '10%', unresize: true}
+                    { field: "url", title: "访问地址"},
+                    { field: "localCode", title: "国际化编码", width: 200},
+                    { field: "enableName", title: "显示", width: 80, align: 'center', unresize: true},
+                    { field: "lockedName", title: "锁定", width: 80, align: 'center', unresize: true},
+                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 120, unresize: true}
                 ]],
                 operate: {
                 	editAction: function (tableInstance, data) {

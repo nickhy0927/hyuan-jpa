@@ -33,7 +33,7 @@ public class IconControlller {
 	private IconService iconService;
 	
 	@ResponseBody
-	@AccessAuthority(alias = "icon-save-json", name = "保存图标")
+	@AccessAuthority(alias = "icon-save", name = "保存图标")
 	@OperateLog(message = "保存图标信息", method = "save", optType = DataType.OptType.INSERT, service = IconService.class)
 	@RequestMapping(value = "/platform/access/icon/save.json", method = RequestMethod.POST)
 	public MessageObject<Icon> iconSave(Icon icon) {
@@ -50,7 +50,7 @@ public class IconControlller {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "icon-edit-json", name = "修改图标")
+	@AccessAuthority(alias = "icon-edit", name = "修改图标")
 	@OperateLog(message = "修改图标信息", method = "edit", optType = DataType.OptType.UPDATE, service = IconService.class)
 	@RequestMapping(value = "/platform/access/icon/edit.json", method = RequestMethod.POST)
 	public MessageObject<Icon> iconEdit(String id) {
@@ -66,7 +66,7 @@ public class IconControlller {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "icon-list-json", name = "图标列表")
+	@AccessAuthority(alias = "icon-list", name = "图标列表")
 	@RequestMapping(value = "/platform/access/icon/list.json", method = { RequestMethod.POST })
 	public MessageObject<Icon> iconList(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
@@ -83,7 +83,7 @@ public class IconControlller {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "icon-delete-json", name = "删除图标")
+	@AccessAuthority(alias = "icon-delete", name = "删除图标")
 	@OperateLog(message = "删除图标信息", method = "delete", optType = DataType.OptType.DELETE, service = IconService.class)
 	@RequestMapping(value = "/platform/access/icon/delete.json", method = RequestMethod.POST)
 	public MessageObject<Icon> iconDelete(@RequestBody String[] ids) {

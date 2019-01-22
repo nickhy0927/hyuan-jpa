@@ -3,25 +3,62 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set value="${pageContext.request.contextPath}" var="ctx"></c:set>
 <hy:extends name="title">菜单列表</hy:extends>
+<hy:extends name="css">
+	<style>
+	</style>
+</hy:extends>
 <hy:extends name="javascript">
     <script type="text/javascript">
     	function refresh() {
     		page.dataTable({
             	elem: '#tableList',
-                title: "用户数据表",
+                title: "用户信息列表",
                 filter: "tableList",
                 loading: true,
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
-                url: "${ctx}/platform/access/role/list.json",
+                url: "${ctx}/platform/access/user/list.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
-                    { field: "code", title: '角色编号', width: 160, fixed: "left", unresize: true},
-                    { field: "name", title: '角色名称', width: 160, fixed: "left", unresize: true},
-                    { field: "parentName", title: "上级角色", width: 160, unresize: true},
-                    { field: "remark", title: "备注"},
+                    { field: "name", title: '图标名称', width: 160, fixed: "left", unresize: true},
+                    { field: "icon",  title: "图标", width: 80, align: 'center', fixed: "left", unresize: true},
+                    { field: "className",  title: "图标样式", width: 160, fixed: "left", unresize: true},
+                    { title: "使用方法", unresize: true, templet: function (d) {
+						return '<pre><xmp>' + d.iconClass + '</xmp></pre>';
+					}},
                     { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 120, unresize: true}
-                ]]
+                ]],
+                operate: {
+                	editAction: function (tableInstance, data) {
+                		$.openWindow({
+							title: '修改图标',
+							height: '240px',
+							width: '70%',
+							url: '${ctx}/platform/access/icon/edit.do?id=' + data.id 
+						})
+					},
+					delAction: function (tableInstance, data) {
+						console.log("del=== ", data)
+					}
+                },
+                groupBtn: {
+                	createAction: function () {
+                		$.openWindow({
+							title: '新增图标',
+							height: '200px',
+							width: '70%',
+							url: '${ctx}/platform/access/icon/create.do'
+						})
+					},
+					deleteAction: function (tableInstance, data) {
+						console.log(tableInstance, data);
+					},
+					searchAction: function (tableInstance) {
+						tableInstance.reload({
+							where : $("#search-form").getForm()
+						});
+					}
+                }
             });
 		}
         $(function() {
@@ -35,7 +72,7 @@
 	        <form class="layui-form layui-form-pane" id="search-form" lay-filter="search-form">
 	            <div class="layui-form-item">
 	                <div class="layui-inline">
-	                    <label class="layui-form-label">角色名称</label>
+	                    <label class="layui-form-label">图标名称</label>
 	                    <div class="layui-input-inline">
 	                        <input type="text" name="name_li" autocomplete="off" class="layui-input">
 	                    </div>
@@ -58,7 +95,7 @@
         	</button>
 	    </div>
 	    <div style="display:none" id="operateBar">
-	         <a class="btn btn-secondary-outline radius size-S">
+	        <a class="btn btn-secondary-outline radius size-S">
 	        	<i class="Hui-iconfont Hui-iconfont-edit"></i>
 	        </a>&nbsp;&nbsp;
 	        <a class="btn btn-danger-outline radius size-S" lay-event="delAction">

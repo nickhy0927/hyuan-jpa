@@ -25,14 +25,14 @@ public class PerformanceViewController {
 	@Autowired
 	private PerformanceService performanceService;
 
-	@AccessAuthority(alias = "performance-list-page-do", name = "性能分页页面")
+	@AccessAuthority(alias = "performance-list-page", name = "性能分页页面")
 	@RequestMapping(value = "/platform/system/performance/list.do", method = RequestMethod.GET)
 	public String list(String alias, Model model) {
 		model.addAttribute("alias", alias);
 		return "platform/system/performance/list";
 	}
 	
-	@AccessAuthority(alias = "performance-list-do", name = "性能统计页面")
+	@AccessAuthority(alias = "performance-list", name = "性能统计页面")
 	@RequestMapping(value = "/platform/system/performance/performance-list.do", method = RequestMethod.GET)
 	public String performanceList(Model model) throws ParseException {
 		int days = getCurrentMonthLastDay();
