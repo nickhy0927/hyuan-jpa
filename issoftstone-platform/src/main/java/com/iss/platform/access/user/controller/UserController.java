@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.iss.anno.OperateLog;
+import com.iss.common.anno.AccessAuthority;
 import com.iss.common.encryption.Md5Encryption;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.MessageObject;
@@ -41,6 +42,7 @@ public class UserController {
 	private UserService userService;
 
 	@ResponseBody
+	@AccessAuthority(alias = "user-create", name = "新增用户信息")
 	@RequestMapping(value = "/platform/access/user/create.do")
 	public MessageObject<User> userCreate() {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
@@ -49,7 +51,8 @@ public class UserController {
 	}
 
 	@ResponseBody
-	@OperateLog(message = "新增用户信息", method = "save", optType = DataType.OptType.INSERT, service = UserService.class)
+	@AccessAuthority(alias = "user-create", name = "新增用户信息")
+	@OperateLog(message = "新增用户信息", method = "userSave", optType = DataType.OptType.INSERT, service = UserService.class)
 	@RequestMapping(value = "/platform/access/user/save.json", method = RequestMethod.POST)
 	public MessageObject<User> userSave(@RequestBody User user) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
@@ -65,6 +68,7 @@ public class UserController {
 	}
 
 	@ResponseBody
+	@AccessAuthority(alias = "user-edit", name = "修改用户信息")
 	@RequestMapping(value = "/platform/access/user/edit.do")
 	@OperateLog(message = "修改用户信息", method = "edit", optType = DataType.OptType.UPDATE, service = UserService.class)
 	public MessageObject<User> userEdit(@RequestBody String id) {
@@ -80,6 +84,7 @@ public class UserController {
 	}
 
 	@ResponseBody
+	@AccessAuthority(alias = "query-user-role", name = "获取用户角色信息")
 	@RequestMapping(value = "/platform/access/user/userroles/queryuserrole.json", method = RequestMethod.GET)
 	public MessageObject<User> roleList(String userId, HttpServletRequest request, PageSupport support) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
@@ -101,6 +106,7 @@ public class UserController {
 	}
 
 	@ResponseBody
+	@AccessAuthority(alias = "user-list", name = "获取用户信息列表")
 	@RequestMapping(value = "/platform/access/user/list.json", method = RequestMethod.POST)
 	public MessageObject<User> userList(HttpServletRequest request, PageSupport support) {
 		logger.debug("查询用户信息");
@@ -117,6 +123,7 @@ public class UserController {
 	}
 
 	@ResponseBody
+	@AccessAuthority(alias = "user-role-save", name = "新增用户权限信息")
 	@RequestMapping(value = "/platform/access/user/role.json", method = RequestMethod.POST)
 	@OperateLog(message = "用户添加权限信息", method = "saveRole", optType = DataType.OptType.UPDATE, service = UserService.class)
 	public MessageObject<User> addRole(String id, HttpServletRequest request) {
