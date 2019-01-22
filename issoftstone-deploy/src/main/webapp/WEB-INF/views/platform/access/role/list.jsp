@@ -16,11 +16,11 @@
                 url: "${ctx}/platform/access/role/list.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
-                    { field: "code", title: '角色编号', width: '15%', fixed: "left", unresize: true},
-                    { field: "name", title: '角色名称', width: '15%', fixed: "left", unresize: true},
-                    { field: "parentName", title: "上级角色", width: '15%', unresize: true},
-                    { field: "remark", title: "备注", width: '40%'},
-                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: '15%', unresize: true}
+                    { field: "code", title: '角色编号', width: 160, fixed: "left", unresize: true},
+                    { field: "name", title: '角色名称', width: 160, fixed: "left", unresize: true},
+                    { field: "parentName", title: "上级角色", width: 160, unresize: true},
+                    { field: "remark", title: "备注"},
+                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 120, unresize: true}
                 ]]
             });
 		}

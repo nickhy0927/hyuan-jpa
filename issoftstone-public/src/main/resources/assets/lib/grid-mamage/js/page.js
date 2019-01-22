@@ -1,4 +1,3 @@
-var tableManager = undefined;
 (function($) {
 	$.fn.select = function(option) {
 		var _this = this;
