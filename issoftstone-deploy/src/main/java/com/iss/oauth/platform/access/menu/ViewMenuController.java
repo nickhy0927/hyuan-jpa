@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class MenuViewController {
+public class ViewMenuController {
 	
 	@AccessAuthority(alias = "menu-save", name = "菜单新增页面")
 	@RequestMapping(value = "/platform/access/menu/create.do", method = RequestMethod.GET)

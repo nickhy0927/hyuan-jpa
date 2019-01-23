@@ -27,13 +27,13 @@ import com.iss.platform.access.role.entity.Role;
 @Table(name = "t_p_a_user")
 public class User extends IdEntity {
 
-	private String brithday;// 出生日期
-	private String email;// 电子邮箱
-	private String loginName;// 登录名称
 	private String nickName;// 用户昵称
+	private String loginName;// 登录名称
 	private String locked; // 锁定 true 是 false 否
 	private String enable; // 启用 true 是 false 否
 	private String password;// 登录密码
+	private String brithday;// 出生日期
+	private String email;// 电子邮箱
 	private String userTag;// 用户手机端的标识
 	private List<Role> roles = new ArrayList<Role>();
 	private String remark; // 用户信息备注

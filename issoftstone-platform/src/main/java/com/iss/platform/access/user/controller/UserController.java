@@ -3,6 +3,7 @@ package com.iss.platform.access.user.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,11 +12,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.collect.Maps;
 import com.iss.anno.OperateLog;
 import com.iss.common.anno.AccessAuthority;
 import com.iss.common.encryption.Md5Encryption;
@@ -42,21 +43,15 @@ public class UserController {
 	private UserService userService;
 
 	@ResponseBody
-	@AccessAuthority(alias = "user-create", name = "新增用户信息")
-	@RequestMapping(value = "/platform/access/user/create.do")
-	public MessageObject<User> userCreate() {
-		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
-		messageObject.ok("获取新增用户信息成功");
-		return messageObject;
-	}
-
-	@ResponseBody
-	@AccessAuthority(alias = "user-create", name = "新增用户信息")
+	@AccessAuthority(alias = "user-save", name = "新增用户信息")
 	@OperateLog(message = "新增用户信息", method = "userSave", optType = DataType.OptType.INSERT, service = UserService.class)
 	@RequestMapping(value = "/platform/access/user/save.json", method = RequestMethod.POST)
-	public MessageObject<User> userSave(@RequestBody User user) {
+	public MessageObject<User> userSave(User user) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
+			user.setStatus(Boolean.TRUE);
+			String salt = UUID.randomUUID().toString();
+			user.setSalt(salt);
 			user.setPassword(Md5Encryption.MD5(user.getPassword()));
 			user = userService.saveEntity(user);
 			messageObject.ok("保存用户成功", user);
@@ -68,21 +63,22 @@ public class UserController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "user-edit", name = "修改用户信息")
-	@RequestMapping(value = "/platform/access/user/edit.do")
+	@AccessAuthority(alias = "user-edit", name = "修改用户")
 	@OperateLog(message = "修改用户信息", method = "edit", optType = DataType.OptType.UPDATE, service = UserService.class)
-	public MessageObject<User> userEdit(@RequestBody String id) {
+	@RequestMapping(value = "/platform/access/user/edit.json", method = RequestMethod.POST)
+	public MessageObject<User> userEdit(String id) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
-			messageObject.ok("查询用户成功", userService.get(id));
+			Map<String, Object> params = Maps.newConcurrentMap();
+			User user = userService.get(id);
+			params.put("user", user);
+			messageObject.ok("修改查询用户成功", params);
 		} catch (ServiceException e) {
 			e.printStackTrace();
-			messageObject.error("查询用户异常");
+			messageObject.error("修改查询用户异常");
 		}
 		return messageObject;
-
 	}
-
 	@ResponseBody
 	@AccessAuthority(alias = "query-user-role", name = "获取用户角色信息")
 	@RequestMapping(value = "/platform/access/user/userroles/queryuserrole.json", method = RequestMethod.GET)

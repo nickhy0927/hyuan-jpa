@@ -75,7 +75,7 @@ function _init_table(settings) {
 		var config = $.extend({
 			totalRow : false,
 			height : "full", // 高度最大化减去差值
-			size : 'sm', // 小尺寸的表格
+			size : 'lg', // 小尺寸的表格
 			groupBtn: {},
 			operate: {},
 			parseData : function(res) {

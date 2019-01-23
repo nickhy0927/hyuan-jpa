@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.iss.common.anno.AccessAuthority;
 
 @Controller
-public class IconViewController {
+public class ViewIconController {
 
-	public IconViewController() {
+	public ViewIconController() {
 	}
 
 	@AccessAuthority(alias = "icon-save", name = "图标新增页面")

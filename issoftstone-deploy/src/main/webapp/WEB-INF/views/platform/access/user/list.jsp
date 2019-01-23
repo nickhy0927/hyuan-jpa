@@ -2,7 +2,7 @@
 <%@ taglib uri="http://www.hy.include" prefix="hy" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set value="${pageContext.request.contextPath}" var="ctx"></c:set>
-<hy:extends name="title">菜单列表</hy:extends>
+<hy:extends name="title">用户列表</hy:extends>
 <hy:extends name="css">
 	<style>
 	</style>
@@ -20,21 +20,23 @@
                 url: "${ctx}/platform/access/user/list.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
-                    { field: "name", title: '图标名称', width: 160, fixed: "left", unresize: true},
-                    { field: "icon",  title: "图标", width: 80, align: 'center', fixed: "left", unresize: true},
-                    { field: "className",  title: "图标样式", width: 160, fixed: "left", unresize: true},
-                    { title: "使用方法", unresize: true, templet: function (d) {
-						return '<pre><xmp>' + d.iconClass + '</xmp></pre>';
-					}},
+                    { field: "nickName", title: '用户姓名', width: 120, fixed: "left", unresize: true},
+                    { field: "loginName",  title: "登录账户", width: 120, align: 'left', fixed: "left", unresize: true},
+                    { field: "brithday",  title: "用户生日", width: 120, align: 'center'},
+                    { field: "email",  title: "电子邮箱", width: 160},
+                    { field: "enableName",  title: "启用", width: 80, align: 'center'},
+                    { field: "lockedName",  title: "锁定", width: 80, align: 'center'},
+                    { field: "lastLoginTime",  title: "最后登录时间", width: 130},
+                    { field: "userTag",  title: "手机标识"},
                     { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 120, unresize: true}
                 ]],
                 operate: {
                 	editAction: function (tableInstance, data) {
                 		$.openWindow({
-							title: '修改图标',
-							height: '240px',
+							title: '修改用户信息',
+							height: '460px',
 							width: '70%',
-							url: '${ctx}/platform/access/icon/edit.do?id=' + data.id 
+							url: '${ctx}/platform/access/user/edit.do?id=' + data.id 
 						})
 					},
 					delAction: function (tableInstance, data) {
@@ -44,10 +46,10 @@
                 groupBtn: {
                 	createAction: function () {
                 		$.openWindow({
-							title: '新增图标',
-							height: '200px',
+							title: '新增用户信息',
+							height: '520px',
 							width: '70%',
-							url: '${ctx}/platform/access/icon/create.do'
+							url: '${ctx}/platform/access/user/create.do'
 						})
 					},
 					deleteAction: function (tableInstance, data) {
@@ -95,7 +97,7 @@
         	</button>
 	    </div>
 	    <div style="display:none" id="operateBar">
-	        <a class="btn btn-secondary-outline radius size-S">
+	        <a class="btn btn-secondary-outline radius size-S" lay-event="editAction">
 	        	<i class="Hui-iconfont Hui-iconfont-edit"></i>
 	        </a>&nbsp;&nbsp;
 	        <a class="btn btn-danger-outline radius size-S" lay-event="delAction">

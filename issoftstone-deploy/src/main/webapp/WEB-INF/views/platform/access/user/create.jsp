@@ -5,34 +5,6 @@
 <hy:extends name="title">新增图标</hy:extends>
 <hy:extends name="css">
 	<style type="text/css">
-		 .downpanel .layui-select-title span {
-            line-height: 38px;
-        }
- 
-        /*继承父类颜色*/
-        .downpanel dl dd:hover {
-            background-color: inherit;
-        }
-        body {
-            height: 100%;
-            width: 100%;
-            background-size: cover;
-            margin: 0 auto;
-        }
-        td {
-            font-size: 12px !important;
-        }
-
-        .layui-form-checkbox span {
-            height: 30px;
-        }
-        .layui-field-title {
-            border-top: 1px solid white;
-        }
-        table {
-            width: 100% !important;
-        }
-        
 	</style>
 </hy:extends>
 <hy:extends name="javascript">
@@ -41,13 +13,18 @@
 			$("body").css({
 				'overflow':'auto'
 			})
-			layui.use(['form', 'tree'], function () {
+			layui.use(['form', 'tree', 'laydate'], function () {
                 var form = layui.form;
+                var laydate = layui.laydate;
+                //执行一个laydate实例
+                laydate.render({
+                  	elem: '#brithday' //指定元素
+                });
                 //监听提交
                 form.on('submit(create-form)', function (data) {    
                 	// console.log($('form').serializeObject())
                 	$.ajax({
-                		url: '${ctx}/platform/access/icon/save.json',//发送请求
+                		url: '${ctx}/platform/access/user/save.json',//发送请求
 				    	data: $('form').getForm(),
 				    	openType: 'alert',
 				    	success: function(result) {
@@ -74,34 +51,86 @@
         <form class="layui-form layui-form-pane">
             <div class="layui-form-item">
                 <label class="layui-form-label">
-                	<i>*</i>图标名称
+                	<i>*</i>用户姓名
                 </label>
                 <div class="layui-input-block">
-                    <input type="text" name="name" required="required"
+                    <input type="text" name="nickName" required="required"
                            lay-verify="required"
                            lay-verType="tips"
-                           placeholder="请输入图标名称"
+                           placeholder="请输入用户姓名"
                            autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label"><i>*</i>样式名称</label>
+                <label class="layui-form-label"><i>*</i>登录账户</label>
                 <div class="layui-input-block">
-                    <input type="text" name="className"
+                    <input type="text" name="loginName"
                     	lay-verType="tips"
-                           required lay-verify="required" placeholder="请输入样式名称"
-                           autocomplete="on" class="layui-input">
+                           required lay-verify="required" placeholder="请输入登录账户"
+                           autocomplete="off" class="layui-input">
                 </div>
             </div>
-            <!-- <div class="layui-form-item">
-                <label class="layui-form-label"><i>*</i>图标用法</label>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><i>*</i>登录密码</label>
                 <div class="layui-input-block">
-                    <input type="text" name="iconClass"
+                    <input type="password" name="password"
                     	lay-verType="tips"
-                           required lay-verify="required" placeholder="请输入图标别名"
-                           autocomplete="on" class="layui-input">
+                           required="required"
+                           lay-verify="required" placeholder="请输入登录密码"
+                           autocomplete="off" class="layui-input">
                 </div>
-            </div> -->
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><i>*</i>确认密码</label>
+                <div class="layui-input-block">
+                    <input type="password" name="repassword"
+                    	lay-verType="tips"
+                           required="required"
+                           lay-verify="required" placeholder="请输入确认密码"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><i>*</i>用户邮箱</label>
+                <div class="layui-input-block">
+                    <input type="email" name="email"
+                    	lay-verType="tips"
+                           required="required"
+                           lay-verify="required" placeholder="请输入确认密码"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><i>*</i>用户生日</label>
+                <div class="layui-input-block">
+                    <input type="text" name="brithday"
+                    	lay-verType="tips"
+                    	id="brithday"
+                    		readonly="readonly"
+                           required="required"
+                           lay-verify="required" placeholder="请选择用户生日"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><i></i>是否显示</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="enable" value="0" title="否">
+                    <input type="radio" name="enable" value="1" title="是" checked>
+                </div>
+                <label class="layui-form-label"><i></i>是否锁定</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="locked" value="0" title="否" checked>
+                    <input type="radio" name="locked" value="1" title="是">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><i></i>备注</label>
+                <div class="layui-input-block">
+			      	<textarea name="remark" style="resize:none" 
+			      		placeholder="请输入内容" class="layui-textarea"></textarea>
+			    </div>
+            </div>
             <div class="layui-form-item" style="text-align: right">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit lay-filter="create-form">

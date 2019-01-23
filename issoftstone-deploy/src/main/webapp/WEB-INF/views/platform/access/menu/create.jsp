@@ -3,38 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set value="${pageContext.request.contextPath}" var="ctx"></c:set>
 <hy:extends name="title">新增菜单</hy:extends>
-<hy:extends name="css">
-	<style type="text/css">
-		 .downpanel .layui-select-title span {
-            line-height: 38px;
-        }
- 
-        /*继承父类颜色*/
-        .downpanel dl dd:hover {
-            background-color: inherit;
-        }
-        body {
-            height: 100%;
-            width: 100%;
-            background-size: cover;
-            margin: 0 auto;
-        }
-        td {
-            font-size: 12px !important;
-        }
-
-        .layui-form-checkbox span {
-            height: 30px;
-        }
-        .layui-field-title {
-            border-top: 1px solid white;
-        }
-        table {
-            width: 100% !important;
-        }
-        
-	</style>
-</hy:extends>
 <hy:extends name="javascript">
 	<script type="text/javascript">
 		$(function () {
@@ -66,7 +34,6 @@
                     contentType: "application/json; charset=utf-8",
                     data: {},
                     success: function(res) {
-                    	console.log(res);
 		            	$('#iconId').select({
 		            		data: res.content['icons'],
 		        			holder: '请选择图标样式',
