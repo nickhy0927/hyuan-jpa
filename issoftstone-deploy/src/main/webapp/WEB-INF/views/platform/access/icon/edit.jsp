@@ -47,7 +47,7 @@
                 form.on('submit(create-form)', function (data) {
                 	$.ajax({
                 		url: '${ctx}/platform/access/icon/save.json',//发送请求
-				    	data: $('form').serializeObject(),
+				    	data: $('form').getForm(),
 				    	openType: 'alert',
 				    	success: function(result) {
 	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引

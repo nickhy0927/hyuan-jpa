@@ -9,7 +9,7 @@ import com.iss.common.anno.AccessAuthority;
  * @author Hyuan
  */
 @Controller
-public class RoleViewController {
+public class ViewRoleController {
 
 	@AccessAuthority(alias = "role-create", name = "角色新增页面")
 	@RequestMapping(value = "/platform/access/role/create.do")

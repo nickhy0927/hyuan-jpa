@@ -25,7 +25,7 @@
                     { type: "checkbox", fixed: "left" },
                     { field: "name", title: '图标名称', width: 160, fixed: "left", unresize: true},
                     { field: "icon",  title: "图标", width: 80, align: 'center', fixed: "left", unresize: true},
-                    { field: "className",  title: "图标样式", width: 160, fixed: "left", unresize: true},
+                    { field: "className",  title: "图标样式", width: 200, fixed: "left", unresize: true},
                     { title: "使用方法", unresize: true, templet: function (d) {
 						return '<pre><xmp>' + d.iconClass + '</xmp></pre>';
 					}},
@@ -98,7 +98,7 @@
         	</button>
 	    </div>
 	    <div style="display:none" id="operateBar">
-	        <a class="btn btn-secondary-outline radius size-S">
+	        <a class="btn btn-secondary-outline radius size-S" lay-event="editAction">
 	        	<i class="Hui-iconfont Hui-iconfont-edit"></i>
 	        </a>&nbsp;&nbsp;
 	        <a class="btn btn-danger-outline radius size-S" lay-event="delAction">
