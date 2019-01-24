@@ -76,7 +76,7 @@ public class UserController {
 			messageObject.openTip("刪除用户成功", null);
 		} catch (Exception e) {
 			e.printStackTrace();
-			messageObject.error("保存用户异常");
+			messageObject.error("刪除用户异常");
 		}
 		return messageObject;
 	}
