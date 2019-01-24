@@ -84,8 +84,8 @@
 	<script type="text/javascript" src="${basePath}/assets/lib/grid-mamage/js/gm.js"></script>
 	<script type="text/javascript" src="${basePath}/assets/js/layer-util.js"></script>
 	<script type="text/javascript" src="${basePath}/assets/lib/grid-mamage/js/page.js"></script> --%>
-	<script type="text/javascript" src="${basePath}/assets/js/layer-util.js"></script>
-	<script type="text/javascript" src="${basePath}/assets/lib/grid-mamage/js/page.js"></script>
+	<script type="text/javascript" src="${basePath}/static/page.js"></script>
+	<script type="text/javascript" src="${basePath}/assets/js/pageCommons.js"></script>
    	<script type="text/javascript">
    	</script>
     <title>

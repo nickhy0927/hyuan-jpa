@@ -23,7 +23,7 @@
                     { field: "nickName", title: '用户姓名', width: 120, fixed: "left", unresize: true},
                     { field: "loginName",  title: "登录账户", width: 120, align: 'left', fixed: "left", unresize: true},
                     { field: "brithday",  title: "用户生日", width: 120, align: 'center'},
-                    { field: "email",  title: "电子邮箱", width: 160},
+                    { field: "email",  title: "电子邮箱", width: 180},
                     { field: "enableName",  title: "启用", width: 80, align: 'center'},
                     { field: "lockedName",  title: "锁定", width: 80, align: 'center'},
                     { field: "lastLoginTime",  title: "最后登录时间", width: 130},
@@ -40,6 +40,11 @@
 						})
 					},
 					delAction: function (tableInstance, data) {
+						layui.use('layer', function(){
+							var layer = layui.layer;
+							layer.msg('hello');
+							layer.alert('只想简单的提示');  
+						});
 						console.log("del=== ", data)
 					}
                 },

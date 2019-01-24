@@ -48,8 +48,8 @@ public class UserController {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
 			user.setStatus(Boolean.TRUE);
-			user = userService.saveEntity(user);
-			messageObject.ok("保存用户成功", user);
+			userService.saveEntity(user);
+			messageObject.openTip("保存用户成功", null);
 		} catch (Exception e) {
 			e.printStackTrace();
 			messageObject.error("保存用户异常");
@@ -136,7 +136,7 @@ public class UserController {
 				if (user != null) {
 					user.setRoles(roles);
 					userService.saveEntity(user);
-					message.ok("保存角色信息成功", null);
+					message.openTip("保存角色信息成功", null);
 				} else {
 					message.error("保存角色信息失败");
 				}

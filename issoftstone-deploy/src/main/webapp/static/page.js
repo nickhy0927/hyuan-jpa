@@ -1,3 +1,170 @@
+(function($) {
+	$.fn.select = function(option) {
+		var _this = this;
+		var setting = $.extend({
+			data: [],
+			defaultValue: '', // 默认值
+			holder: '请选择',
+			fields: {
+				val: 'value', // value值的名称
+				name: 'name' // name值的名称
+			},
+			syns: false // 是否异步
+		}, option || {})
+		if(option.syns) {
+			$.ajax({
+           	 	type: "GET",
+                url: "${ctx}/platform/access/menu/create.json",
+                contentType: "application/json; charset=utf-8",
+                data: {},
+                dataType: "json",
+                success: function (res) {
+                	var data = res.data;
+                	var options = '<option value="">' + setting.holder +'</option>';
+                	if (data && data.length > 0) {
+                		$.each(data, function(index, item){
+                			if(setting.defaultValue == item[setting.fields.val]) 
+                				options += '<option selected="selected" value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
+                			else
+                				options += '<option value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
+                		})
+                	}
+                	_this.html(options)
+                },
+                error: function (message) {
+                }
+           })
+		} else {
+			var options = '<option value="">' + setting.holder +'</option>';
+        	if (setting.data && setting.data.length > 0) {
+        		$.each(setting.data, function(index, item){
+        			if(setting.defaultValue == item[setting.fields.val]) 
+        				options += '<option selected="selected" value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
+        			else
+        				options += '<option value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
+        		})
+        	}
+        	_this.html(options)
+		}
+	}
+	$.fn.getForm = function(){
+		var obj = {}, names = {};
+		$.each( this.serializeArray(), function(i,o){
+			var n = o.name,
+	        v = o.value;
+	        if ( n.includes( '[]' ) ) {
+	          names.n = !names.n ? 1 : names.n+1;
+	          var indx = names.n - 1;
+	          n = n.replace( '[]', '[' + indx + ']' );
+	        }
+	        obj[n] = obj[n] === undefined ? v : $.isArray( obj[n] ) ? obj[n].concat( v ) : [ obj[n], v ];
+	    });
+	    return obj;
+	}; 
+})(jQuery);
+/*
+$(window).resize(function() {
+	location.reload()
+});
+*/
+function _init_table(settings) {
+	var h = window.screen.availHeight;
+	layui.use("table", function() {
+		var table = layui.table;
+		var layer = layui.layer;
+		var config = $.extend({
+			totalRow : false,
+			height : "full", // 高度最大化减去差值
+			size : 'lg', // 小尺寸的表格
+			groupBtn: {},
+			operate: {},
+			parseData : function(res) {
+				return {
+            		"code": res.code, //解析接口状态
+            		"msg": res.message, //解析提示文本
+            		"count": res.total, //解析数据长度
+            		"data": res.rows.item //解析数据列表
+        	    };
+			},
+			text : {
+				none : '暂无相关数据' // 默认：无数据。注：该属性为 layui 2.2.5 开始新增
+			}
+		}, settings || {});
+		// 第一个实例
+		var tableInstance = table.render(config);
+		table.on('toolbar(' + config.filter + ')', function(obj) {
+			var func = config.groupBtn[obj.event];
+			var checkStatus = table.checkStatus(config.id);
+			var data = checkStatus.data;
+			var array = [];
+			if (!data) data = [];
+			else {
+				$.each(data, function(index, item) {
+					array.push(item.id);
+				})
+			}
+			if(func)
+				eval(func).call(this, tableInstance, array);
+		});
+
+		// 监听行工具事件
+		table.on('tool(' + config.filter + ')', function(obj) {
+			var func = config.operate[obj.event];
+			if(func)
+				eval(func).call(this, tableInstance, obj.data);
+		});
+	});
+}
+
+var page = {
+	openWindow : function(options) {
+		var settings = $.extend({
+			type : 2,
+			title : options.title || '提示信息',
+			area : [ options.width || '800px', options.height || '450px' ],
+			fixed : true, // 不固定
+			offset : 'auto',
+			anim : 5,
+			maxmin : true,
+			move : false,
+			shadeClose : false,
+			shade : 0.6,
+			content : options.url,
+			end : function(index) {
+				options.callback ? options.callback(index) : null
+			}
+		})
+		layui.use("layer", function() {
+			var layer = layui.layer;
+			layer.open(settings);
+		});
+	},
+	dataTable : function(option) {
+		var settings = $.extend({
+			elem : '',
+			title : "数据列表",
+			totalRow : false,
+			toolbar : '',
+			method : 'POST',
+			filter : 'demo',
+			loading: true, //翻页加loading
+			url : '',
+			cols : [],
+			// 开启分页
+			page: {
+				groups: 6,
+            	first:'首页',
+             	prev:'上一页',
+             	next:'下一页',
+             	last:'尾页',
+             	layout: ['count', 'skip','prev', 'page', 'next', 'limit', 'refresh']
+            },
+			limit: 10
+		}, option || {});
+		_init_table(settings);
+	}
+};
+
 function number_format(number, decimals, dec_point, thousands_sep) {
     /*
     * 参数说明：
@@ -93,12 +260,13 @@ function _openLoading(msg) {
 }
 
 function _openTip(content, isAlert, callback, title) {
-    console.log('openTip')
-	if (isAlert) { // skin: 'layui-layer-molv' //样式类名  自定义样式
+	if (isAlert) { 
         layer.alert(content, {
-            skin: 'layui-layer-molv', //样式类名  自定义样式
+        	//样式类名  自定义样式
+            skin: 'layui-layer-molv', 
             // anim: 2, //动画类型
-            icon: 6,    // icon
+            // icon
+            icon: 6,    
             closeBtn: 0,
             btn: ['确定'] //按钮
         }, function () {
@@ -173,19 +341,10 @@ $(document).ready(function () {
         $.openLoading();
     }).ajaxSuccess(function (event, xhr, settings) {
     	var res = JSON.parse(xhr.responseText);
-    	setTimeout(function() {
-    		if(settings.openType) {
-	    		var bool = settings.openType == 'alert';
-	    		$.openTip(res.message, bool, function() {
-	    			var fn = eval(settings.success);
-	                fn.call(this, res);
-	    		});
-	    	}  else {
-	    		$.closeLoading();
-	    		var fn = eval(settings.success);
-	            fn.call(this, res);
-	    	}
-    	}, 1000)
+    	console.log('res=== ', res)
+    	if (res.code != 1) {
+    		$.closeLoading();
+    	}
     }).ajaxError(function () {
         $.closeLoading();
         console.log('全局错误处理...')
@@ -198,5 +357,19 @@ $.extend({
     closeLoading: _closeLoading,
     dateSimpleFormat: _date_format,
     openWindow: _openWindow,
-    parentOpenWindow: _parentOpenWindow
+    parentOpenWindow: _parentOpenWindow,
+    saveInfo: function(option) {
+    	if(option.openType == 'alert') {}
+    	$.ajax({
+    		url: option.url,//发送请求
+	    	data: option.data,
+	    	openType: 'alert',
+	    	success: function(res) {
+	    		$.openTip(res.message, true, function() {
+	    			var fn = eval(option.success);
+	                fn.call(this, res);
+	    		});
+	    	}
+		})
+    }
 });

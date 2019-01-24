@@ -9,11 +9,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.iss.anno.OperateLog;
+import com.iss.common.config.InitEnvironment;
 import com.iss.common.spring.SpringContextHolder;
 import com.iss.common.utils.JsonMapper;
 import com.iss.common.utils.WebUtils;
@@ -36,7 +38,9 @@ public class OperateLogInterceptor implements HandlerInterceptor {
             	log.setMessage(operateLog.message());
             	log.setOptType(operateLog.optType());
             	User user = UserPrincipal.getContextUser();
-                log.setUser(user);
+            	if (!StringUtils.equals(InitEnvironment.getInitUsername(), user.getLoginName())) {
+            		log.setUser(user);
+				}
             	String methodName = handlerMethod.getMethod().getName();
             	log.setMethod(methodName);
             	Class<?> service = operateLog.service();
