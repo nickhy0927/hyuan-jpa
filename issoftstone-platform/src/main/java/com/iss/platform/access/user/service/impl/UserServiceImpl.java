@@ -31,6 +31,7 @@ public class UserServiceImpl extends BaseCustomService<User, String> implements 
 	private Md5PasswordEncoder encoder;
 
 	@Override
+	@Transactional(readOnly = false)
 	public User saveEntity(User entity) throws ServiceException {
 		String salt = SaltUtils.getSalt(UUID.randomUUID().toString());
 		entity.setSalt(salt);

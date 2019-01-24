@@ -22,17 +22,15 @@
                 });
                 //监听提交
                 form.on('submit(create-form)', function (data) {    
-                	// console.log($('form').serializeObject())
-                	$.ajax({
+                	$.saveInfo({
                 		url: '${ctx}/platform/access/user/save.json',//发送请求
 				    	data: $('form').getForm(),
-				    	openType: 'alert',
-				    	success: function(result) {
-	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+				    	success: function (res) {
+				    		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 		    				parent.layer.close(index); //再执行关闭
-							window.parent.refresh();
-				    	}
-					})
+		    				window.parent.refresh();
+						}
+                	})
                 	return false;
                 });
                 $.ajax({

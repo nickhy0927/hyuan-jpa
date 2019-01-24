@@ -41,7 +41,7 @@ public class MenuController {
 	private IconService iconService;
 
 	@ResponseBody
-	@AccessAuthority(alias = "menu-create", name = "新增菜单")
+	@AccessAuthority(alias = "menu-save", name = "新增菜单")
 	@RequestMapping(value = "/platform/access/menu/create.json", method = RequestMethod.GET)
 	public MessageObject<Menu> menuCreate() {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
@@ -76,7 +76,7 @@ public class MenuController {
 			}
 			menu.setStatus(IsDelete.NO);
 			menuService.saveEntity(menu);
-			messageObject.ok("新增菜单成功");
+			messageObject.openTip("新增菜单成功", null);
 			if (StringUtils.isNotEmpty(id)) {
 				messageObject.ok("修改菜单成功");
 			}
@@ -135,7 +135,7 @@ public class MenuController {
 			if (StringUtils.isNotEmpty(id)) {
 				String[] ids = id.split(",");
 				menuService.deleteBatch(ids);
-				messageObject.ok("删除菜单成功");
+				messageObject.openTip("删除菜单成功", null);
 			}
 		} catch (ServiceException e) {
 			e.printStackTrace();

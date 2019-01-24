@@ -42,7 +42,7 @@ public class IconControlller {
 			icon.setIconClass("<i class=\"Hui-iconfont " + icon.getClassName() + "\"></i> ");
 			icon.setStatus(IsDelete.NO);
 			iconService.saveEntity(icon);
-			messageObject.ok("新增图标成功");
+			messageObject.openTip("新增图标成功", null);
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
@@ -91,7 +91,7 @@ public class IconControlller {
 		try {
 			if (ids.length > 0) {
 				iconService.deleteBatch(ids);
-				messageObject.ok("删除图标成功");
+				messageObject.openTip("删除图标成功", null);
 			}
 		} catch (ServiceException e) {
 			e.printStackTrace();
