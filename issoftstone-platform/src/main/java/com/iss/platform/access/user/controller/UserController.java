@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.iss.anno.OperateLog;
 import com.iss.common.anno.AccessAuthority;
@@ -56,6 +57,29 @@ public class UserController {
 		}
 		return messageObject;
 	}
+	
+	@ResponseBody
+	@AccessAuthority(alias = "user-delete", name = "删除用户信息")
+	@OperateLog(message = "新增用户信息", method = "userSave", optType = DataType.OptType.INSERT, service = UserService.class)
+	@RequestMapping(value = "/platform/access/user/delete.json", method = RequestMethod.POST)
+	public MessageObject<User> userDelete(String id) {
+		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
+		try {
+			List<User> users = Lists.newArrayList();
+			String[] ids = id.split(",");
+			for (String str : ids) {
+				User user = userService.get(str);
+				user.setStatus(Boolean.FALSE);
+				users.add(user);
+			}
+			userService.saveBatch(users);
+			messageObject.openTip("保存用户成功", null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			messageObject.error("保存用户异常");
+		}
+		return messageObject;
+	}
 
 	@ResponseBody
 	@AccessAuthority(alias = "user-edit", name = "修改用户")
@@ -77,18 +101,13 @@ public class UserController {
 	@ResponseBody
 	@AccessAuthority(alias = "query-user-role", name = "获取用户角色信息")
 	@RequestMapping(value = "/platform/access/user/userroles/queryuserrole.json", method = RequestMethod.GET)
-	public MessageObject<User> roleList(String userId, HttpServletRequest request, PageSupport support) {
-		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
+	public MessageObject<Role> roleList(String userId, HttpServletRequest request, PageSupport support) {
+		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
 		try {
 			Map<String, Object> map = WebUtils.getRequestToMap(request);
-			if (StringUtils.isNotEmpty(userId)) {
-				User user = userService.get(userId);
-				map.put("user", user);
-			}
+			map.put("user.id_eq", userId);
 			PagerInfo<Role> pagerInfo = roleService.queryPageByMap(map, support);
-			System.out.println(pagerInfo);
-			map.put("pagerInfo", pagerInfo);
-			messageObject.ok("查询用户权限成功", map);
+			messageObject.ok("查询用户权限成功", pagerInfo);
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			messageObject.error("查询用户权限失败");

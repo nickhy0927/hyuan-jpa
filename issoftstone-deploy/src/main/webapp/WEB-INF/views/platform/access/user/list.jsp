@@ -10,11 +10,7 @@
 <hy:extends name="javascript">
     <script type="text/javascript">
     	function refresh() {
-    		page.dataTable({
-            	elem: '#tableList',
-                title: "用户信息列表",
-                filter: "tableList",
-                loading: true,
+    		$("#tableList").dataTable({
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
                 url: "${ctx}/platform/access/user/list.json",
@@ -40,12 +36,7 @@
 						})
 					},
 					delAction: function (tableInstance, data) {
-						layui.use('layer', function(){
-							var layer = layui.layer;
-							layer.msg('hello');
-							layer.alert('只想简单的提示');  
-						});
-						console.log("del=== ", data)
+						console.log(data);
 					}
                 },
                 groupBtn: {
@@ -58,7 +49,18 @@
 						})
 					},
 					deleteAction: function (tableInstance, data) {
-						console.log(tableInstance, data);
+						console.log(data);
+						$.deleteInfo({
+							url: '${ctx}/platform/access/user/delete.json',//发送请求
+					    	data: data,
+					    	loadMsg: '正在删除用户信息，请稍等...', 
+					    	success: function (res) {
+					    		refresh();
+							}
+						})
+						/* tableInstance.reload({
+							where : $("#search-form").getForm()
+						}); */
 					},
 					searchAction: function (tableInstance) {
 						tableInstance.reload({

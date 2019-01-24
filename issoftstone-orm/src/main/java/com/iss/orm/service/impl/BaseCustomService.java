@@ -8,10 +8,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.iss.common.exception.DaoException;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.PageSupport;
 import com.iss.common.utils.PageSupport.Sortable;
@@ -28,15 +28,35 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	@Override
 	@Transactional
 	public E saveEntity(E entity) throws ServiceException {
-		return this.dao.saveEntity(entity);
+		try {
+			return this.dao.saveEntity(entity);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException("保存信息失败", e);
+		}
+	}
+	
+	@Override
+	public void saveBatch(Iterable<E> entities) throws ServiceException {
+		try {
+			this.dao.save(entities);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException("批量保存信息失败", e);
+		}
 	}
 	
 	@Override
 	@Transactional
 	public void delete(ID id) throws ServiceException {
-		E t = get(id);
-		if (t != null) {
-			this.dao.delete(id);
+		try {
+			E t = get(id);
+			if (t != null) {
+				this.dao.delete(id);
+			}
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException("删除信息失败", e);
 		}
 	}
 
@@ -44,69 +64,102 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	@Override
 	@Transactional
 	public void delete(Iterable<E> entities) throws ServiceException {
-		this.dao.delete(entities);
+		try {
+			this.dao.delete(entities);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException("批量删除信息失败", e);
+		}
 	}
 
 	@Override
 	@Transactional
 	public void deleteAll() throws ServiceException {
-		this.dao.deleteAll();
+		try {
+			this.dao.deleteAll();
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException("删除所有数据信息失败", e);
+		}
 	}
 
 	
 	@Override
 	@Transactional
 	public void deleteBatch(ID[] ids) throws ServiceException {
-		if (ids != null && ids.length > 0) {
-			for (int i = 0; i < ids.length; i++) {
-				ID id = ids[i];
-				delete(id);
+		try {
+			if (ids != null && ids.length > 0) {
+				for (int i = 0; i < ids.length; i++) {
+					ID id = ids[i];
+					delete(id);
+				}
 			}
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException("删除所有数据信息失败", e);
 		}
 	}
 
 	
 	@Override
 	public List<E> findAll() throws ServiceException {
-		return dao.findAll();
+		try {
+			return dao.findAll();
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException("查询所有数据信息失败", e);
+		}
 	}
 
 	
 	@Override
 	public E get(ID id) throws ServiceException {
-		return this.dao.findOne(id);
+		try {
+			return this.dao.findOne(id);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException("查询一条数据信息失败", e);
+		}
 	}
 
 	
 	@Override
 	public List<E> queryByMap(Map<String, Object> map) throws ServiceException {
-		return this.dao.queryByMap(map);
+		try {
+			return this.dao.queryByMap(map);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException("查询数据集合信息失败", e);
+		}
 	}
 
 	
 	@Override
 	public List<E> queryByMap(Map<String, Object> paramMap, Sort sort) throws ServiceException {
-		return dao.queryByMap(paramMap, sort);
+		try {
+			return dao.queryByMap(paramMap, sort);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException("查询数据集合信息失败", e);
+		}
 	}
 
-	
-	@Override
-	public Page<E> queryPageByMap(Map<String, Object> map, Pageable pageable) throws ServiceException {
-		return this.dao.queryPageByMap(map, pageable);
-	}
-
-	
 	@Override
 	public PagerInfo<E> queryPageByMap(Map<String, Object> map, PageSupport support) throws ServiceException {
-		support.setTotalRecord(queryByMap(map).size());
-		Sort sort = new Sort(Sort.Direction.ASC, support.getOrder());
-		if (StringUtils.equals(support.getSort().toUpperCase(), Sortable.DESC.toString().toUpperCase())) {
-			sort = new Sort(Sort.Direction.DESC, support.getOrder());
+		try {
+			support.setTotalRecord(queryByMap(map).size());
+			Sort sort = new Sort(Sort.Direction.ASC, support.getOrder());
+			if (StringUtils.equals(support.getSort().toUpperCase(), Sortable.DESC.toString().toUpperCase())) {
+				sort = new Sort(Sort.Direction.DESC, support.getOrder());
+			}
+			PageRequest pageable = new PageRequest(support.getPage() - 1, support.getLimit(), sort);
+			Page<E> pageInfo = this.dao.queryPageByMap(map, pageable);
+			PagerInfo<E> pagerInfo = new PagerInfo<E>(support, pageInfo.getContent());
+			return pagerInfo;
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException("查询数据分页信息失败", e);
 		}
-		PageRequest pageable = new PageRequest(support.getPage() - 1, support.getLimit(), sort);
-		Page<E> pageInfo = queryPageByMap(map, pageable);
-		PagerInfo<E> pagerInfo = new PagerInfo<E>(support, pageInfo.getContent());
-		return pagerInfo;
 	}
 	
 }

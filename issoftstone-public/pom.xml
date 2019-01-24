@@ -33,6 +33,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo-common</artifactId>
+			<version>2.6.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 			<version>1.0.15</version>
 		</dependency>
