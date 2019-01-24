@@ -1,15 +1,19 @@
 package com.iss.platform.access.user.service.impl;
 
-import com.iss.common.encryption.Md5Encryption;
-import com.iss.orm.service.impl.BaseCustomService;
+import java.util.UUID;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.iss.common.config.InitEnvironment;
+import com.iss.common.encryption.Md5Encryption;
 import com.iss.common.exception.ServiceException;
+import com.iss.common.utils.SaltUtils;
 import com.iss.common.utils.SysContants;
+import com.iss.orm.service.impl.BaseCustomService;
 import com.iss.platform.access.user.dao.UserDao;
 import com.iss.platform.access.user.entity.User;
 import com.iss.platform.access.user.service.UserService;
@@ -23,12 +27,24 @@ public class UserServiceImpl extends BaseCustomService<User, String> implements 
 	@Autowired
 	private UserDao userDao;
 
+	@Autowired
+	private Md5PasswordEncoder encoder;
+
+	@Override
+	public User saveEntity(User entity) throws ServiceException {
+		String salt = SaltUtils.getSalt(UUID.randomUUID().toString());
+		entity.setSalt(salt);
+		String password = entity.getPassword();
+		entity.setPassword(encoder.encodePassword(password, salt));
+		return super.saveEntity(entity);
+	}
+
 	@Override
 	public User findUserByLoginName(String loginName) {
 		User root = isRoot(loginName);
 		if (root == null) {
 			root = userDao.findUserByLoginName(loginName);
-		} 
+		}
 		return root;
 	}
 
@@ -52,7 +68,7 @@ public class UserServiceImpl extends BaseCustomService<User, String> implements 
 	}
 
 	@Override
-    public User get(String id) throws ServiceException {
+	public User get(String id) throws ServiceException {
 		return userDao.findOne(id);
 	}
 
@@ -82,5 +98,4 @@ public class UserServiceImpl extends BaseCustomService<User, String> implements 
 	public void deleteByLoginName(String loginName) {
 		userDao.deleteByLoginName(loginName);
 	}
-
 }

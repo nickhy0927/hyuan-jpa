@@ -3,7 +3,6 @@ package com.iss.platform.access.user.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.common.collect.Maps;
 import com.iss.anno.OperateLog;
 import com.iss.common.anno.AccessAuthority;
-import com.iss.common.encryption.Md5Encryption;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.PageSupport;
@@ -50,9 +48,6 @@ public class UserController {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
 			user.setStatus(Boolean.TRUE);
-			String salt = UUID.randomUUID().toString();
-			user.setSalt(salt);
-			user.setPassword(Md5Encryption.MD5(user.getPassword()));
 			user = userService.saveEntity(user);
 			messageObject.ok("保存用户成功", user);
 		} catch (Exception e) {
