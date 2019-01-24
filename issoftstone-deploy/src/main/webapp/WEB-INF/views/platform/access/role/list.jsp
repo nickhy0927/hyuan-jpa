@@ -6,11 +6,7 @@
 <hy:extends name="javascript">
     <script type="text/javascript">
     	function refresh() {
-    		page.dataTable({
-            	elem: '#tableList',
-                title: "用户数据表",
-                filter: "tableList",
-                loading: true,
+    		$("#tableList").dataTable({
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
                 url: "${ctx}/platform/access/role/list.json",

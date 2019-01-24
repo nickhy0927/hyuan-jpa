@@ -6,12 +6,7 @@
 <hy:extends name="javascript">
     <script type="text/javascript">
     	function refresh() {
-    		page.dataTable({
-            	elem: '#tableList',
-                title: "用户数据表",
-                filter: "tableList",
-                id: 'tableList',
-                loading: true,
+    		$("#tableList").dataTable({
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
                 url: "${ctx}/platform/access/menu/list.json",
@@ -44,6 +39,7 @@
                 },
                 groupBtn: {
                 	createAction: function () {
+                		console.log($)
                 		$.openWindow({
 							title: '新增菜单',
 							height: '450px',
@@ -52,7 +48,6 @@
 						})
 					},
 					deleteAction: function (tableInstance, data) {
-						console.log(data);
 						$.openTip('你确定删除吗？', false, function () {
 							$.ajax({
 								url:'${ctx}/platform/access/menu/delete.json',

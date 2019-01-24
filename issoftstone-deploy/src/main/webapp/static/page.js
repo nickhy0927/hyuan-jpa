@@ -356,7 +356,7 @@ $.extend({
     openLoading: _openLoading,
     closeLoading: _closeLoading,
     dateSimpleFormat: _date_format,
-    openWindow: _openWindow,
+   /* openWindow: _openWindow,*/
     parentOpenWindow: _parentOpenWindow,
     saveInfo: function(option) {
     	if(option.openType == 'alert') {}

@@ -24,6 +24,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.iss.common.exception.DaoException;
 import com.iss.common.utils.IdEntity;
 import com.iss.orm.repository.CustomRepostiory;
 
@@ -41,17 +42,17 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 	}
 
 	@Override
-	public List<T> queryByMap(Map<String, Object> map) {
+	public List<T> queryByMap(Map<String, Object> map) throws DaoException {
 		return createCriteria(map).list();
 	}
 
 	@Override
-	public List<T> queryByCriteria(org.hibernate.Criteria criteria) {
+	public List<T> queryByCriteria(org.hibernate.Criteria criteria) throws DaoException {
 		return criteria.list();
 	}
 
 	@Override
-	public List<T> queryByMap(Map<String, Object> map, Sort sort) {
+	public List<T> queryByMap(Map<String, Object> map, Sort sort) throws DaoException {
 		Criteria criteria = createCriteria(map);
 		Iterator<Sort.Order> it;
 		if (sort != null) {
@@ -68,7 +69,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 	}
 
 	@Override
-	public List<T> queryByCriteria(Criteria criteria, Sort sort) {
+	public List<T> queryByCriteria(Criteria criteria, Sort sort) throws DaoException {
 		Iterator<Sort.Order> it;
 		if (sort != null) {
 			for (it = sort.iterator(); it.hasNext();) {
@@ -84,7 +85,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 	}
 
 	@Override
-	public Page<T> queryPageByMap(Map<String, Object> map, Pageable pageable) {
+	public Page<T> queryPageByMap(Map<String, Object> map, Pageable pageable) throws DaoException {
 		Criteria criteria = createCriteria(map);
 		long total = countCriteriaResult(criteria);
 		criteria.setFirstResult(pageable.getOffset()).setMaxResults(pageable.getPageSize());
@@ -104,7 +105,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 	}
 
 	@Override
-	public Page<T> queryPageByCriteria(Criteria criteria, Pageable pageable) {
+	public Page<T> queryPageByCriteria(Criteria criteria, Pageable pageable) throws DaoException {
 		long total = countCriteriaResult(criteria);
 		criteria.setFirstResult(pageable.getOffset()).setMaxResults(pageable.getPageSize());
 		Iterator<Sort.Order> it;
@@ -123,7 +124,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 	}
 
 	@Override
-	public Criteria createCriteria(Map<String, Object> map) {
+	public Criteria createCriteria(Map<String, Object> map) throws DaoException {
 		Set<Map.Entry<String, Object>> set = map.entrySet();
 		Criteria c = getSession().createCriteria(this.entityClass);
 		for (Map.Entry<String, Object> entry : set) {
@@ -137,7 +138,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 	}
 
 	@Override
-	public Disjunction createdDisjunction(Map<String, Object> map) {
+	public Disjunction createdDisjunction(Map<String, Object> map) throws DaoException {
 		Set<Map.Entry<String, Object>> set = map.entrySet();
 		Disjunction or = Restrictions.disjunction();
 		for (Map.Entry<String, Object> entry : set) {
@@ -189,11 +190,11 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 	}
 
 	protected long countCriteriaResult(Criteria c) {
-		return 0;
+		return c.list().size();
 	}
 
 	@Override
-	public int nativeSqlUpdate(String sql, Object... values) {
+	public int nativeSqlUpdate(String sql, Object... values) throws DaoException {
 		SQLQuery query = getSession().createSQLQuery(sql);
 		if (values != null) {
 			for (int i = 0; i < values.length; i++) {
@@ -204,7 +205,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 	}
 
 	@Override
-	public int nativeSqlUpdate(String sql, Map<String, ?> values) {
+	public int nativeSqlUpdate(String sql, Map<String, ?> values) throws DaoException {
 		SQLQuery query = getSession().createSQLQuery(sql);
 		if (values != null) {
 			query.setProperties(values);
@@ -213,25 +214,24 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 	}
 
 	@Override
-	public T saveEntity(T entity) {
+	public T saveEntity(T entity) throws DaoException {
 		if ((entity instanceof IdEntity)) {
 			((IdEntity) entity).setUpdateTime(new Date());
 		}
 		return saveAndFlush(entity);
 	}
 
-	public List<T> queryByMap(Map<String, Object> map, int limit) {
+	public List<T> queryByMap(Map<String, Object> map, int limit) throws DaoException {
 		Criteria criteria = createCriteria(map);
 		criteria.setFirstResult(0).setMaxResults(limit);
 		return criteria.list();
 	}
 
-	public List<T> queryByMap(Map<String, Object> map, int limit, Sort sort) {
+	public List<T> queryByMap(Map<String, Object> map, int limit, Sort sort) throws DaoException {
 		Criteria criteria = createCriteria(map);
 		criteria.setFirstResult(0).setMaxResults(limit);
-		Iterator<Sort.Order> it;
 		if (sort != null) {
-			for (it = sort.iterator(); it.hasNext();) {
+			for (Iterator<Sort.Order> it = sort.iterator(); it.hasNext();) {
 				Sort.Order order = (Sort.Order) it.next();
 				if (order.getDirection().equals(Sort.Direction.DESC)) {
 					criteria.addOrder(Order.desc(order.getProperty()));
@@ -243,13 +243,13 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 		return criteria.list();
 	}
 
-	public List<T> queryByMap(Map<String, Object> map, int offset, int limit) {
+	public List<T> queryByMap(Map<String, Object> map, int offset, int limit) throws DaoException {
 		Criteria criteria = createCriteria(map);
 		criteria.setFirstResult(offset).setMaxResults(limit);
 		return criteria.list();
 	}
 
-	public List<T> queryByMap(Map<String, Object> map, int offset, int limit, Sort sort) {
+	public List<T> queryByMap(Map<String, Object> map, int offset, int limit, Sort sort) throws DaoException {
 		Criteria criteria = createCriteria(map);
 		criteria.setFirstResult(offset).setMaxResults(limit);
 		Iterator<Sort.Order> it;
@@ -267,11 +267,11 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 	}
 
 	@Override
-	public List<T> queryByCriteria(Criteria criteria, int limit) {
+	public List<T> queryByCriteria(Criteria criteria, int limit) throws DaoException {
 		return criteria.setFirstResult(0).setMaxResults(limit).list();
 	}
 
-	public List<T> queryByCriteria(Criteria criteria, int limit, Sort sort) {
+	public List<T> queryByCriteria(Criteria criteria, int limit, Sort sort) throws DaoException {
 		criteria.setFirstResult(0).setMaxResults(limit);
 		Iterator<Sort.Order> it;
 		if (sort != null) {
@@ -287,12 +287,12 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 		return criteria.list();
 	}
 
-	public List<T> queryByCriteria(Criteria criteria, int offset, int limit) {
+	public List<T> queryByCriteria(Criteria criteria, int offset, int limit) throws DaoException {
 		return criteria.setFirstResult(offset).setMaxResults(limit).list();
 	}
 
 	public List<T> queryByCriteria(Criteria criteria, int offset, int limit,
-			Sort sort) {
+			Sort sort) throws DaoException {
 		criteria.setFirstResult(offset).setMaxResults(limit);
 		Iterator<Sort.Order> it;
 		if (sort != null) {
@@ -313,7 +313,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 	}
 
 	@Override
-	public void insertInBatch(List<T> entitys) {
+	public void insertInBatch(List<T> entitys) throws DaoException {
 		for (int i = 0; i < entitys.size(); i++) {
 			this.entityManager.persist(entitys.get(i));
 			if (i % 50 == 0) {
@@ -324,7 +324,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 	}
 
 	@Override
-	public Page<T> queryByPage(Pageable pageable) {
+	public Page<T> queryByPage(Pageable pageable) throws DaoException {
 		Criteria criteria = getSession().createCriteria(this.entityClass);
 		long total = countCriteriaResult(criteria);
 		criteria.setFirstResult(pageable.getOffset()).setMaxResults(pageable.getPageSize());
@@ -344,7 +344,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 	}
 
 	@Override
-	public List<T> findByEntityList(Map<String, Object> paramMap) {
+	public List<T> findByEntityList(Map<String, Object> paramMap) throws DaoException {
 		Criteria criteria = createCriteria(paramMap);
 		return queryByCriteria(criteria);
 	}

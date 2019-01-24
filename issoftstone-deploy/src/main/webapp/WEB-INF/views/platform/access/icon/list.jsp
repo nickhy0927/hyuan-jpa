@@ -13,11 +13,7 @@
 <hy:extends name="javascript">
     <script type="text/javascript">
     	function refresh() {
-    		page.dataTable({
-            	elem: '#tableList',
-                title: "图标列表",
-                filter: "tableList",
-                loading: true,
+    		$("#tableList").dataTable({
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
                 url: "${ctx}/platform/access/icon/list.json",

@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import com.iss.common.exception.ServiceException;
@@ -38,9 +36,9 @@ public interface CustomService<E, ID extends Serializable> {
 
 	List<E> queryByMap(Map<String, Object> paramMap, Sort sort) throws ServiceException;
 
-	Page<E> queryPageByMap(Map<String, Object> paramMap, Pageable paramPageable) throws ServiceException;
-
 	PagerInfo<E> queryPageByMap(Map<String, Object> map, PageSupport support) throws ServiceException;
 
 	E saveEntity(E entity) throws ServiceException;
+	
+	void saveBatch(Iterable<E> paramIterable) throws ServiceException;
 }

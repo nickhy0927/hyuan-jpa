@@ -25,6 +25,7 @@
                 	$.saveInfo({
                 		url: '${ctx}/platform/access/user/save.json',//发送请求
 				    	data: $('form').getForm(),
+				    	loadMsg: '正在保存菜单信息，请稍等...', 
 				    	success: function (res) {
 				    		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 		    				parent.layer.close(index); //再执行关闭
