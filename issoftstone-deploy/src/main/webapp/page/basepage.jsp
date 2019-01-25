@@ -75,7 +75,6 @@
 	<!-- 表单验证插件 -->
 	<script type="text/javascript" src="${basePath}/assets/lib/jquery.validation/1.14.0/messages_zh.js"></script> <!-- 表单验证插件 -->
 	<script type="text/javascript" src="${basePath}/assets/js/common/tools.js"></script>
-	<script type="text/javascript" src="${basePath}/static/page.js"></script>
 	<script type="text/javascript" src="${basePath}/static/pageCommons.js"></script>
    	<script type="text/javascript">
    	</script>

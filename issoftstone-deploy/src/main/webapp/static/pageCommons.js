@@ -1,4 +1,64 @@
 (function($, window, document) {
+	$.fn.select = function(option) {
+		var _this = this;
+		var setting = $.extend({
+			data: [],
+			defaultValue: '', // 默认值
+			holder: '请选择',
+			fields: {
+				val: 'value', // value值的名称
+				name: 'name' // name值的名称
+			},
+			syns: false // 是否异步
+		}, option || {})
+		if(option.syns) {
+			$.ajax({
+           	 	type: "GET",
+                url: "${ctx}/platform/access/menu/create.json",
+                contentType: "application/json; charset=utf-8",
+                success: function (res) {
+                	var data = res.data;
+                	var options = '<option value="">' + setting.holder +'</option>';
+                	if (data && data.length > 0) {
+                		$.each(data, function(index, item){
+                			if(setting.defaultValue == item[setting.fields.val]) 
+                				options += '<option selected="selected" value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
+                			else
+                				options += '<option value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
+                		})
+                	}
+                	_this.html(options)
+                },
+                error: function (message) {
+                }
+           })
+		} else {
+			var options = '<option value="">' + setting.holder +'</option>';
+        	if (setting.data && setting.data.length > 0) {
+        		$.each(setting.data, function(index, item){
+        			if(setting.defaultValue == item[setting.fields.val]) 
+        				options += '<option selected="selected" value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
+        			else
+        				options += '<option value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
+        		})
+        	}
+        	_this.html(options)
+		}
+	}
+	$.fn.getForm = function(){
+		var obj = {}, names = {};
+		$.each( this.serializeArray(), function(i,o){
+			var n = o.name,
+	        v = o.value;
+	        if ( n.includes( '[]' ) ) {
+	          names.n = !names.n ? 1 : names.n+1;
+	          var indx = names.n - 1;
+	          n = n.replace( '[]', '[' + indx + ']' );
+	        }
+	        obj[n] = obj[n] === undefined ? v : $.isArray( obj[n] ) ? obj[n].concat( v ) : [ obj[n], v ];
+	    });
+	    return obj;
+	}; 
 	$.fn.dataTable = function(options) {
 		var _this = $(this);
 		layui.use("table", function() {
@@ -61,53 +121,7 @@
 			});
 		});
 	}
-	$.extend({
-		openWindow : _openWindow,
-		openTip: _openTip,
-	    openLoading: _openLoading,
-	    closeLoading: _closeLoading,
-	    dateSimpleFormat: _date_format,
-	    saveInfo: function(option) {
-	    	$.ajax({
-	    		url: option.url,//发送请求
-		    	data: option.data,
-		    	loadMsg: option.loadMsg, 
-		    	success: function(res) {
-		    		$.openTip(res.message, true, function() {
-		    			var fn = eval(option.success);
-		                fn.call(this, res);
-		    		});
-		    	}
-			})
-	    },
-	    deleteInfo: function(options) {
-	    	layer.confirm("确定要删除信息吗？", {
-	            skin: 'layui-layer-molv', //样式类名  自定义样式
-	            title: options.title ? options.title : '提示信息',
-	            closeBtn: 0,
-	            btn: ['确定', '取消'] //按钮
-	        }, function () {
-	            _closeLoading();
-	            var ids = [];
-	            var data = options.data;
-	            for(var i in data) ids.push(data[i].id)
-	            console.log(ids);
-	            $.ajax({
-		    		url: options.url,//发送请求
-			    	data: {id: ids.join(",")},
-			    	loadMsg: options.loadMsg, 
-			    	success: function(res) {
-			    		$.openTip(res.message, true, function() {
-			    			var fn = eval(options.success);
-			                fn.call(this, res);
-			    		});
-			    	}
-				})
-	        }, function () {
-	            _closeLoading();
-	        });
-	    }
-	})
+	
 })(jQuery, window, document);
 
 
@@ -195,18 +209,66 @@ $(document).ready(function () {
 	});
     $(document).ajaxStart(function () {
     }).ajaxSend(function(e,xhr,opt){
-    	console.log("ajaxSend event==========", event)
-    	console.log("ajaxSend xhr==========", xhr)
-    	console.log("ajaxSend opt==========", opt)
-    	console.log("ajaxSend loadMsg==========", opt.loadMsg)
-    	$.openLoading(opt.loadMsg);
+    	_openLoading(opt.loadMsg);
     }).ajaxSuccess(function (event, xhr, settings) {
     	var res = JSON.parse(xhr.responseText);
     	if (res.code != 1) {
-    		$.closeLoading();
+    		_closeLoading();
     	}
     }).ajaxError(function () {
         $.closeLoading();
         console.log('全局错误处理...')
     })
+    $.extend({
+		openWindow : _openWindow,
+		openTip: _openTip,
+	    openLoading: _openLoading,
+	    closeLoading: _closeLoading,
+	    saveInfo: function(option) {
+	    	$.ajax({
+	    		url: option.url,//发送请求
+		    	data: option.data,
+		    	loadMsg: option.loadMsg, 
+		    	success: function(res) {
+		    		$.openTip(res.message, true, function() {
+		    			var fn = eval(option.success);
+		                fn.call(this, res);
+		    		});
+		    	}
+			})
+	    },
+	    deleteInfo: function(options) {
+	    	var ids = [];
+            var data = options.data;
+            for(var i in data) ids.push(data[i].id)
+            if(ids.length == 0) {
+            	$.openTip('请选择一项进行删除');
+            	return;
+            }
+            console.log(ids);
+	    	layer.confirm("确定要删除信息吗？", {
+	            skin: 'layui-layer-molv', //样式类名  自定义样式
+	            title: options.title ? options.title : '提示信息',
+	            closeBtn: 0,
+	            btn: ['确定', '取消'] //按钮
+	        }, function () {
+	            _closeLoading();
+	            $.ajax({
+		    		url: options.url,//发送请求
+			    	data: {id: ids.join(",")},
+			    	loadMsg: options.loadMsg, 
+			    	success: function(res) {
+			    		$.openTip(res.message, function() {
+			    			var fn = eval(options.success);
+			                fn.call(this, res);
+			    		});
+			    	}
+				})
+	        }, function () {
+	        	
+	        	console.log('1')
+	            _closeLoading();
+	        });
+	    }
+	})
 });

@@ -37,9 +37,10 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	}
 	
 	@Override
-	public void saveBatch(Iterable<E> entities) throws ServiceException {
+	@Transactional
+	public void saveBatch(List<E> entities) throws ServiceException {
 		try {
-			this.dao.save(entities);
+			this.dao.insertInBatch(entities);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new ServiceException("批量保存信息失败", e);

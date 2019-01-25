@@ -24,6 +24,7 @@ import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.PageSupport;
 import com.iss.common.utils.PagerInfo;
 import com.iss.common.utils.WebUtils;
+import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.constant.DataType;
 import com.iss.platform.access.role.entity.Role;
 import com.iss.platform.access.role.service.RoleService;
@@ -48,7 +49,7 @@ public class UserController {
 	public MessageObject<User> userSave(User user) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
-			user.setStatus(Boolean.TRUE);
+			user.setStatus(IsDelete.NO);
 			userService.saveEntity(user);
 			messageObject.openTip("保存用户成功", null);
 		} catch (Exception e) {
@@ -60,7 +61,7 @@ public class UserController {
 	
 	@ResponseBody
 	@AccessAuthority(alias = "user-delete", name = "删除用户信息")
-	@OperateLog(message = "新增用户信息", method = "userSave", optType = DataType.OptType.INSERT, service = UserService.class)
+	@OperateLog(message = "删除用户信息", method = "userSave", optType = DataType.OptType.INSERT, service = UserService.class)
 	@RequestMapping(value = "/platform/access/user/delete.json", method = RequestMethod.POST)
 	public MessageObject<User> userDelete(String id) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
@@ -69,7 +70,7 @@ public class UserController {
 			String[] ids = id.split(",");
 			for (String str : ids) {
 				User user = userService.get(str);
-				user.setStatus(Boolean.FALSE);
+				user.setStatus(IsDelete.YES);
 				users.add(user);
 			}
 			userService.saveBatch(users);
@@ -123,6 +124,7 @@ public class UserController {
 		MessageObject<User> message = MessageObject.getDefaultInstance();
 		Map<String, Object> paramMap = WebUtils.getRequestToMap(request);
 		try {
+			paramMap.put("status_eq", IsDelete.NO);
 			PagerInfo<User> users = userService.queryPageByMap(paramMap, support);
 			message.ok("查询用户成功", users);
 		} catch (ServiceException e) {
