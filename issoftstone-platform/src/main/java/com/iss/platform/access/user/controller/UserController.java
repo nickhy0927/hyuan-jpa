@@ -45,13 +45,16 @@ public class UserController {
 	@ResponseBody
 	@AccessAuthority(alias = "user-save", name = "新增用户信息")
 	@OperateLog(message = "新增用户信息", method = "userSave", optType = DataType.OptType.INSERT, service = UserService.class)
-	@RequestMapping(value = "/platform/access/user/save.json", method = RequestMethod.POST)
+	@RequestMapping(value = "/platform/access/user/userSave.json", method = RequestMethod.POST)
 	public MessageObject<User> userSave(User user) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
+			String id = user.getId();
 			user.setStatus(IsDelete.NO);
 			userService.saveEntity(user);
-			messageObject.openTip("保存用户成功", null);
+			if (StringUtils.isEmpty(id)) {
+				messageObject.openTip("保存用户成功");
+			} else messageObject.openTip("修改用户成功");
 		} catch (Exception e) {
 			e.printStackTrace();
 			messageObject.error("保存用户异常");
@@ -61,8 +64,8 @@ public class UserController {
 	
 	@ResponseBody
 	@AccessAuthority(alias = "user-delete", name = "删除用户信息")
-	@OperateLog(message = "删除用户信息", method = "userSave", optType = DataType.OptType.INSERT, service = UserService.class)
-	@RequestMapping(value = "/platform/access/user/delete.json", method = RequestMethod.POST)
+	@OperateLog(message = "删除用户信息", method = "userDelete", optType = DataType.OptType.INSERT, service = UserService.class)
+	@RequestMapping(value = "/platform/access/user/userDelete.json", method = RequestMethod.POST)
 	public MessageObject<User> userDelete(String id) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -92,7 +95,7 @@ public class UserController {
 	@ResponseBody
 	@AccessAuthority(alias = "user-edit", name = "修改用户")
 	@OperateLog(message = "修改用户信息", method = "edit", optType = DataType.OptType.UPDATE, service = UserService.class)
-	@RequestMapping(value = "/platform/access/user/edit.json", method = RequestMethod.POST)
+	@RequestMapping(value = "/platform/access/user/userEdit.json", method = RequestMethod.POST)
 	public MessageObject<User> userEdit(String id) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {

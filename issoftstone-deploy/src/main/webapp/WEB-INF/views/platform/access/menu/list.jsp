@@ -30,7 +30,7 @@
 							title: '修改菜单',
 							height: '450px',
 							width: '90%',
-							url: '${ctx}/platform/access/menu/edit.do?id=' + data.id
+							url: '${ctx}/platform/access/menu/edit.do?id=' + data[0].id
 						})
 					},
 					delAction: function (tableInstance, data) {
@@ -103,9 +103,9 @@
 	                    <label class="layui-form-label">是否启用</label>
 	                    <div class="layui-input-inline">
 	                        <select name="enable_eq" lay-filter="enable">
-	                            <option value="">请选择菜单状态</option>
+	                            <option value="">请选择</option>
 	                            <option value="0">否</option>
-	                            <option value="1" selected>是</option>
+	                            <option value="1">是</option>
 	                        </select>
 	                    </div>
 	                </div>

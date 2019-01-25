@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -60,11 +59,13 @@ public class RoleController {
 	public MessageObject<Role> roleSave(Role role) {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
 		try {
-			if (StringUtils.isNotEmpty(role.getParentId())) {
-				role.setRole(roleService.get(role.getParentId()));
-			}
+			String id = role.getId();
+			role.setStatus(IsDelete.NO);
 			roleService.saveEntity(role);
-			messageObject.ok("新增角色成功");
+			if (StringUtils.isEmpty(id)) {
+				messageObject.openTip("新增角色成功");
+			} else messageObject.openTip("修改角色成功");
+			
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
@@ -72,16 +73,16 @@ public class RoleController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "role-edit", name = "修改角色")
-	@OperateLog(message = "修改角色信息", method = "edit", optType = DataType.OptType.UPDATE, service = RoleService.class)
-	@RequestMapping(value = "/platform/access/role/edit.json", method = RequestMethod.POST)
-	public MessageObject<Role> roleEdit(@RequestBody String id) {
+	@AccessAuthority(alias = "role-edit", name = "获取角色信息")
+	@OperateLog(message = "获取角色信息", method = "edit", optType = DataType.OptType.UPDATE, service = RoleService.class)
+	@RequestMapping(value = "/platform/access/role/roleEdit.json", method = RequestMethod.POST)
+	public MessageObject<Role> roleEdit(String id) {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
 		try {
-			messageObject.ok("修改角色成功", roleService.get(id));
+			messageObject.ok("获取角色成功", roleService.get(id));
 		} catch (ServiceException e) {
 			e.printStackTrace();
-			messageObject.error("修改角色异常");
+			messageObject.error("获取角色异常");
 		}
 		return messageObject;
 	}
@@ -107,8 +108,8 @@ public class RoleController {
 	@ResponseBody
 	@AccessAuthority(alias = "role-delete", name = "删除角色")
 	@OperateLog(message = "删除角色信息", method = "delete", optType = DataType.OptType.DELETE, service = RoleService.class)
-	@RequestMapping(value = "/platform/access/role/delete.json", method = { RequestMethod.POST })
-	public MessageObject<Role> roleDelete(String id) {
+	@RequestMapping(value = "/platform/access/role/roleDetete.json", method = { RequestMethod.POST })
+	public MessageObject<Role> roleDetete(String id) {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
 		try {
 			if (StringUtils.isNotEmpty(id)) {

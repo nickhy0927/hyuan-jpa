@@ -59,11 +59,10 @@
 	    });
 	    return obj;
 	}; 
-	$.fn.dataTable = function(options) {
-		var _this = $(this);
+	var globleOpts = undefined;
+	var _init_table = function(options, _this) {
 		layui.use("table", function() {
 			var table = layui.table;
-			var layer = layui.layer;
 			var settings = $.extend({
 				elem : _this,
 				title : "数据列表",
@@ -93,15 +92,17 @@
 				},
 				// 开启分页
 				page : {
-					groups : 6,
+					groups : 5,
 					first : '首页',
 					prev : '上一页',
 					next : '下一页',
 					last : '尾页',
-					layout : [ 'count', 'skip', 'prev', 'page', 'next', 'limit', 'refresh' ]
+					theme: '#FF5722',
+					layout : [ 'count', 'skip', 'prev', 'page', 'next', 'limit', 'refresh' ],
 				},
 				limit : 10
 			}, options || {});
+			globleOpts = settings;
 			// 第一个实例
 			var tableInstance = table.render(settings);
 			table.on('toolbar(' + _this.attr('lay-filter') + ')', function(obj) {
@@ -121,9 +122,15 @@
 			});
 		});
 	}
-	
+	$.fn.dataTable = function(options) {
+		var _this = $(this);
+		_init_table(options, _this);
+	}
+	$.fn.refreshTable = function() {
+		if(!globleOpts) globleOpts = {};
+		_init_table(globleOpts, $(this))
+	}
 })(jQuery, window, document);
-
 
 /**
  * 打开窗口
@@ -181,9 +188,6 @@ var _openLoading = function(msg) {
     layer.msg(msg, {icon: 16, time: 1000 * 10000, shade: [0.3, '#000']});
 }
 
-/**
- * 
- */
 var _openTip = function(content, callback) {
 	layer.alert(content, {
         skin: 'layui-layer-molv', 
@@ -192,7 +196,6 @@ var _openTip = function(content, callback) {
         closeBtn: 0,
         btn: ['确定'] //按钮
     }, function () {
-    	_closeLoading();
         if (callback != undefined)
             callback();
     });
@@ -230,7 +233,7 @@ $(document).ready(function () {
 		    	data: option.data,
 		    	loadMsg: option.loadMsg, 
 		    	success: function(res) {
-		    		$.openTip(res.message, true, function() {
+		    		$.openTip(res.message, function() {
 		    			var fn = eval(option.success);
 		                fn.call(this, res);
 		    		});
@@ -245,7 +248,6 @@ $(document).ready(function () {
             	$.openTip('请选择一项进行删除');
             	return;
             }
-            console.log(ids);
 	    	layer.confirm("确定要删除信息吗？", {
 	            skin: 'layui-layer-molv', //样式类名  自定义样式
 	            title: options.title ? options.title : '提示信息',

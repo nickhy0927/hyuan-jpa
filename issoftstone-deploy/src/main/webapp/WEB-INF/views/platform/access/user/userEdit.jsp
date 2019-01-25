@@ -23,7 +23,7 @@
                 //监听提交
                 form.on('submit(create-form)', function (data) {    
                 	$.saveInfo({
-                		url: '${ctx}/platform/access/user/save.json',//发送请求
+                		url: '${ctx}/platform/access/user/userSave.json',//发送请求
 				    	data: $('form').getForm(),
 				    	success: function (res) {
 				    		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
@@ -35,7 +35,7 @@
                 });
                 $.ajax({
     		    	type: 'POST',
-    		    	url: '${ctx}/platform/access/user/edit.json',//发送请求
+    		    	url: '${ctx}/platform/access/user/userEdit.json',//发送请求
     		    	data: {id : '${id}'},
     		    	dataType : "json",
     		    	success: function(res) {

@@ -1,16 +1,17 @@
 package com.iss.platform.access.icon.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.collect.Lists;
 import com.iss.anno.OperateLog;
 import com.iss.common.anno.AccessAuthority;
 import com.iss.common.exception.ServiceException;
@@ -85,12 +86,19 @@ public class IconControlller {
 	@ResponseBody
 	@AccessAuthority(alias = "icon-delete", name = "删除图标")
 	@OperateLog(message = "删除图标信息", method = "delete", optType = DataType.OptType.DELETE, service = IconService.class)
-	@RequestMapping(value = "/platform/access/icon/delete.json", method = RequestMethod.POST)
-	public MessageObject<Icon> iconDelete(@RequestBody String[] ids) {
+	@RequestMapping(value = "/platform/access/icon/iconDelete.json", method = RequestMethod.POST)
+	public MessageObject<Icon> iconDelete(String id) {
 		MessageObject<Icon> messageObject = MessageObject.getDefaultInstance();
 		try {
+			String[] ids = id.split(",");
 			if (ids.length > 0) {
-				iconService.deleteBatch(ids);
+				List<Icon> icons = Lists.newArrayList();
+				for (String string : ids) {
+					Icon icon = iconService.get(string);
+					icon.setStatus(IsDelete.YES);
+					icons.add(icon);
+				}
+				iconService.saveBatch(icons);
 				messageObject.openTip("删除图标成功", null);
 			}
 		} catch (ServiceException e) {

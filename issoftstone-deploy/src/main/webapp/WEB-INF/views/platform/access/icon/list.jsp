@@ -33,11 +33,11 @@
 							title: '修改图标',
 							height: '240px',
 							width: '70%',
-							url: '${ctx}/platform/access/icon/edit.do?id=' + data.id 
+							url: '${ctx}/platform/access/icon/edit.do?id=' + data[0].id 
 						})
 					},
 					delAction: function (tableInstance, data) {
-						console.log("del=== ", data)
+						deleteInfo(tableInstance, data);
 					}
                 },
                 groupBtn: {
@@ -50,7 +50,7 @@
 						})
 					},
 					deleteAction: function (tableInstance, data) {
-						console.log(tableInstance, data);
+						deleteInfo(tableInstance, data);
 					},
 					searchAction: function (tableInstance) {
 						tableInstance.reload({
@@ -59,6 +59,17 @@
 					}
                 }
             });
+		}
+    	
+    	function deleteInfo(tableInstance, data) {
+    		$.deleteInfo({
+				url: '${ctx}/platform/access/icon/iconDelete.json',//发送请求
+		    	data: data,
+		    	loadMsg: '正在删除图标信息，请稍等...', 
+		    	success: function (res) {
+		    		$("#tableList").refreshTable()
+				}
+			})
 		}
         $(function() {
             refresh();
