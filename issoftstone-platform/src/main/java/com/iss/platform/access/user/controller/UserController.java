@@ -81,6 +81,13 @@ public class UserController {
 		}
 		return messageObject;
 	}
+	
+	@AccessAuthority(alias = "user-role-list", name = "获取用户权限信息")
+	@RequestMapping(value = "/platform/access/user/userRoleList.do", method = RequestMethod.GET)
+	public String userRoleList(String userId) {
+		
+		return "platform/access/user/roleList";
+	}
 
 	@ResponseBody
 	@AccessAuthority(alias = "user-edit", name = "修改用户")
@@ -99,23 +106,7 @@ public class UserController {
 		}
 		return messageObject;
 	}
-	@ResponseBody
-	@AccessAuthority(alias = "query-user-role", name = "获取用户角色信息")
-	@RequestMapping(value = "/platform/access/user/userroles/queryuserrole.json", method = RequestMethod.GET)
-	public MessageObject<Role> roleList(String userId, HttpServletRequest request, PageSupport support) {
-		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
-		try {
-			Map<String, Object> map = WebUtils.getRequestToMap(request);
-			map.put("user.id_eq", userId);
-			PagerInfo<Role> pagerInfo = roleService.queryPageByMap(map, support);
-			messageObject.ok("查询用户权限成功", pagerInfo);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			messageObject.error("查询用户权限失败");
-		}
-		return messageObject;
-	}
-
+	
 	@ResponseBody
 	@AccessAuthority(alias = "user-list", name = "获取用户信息列表")
 	@RequestMapping(value = "/platform/access/user/list.json", method = RequestMethod.POST)

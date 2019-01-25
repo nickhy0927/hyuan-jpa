@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.collect.Lists;
 import com.iss.anno.OperateLog;
 import com.iss.common.anno.AccessAuthority;
 import com.iss.common.exception.ServiceException;
@@ -107,12 +108,21 @@ public class RoleController {
 	@AccessAuthority(alias = "role-delete", name = "删除角色")
 	@OperateLog(message = "删除角色信息", method = "delete", optType = DataType.OptType.DELETE, service = RoleService.class)
 	@RequestMapping(value = "/platform/access/role/delete.json", method = { RequestMethod.POST })
-	public MessageObject<Role> roleDelete(@RequestBody String[] ids) {
+	public MessageObject<Role> roleDelete(String id) {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
 		try {
-			if (ids.length > 0) {
-				roleService.deleteBatch(ids);
+			if (StringUtils.isNotEmpty(id)) {
+				String[] ids = id.split(",");
+				List<Role> roles = Lists.newArrayList();
+				for (String string : ids) {
+					Role role = roleService.get(string);
+					role.setStatus(IsDelete.YES);
+					roles.add(role);
+				}
+				roleService.saveBatch(roles);
 				messageObject.openTip("删除角色成功");
+			} else {
+				messageObject.error("删除角色异常");
 			}
 		} catch (ServiceException e) {
 			e.printStackTrace();

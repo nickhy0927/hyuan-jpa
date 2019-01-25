@@ -9,27 +9,16 @@
     		$("#tableList").dataTable({
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
+                limit: 10,
                 url: "${ctx}/platform/access/role/list.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
                     { field: "code", title: '角色编号', width: 160, fixed: "left", unresize: true},
                     { field: "name", title: '角色名称', width: 160, fixed: "left", unresize: true},
                     { field: "parentName", title: "上级角色", width: 160, unresize: true},
-                    { field: "remark", title: "备注"},
-                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 120, unresize: true}
+                    { field: "remark", title: "备注"}
                 ]],
                 groupBtn: {
-                	createAction: function () {
-                		$.openWindow({
-							title: '新增用户信息',
-							height: '520px',
-							width: '70%',
-							url: '${ctx}/platform/access/role/create.do'
-						})
-					},
-					deleteAction: function (tableInstance, data) {
-						deleteInfo(tableInstance, data);
-					},
 					searchAction: function (tableInstance) {
 						tableInstance.reload({
 							where : $("#search-form").getForm()
@@ -37,18 +26,6 @@
 					}
                 }
             });
-		}
-    	function deleteInfo(tableInstance, data) {
-    		$.deleteInfo({
-				url: '${ctx}/platform/access/role/delete.json',//发送请求
-		    	data: data,
-		    	loadMsg: '正在删除角色信息，请稍等...', 
-		    	success: function (res) {
-		    		tableInstance.reload({
-						where : $("#search-form").getForm()
-					});
-				}
-			})
 		}
         $(function() {
             refresh();
@@ -73,10 +50,7 @@
     	<table id="tableList" lay-filter="tableList"></table>
 	    <div style="display:none" class="layui-btn-container" id="tableBar">
 	        <button class="	btn btn-primary radius" lay-event="createAction">
-	        	<i class="Hui-iconfont Hui-iconfont-add2"></i>新增
-	        </button>
-	        <button class="btn btn-danger radius" lay-event="deleteAction">
-	        	<i class="Hui-iconfont Hui-iconfont-del2"></i>批量删除
+	        	<i class="Hui-iconfont Hui-iconfont-add2"></i>确定
 	        </button>
 	        <button class="btn btn-success radius" lay-event="searchAction">
 	        	<i class="Hui-iconfont Hui-iconfont-search"></i>   
