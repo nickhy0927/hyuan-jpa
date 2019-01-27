@@ -91,24 +91,20 @@
     		<div class="menu_dropdown" style="<c:if test="${m.index == 0}">display: block</c:if><c:if test="${m.index != 0}">display: none</c:if>">
     			<c:if test="${not empty menu.children}">
 	   				<c:forEach items="${menu.children}" var="secord" varStatus="s">
-	   					<hy:permission alias="${secord.alias}">
 		   					<dl>
 				                <dt><i class="Hui-iconfont">&#xe616;</i> ${secord.name}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 				                <dd>
 				                    <ul>
 				                        <c:if test="${not empty secord.children}">
 				                        	<c:forEach items="${secord.children}" var="third">
-				                        		<hy:permission alias="${third.alias}">
 					                        		<li>
 							                        	<a data-href="${basePath}${third.url}" data-title="${third.name}" href="javascript:void(0)">${third.name}</a>
 							                        </li>
-						                        </hy:permission>
 				                        	</c:forEach>
 				                        </c:if>
 				                    </ul>
 				                </dd>
 				            </dl>
-			            </hy:permission>
 	   				</c:forEach>
 	   			</c:if>
         	</div>
