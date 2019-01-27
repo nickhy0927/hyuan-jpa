@@ -1,10 +1,22 @@
 package com.iss.interceptor;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.google.common.collect.Maps;
+import com.iss.common.config.InitEnvironment;
 import com.iss.common.spring.SpringContextHolder;
+import com.iss.common.utils.SysContants.IsDelete;
+import com.iss.platform.access.user.entity.User;
+import com.iss.platform.access.user.service.UserService;
 
 public class StaticResources {
+	
+	@Autowired
+	private UserService userService;
 
 	private List<String> urls;
 	private String loginUrl;
@@ -49,6 +61,19 @@ public class StaticResources {
 
 	public static StaticResources getStaticResourcesInstance() {
 		return SpringContextHolder.getBean(StaticResources.class);
+	}
+	
+	public void init() {
+		Map<String, Object> paramMap = Maps.newConcurrentMap();
+		paramMap.put("status_eq", IsDelete.NO);
+		List<User> users = userService.queryByMap(paramMap);
+		Map<String, Set<String>> permissionSet = Maps.newConcurrentMap();
+		for (User user : users) {
+			Set<String> alias = userService.queryMenuAlias(user.getId());
+			permissionSet.put(user.getLoginName(), alias);
+		}
+		permissionSet.put("root", userService.queryAllMenuAlias());
+		InitEnvironment.setPermissionSet(permissionSet);
 	}
 
 }

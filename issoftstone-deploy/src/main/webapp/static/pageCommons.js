@@ -100,7 +100,7 @@
 					theme: '#FF5722',
 					layout : [ 'count', 'skip', 'prev', 'page', 'next', 'limit', 'refresh' ],
 				},
-				limit : 10
+				limit : 15
 			}, options || {});
 			globleOpts = settings;
 			// 第一个实例
@@ -124,12 +124,28 @@
 	}
 	$.fn.dataTable = function(options) {
 		var _this = $(this);
+		var d = $(document).height();
+		var h = $('#search-form').height() + 25;
+		options.height = d - h;
 		_init_table(options, _this);
+		$('body').css({
+			'overflow': 'hidden'
+		})
 	}
 	$.fn.refreshTable = function() {
 		if(!globleOpts) globleOpts = {};
 		_init_table(globleOpts, $(this))
 	}
+	$(window).resize(function() {
+		var d = $(document).height();
+		var h = $('#search-form').height() + 25;
+		globleOpts.height = d - h;
+		_init_table(globleOpts, $('#tableList'));
+		$('body').css({
+			'overflow': 'hidden'
+		})
+		$('.ztree-form').height(d - h - 164);
+	})
 })(jQuery, window, document);
 
 /**
@@ -228,6 +244,7 @@ $(document).ready(function () {
 	    openLoading: _openLoading,
 	    closeLoading: _closeLoading,
 	    saveInfo: function(option) {
+	    	console.log(option.data);
 	    	$.ajax({
 	    		url: option.url,//发送请求
 		    	data: option.data,

@@ -46,6 +46,8 @@ public class Menu extends IdEntity {
 	private String enableName;// 是否显示 true 显示 false 隐藏
 	private String lockedName; // 是否锁定 true 是 false 否
 	private String iconId;
+	
+	private Boolean checked;
 
 	@ManyToOne
 	@JoinColumn(name = "icon_id")
@@ -170,5 +172,14 @@ public class Menu extends IdEntity {
 	
 	public void setOrders(Integer orders) {
 		this.orders = orders;
+	}
+	
+	@Transient
+	public Boolean getChecked() {
+		return checked;
+	}
+	
+	public void setChecked(Boolean checked) {
+		this.checked = checked;
 	}
 }

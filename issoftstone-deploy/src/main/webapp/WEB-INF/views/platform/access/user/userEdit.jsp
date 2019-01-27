@@ -35,20 +35,19 @@
                 });
                 $.ajax({
     		    	type: 'POST',
-    		    	url: '${ctx}/platform/access/user/userEdit.json',//发送请求
+    		    	url: '${ctx}/platform/access/user/queryUserInfo.json',//发送请求
     		    	data: {id : '${id}'},
     		    	dataType : "json",
     		    	success: function(res) {
-    		    		console.log(res)
     		    		form.val("edit-form", {
-    	    			  	"id": res.content.user['id'],
-    	    			  	"nickName": res.content.user['nickName'],
-    	    			  	"loginName": res.content.user['loginName'],
-    	    			  	"email": res.content.user['email'],
-    	    			  	"enable": res.content.user['enable'],
-    	    			  	"locked": res.content.user['locked'],
-    	    			  	"remark": res.content.user['remark'],
-    	    			  	"brithday": res.content.user['brithday'],
+    	    			  	"id": res.content['id'],
+    	    			  	"nickName": res.content['nickName'],
+    	    			  	"loginName": res.content['loginName'],
+    	    			  	"email": res.content['email'],
+    	    			  	"enable": res.content['enable'],
+    	    			  	"locked": res.content['locked'],
+    	    			  	"remark": res.content['remark'],
+    	    			  	"brithday": res.content['brithday'],
     	    			})
     		    	}
                 });

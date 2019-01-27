@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/font-awesome/css/font-awesome.min.css"/> <!-- 自定义样式 -->
     <link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/webuploader/0.1.5/webuploader.css">
     <link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/webuploader/webloader.css">
+    <link rel="stylesheet" type="text/css" href="${basePath}/static/global.css"/> <!-- 自定义样式 -->
     <link rel="stylesheet" type="text/css" href="${basePath}/assets/css/style.css"/> <!-- 自定义样式 -->
 	<style type="text/css">
 	   .ui-widget-overlay {
@@ -60,12 +61,11 @@
 	<![endif]-->
 	<script type="text/javascript" src="${basePath}/assets/lib/jquery/1.9.1/jquery.min.js"></script>
 	<script type="text/javascript" src="${basePath}/assets/lib/jquery/1.9.1/jquery.core.autocomplete.js"></script>
-	<script type="text/javascript" src="${basePath}/assets/lib/jquery/1.9.1/jquery.mockjax.js"></script>
-	<script type="text/javascript" src="${basePath}/assets/lib/jquery/1.9.1/countries.js"></script>
 	<script type="text/javascript" src="${basePath}/assets/lib/layer/2.4/layer.js"></script>
+	<script type="text/javascript" src="${basePath}/assets/lib/layui/layui-xtree.js"></script>
+	<script type="text/javascript" src="${basePath}/assets/lib/zTree/v3/js/jquery.ztree.all-3.5.min.js"></script>
 	<script type="text/javascript" src="${basePath}/assets/js/H-ui.min.js"></script>
 	<script type="text/javascript" src="${basePath}/assets/js/H-ui.admin.js"></script>
-	<script type="text/javascript" src="${basePath}/assets/lib/zTree/v3/js/jquery.ztree.all-3.5.min.js"></script>
 	<!-- zTree插件 -->
 	<script type="text/javascript" src="${basePath}/assets/js/codeTool.js"></script> <!-- 公共编解码 定制方法 -->
 	<script type="text/javascript" src="${basePath}/assets/js/jquery.pagination.js"></script> <!-- 翻页插件 -->

@@ -40,10 +40,10 @@
 					},
 					addRoleAction: function (tableInstance, data) {
 						$.openWindow({
-							title: '新增用户权限信息',
+							title: '用户：' + data[0].nickName + '权限信息',
 							height: '95%',
 							width: '90%',
-							url: '${ctx}/platform/access/user/userRoleList.do' 
+							url: '${ctx}/platform/access/user/userRoleList.do?userId=' + data[0].id 
 						})
 					}
                 },

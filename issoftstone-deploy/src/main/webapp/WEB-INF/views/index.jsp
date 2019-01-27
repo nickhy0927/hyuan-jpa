@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://www.hy.include" prefix="hy"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set value="${pageContext.request.contextPath}" var="basePath"></c:set>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<c:set value="${pageContext.request.contextPath}" var="basePath" />
 <hy:extends name="title">新闻系统</hy:extends>
 <hy:extends name="css">
 	<style type="text/css">
@@ -47,12 +48,14 @@
                 <nav class="nav navbar-nav">
                     <ul class="cl">
                     	<c:forEach items="${menus}" var="menu" varStatus="index">
-                    		<li class="navbar-levelone <c:if test="${index.index ==0}">current</c:if>">
-	                           <a href="javascript:;">
-	                              	<c:if test="${not empty menu.iconClass}">${menu.iconClass}</c:if>
-	                              	${menu.name}
-	                           </a>
-	                       	</li>
+                    		<hy:permission alias="${menu.alias}">
+	                    		<li class="navbar-levelone <c:if test="${index.index ==0}">current</c:if>">
+		                           <a href="javascript:;">
+		                              	<c:if test="${not empty menu.iconClass}">${menu.iconClass}</c:if>
+		                              	${menu.name}
+		                           </a>
+		                       	</li>
+	                       	</hy:permission>
                     	</c:forEach>
                     </ul>
                 </nav>
@@ -88,20 +91,24 @@
     		<div class="menu_dropdown" style="<c:if test="${m.index == 0}">display: block</c:if><c:if test="${m.index != 0}">display: none</c:if>">
     			<c:if test="${not empty menu.children}">
 	   				<c:forEach items="${menu.children}" var="secord" varStatus="s">
-	   					<dl>
-			                <dt><i class="Hui-iconfont">&#xe616;</i> ${secord.name}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			                <dd>
-			                    <ul>
-			                        <c:if test="${not empty secord.children}">
-			                        	<c:forEach items="${secord.children}" var="third">
-			                        		<li>
-					                        	<a data-href="${basePath}${third.url}" data-title="${third.name}" href="javascript:void(0)">${third.name}</a>
-					                        </li>
-			                        	</c:forEach>
-			                        </c:if>
-			                    </ul>
-			                </dd>
-			            </dl>
+	   					<hy:permission alias="${secord.alias}">
+		   					<dl>
+				                <dt><i class="Hui-iconfont">&#xe616;</i> ${secord.name}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+				                <dd>
+				                    <ul>
+				                        <c:if test="${not empty secord.children}">
+				                        	<c:forEach items="${secord.children}" var="third">
+				                        		<hy:permission alias="${third.alias}">
+					                        		<li>
+							                        	<a data-href="${basePath}${third.url}" data-title="${third.name}" href="javascript:void(0)">${third.name}</a>
+							                        </li>
+						                        </hy:permission>
+				                        	</c:forEach>
+				                        </c:if>
+				                    </ul>
+				                </dd>
+				            </dl>
+			            </hy:permission>
 	   				</c:forEach>
 	   			</c:if>
         	</div>

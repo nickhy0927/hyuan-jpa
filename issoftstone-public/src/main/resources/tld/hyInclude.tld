@@ -29,4 +29,17 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	
+	<tag>
+		<name>permission</name>
+		<tag-class>com.iss.common.utils.PermissionTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>alias</name>
+			<description>菜单别名</description>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
 </taglib>

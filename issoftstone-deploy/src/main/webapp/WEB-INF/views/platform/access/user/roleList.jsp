@@ -24,12 +24,46 @@
 							where : $("#search-form").getForm()
 						});
 					}
+                },
+                done: function(res, page, count){
+                    var roles = ${roles};
+                    for (var i = 0; i < res.data.length; i++) {
+                    	var r = res.data[i];
+						for (var j = 0; j < roles.length; j++) {
+							var role = roles[j];
+							if (r.id == role.id) {
+			                    var index= r['LAY_TABLE_INDEX'];
+			                    r["LAY_CHECKED"] = 'true';
+			                    $('tr[data-index=' + index + '] input[type="checkbox"]').prop('checked', true);
+			                    $('tr[data-index=' + index + '] input[type="checkbox"]').next().addClass('layui-form-checked');
+			                    break;
+							}
+						}
+					}
                 }
             });
 		}
         $(function() {
             refresh();
         })
+        function saveRole() {
+        	layui.use('table', function(){
+      			var table = layui.table;
+      			var checkStatus = table.checkStatus('tableList');
+      			var data = checkStatus.data;
+      			var ids = [];
+      			for(var i in data) ids.push(data[i].id);
+  	  			$.saveInfo({
+  	  				url: '${ctx}/platform/access/user/userRoleSave.json',
+  	  				data: {userId: $("#userId").val(), roleIds: ids.join(",")},
+  	  				success: function () {
+	  	  				var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+	    				parent.layer.close(index); //再执行关闭
+	    				window.parent.refresh();
+					}
+  	  			})
+            });
+		}
     </script>
 </hy:extends>
 <hy:extends name="body">
@@ -49,22 +83,15 @@
     	<hr class="hr-line">
     	<table id="tableList" lay-filter="tableList"></table>
 	    <div style="display:none" class="layui-btn-container" id="tableBar">
-	        <button class="	btn btn-primary radius" lay-event="createAction">
-	        	<i class="Hui-iconfont Hui-iconfont-add2"></i>确定
+	        <button class="	btn btn-primary radius"  onclick="saveRole()">
+	        	<i class="Hui-iconfont Hui-iconfont-add2"></i>确定保存
 	        </button>
 	        <button class="btn btn-success radius" lay-event="searchAction">
 	        	<i class="Hui-iconfont Hui-iconfont-search"></i>   
         		搜索
         	</button>
 	    </div>
-	    <div style="display:none" id="operateBar">
-	         <a class="btn btn-secondary-outline radius size-S">
-	        	<i class="Hui-iconfont Hui-iconfont-edit"></i>
-	        </a>&nbsp;&nbsp;
-	        <a class="btn btn-danger-outline radius size-S" lay-event="delAction">
-	        	<i class="Hui-iconfont Hui-iconfont-del2"></i>
-	        </a>
-	    </div>
+	    <input id="userId" name="userId" type="hidden" value="${userId}"/>
     </div>
 </hy:extends>
 <jsp:include page="/page/basepage.jsp" />
