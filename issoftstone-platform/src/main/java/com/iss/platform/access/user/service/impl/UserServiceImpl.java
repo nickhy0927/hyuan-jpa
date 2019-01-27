@@ -1,5 +1,6 @@
 package com.iss.platform.access.user.service.impl;
 
+import java.util.Set;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
@@ -11,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.iss.common.config.InitEnvironment;
 import com.iss.common.encryption.Md5Encryption;
 import com.iss.common.exception.ServiceException;
-import com.iss.common.utils.SaltUtils;
 import com.iss.common.utils.SysContants;
 import com.iss.orm.service.impl.BaseCustomService;
 import com.iss.platform.access.user.dao.UserDao;
@@ -33,7 +33,7 @@ public class UserServiceImpl extends BaseCustomService<User, String> implements 
 	@Override
 	@Transactional(readOnly = false)
 	public User saveEntity(User entity) throws ServiceException {
-		String salt = SaltUtils.getSalt(UUID.randomUUID().toString());
+		String salt = UUID.randomUUID().toString().replaceAll("-", "");
 		entity.setSalt(salt);
 		String password = entity.getPassword();
 		entity.setPassword(encoder.encodePassword(password, salt));
@@ -98,5 +98,10 @@ public class UserServiceImpl extends BaseCustomService<User, String> implements 
 	@Transactional(readOnly = false, rollbackFor = ServiceException.class)
 	public void deleteByLoginName(String loginName) {
 		userDao.deleteByLoginName(loginName);
+	}
+	
+	@Override
+	public Set<String> queryMenuAlias(String id) {
+		return userDao.queryMenuAlias(id);
 	}
 }

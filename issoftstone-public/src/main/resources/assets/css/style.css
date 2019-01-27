@@ -1358,6 +1358,10 @@ td {
 	border-top: 1px solid white;
 }
 
-table {
+/* table {
 	width: 100% !important;
+} */
+.layui-table-page select {
+	height: 20px !important;
+	margin-top: -2px;
 }

@@ -24,6 +24,9 @@ import com.iss.common.utils.PagerInfo;
 import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.WebUtils;
 import com.iss.constant.DataType;
+import com.iss.platform.access.menu.entity.Menu;
+import com.iss.platform.access.menu.entity.Ztree;
+import com.iss.platform.access.menu.service.MenuService;
 import com.iss.platform.access.role.entity.Role;
 import com.iss.platform.access.role.service.RoleService;
 
@@ -36,6 +39,9 @@ public class RoleController {
 
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private MenuService menuService;
 
 	@ResponseBody
 	@AccessAuthority(alias = "role-create", name = "新增角色")
@@ -71,6 +77,25 @@ public class RoleController {
 		}
 		return messageObject;
 	}
+	@ResponseBody
+	@AccessAuthority(alias = "role-menu-save", name = "保存角色")
+	@OperateLog(message = "新增角色信息", method = "save", optType = DataType.OptType.INSERT, service = RoleService.class)
+	@RequestMapping(value = "/platform/access/role/roleMenuSave.json", method = RequestMethod.POST)
+	public MessageObject<Role> roleMenuSave(String roleId, String menuIds) {
+		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
+		try {
+			Role role = roleService.get(roleId);
+			List<Menu> menus = Lists.newArrayList();
+			String[] split = menuIds.split(",");
+			for (String menuId : split) menus.add(menuService.get(menuId));
+			role.setMenus(menus);
+			roleService.saveEntity(role);
+			messageObject.openTip("保存权限信息成功");
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		return messageObject;
+	}
 
 	@ResponseBody
 	@AccessAuthority(alias = "role-edit", name = "获取角色信息")
@@ -85,6 +110,15 @@ public class RoleController {
 			messageObject.error("获取角色异常");
 		}
 		return messageObject;
+	}
+	
+	@ResponseBody
+	@AccessAuthority(alias = "role-edit", name = "获取菜单信息")
+	@RequestMapping(value = "/platform/access/menu/menuTreeList.json", method = RequestMethod.GET)
+	public List<Ztree> menuTreeList(String id) {
+		Role role = roleService.get(id);
+		List<Menu> menus = role != null ? role.getMenus() : Lists.newArrayList();
+		return menuService.queryZtreeMenuTree(menus);
 	}
 
 	@ResponseBody

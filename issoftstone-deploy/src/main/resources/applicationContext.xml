@@ -75,8 +75,7 @@
 		<property name="initUsername" value="${initUsername}" />
 	</bean>
 	
-	<import resource="config/security/spring-security.xml"/>
-	<bean class="com.iss.interceptor.StaticResources">
+	<bean class="com.iss.interceptor.StaticResources" init-method="init" lazy-init="false">
 		<property name="urls">
 			<list>
 				<value>/static/**</value>
@@ -114,4 +113,6 @@
 	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
 		<constructor-arg ref="dataSourceSpied" />
 	</bean>
+	
+	<import resource="config/security/spring-security.xml"/>
 </beans>

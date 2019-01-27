@@ -1,5 +1,7 @@
 package com.iss.platform.access.user.service;
 
+import java.util.Set;
+
 import com.iss.orm.service.CustomService;
 import com.iss.platform.access.user.entity.User;
 
@@ -35,4 +37,11 @@ public interface UserService extends CustomService<User, String> {
 	 * @param loginName
 	 */
 	void deleteByLoginName(String loginName);
+	
+	/**
+	 * 查询所有的菜单别名
+	 * @param userId
+	 * @return
+	 */
+	Set<String> queryMenuAlias(String id);
 }

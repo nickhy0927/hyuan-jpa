@@ -1,10 +1,50 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://www.hy.include" prefix="hy" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set value="${pageContext.request.contextPath}" var="ctx"></c:set>
+<c:set value="${pageContext.request.contextPath}" var="ctx"/>
 <hy:extends name="title">菜单列表</hy:extends>
+<hy:extends name="css">
+	<style type="text/css">
+		.xtree_contianer {
+			border: 1px solid #e6e6e6;
+			overflow: auto;
+			background-color: #fff;
+			padding: 10px 0 25px 5px;
+		}
+		.title-nav {
+			height: 42px;
+			background: #f2f2f2;
+			margin-top: 10px;
+			line-height: 38px;
+			padding: 10px 0px;
+		}
+		.title-nav .title {
+			float: left;
+			padding: 5px 10px;
+		}
+		.title-nav button {
+			float: right;
+			margin-top: 10px;
+			margin-right: 10px;
+		}
+		.layui-table-view {
+			float: left;
+		}
+		.ztree-form, .xtree_contianer {
+			width: 98%;
+			height: 100%;
+			margin-left: 2px;
+		}
+	</style>
+</hy:extends>
 <hy:extends name="javascript">
     <script type="text/javascript">
+    	$(window).resize(function () {
+    		var height = $(window).height();
+            var viewH = $('.layui-table-view').height();
+            if (height < viewH) height = viewH
+			$('.ztree-form').height(height - 164);
+		})
     	function refresh() {
     		$("#tableList").dataTable({
                 toolbar: "#tableBar",
@@ -15,11 +55,10 @@
                     { field: "code", title: '角色编号', width: 180, fixed: "left", unresize: true},
                     { field: "name", title: '角色名称', width: 160, fixed: "left", unresize: true},
                     { field: "remark", title: "备注", minWidth: 300},
-                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 120, unresize: true}
+                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 145, unresize: true},
                 ]],
                 operate: {
                 	editAction: function (tableInstance, data) {
-                		console.log(data);
                 		$.openWindow({
 							title: '修改角色信息',
 							height: '300px',
@@ -29,6 +68,10 @@
 					},
 					delAction: function (tableInstance, data) {
 						deleteInfo(tableInstance, data);
+					},
+					addMenuAction: function (tableInstance, data) {
+						$("#roleId").val(data[0].id)
+						initTree(data[0].id)
 					}
                 },
                 groupBtn: {
@@ -64,8 +107,53 @@
 				}
 			})
 		}
+        
+        var zTreeObj, setting = {
+        	check: {
+                enable: true,
+                chkStyle: "checkbox",
+                chkboxType:  { "Y" : "ps", "N" : "ps" }
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+		}
+        function initTree(roleId) {
+        	$.ajax({
+        		url: '${ctx}/platform/access/menu/menuTreeList.json',
+        		method: 'GET',
+        		data: {id: (roleId ? roleId : "")},
+        		success: function (res) {
+        			zTreeObj = $.fn.zTree.init($("#tree"), setting, res);
+				}
+        	})
+		}
+        
         $(function() {
             refresh();
+            var height = $(window).height();
+            var viewH = $('.layui-table-view').height();
+            if (height < viewH) height = viewH
+            $('.xtree_contianer').height(height - 164);
+			$('.ztree-form').height(height - 164);
+			$('#saveRole').click(function () {
+				var nodes = zTreeObj.getCheckedNodes(true);
+				var roleId = $('#roleId').val();
+				var ids = [];
+				for (var i = 0; i < nodes.length; i++) ids.push(nodes[i].id);
+				console.log(ids);
+				$.saveInfo({
+                	url: '${ctx}/platform/access/role/roleMenuSave.json',
+                	data: {roleId: roleId, menuIds: ids.join(',')},
+                	loadMsg: '正在保存权限, 请稍等...',
+                	success: function (res) {
+               			refresh();
+                		initTree(roleId)
+					}
+                })
+			})
         })
     </script>
 </hy:extends>
@@ -84,7 +172,25 @@
 	        </form>
 	    </div>
     	<hr class="hr-line">
-    	<table id="tableList" lay-filter="tableList"></table>
+    	<div class="layui-row">
+		    <div class="layui-col-xs9">
+		      	<table id="tableList" lay-filter="tableList"></table>
+		    </div>
+		    <div class="layui-col-xs3">
+		    	<div class="title-nav" style="padding: 5px 0px;">
+	    			<div class="title">
+	    				菜单列表
+	    			</div>
+	    			<button class="btn btn-primary radius" id="saveRole">
+			        	<i class="Hui-iconfont Hui-iconfont-save"></i>保存权限
+			        </button>
+    			</div>
+		      	<form class="layui-form ztree-form">
+					<ul id="tree" class="ztree xtree_contianer" style="overflow:auto;"></ul>
+					<input type="hidden" value="" name="roleId" id="roleId">
+				</form>
+		    </div>
+		</div>
 	    <div style="display:none" class="layui-btn-container" id="tableBar">
 	        <button class="	btn btn-primary radius" lay-event="createAction">
 	        	<i class="Hui-iconfont Hui-iconfont-add2"></i>新增
@@ -100,9 +206,12 @@
 	    <div style="display:none" id="operateBar">
 	         <a class="btn btn-secondary-outline radius size-S" lay-event="editAction">
 	        	<i class="Hui-iconfont Hui-iconfont-edit"></i>
-	        </a>&nbsp;&nbsp;
+	        </a>
 	        <a class="btn btn-danger-outline radius size-S" lay-event="delAction">
 	        	<i class="Hui-iconfont Hui-iconfont-del2"></i>
+	        </a>
+         	<a title="添加权限信息" class="btn btn-primary-outline radius size-S" lay-event="addMenuAction">
+	        	<i class="Hui-iconfont Hui-iconfont-add"></i>
 	        </a>
 	    </div>
     </div>

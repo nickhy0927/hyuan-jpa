@@ -16,15 +16,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.iss.anno.OperateLog;
 import com.iss.common.anno.AccessAuthority;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.PageSupport;
 import com.iss.common.utils.PagerInfo;
-import com.iss.common.utils.WebUtils;
 import com.iss.common.utils.SysContants.IsDelete;
+import com.iss.common.utils.WebUtils;
 import com.iss.constant.DataType;
 import com.iss.platform.access.role.entity.Role;
 import com.iss.platform.access.role.service.RoleService;
@@ -61,6 +60,28 @@ public class UserController {
 		}
 		return messageObject;
 	}
+	@ResponseBody
+	@AccessAuthority(alias = "user-role-list", name = "新增用户权限信息")
+	@OperateLog(message = "新增用户权限信息", method = "userRoleSave", optType = DataType.OptType.INSERT, service = UserService.class)
+	@RequestMapping(value = "/platform/access/user/userRoleSave.json", method = RequestMethod.POST)
+	public MessageObject<User> userRoleSave(String userId, String roleIds) {
+		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
+		try {
+			User user = userService.get(userId);
+			String[] split = roleIds.split(",");
+			List<Role> roles = Lists.newArrayList();
+			for (String string : split) {
+				roles.add(roleService.get(string));
+			}
+			user.setRoles(roles);
+			userService.saveEntity(user);
+			messageObject.openTip("保存用户权限成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			messageObject.error("保存用户权限异常");
+		}
+		return messageObject;
+	}
 	
 	@ResponseBody
 	@AccessAuthority(alias = "user-delete", name = "删除用户信息")
@@ -84,25 +105,17 @@ public class UserController {
 		}
 		return messageObject;
 	}
-	
-	@AccessAuthority(alias = "user-role-list", name = "获取用户权限信息")
-	@RequestMapping(value = "/platform/access/user/userRoleList.do", method = RequestMethod.GET)
-	public String userRoleList(String userId) {
-		
-		return "platform/access/user/roleList";
-	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "user-edit", name = "修改用户")
-	@OperateLog(message = "修改用户信息", method = "edit", optType = DataType.OptType.UPDATE, service = UserService.class)
-	@RequestMapping(value = "/platform/access/user/userEdit.json", method = RequestMethod.POST)
-	public MessageObject<User> userEdit(String id) {
+	@AccessAuthority(alias = "queryUserInfo", name = "获取用户信息")
+	@OperateLog(message = "获取用户信息", method = "edit", optType = DataType.OptType.UPDATE, service = UserService.class)
+	@RequestMapping(value = "/platform/access/user/queryUserInfo.json", method = RequestMethod.POST)
+	public MessageObject<User> queryUserInfo(String id) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
-			Map<String, Object> params = Maps.newConcurrentMap();
 			User user = userService.get(id);
-			params.put("user", user);
-			messageObject.ok("修改查询用户成功", params);
+			user.setPassword(null);
+			messageObject.ok("修改查询用户成功", user);
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			messageObject.error("修改查询用户异常");

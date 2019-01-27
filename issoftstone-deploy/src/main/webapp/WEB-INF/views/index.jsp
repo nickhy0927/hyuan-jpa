@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://www.hy.include" prefix="hy"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set value="${pageContext.request.contextPath}" var="basePath"></c:set>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<c:set value="${pageContext.request.contextPath}" var="basePath" />
 <hy:extends name="title">新闻系统</hy:extends>
 <hy:extends name="css">
 	<style type="text/css">
@@ -47,12 +48,14 @@
                 <nav class="nav navbar-nav">
                     <ul class="cl">
                     	<c:forEach items="${menus}" var="menu" varStatus="index">
-                    		<li class="navbar-levelone <c:if test="${index.index ==0}">current</c:if>">
-	                           <a href="javascript:;">
-	                              	<c:if test="${not empty menu.iconClass}">${menu.iconClass}</c:if>
-	                              	${menu.name}
-	                           </a>
-	                       	</li>
+                    		<hy:permission alias="${menu.alias}">
+	                    		<li class="navbar-levelone <c:if test="${index.index ==0}">current</c:if>">
+		                           <a href="javascript:;">
+		                              	<c:if test="${not empty menu.iconClass}">${menu.iconClass}</c:if>
+		                              	${menu.name}
+		                           </a>
+		                       	</li>
+	                       	</hy:permission>
                     	</c:forEach>
                     </ul>
                 </nav>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.iss.common.config.InitEnvironment;
 import com.iss.common.exception.VerifyCodeException;
 import com.iss.common.utils.MessageObject;
 
@@ -49,8 +50,10 @@ public class LoginController {
 			// 这个非常重要，否则验证后将无法登陆
 			session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
 			messageObject.ok("登陆成功", authentication.getName());
+			InitEnvironment.setCurrentLoginName(authentication.getName());
 			return messageObject;
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			if (ex instanceof LockedException) {
 				messageObject.error("账户被锁定，请联系管理员");
 			}
