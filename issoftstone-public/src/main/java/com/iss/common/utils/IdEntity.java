@@ -40,7 +40,7 @@ public class IdEntity {
 		return getId().equals(other.getId());
 	}
 
-	@Column(updatable = false)
+	@Column(updatable = false, columnDefinition = "datetime comment '创建时间'")
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -48,10 +48,12 @@ public class IdEntity {
 	@Id
 	@GeneratedValue(generator = "system-uuid")
 	@GenericGenerator(name = "system-uuid", strategy = "uuid2")
+	@Column(columnDefinition = "varchar(64) comment '主键ID'")
 	public String getId() {
 		return id;
 	}
 
+	@Column(columnDefinition = "datetime comment '修改时间'")
 	public Date getUpdateTime() {
 		return updateTime;
 	}
@@ -72,7 +74,7 @@ public class IdEntity {
 	public String getStatusName() {
 		return statusName;
 	}
-	
+
 	public void setStatusName(String statusName) {
 		this.statusName = statusName;
 	}
@@ -81,6 +83,7 @@ public class IdEntity {
 		this.status = status;
 	}
 
+	@Column(columnDefinition = "bit(1) comment '是否删除：0 否 1 是'")
 	public Boolean getStatus() {
 		String statusName = SysContants.IsDelete.getIsDeleteName(status);
 		setStatusName(statusName);

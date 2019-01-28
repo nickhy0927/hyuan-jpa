@@ -45,6 +45,7 @@ public class User extends IdEntity {
 	private String enableName;// 是否显示 true 是 false 否
 	private String lockedName; // 是否锁定 true 是 false 否
 
+	@Column(columnDefinition = "varchar(255) comment '手机端标识'")
 	public String getUserTag() {
 		return userTag;
 	}

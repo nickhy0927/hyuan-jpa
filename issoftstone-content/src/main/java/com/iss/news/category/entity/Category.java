@@ -8,6 +8,11 @@ import javax.persistence.Table;
 
 import com.iss.common.utils.IdEntity;
 
+/**
+ * 栏目分类
+ * @author Mr's Huang
+ *
+ */
 @Entity
 @Table(name = "t_d_category")
 public class Category extends IdEntity {
