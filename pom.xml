@@ -36,6 +36,11 @@
 				<artifactId>issoftstone-auth-core</artifactId>
 				<version>${issoftstone.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.iss</groupId>
+				<artifactId>issoftstone-content</artifactId>
+				<version>${issoftstone.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<build>
@@ -62,6 +67,7 @@
 		<module>issoftstone-auth-core</module>
 		<module>issoftstone-oauth</module>
 		<module>issoftstone-deploy</module>
-        <module>issoftstone-webapp</module>
-    </modules>
+		<module>issoftstone-webapp</module>
+		<module>issoftstone-content</module>
+	</modules>
 </project>

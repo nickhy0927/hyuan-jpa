@@ -12,11 +12,11 @@
 	<description>Spring公共配置</description>
 	<bean id="springContextHolder" class="com.iss.common.spring.SpringContextHolder" lazy-init="false" />
 	<!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
-	<context:component-scan base-package="com.iss.platform,com.iss.oauth">
+	<context:component-scan base-package="com.iss.platform,com.iss.oauth,com.iss.news">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
-	<jpa:repositories base-package="com.iss.platform,com.iss.oauth"
+	<jpa:repositories base-package="com.iss.platform,com.iss.oauth,com.iss.news"
 		transaction-manager-ref="transactionManager"
 		entity-manager-factory-ref="entityManagerFactory"
 		factory-class="com.iss.orm.factory.DefaultRepositoryFactoryBean">
@@ -26,7 +26,7 @@
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />
-		<property name="packagesToScan" value="com.iss.platform,com.iss.oauth" />
+		<property name="packagesToScan" value="com.iss.platform,com.iss.oauth,com.iss.news" />
 		<!--待扫描的实体类包，不再需要persistence.xml了 -->
 		<property name="jpaProperties">
 			<props>
