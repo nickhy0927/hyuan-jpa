@@ -50,10 +50,13 @@ public class UserController {
 		try {
 			String id = user.getId();
 			user.setStatus(IsDelete.NO);
-			userService.saveEntity(user);
 			if (StringUtils.isEmpty(id)) {
+				userService.saveEntity(user);
 				messageObject.openTip("保存用户成功");
-			} else messageObject.openTip("修改用户成功");
+			} else {
+				userService.updateUser(user);
+				messageObject.openTip("修改用户成功");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			messageObject.error("保存用户异常");
@@ -74,7 +77,7 @@ public class UserController {
 				roles.add(roleService.get(string));
 			}
 			user.setRoles(roles);
-			userService.saveEntity(user);
+			userService.updateUser(user);
 			messageObject.openTip("保存用户权限成功");
 		} catch (Exception e) {
 			e.printStackTrace();

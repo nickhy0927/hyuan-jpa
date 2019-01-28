@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.iss.common.config.InitEnvironment;
 import com.iss.common.encryption.Md5Encryption;
 import com.iss.common.exception.ServiceException;
+import com.iss.common.utils.SaltUtils;
 import com.iss.common.utils.SysContants;
 import com.iss.orm.service.impl.BaseCustomService;
 import com.iss.platform.access.user.dao.UserDao;
@@ -29,14 +30,21 @@ public class UserServiceImpl extends BaseCustomService<User, String> implements 
 
 	@Autowired
 	private Md5PasswordEncoder encoder;
-
+	
 	@Override
 	@Transactional(readOnly = false)
 	public User saveEntity(User entity) throws ServiceException {
 		String salt = UUID.randomUUID().toString().replaceAll("-", "");
+		salt = SaltUtils.getSalt(salt);
 		entity.setSalt(salt);
 		String password = entity.getPassword();
 		entity.setPassword(encoder.encodePassword(password, salt));
+		return super.saveEntity(entity);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public User updateUser(User entity) throws ServiceException {
 		return super.saveEntity(entity);
 	}
 
@@ -99,12 +107,12 @@ public class UserServiceImpl extends BaseCustomService<User, String> implements 
 	public void deleteByLoginName(String loginName) {
 		userDao.deleteByLoginName(loginName);
 	}
-	
+
 	@Override
 	public Set<String> queryMenuAlias(String id) {
 		return userDao.queryMenuAlias(id);
 	}
-	
+
 	@Override
 	public Set<String> queryAllMenuAlias() {
 		return userDao.queryAllMenuAlias();
