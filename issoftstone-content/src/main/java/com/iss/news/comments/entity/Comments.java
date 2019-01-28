@@ -5,10 +5,14 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.iss.common.utils.IdEntity;
+import com.iss.news.content.entity.News;
 
 @Entity
 @Table(name = "t_d_comments")
@@ -37,7 +41,7 @@ public class Comments extends IdEntity {
 	/**
 	 * 新闻ID
 	 */
-	private String newsId;
+	private News news;
 
 	@Column(columnDefinition = "varchar(64) comment '评论者ID'")
 	public String getReviewer() {
@@ -77,13 +81,14 @@ public class Comments extends IdEntity {
 		this.commentDate = commentDate;
 	}
 
-	@Column(columnDefinition = "varchar(64) comment '新闻ID'")
-	public String getNewsId() {
-		return newsId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "news_id", columnDefinition = "varchar(64) comment '新闻ID'")
+	public News getNews() {
+		return news;
 	}
-
-	public void setNewsId(String newsId) {
-		this.newsId = newsId;
+	
+	public void setNews(News news) {
+		this.news = news;
 	}
 
 }
