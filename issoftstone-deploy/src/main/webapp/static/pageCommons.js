@@ -139,6 +139,7 @@
 	$(window).resize(function() {
 		var d = $(document).height();
 		var h = $('#search-form').height() + 25;
+		if(!globleOpts) globleOpts = {};
 		globleOpts.height = d - h;
 		_init_table(globleOpts, $('#tableList'));
 		$('body').css({

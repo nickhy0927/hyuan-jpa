@@ -16,8 +16,8 @@
                 url: "${ctx}/platform/access/user/list.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
-                    { field: "nickName", title: '用户姓名', width: 120, fixed: "left", unresize: true},
-                    { field: "loginName",  title: "登录账户", width: 120, align: 'left', fixed: "left", unresize: true},
+                    { field: "nickName", title: '用户姓名', width: 160, fixed: "left", unresize: true},
+                    { field: "loginName",  title: "登录账户", width: 160, align: 'left', fixed: "left", unresize: true},
                     { field: "brithday",  title: "用户生日", width: 120, align: 'center'},
                     { field: "email",  title: "电子邮箱", minWidth: 180},
                     { field: "enableName",  title: "启用", width: 80, align: 'center'},
@@ -40,9 +40,9 @@
 					},
 					addRoleAction: function (tableInstance, data) {
 						$.openWindow({
-							title: '用户：' + data[0].nickName + '权限信息',
-							height: '95%',
-							width: '90%',
+							title: '<span style="font-weight:bold;">添加用户【<span style="color:red;">' + data[0].nickName + '</span>】的权限信息</span>',
+							height: '90%',
+							width: '70%',
 							url: '${ctx}/platform/access/user/userRoleList.do?userId=' + data[0].id 
 						})
 					}
