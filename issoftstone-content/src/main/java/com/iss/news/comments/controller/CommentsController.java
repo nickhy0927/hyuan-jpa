@@ -29,13 +29,13 @@ public class CommentsController {
 	@Autowired
 	private CommentService commentService;
 	
-	@AccessAuthority(alias = "comments-save", name = "进入新增评论页面")
+	@AccessAuthority(alias = "comments-save", name = "进入评论新增页面")
 	@RequestMapping(value = "/platform/access/comments/commentsCreate.do", method = RequestMethod.GET)
 	public String CommentsCreate() {
 		return "content/comments/commentsCreate";
 	}
 	
-	@AccessAuthority(alias = "comments-edit", name = "进入新增评论页面")
+	@AccessAuthority(alias = "comments-edit", name = "进入评论编辑页面")
 	@RequestMapping(value = "/platform/access/comments/commentsEdit.do", method = RequestMethod.GET)
 	public String CommentsEdit(String id, Model model) {
 		model.addAttribute("id", id);
@@ -49,7 +49,7 @@ public class CommentsController {
 	}
 	
 	@ResponseBody
-	@AccessAuthority(alias = "comments-save", name = "保存评论")
+	@AccessAuthority(alias = "comments-save", name = "保存评论信息")
 	@OperateLog(message = "保存评论信息", method = "commentsSave", optType = DataType.OptType.INSERT, service = CommentService.class)
 	@RequestMapping(value = "/platform/access/comments/commentsSave.json", method = RequestMethod.POST)
 	public MessageObject<Comments> commentsSave(Comments comments) {
@@ -65,7 +65,7 @@ public class CommentsController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "Comments-edit", name = "修改评论")
+	@AccessAuthority(alias = "Comments-edit", name = "修改评论信息")
 	@OperateLog(message = "修改评论信息", method = "commentsEdit", optType = DataType.OptType.UPDATE, service = CommentService.class)
 	@RequestMapping(value = "/platform/access/comments/commentsEdit.json", method = RequestMethod.POST)
 	public MessageObject<Comments> commentsEdit(String id) {
@@ -81,7 +81,7 @@ public class CommentsController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "comments-list", name = "评论列表")
+	@AccessAuthority(alias = "comments-list", name = "评论信息列表")
 	@RequestMapping(value = "/platform/access/comments/commentsList.json", method = { RequestMethod.POST })
 	public MessageObject<Comments> commentsList(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
@@ -113,7 +113,7 @@ public class CommentsController {
 					commentss.add(comments);
 				}
 				commentService.saveBatch(commentss);
-				messageObject.openTip("删除评论成功", null);
+				messageObject.openTip("删除评论成功");
 			}
 		} catch (ServiceException e) {
 			e.printStackTrace();
