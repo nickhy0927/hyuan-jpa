@@ -15,15 +15,13 @@
                 form.on('submit(create-form)', function (data) {
                 	$.openLoading('正在保存数据，请稍等...');
                 	$.ajax({
-				    	type: 'POST',
-				    	url: '${ctx}/platform/access/menu/save.json',//发送请求
-				    	data: data.field,
-				    	openType: 'alert',
-				    	loadSuccess: function(result) {
-	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+				    	url: '${ctx}/platform/access/menu/menuSave.json',//发送请求
+				    	data: $('form').getForm(),
+				    	success: function (res) {
+				    		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 		    				parent.layer.close(index); //再执行关闭
-							window.parent.refresh();
-				    	}
+		    				window.parent.refresh();
+						}
 			    	});
                 	return false;
                 });

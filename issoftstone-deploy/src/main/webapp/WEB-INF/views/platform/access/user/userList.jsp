@@ -10,7 +10,21 @@
 <hy:extends name="javascript">
     <script type="text/javascript">
     	function refresh() {
-    		$("#tableList").dataTable({
+    		$("#tableList").refreshTable();
+		}
+    	
+    	function deleteInfo(tableInstance, data) {
+    		$.deleteInfo({
+				url: '${ctx}/platform/access/user/userDelete.json',//发送请求
+		    	data: data,
+		    	loadMsg: '正在删除用户信息，请稍等...', 
+		    	success: function (res) {
+		    		$("#tableList").refreshTable();
+				}
+			})
+		}
+        $(function() {
+        	$("#tableList").dataTable({
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
                 url: "${ctx}/platform/access/user/list.json",
@@ -66,20 +80,6 @@
 					}
                 }
             });
-		}
-    	
-    	function deleteInfo(tableInstance, data) {
-    		$.deleteInfo({
-				url: '${ctx}/platform/access/user/userDelete.json',//发送请求
-		    	data: data,
-		    	loadMsg: '正在删除用户信息，请稍等...', 
-		    	success: function (res) {
-		    		$("#tableList").refreshTable()
-				}
-			})
-		}
-        $(function() {
-            refresh();
         })
     </script>
 </hy:extends>

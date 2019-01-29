@@ -6,13 +6,17 @@
 <hy:extends name="javascript">
     <script type="text/javascript">
     	function refresh() {
-    		$("#tableList").dataTable({
+    		console.log('refresh')
+    		$("#tableList").refreshTable();
+		}
+        $(function() {
+        	$("#tableList").dataTable({
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
                 url: "${ctx}/platform/access/menu/list.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
-                    { field: "name", title: '菜单名称', width: 120, fixed: "left", unresize: true},
+                    { field: "name", title: '菜单名称', width: 160, fixed: "left", unresize: true},
                     { field: "alias",  title: "菜单别名", width: 200, fixed: "left", unresize: true},
                     { field: "parentName", title: "上级菜单", width: 120, unresize: true},
                     { title: "图标", width: 80, unresize: true, align: 'center', templet: function (d) {
@@ -69,9 +73,6 @@
 					}
                 }
             });
-		}
-        $(function() {
-            refresh();
         })
     </script>
 </hy:extends>

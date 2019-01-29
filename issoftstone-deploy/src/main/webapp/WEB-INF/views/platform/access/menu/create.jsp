@@ -6,9 +6,6 @@
 <hy:extends name="javascript">
 	<script type="text/javascript">
 		$(function () {
-			$("body").css({
-				'overflow':'auto'
-			})
 			layui.use(['form', 'tree'], function () {
                 var form = layui.form;
                 //监听提交

@@ -39,14 +39,45 @@
 </hy:extends>
 <hy:extends name="javascript">
     <script type="text/javascript">
-    	$(window).resize(function () {
-    		var height = $(window).height();
-            var viewH = $('.layui-table-view').height();
-            if (height < viewH) height = viewH
-			$('.ztree-form').height(height - 164);
-		})
     	function refresh() {
-    		$("#tableList").dataTable({
+    		$("#tableList").refreshTable()
+		}
+    	function deleteInfo(tableInstance, data) {
+    		$.deleteInfo({
+				url: '${ctx}/platform/access/role/delete.json',//发送请求
+		    	data: data,
+		    	loadMsg: '正在删除角色信息，请稍等...', 
+		    	success: function (res) {
+		    		$("#tableList").refreshTable()
+				}
+			})
+		}
+        
+        var zTreeObj, setting = {
+        	check: {
+                enable: true,
+                chkStyle: "checkbox",
+                chkboxType:  { "Y" : "ps", "N" : "ps" }
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+		}
+        function initTree(roleId) {
+        	$.ajax({
+        		url: '${ctx}/platform/access/menu/menuTreeList.json',
+        		method: 'GET',
+        		data: {id: (roleId ? roleId : "")},
+        		success: function (res) {
+        			zTreeObj = $.fn.zTree.init($("#tree"), setting, res);
+				}
+        	})
+		}
+        
+        $(function() {
+        	$("#tableList").dataTable({
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
                 url: "${ctx}/platform/access/role/list.json",
@@ -96,43 +127,7 @@
 					}
                 }
             });
-		}
-    	function deleteInfo(tableInstance, data) {
-    		$.deleteInfo({
-				url: '${ctx}/platform/access/role/delete.json',//发送请求
-		    	data: data,
-		    	loadMsg: '正在删除角色信息，请稍等...', 
-		    	success: function (res) {
-		    		$("#tableList").refreshTable()
-				}
-			})
-		}
-        
-        var zTreeObj, setting = {
-        	check: {
-                enable: true,
-                chkStyle: "checkbox",
-                chkboxType:  { "Y" : "ps", "N" : "ps" }
-            },
-            data: {
-                simpleData: {
-                    enable: true
-                }
-            }
-		}
-        function initTree(roleId) {
-        	$.ajax({
-        		url: '${ctx}/platform/access/menu/menuTreeList.json',
-        		method: 'GET',
-        		data: {id: (roleId ? roleId : "")},
-        		success: function (res) {
-        			zTreeObj = $.fn.zTree.init($("#tree"), setting, res);
-				}
-        	})
-		}
-        
-        $(function() {
-            refresh();
+            
             var height = $(window).height();
             var viewH = $('.layui-table-view').height();
             if (height < viewH) height = viewH

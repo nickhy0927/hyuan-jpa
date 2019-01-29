@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,20 +31,20 @@ public class CommentsController {
 	private CommentService commentService;
 	
 	@AccessAuthority(alias = "comments-save", name = "进入评论新增页面")
-	@RequestMapping(value = "/platform/access/comments/commentsCreate.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/content/news/comments/commentsCreate.do", method = RequestMethod.GET)
 	public String CommentsCreate() {
 		return "content/comments/commentsCreate";
 	}
 	
 	@AccessAuthority(alias = "comments-edit", name = "进入评论编辑页面")
-	@RequestMapping(value = "/platform/access/comments/commentsEdit.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/content/news/comments/commentsEdit.do", method = RequestMethod.GET)
 	public String CommentsEdit(String id, Model model) {
 		model.addAttribute("id", id);
 		return "content/comments/commentsEdit";
 	}
 	
 	@AccessAuthority(alias = "comments-save", name = "进入评论列表页面")
-	@RequestMapping(value = "/platform/access/comments/commentsList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/content/news/comments/commentsList.do", method = RequestMethod.GET)
 	public String commentsList() {
 		return "content/comments/commentsList";
 	}
@@ -51,15 +52,21 @@ public class CommentsController {
 	@ResponseBody
 	@AccessAuthority(alias = "comments-save", name = "保存评论信息")
 	@OperateLog(message = "保存评论信息", method = "commentsSave", optType = DataType.OptType.INSERT, service = CommentService.class)
-	@RequestMapping(value = "/platform/access/comments/commentsSave.json", method = RequestMethod.POST)
+	@RequestMapping(value = "/content/news/comments/commentsSave.json", method = RequestMethod.POST)
 	public MessageObject<Comments> commentsSave(Comments comments) {
 		MessageObject<Comments> messageObject = MessageObject.getDefaultInstance();
 		try {
+			String id = comments.getId();
 			comments.setStatus(IsDelete.NO);
 			commentService.saveEntity(comments);
-			messageObject.openTip("新增评论成功");
+			if (StringUtils.isEmpty(id)) {
+				messageObject.openTip("新增评论成功");
+			} else {
+				messageObject.openTip("修改评论成功");
+			}
 		} catch (ServiceException e) {
 			e.printStackTrace();
+			messageObject.openTip("操作出现异常，请稍后.");
 		}
 		return messageObject;
 	}
@@ -67,7 +74,7 @@ public class CommentsController {
 	@ResponseBody
 	@AccessAuthority(alias = "Comments-edit", name = "修改评论信息")
 	@OperateLog(message = "修改评论信息", method = "commentsEdit", optType = DataType.OptType.UPDATE, service = CommentService.class)
-	@RequestMapping(value = "/platform/access/comments/commentsEdit.json", method = RequestMethod.POST)
+	@RequestMapping(value = "/content/news/comments/commentsEdit.json", method = RequestMethod.POST)
 	public MessageObject<Comments> commentsEdit(String id) {
 		MessageObject<Comments> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -82,7 +89,7 @@ public class CommentsController {
 
 	@ResponseBody
 	@AccessAuthority(alias = "comments-list", name = "评论信息列表")
-	@RequestMapping(value = "/platform/access/comments/commentsList.json", method = { RequestMethod.POST })
+	@RequestMapping(value = "/content/news/comments/commentsList.json", method = { RequestMethod.POST })
 	public MessageObject<Comments> commentsList(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
 		MessageObject<Comments> messageObject = MessageObject.getDefaultInstance();
@@ -100,7 +107,7 @@ public class CommentsController {
 	@ResponseBody
 	@AccessAuthority(alias = "comments-delete", name = "删除评论信息")
 	@OperateLog(message = "删除评论信息", method = "commentsDelete", optType = DataType.OptType.DELETE, service = CommentService.class)
-	@RequestMapping(value = "/platform/access/Comments/commentsDelete.json", method = RequestMethod.POST)
+	@RequestMapping(value = "/content/news/Comments/commentsDelete.json", method = RequestMethod.POST)
 	public MessageObject<Comments> CommentsDelete(String id) {
 		MessageObject<Comments> messageObject = MessageObject.getDefaultInstance();
 		try {

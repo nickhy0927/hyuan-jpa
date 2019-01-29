@@ -127,6 +127,7 @@
 		var d = $(document).height();
 		var h = $('#search-form').height() + 25;
 		options.height = d - h;
+		console.log(d - h)
 		_init_table(options, _this);
 		$('body').css({
 			'overflow': 'hidden'
@@ -134,6 +135,10 @@
 	}
 	$.fn.refreshTable = function() {
 		if(!globleOpts) globleOpts = {};
+		var _this = $(this);
+		var d = $(document).height();
+		var h = $('#search-form').height() + 25 + 10;
+		globleOpts.height = d - h;
 		_init_table(globleOpts, $(this))
 	}
 	$(window).resize(function() {

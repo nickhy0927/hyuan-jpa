@@ -61,8 +61,8 @@ public class MenuController {
 
 	@ResponseBody
 	@AccessAuthority(alias = "menu-save", name = "保存菜单")
-	@OperateLog(message = "新增菜单信息", method = "save", optType = DataType.OptType.INSERT, service = MenuService.class)
-	@RequestMapping(value = "/platform/access/menu/save.json", method = RequestMethod.POST)
+	@OperateLog(message = "新增菜单信息", method = "menuSave", optType = DataType.OptType.INSERT, service = MenuService.class)
+	@RequestMapping(value = "/platform/access/menu/menuSave.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuSave(Menu menu) {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -76,9 +76,9 @@ public class MenuController {
 			}
 			menu.setStatus(IsDelete.NO);
 			menuService.saveEntity(menu);
-			messageObject.openTip("新增菜单成功", null);
+			messageObject.openTip("新增菜单成功");
 			if (StringUtils.isNotEmpty(id)) {
-				messageObject.ok("修改菜单成功");
+				messageObject.openTip("修改菜单成功");
 			}
 		} catch (ServiceException e) {
 			e.printStackTrace();

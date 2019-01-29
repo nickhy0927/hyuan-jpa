@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,20 +33,20 @@ public class CategoryController {
 	private CategoryService categoryService;
 	
 	@AccessAuthority(alias = "category-save", name = "进入新增栏目页面")
-	@RequestMapping(value = "/platform/access/category/categoryCreate.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/content/news/category/categoryCreate.do", method = RequestMethod.GET)
 	public String CategoryCreate() {
 		return "content/category/categoryCreate";
 	}
 	
 	@AccessAuthority(alias = "category-edit", name = "进入新增栏目页面")
-	@RequestMapping(value = "/platform/access/category/categoryEdit.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/content/news/category/categoryEdit.do", method = RequestMethod.GET)
 	public String CategoryEdit(String id, Model model) {
 		model.addAttribute("id", id);
 		return "content/category/categoryEdit";
 	}
 	
 	@AccessAuthority(alias = "category-save", name = "进入栏目列表页面")
-	@RequestMapping(value = "/platform/access/category/categoryList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/content/news/category/categoryList.do", method = RequestMethod.GET)
 	public String categoryList() {
 		return "content/category/categoryList";
 	}
@@ -53,15 +54,21 @@ public class CategoryController {
 	@ResponseBody
 	@AccessAuthority(alias = "category-save", name = "保存栏目")
 	@OperateLog(message = "保存栏目信息", method = "categorySave", optType = DataType.OptType.INSERT, service = CategoryService.class)
-	@RequestMapping(value = "/platform/access/category/categorySave.json", method = RequestMethod.POST)
+	@RequestMapping(value = "/content/news/category/categorySave.json", method = RequestMethod.POST)
 	public MessageObject<Category> categorySave(Category category) {
 		MessageObject<Category> messageObject = MessageObject.getDefaultInstance();
 		try {
+			String id = category.getId();
 			category.setStatus(IsDelete.NO);
 			categoryService.saveEntity(category);
-			messageObject.openTip("新增栏目成功");
+			if (StringUtils.isEmpty(id)) {
+				messageObject.openTip("新增栏目成功");
+			} else {
+				messageObject.openTip("修改栏目成功");
+			}
 		} catch (ServiceException e) {
 			e.printStackTrace();
+			messageObject.openTip("操作出现异常，请稍后.");
 		}
 		return messageObject;
 	}
@@ -69,7 +76,7 @@ public class CategoryController {
 	@ResponseBody
 	@AccessAuthority(alias = "Category-edit", name = "修改栏目")
 	@OperateLog(message = "修改栏目信息", method = "categoryEdit", optType = DataType.OptType.UPDATE, service = CategoryService.class)
-	@RequestMapping(value = "/platform/access/category/categoryEdit.json", method = RequestMethod.POST)
+	@RequestMapping(value = "/content/news/category/categoryEdit.json", method = RequestMethod.POST)
 	public MessageObject<Category> categoryEdit(String id) {
 		MessageObject<Category> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -84,7 +91,7 @@ public class CategoryController {
 
 	@ResponseBody
 	@AccessAuthority(alias = "category-list", name = "栏目列表")
-	@RequestMapping(value = "/platform/access/Category/categoryList.json", method = { RequestMethod.POST })
+	@RequestMapping(value = "/content/news/Category/categoryList.json", method = { RequestMethod.POST })
 	public MessageObject<Category> categoryList(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
 		MessageObject<Category> messageObject = MessageObject.getDefaultInstance();
@@ -102,7 +109,7 @@ public class CategoryController {
 	@ResponseBody
 	@AccessAuthority(alias = "category-delete", name = "删除栏目信息")
 	@OperateLog(message = "删除栏目信息", method = "categoryDelete", optType = DataType.OptType.DELETE, service = CategoryService.class)
-	@RequestMapping(value = "/platform/access/category/categoryDelete.json", method = RequestMethod.POST)
+	@RequestMapping(value = "/content/news/category/categoryDelete.json", method = RequestMethod.POST)
 	public MessageObject<Category> categoryDelete(String id) {
 		MessageObject<Category> messageObject = MessageObject.getDefaultInstance();
 		try {

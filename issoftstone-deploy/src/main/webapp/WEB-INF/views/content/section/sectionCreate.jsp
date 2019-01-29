@@ -6,18 +6,13 @@
 <hy:extends name="javascript">
 	<script type="text/javascript">
 		$(function () {
-			$("body").css({
-				'overflow':'auto'
-			})
 			layui.use(['form', 'tree'], function () {
                 var form = layui.form;
                 //监听提交
                 form.on('submit(create-form)', function (data) {    
-                	// console.log($('form').serializeObject())
-                	$.ajax({
-                		url: '${ctx}/platform/access/icon/save.json',//发送请求
+                	$.saveInfo({
+                		url: '${ctx}/content/news/section/sectionSave.json',//发送请求
 				    	data: $('form').getForm(),
-				    	openType: 'alert',
 				    	success: function(result) {
 	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 		    				parent.layer.close(index); //再执行关闭
@@ -42,34 +37,26 @@
         <form class="layui-form layui-form-pane">
             <div class="layui-form-item">
                 <label class="layui-form-label">
-                	<i>*</i>图标名称
+                	<i>*</i>版块名称
                 </label>
                 <div class="layui-input-block">
-                    <input type="text" name="name" required="required"
+                    <input type="text" name="sectionName" required="sectionName"
                            lay-verify="required"
                            lay-verType="tips"
-                           placeholder="请输入图标名称"
+                           placeholder="请输入版块名称"
                            autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label"><i>*</i>样式名称</label>
+                <label class="layui-form-label"><i>*</i>版块描述</label>
                 <div class="layui-input-block">
-                    <input type="text" name="className"
-                    	lay-verType="tips"
-                           required lay-verify="required" placeholder="请输入样式名称"
-                           autocomplete="on" class="layui-input">
+                    <input type="text" name="remarks" required="required"
+                           lay-verify="required"
+                           lay-verType="tips"
+                           placeholder="请输入版块描述"
+                           autocomplete="off" class="layui-input">
                 </div>
             </div>
-            <!-- <div class="layui-form-item">
-                <label class="layui-form-label"><i>*</i>图标用法</label>
-                <div class="layui-input-block">
-                    <input type="text" name="iconClass"
-                    	lay-verType="tips"
-                           required lay-verify="required" placeholder="请输入图标别名"
-                           autocomplete="on" class="layui-input">
-                </div>
-            </div> -->
             <div class="layui-form-item" style="text-align: right">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit lay-filter="create-form">
