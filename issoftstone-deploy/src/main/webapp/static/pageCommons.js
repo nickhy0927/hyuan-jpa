@@ -127,7 +127,6 @@
 		var d = $(document).height();
 		var h = $('#search-form').height() + 25;
 		options.height = d - h;
-		console.log(d - h)
 		_init_table(options, _this);
 		$('body').css({
 			'overflow': 'hidden'
