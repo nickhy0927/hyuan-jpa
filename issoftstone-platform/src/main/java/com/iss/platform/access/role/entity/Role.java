@@ -20,6 +20,7 @@ import com.iss.platform.access.menu.entity.Menu;
  * @date 2015/9/21
  */
 @Entity
+@SuppressWarnings("serial")
 @Table(name = "t_p_a_role")
 public class Role extends IdEntity {
 	private String code;

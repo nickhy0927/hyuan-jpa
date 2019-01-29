@@ -10,10 +10,9 @@
                 var form = layui.form;
                 //监听提交
                 form.on('submit(create-form)', function (data) {
-                	$.ajax({
-                		url: '${ctx}/platform/access/menu/save.json',//发送请求
+                	$.saveInfo({
+                		url: '${ctx}/platform/access/menu/menuSave.json',//发送请求
 				    	data: data.field,
-				    	openType: 'alert',
 				    	success: function(result) {
 	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 		    				parent.layer.close(index); //再执行关闭

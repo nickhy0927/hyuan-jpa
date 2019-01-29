@@ -12,6 +12,7 @@ import com.iss.common.utils.IdEntity;
  * 异常日志
  */
 @Entity
+@SuppressWarnings("serial")
 @Table(name = "t_p_s_exce_log")
 public class ExceptionLog extends IdEntity {
 

@@ -15,6 +15,7 @@ import com.iss.platform.access.user.entity.User;
  * 操作日志
  */
 @Entity
+@SuppressWarnings("serial")
 @Table(name = "t_p_s_optlog")
 public class OptLog extends IdEntity {
 	private String message; // 操作信息

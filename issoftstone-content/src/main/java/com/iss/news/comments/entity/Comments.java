@@ -15,6 +15,7 @@ import com.iss.common.utils.IdEntity;
 import com.iss.news.content.entity.News;
 
 @Entity
+@SuppressWarnings("serial")
 @Table(name = "t_d_comments")
 public class Comments extends IdEntity {
 

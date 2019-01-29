@@ -1,5 +1,6 @@
 package com.iss.common.utils;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Access;
@@ -9,18 +10,25 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 import org.hibernate.annotations.GenericGenerator;
 
+@SuppressWarnings("serial")
 @MappedSuperclass
 @Access(AccessType.PROPERTY)
-public class IdEntity {
+public class IdEntity implements Serializable {
 	protected String id;// ID
 	protected Date createTime = new Date();
 	protected Date updateTime;
 	protected Boolean status; // 有效状态 true 有效 false 无效
 
 	protected String statusName;
+	
+	/**
+	 * 版本号
+	 */
+	private int version = 0;
 
 	@Override
 	public boolean equals(Object obj) {
@@ -88,5 +96,15 @@ public class IdEntity {
 		String statusName = SysContants.IsDelete.getIsDeleteName(status);
 		setStatusName(statusName);
 		return status;
+	}
+	
+	@Version
+	@Column(name = "version",columnDefinition = "int(11) default 0  comment '版本号,防重' ")
+	public int getVersion() {
+		return version;
+	}
+	
+	public void setVersion(int version) {
+		this.version = version;
 	}
 }

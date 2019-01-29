@@ -7,6 +7,7 @@ import javax.persistence.Table;
 import com.iss.common.utils.IdEntity;
 
 @Entity
+@SuppressWarnings("serial")
 @Table(name = "t_d_section")
 public class Section extends IdEntity{
 

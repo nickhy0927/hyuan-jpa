@@ -17,6 +17,7 @@ import com.iss.platform.access.icon.entity.Icon;
  * 菜单
  */
 @Entity
+@SuppressWarnings("serial")
 @Table(name = "t_p_a_menu")
 public class Menu extends IdEntity {
 

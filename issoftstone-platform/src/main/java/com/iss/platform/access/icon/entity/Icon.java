@@ -10,6 +10,7 @@ import com.iss.common.utils.IdEntity;
  * 图标
  */
 @Entity
+@SuppressWarnings("serial")
 @Table(name = "t_p_a_icon")
 public class Icon extends IdEntity {
 

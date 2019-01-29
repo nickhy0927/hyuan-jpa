@@ -14,6 +14,7 @@ import com.iss.common.utils.IdEntity;
  *
  */
 @Entity
+@SuppressWarnings("serial")
 @Table(name = "t_d_category")
 public class Category extends IdEntity {
 

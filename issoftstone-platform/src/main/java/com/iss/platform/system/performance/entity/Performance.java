@@ -11,6 +11,7 @@ import com.iss.common.utils.IdEntity;
  *
  */
 @Entity
+@SuppressWarnings("serial")
 @Table(name = "t_p_s_performance")
 public class Performance extends IdEntity {
 

@@ -16,6 +16,7 @@ import com.iss.news.section.entity.Section;
 
 @Entity
 @Table(name = "t_d_news")
+@SuppressWarnings("serial")
 public class News extends IdEntity {
 
 	/**

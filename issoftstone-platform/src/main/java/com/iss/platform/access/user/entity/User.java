@@ -24,6 +24,7 @@ import com.iss.platform.access.role.entity.Role;
  * 用户
  */
 @Entity
+@SuppressWarnings("serial")
 @Table(name = "t_p_a_user")
 public class User extends IdEntity {
 
