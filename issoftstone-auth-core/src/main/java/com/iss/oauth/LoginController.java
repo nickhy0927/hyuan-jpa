@@ -1,5 +1,7 @@
 package com.iss.oauth;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.iss.common.config.InitEnvironment;
 import com.iss.common.exception.VerifyCodeException;
 import com.iss.common.utils.MessageObject;
+import com.iss.platform.access.user.entity.User;
+import com.iss.platform.access.user.service.UserService;
 
 /**
  * @author Administrator
@@ -31,6 +35,10 @@ public class LoginController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
+	@Autowired
+	private UserService userService;
+	
+	
 	@ResponseBody
 	@RequestMapping(value = "/login.json", method = RequestMethod.POST)
 	public MessageObject<UserDetails> login(String username, String password, HttpServletRequest request) {
@@ -51,6 +59,10 @@ public class LoginController {
 			session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
 			messageObject.ok("登陆成功", authentication.getName());
 			InitEnvironment.setCurrentLoginName(authentication.getName());
+			String name = authentication.getName();
+			User user = userService.findUserByLoginName(name);
+			user.setLastLoginTime(new Date());
+			userService.updateUser(user);
 			return messageObject;
 		} catch (Exception ex) {
 			ex.printStackTrace();

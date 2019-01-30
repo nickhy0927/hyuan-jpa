@@ -1,4 +1,4 @@
-package com.iss.platform.access.dict;
+package com.iss.platform.access.dict.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,7 +54,7 @@ public class DictController {
 	}
 	
 	@ResponseBody
-	@AccessAuthority(alias = "dict-save", name = "保存数据字典")
+	@AccessAuthority(alias = "dict-save|dict-edit", name = "保存数据字典")
 	@OperateLog(message = "保存数据字典信息", method = "dictSave", optType = DataType.OptType.INSERT, service = DictService.class)
 	@RequestMapping(value = "/platform/access/dict/dictSave.json", method = RequestMethod.POST)
 	public MessageObject<Dict> dictSave(Dict dict) {

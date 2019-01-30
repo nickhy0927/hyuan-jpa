@@ -52,7 +52,7 @@ public class SectionController {
 	}
 	
 	@ResponseBody
-	@AccessAuthority(alias = "section-save", name = "保存版块")
+	@AccessAuthority(alias = "section-save|save-edit", name = "保存版块")
 	@OperateLog(message = "保存版块信息", method = "sectionSave", optType = DataType.OptType.INSERT, service = SectionService.class)
 	@RequestMapping(value = "/content/news/section/sectionSave.json", method = RequestMethod.POST)
 	public MessageObject<Section> sectionSave(Section section) {

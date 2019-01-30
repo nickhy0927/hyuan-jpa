@@ -79,14 +79,14 @@
            	<div class="layui-form-item">
                 <label class="layui-form-label"><i></i>是否启用</label>
                 <div class="layui-input-inline">
-                    <input type="radio" name="enable" value="0" title="否">
                     <input type="radio" name="enable" value="1" title="是" checked>
+                    <input type="radio" name="enable" value="0" title="否">
                 </div>
-                <label class="layui-form-label"><i></i>是否锁定</label>
+                <!-- <label class="layui-form-label"><i></i>是否锁定</label>
                 <div class="layui-input-inline">
                     <input type="radio" name="locked" value="0" title="否" checked>
                     <input type="radio" name="locked" value="1" title="是">
-                </div>
+                </div> -->
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">

@@ -33,11 +33,21 @@
                     { field: "nickName", title: '用户姓名', width: 160, fixed: "left", unresize: true},
                     { field: "loginName",  title: "登录账户", width: 160, align: 'left', fixed: "left", unresize: true},
                     { field: "brithday",  title: "用户生日", width: 120, align: 'center'},
-                    { field: "email",  title: "电子邮箱", minWidth: 180},
-                    { field: "enableName",  title: "启用", width: 80, align: 'center'},
-                    { field: "lockedName",  title: "锁定", width: 80, align: 'center'},
-                    { field: "lastLoginTime",  title: "最后登录时间", width: 130},
-                    { field: "userTag",  title: "手机标识"},
+                    { field: "email",  title: "电子邮箱", width: 180},
+                    { field: "enable",  title: "启用", width: 80, align: 'center', templet: function (d) {
+						if (d.enable) {
+							return '<span class="label label-success radius">是</span>'
+						}
+						return '<span class="label label-warning radius">否</span>'
+					}},
+                    { field: "locked",  title: "锁定", width: 80, align: 'center', templet: function (d) {
+						if (d.enable) {
+							return '<span class="label label-success radius">是</span>'
+						}
+						return '<span class="label label-warning radius">否</span>'
+					}},
+                    { field: "lastLoginTime",  title: "最后登录时间", minWidth: 130},
+                    { field: "userTag",  title: "手机标识", minWidth: 200},
                     { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 130, unresize: true}
                 ]],
                 operate: {

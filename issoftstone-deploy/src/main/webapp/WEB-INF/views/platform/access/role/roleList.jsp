@@ -83,7 +83,7 @@
                 url: "${ctx}/platform/access/role/list.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
-                    { field: "code", title: '角色编号', width: 180, fixed: "left", unresize: true},
+                    { field: "code", title: '角色编号', width: 200, fixed: "left", unresize: true},
                     { field: "name", title: '角色名称', width: 160, fixed: "left", unresize: true},
                     { field: "remark", title: "备注", minWidth: 300},
                     { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 145, unresize: true},

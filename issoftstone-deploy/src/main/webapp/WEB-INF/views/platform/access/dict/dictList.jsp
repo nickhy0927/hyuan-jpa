@@ -33,12 +33,17 @@
                 url: "${ctx}/platform/access/dict/dictList.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
-                    { field: "dictCode", title: '字典编号', width: 160, fixed: "left", unresize: true},
+                    { field: "dictCode", title: '字典编号', width: 180, fixed: "left", unresize: true},
                     { field: "dictName",  title: "字典名称", width: 160},
-                    { field: "dictValue",  title: "字典值", width: 160},
-                    { field: "dictType",  title: "类型名称", width: 120},
-                    { field: "enable",  title: "是否启用", align: "center", width: 100},
-                    { field: "remarks",  title: "字典描述", align: "left"},
+                    { field: "dictValue",  title: "字典值", width: 100},
+                    { field: "dictType",  title: "类型名称", width: 260},
+                    { field: "enable",  title: "启用", align: "center", width: 80, templet: function (d) {
+						if (d.enable) {
+							return '<span class="label label-success radius">是</span>'
+						}
+						return '<span class="label label-warning radius">否</span>'
+					}},
+                    { field: "remarks",  title: "字典描述", align: "left", minWidth: 200},
                     { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 120, unresize: true}
                 ]],
                 operate: {
@@ -46,7 +51,7 @@
                 		$.openWindow({
 							title: '修改字典信息',
 							height: '360px',
-							width: '50%',
+							width: '60%',
 							url: '${ctx}/platform/access/dict/dictEdit.do?id=' + data[0].id 
 						})
 					},
@@ -59,7 +64,7 @@
                 		$.openWindow({
 							title: '新增字典信息',
 							height: '360px',
-							width: '50%',
+							width: '60%',
 							url: '${ctx}/platform/access/dict/dictCreate.do'
 						})
 					},

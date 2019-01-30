@@ -6,56 +6,40 @@
 <hy:extends name="javascript">
 	<script type="text/javascript">
 		$(function () {
-			$("body").css({
-				'overflow':'auto'
-			})
 			layui.use(['form', 'tree'], function () {
                 var form = layui.form;
                 //监听提交
                 form.on('submit(create-form)', function (data) {
-                	$.openLoading('正在保存数据，请稍等...');
-                	$.ajax({
-				    	url: '${ctx}/platform/access/menu/menuSave.json',//发送请求
-				    	data: $('form').getForm(),
-				    	success: function (res) {
-				    		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                	$.saveInfo({
+                		url: '${ctx}/platform/access/menu/menuSave.json',//发送请求
+				    	data: data.field,
+				    	success: function(result) {
+	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 		    				parent.layer.close(index); //再执行关闭
-		    				window.parent.refresh();
-						}
-			    	});
+							window.parent.refresh();
+				    	}
+					})
                 	return false;
                 });
                 form.verify({
-                    alias: [/^[a-zA-Z0-9_-]{4,16}$/, '别名由字母，数字，下划线，减号组成']
+                    alias: [/^[a-zA-Z_-]+$/, '别名由字母，减号组成']
                 });
                 $.ajax({
-			    	type: 'POST',
-			    	url: '${ctx}/platform/access/menu/edit.json',//发送请求
-			    	data: {id : '${id}'},
-			    	dataType : "json",
-			    	success: function(res) {
-			    		res.content.menu.menu ? $("#treeclass").text(res.content.menu.menu.name) : ''
-		    			res.content.menu.menu ? $("#parentId").val(res.content.menu.menu.id) : ''
-			    		form.val("edit-form", {		    			  	"id": res.content.menu['id'],
-		    			  	"name": res.content.menu['name'],
-		    			  	"alias": res.content.menu['alias'],
-		    			  	"url": res.content.menu['url'],
-		    			  	"enable": res.content.menu['enable'],
-		    			  	"locked": res.content.menu['locked'],
-		    			  	"localCode": res.content.menu['localCode'],
-		    			  	"orders": res.content.menu['orders'],
-		    			})
-		    			$('#iconId').select({
+                	type: "GET",
+                    url: "${ctx}/platform/access/menu/menuCreate.json",
+                    contentType: "application/json; charset=utf-8",
+                    data: {},
+                    success: function(res) {
+		            	$('#iconId').select({
 		            		data: res.content['icons'],
 		        			holder: '请选择图标样式',
-		        			defaultValue: res.content.menu.icon ? res.content.menu.icon['id']: "",
 		        			fields: {
 		        				val: 'id', // value值的名称
 		        				name: 'name' // name值的名称
 		        			},
 		                });
                     	form.render('select');
-                    	$('#classtree').html('');
+                    	$("#classtree").html("");
          	         	layui.tree({
                             elem: "#classtree",
                             nodes: res.content['menuTrees'],
@@ -64,8 +48,10 @@
                                 $select.removeClass("layui-form-selected").find(".layui-select-title span").html(node.name).end().find("input:hidden[name='parentId']").val(node.id);
                            }
                         });
-			    	}
-                });
+                     },
+                     error: function (message) {
+                     }
+                })
                 $(".downpanel").on("click", ".layui-select-title", function (e) {
                     $(".layui-form-select").not($(this).parents(".layui-form-select")).removeClass("layui-form-selected");
                     $(this).parents(".downpanel").toggleClass("layui-form-selected");
@@ -86,13 +72,12 @@
 </hy:extends>
 <hy:extends name="body">
 	<div class="create-form">
-        <form class="layui-form layui-form-pane" lay-filter="edit-form">
+        <form class="layui-form layui-form-pane">
             <div class="layui-form-item">
                 <label class="layui-form-label">
                 	<i>*</i>菜单名称
                 </label>
                 <div class="layui-input-block">
-                	<input name="id" type="hidden" id="id"/>
                     <input type="text" name="name"
                            lay-verify="required"
                            lay-verType="tips"
@@ -126,7 +111,10 @@
 		        <div class="layui-input-block">
 		            <div class="layui-unselect layui-form-select downpanel">
 		                <div class="layui-select-title">
-		                    <span class="layui-input layui-unselect" id="treeclass">请选择上级菜单</span>
+		                   <span class="layui-input layui-unselect" id="treeclass">请选择上级菜单</span>
+		                   <!--  <select name="treeclass" id="treeclass" lay-verType="tips">
+		                    	<option value="">请选择上级菜单</option>
+		                    </select> -->
 		                    <input type="hidden" name="parentId" value="">
 		                    <i class="layui-edge"></i>
 		                </div>

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,15 +36,21 @@ import com.iss.platform.access.menu.service.MenuService;
 public class MenuController {
 
 	@Autowired
-	private MenuService menuService;
-
-	@Autowired
 	private IconService iconService;
 
+	@Autowired
+	private MenuService menuService;
+
+	@AccessAuthority(alias = "menu-save", name = "菜单新增页面")
+	@RequestMapping(value = "/platform/access/menu/menuCreate.do", method = RequestMethod.GET)
+	public String menuCreate() {
+		return "platform/access/menu/menuCreate";
+	}
+
 	@ResponseBody
-	@AccessAuthority(alias = "menu-save", name = "新增菜单")
-	@RequestMapping(value = "/platform/access/menu/create.json", method = RequestMethod.GET)
-	public MessageObject<Menu> menuCreate() {
+	@AccessAuthority(alias = "menu-save", name = "获取新增菜单信息")
+	@RequestMapping(value = "/platform/access/menu/menuCreate.json", method = RequestMethod.GET)
+	public MessageObject<Menu> menuCreateJson() {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
 		try {
 			Map<String, Object> params = Maps.newConcurrentMap();
@@ -60,7 +67,78 @@ public class MenuController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "menu-save", name = "保存菜单")
+	@AccessAuthority(alias = "menu-delete", name = "删除菜单")
+	@OperateLog(message = "删除菜单信息", method = "delete", optType = DataType.OptType.DELETE, service = MenuService.class)
+	@RequestMapping(value = "/platform/access/menu/menuDekete.json", method = RequestMethod.POST)
+	public MessageObject<Menu> menuDelete(String id) {
+		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
+		try {
+			if (StringUtils.isNotEmpty(id)) {
+				String[] ids = id.split(",");
+				menuService.deleteBatch(ids);
+				messageObject.openTip("删除菜单成功", null);
+			}
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.error("删除菜单异常");
+		}
+		return messageObject;
+	}
+
+	@ResponseBody
+	@AccessAuthority(alias = "menu-edit", name = "修改菜单")
+	@OperateLog(message = "修改菜单信息", method = "edit", optType = DataType.OptType.UPDATE, service = MenuService.class)
+	@RequestMapping(value = "/platform/access/menu/menuEdit.json", method = RequestMethod.POST)
+	public MessageObject<Menu> menuEdit(String id) {
+		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
+		try {
+			Map<String, Object> params = Maps.newConcurrentMap();
+			List<MenuTree> menuTrees = menuService.queryMenuTree();
+			List<Icon> icons = iconService.queryByMap(params);
+			params.put("menuTrees", menuTrees);
+			params.put("icons", icons);
+			Menu menu = menuService.get(id);
+			params.put("menu", menu);
+			messageObject.ok("修改查询菜单成功", params);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.error("修改查询菜单异常");
+		}
+		return messageObject;
+	}
+
+	@AccessAuthority(alias = "menu-edit", name = "菜单修改页面")
+	@RequestMapping(value = "/platform/access/menu/menuEdit.do", method = RequestMethod.GET)
+	public String menuEdit(String id, Model model) {
+		model.addAttribute("id", id);
+		return "platform/access/menu/menuEdit";
+	}
+
+	@AccessAuthority(alias = "menu-list", name = "进入菜单列表页面")
+	@RequestMapping(value = "/platform/access/menu/menuList.do", method = RequestMethod.GET)
+	public String menuList() {
+		return "platform/access/menu/menuList";
+	}
+
+	@ResponseBody
+	@AccessAuthority(alias = "menu-list", name = "获取菜单列表分页")
+	@RequestMapping(value = "/platform/access/menu/menuList.json", method = { RequestMethod.POST })
+	public MessageObject<Menu> menuList(HttpServletRequest request, PageSupport support) {
+		Map<String, Object> map = WebUtils.getRequestToMap(request);
+		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
+		try {
+			map.put("status_eq", IsDelete.NO);
+			PagerInfo<Menu> tools = menuService.queryPageByMap(map, support);
+			messageObject.ok("查询菜单成功", tools);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.error("查询菜单异常");
+		}
+		return messageObject;
+	}
+
+	@ResponseBody
+	@AccessAuthority(alias = "menu-save|menu-edit", name = "保存菜单信息")
 	@OperateLog(message = "新增菜单信息", method = "menuSave", optType = DataType.OptType.INSERT, service = MenuService.class)
 	@RequestMapping(value = "/platform/access/menu/menuSave.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuSave(Menu menu) {
@@ -82,64 +160,6 @@ public class MenuController {
 			}
 		} catch (ServiceException e) {
 			e.printStackTrace();
-		}
-		return messageObject;
-	}
-
-	@ResponseBody
-	@AccessAuthority(alias = "menu-edit", name = "修改菜单")
-	@OperateLog(message = "修改菜单信息", method = "edit", optType = DataType.OptType.UPDATE, service = MenuService.class)
-	@RequestMapping(value = "/platform/access/menu/edit.json", method = RequestMethod.POST)
-	public MessageObject<Menu> menuEdit(String id) {
-		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
-		try {
-			Map<String, Object> params = Maps.newConcurrentMap();
-			List<MenuTree> menuTrees = menuService.queryMenuTree();
-			List<Icon> icons = iconService.queryByMap(params);
-			params.put("menuTrees", menuTrees);
-			params.put("icons", icons);
-			Menu menu = menuService.get(id);
-			params.put("menu", menu);
-			messageObject.ok("修改查询菜单成功", params);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			messageObject.error("修改查询菜单异常");
-		}
-		return messageObject;
-	}
-
-	@ResponseBody
-	@AccessAuthority(alias = "menu-list", name = "菜单列表")
-	@RequestMapping(value = "/platform/access/menu/list.json", method = { RequestMethod.POST })
-	public MessageObject<Menu> menuList(HttpServletRequest request, PageSupport support) {
-		Map<String, Object> map = WebUtils.getRequestToMap(request);
-		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
-		try {
-			map.put("status_eq", IsDelete.NO);
-			PagerInfo<Menu> tools = menuService.queryPageByMap(map, support);
-			messageObject.ok("查询菜单成功", tools);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			messageObject.error("查询菜单异常");
-		}
-		return messageObject;
-	}
-
-	@ResponseBody
-	@AccessAuthority(alias = "menu-delete", name = "删除菜单")
-	@OperateLog(message = "删除菜单信息", method = "delete", optType = DataType.OptType.DELETE, service = MenuService.class)
-	@RequestMapping(value = "/platform/access/menu/delete.json", method = RequestMethod.POST)
-	public MessageObject<Menu> menuDelete(String id) {
-		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
-		try {
-			if (StringUtils.isNotEmpty(id)) {
-				String[] ids = id.split(",");
-				menuService.deleteBatch(ids);
-				messageObject.openTip("删除菜单成功", null);
-			}
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			messageObject.error("删除菜单异常");
 		}
 		return messageObject;
 	}

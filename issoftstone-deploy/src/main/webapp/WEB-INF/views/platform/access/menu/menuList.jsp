@@ -13,7 +13,7 @@
         	$("#tableList").dataTable({
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
-                url: "${ctx}/platform/access/menu/list.json",
+                url: "${ctx}/platform/access/menu/menuList.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
                     { field: "name", title: '菜单名称', width: 160, fixed: "left", unresize: true},
@@ -34,7 +34,7 @@
 							title: '修改菜单',
 							height: '450px',
 							width: '90%',
-							url: '${ctx}/platform/access/menu/edit.do?id=' + data[0].id
+							url: '${ctx}/platform/access/menu/menuEdit.do?id=' + data[0].id
 						})
 					},
 					delAction: function (tableInstance, data) {
@@ -43,18 +43,17 @@
                 },
                 groupBtn: {
                 	createAction: function () {
-                		console.log($)
                 		$.openWindow({
 							title: '新增菜单',
 							height: '450px',
 							width: '90%',
-							url: '${ctx}/platform/access/menu/create.do'
+							url: '${ctx}/platform/access/menu/menuCreate.do'
 						})
 					},
 					deleteAction: function (tableInstance, data) {
 						$.openTip('你确定删除吗？', false, function () {
 							$.ajax({
-								url:'${ctx}/platform/access/menu/delete.json',
+								url:'${ctx}/platform/access/menu/menuDelete.json',
 								data: {id: data.join(",")},
 								success: function (res) {
 									console.log(res);

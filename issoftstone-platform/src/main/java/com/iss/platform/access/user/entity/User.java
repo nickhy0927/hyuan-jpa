@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.iss.common.utils.IdEntity;
 import com.iss.constant.AccessConstant;
 import com.iss.platform.access.role.entity.Role;
@@ -41,7 +42,7 @@ public class User extends IdEntity {
 	private String salt; // 加密盐
 	private byte[] image; // 用户图像
 	private Date lastLoginTime;
-	
+
 	// 附加字段
 	private String enableName;// 是否显示 true 是 false 否
 	private String lockedName; // 是否锁定 true 是 false 否
@@ -144,6 +145,7 @@ public class User extends IdEntity {
 		this.image = image;
 	}
 
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
 	public Date getLastLoginTime() {
 		return lastLoginTime;
 	}
@@ -151,7 +153,7 @@ public class User extends IdEntity {
 	public void setLastLoginTime(Date lastLoginTime) {
 		this.lastLoginTime = lastLoginTime;
 	}
-	
+
 	@Transient
 	public String getEnableName() {
 		enableName = AccessConstant.Enable.getName(enable);
@@ -163,11 +165,11 @@ public class User extends IdEntity {
 		lockedName = AccessConstant.Locked.getName(locked);
 		return lockedName;
 	}
-	
+
 	public String getSalt() {
 		return salt;
 	}
-	
+
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}

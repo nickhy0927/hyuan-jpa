@@ -27,7 +27,8 @@
     <link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/font-awesome/css/font-awesome.min.css"/> <!-- 自定义样式 -->
     <link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/webuploader/0.1.5/webuploader.css">
     <link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/webuploader/webloader.css">
-    <link rel="stylesheet" type="text/css" href="${basePath}/static/global.css"/> <!-- 自定义样式 -->
+    <link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/select2/css/select2.css"/>
+    <link rel="stylesheet" type="text/css" href="${basePath}/assets/css/global.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/assets/css/style.css"/> <!-- 自定义样式 -->
 	<style type="text/css">
 	   .ui-widget-overlay {
@@ -75,7 +76,8 @@
 	<!-- 表单验证插件 -->
 	<script type="text/javascript" src="${basePath}/assets/lib/jquery.validation/1.14.0/messages_zh.js"></script> <!-- 表单验证插件 -->
 	<script type="text/javascript" src="${basePath}/assets/js/common/tools.js"></script>
-	<script type="text/javascript" src="${basePath}/static/pageCommons.js"></script>
+	<script type="text/javascript" src="${basePath}/assets/lib/select2/js/select2.js"></script>
+	<script type="text/javascript" src="${basePath}/assets/js/pageCommons.js"></script>
    	<script type="text/javascript">
    	</script>
     <title>

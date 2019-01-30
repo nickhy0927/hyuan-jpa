@@ -1365,3 +1365,7 @@ td {
 	height: 20px !important;
 	margin-top: -2px;
 }
+
+.label {
+	padding: 5px 10px;
+}

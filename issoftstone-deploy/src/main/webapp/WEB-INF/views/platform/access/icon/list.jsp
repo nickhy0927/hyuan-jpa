@@ -36,8 +36,8 @@
                     { type: "checkbox", fixed: "left" },
                     { field: "name", title: '图标名称', width: 160, fixed: "left", unresize: true},
                     { field: "icon",  title: "图标", width: 80, align: 'center', fixed: "left", unresize: true},
-                    { field: "className",  title: "图标样式", width: 200, fixed: "left", unresize: true},
-                    { title: "使用方法", unresize: true, templet: function (d) {
+                    { field: "className",  title: "图标样式", minWidth: 240, fixed: "left", unresize: true},
+                    { title: "使用方法", minWidth: 200, unresize: true, templet: function (d) {
 						return '<pre><xmp>' + d.iconClass + '</xmp></pre>';
 					}},
                     { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 120, unresize: true}
