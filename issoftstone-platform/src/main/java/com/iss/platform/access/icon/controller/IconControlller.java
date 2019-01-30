@@ -49,6 +49,17 @@ public class IconControlller {
 		}
 		return messageObject;
 	}
+	
+	@ResponseBody
+	@AccessAuthority(alias = "queryIconList", name = "获取所有图标")
+	@RequestMapping(value = "/platform/access/icon/queryIconList.json", method = RequestMethod.GET)
+	public PagerInfo<Icon> queryIconList(HttpServletRequest request, PageSupport support) {
+		Map<String, Object> paramMap = WebUtils.getRequestToMap(request);
+		support.setLimit(20);
+		paramMap.put("status_eq", IsDelete.NO);
+		PagerInfo<Icon> pagerInfo = iconService.queryPageByMap(paramMap, support);
+		return pagerInfo;
+	}
 
 	@ResponseBody
 	@AccessAuthority(alias = "icon-edit", name = "修改图标")

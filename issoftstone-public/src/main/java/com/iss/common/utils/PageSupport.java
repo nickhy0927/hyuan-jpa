@@ -4,7 +4,7 @@ public class PageSupport {
 	private int limit = 10; // 分页大小
 	private int totals;// 总记录数
 	private int totalPage;// 总页数
-	private int page;// 当前页
+	private int page = 1;// 当前页
 	private String order = "createTime";
 	private String sort = Sortable.DESC.toString().toLowerCase();
 

@@ -7,9 +7,9 @@
 	</appender>
 
 	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>logs/cms.log</file>
+		<file>logs/news.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>logs/cms.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>logs/news.%d{yyyy-MM-dd}.log</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
@@ -28,6 +28,6 @@
 	<logger name="jdbc.sqltiming" level="INFO"/>
 	<root level="info">
 		<appender-ref ref="console" />
-		<!--<appender-ref ref="rollingFile" />-->
+		<appender-ref ref="rollingFile" />
 	</root>
 </configuration>

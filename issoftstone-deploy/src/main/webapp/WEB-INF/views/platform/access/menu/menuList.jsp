@@ -22,8 +22,8 @@
                     { title: "图标", width: 80, unresize: true, align: 'center', templet: function (d) {
 						return d.icon ? d.icon.iconClass : "";
 					}},
-                    { field: "url", title: "访问地址"},
-                    { field: "localCode", title: "国际化编码", width: 200},
+                    { field: "url", title: "访问地址",minWidth: 200},
+                    { field: "localCode", title: "国际化编码", minWidth: 160},
                     { field: "enableName", title: "显示", width: 80, align: 'center', unresize: true},
                     { field: "lockedName", title: "锁定", width: 80, align: 'center', unresize: true},
                     { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 120, unresize: true}
