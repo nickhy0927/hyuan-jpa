@@ -1,12 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://www.hy.include" prefix="hy" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set value="${pageContext.request.contextPath}" var="ctx"></c:set>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set value="${pageContext.request.contextPath}" var="ctx" />
 <hy:extends name="title">菜单列表</hy:extends>
 <hy:extends name="javascript">
     <script type="text/javascript">
     	function refresh() {
-    		console.log('refresh')
     		$("#tableList").refreshTable();
 		}
         $(function() {
@@ -24,8 +23,18 @@
 					}},
                     { field: "url", title: "访问地址",minWidth: 200},
                     { field: "localCode", title: "国际化编码", minWidth: 160},
-                    { field: "enableName", title: "显示", width: 80, align: 'center', unresize: true},
-                    { field: "lockedName", title: "锁定", width: 80, align: 'center', unresize: true},
+					{ field: "enable",  title: "启用", width: 80, align: 'center', templet: function (d) {
+						if (d.enable) {
+							return '<span class="label label-success radius">是</span>'
+						}
+						return '<span class="label label-warning radius">否</span>'
+					}},
+					{ field: "locked",  title: "锁定", width: 80, align: 'center', templet: function (d) {
+						if (d.enable) {
+							return '<span class="label label-success radius">是</span>'
+						}
+						return '<span class="label label-warning radius">否</span>'
+					}},
                     { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 120, unresize: true}
                 ]],
                 operate: {
@@ -33,7 +42,7 @@
                 		$.openWindow({
 							title: '修改菜单',
 							height: '450px',
-							width: '90%',
+							width: '800px',
 							url: '${ctx}/platform/access/menu/menuEdit.do?id=' + data[0].id
 						})
 					},
@@ -46,7 +55,7 @@
                 		$.openWindow({
 							title: '新增菜单',
 							height: '450px',
-							width: '90%',
+							width: '800px',
 							url: '${ctx}/platform/access/menu/menuCreate.do'
 						})
 					},

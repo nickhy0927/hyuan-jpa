@@ -1,276 +1,276 @@
 @charset "utf-8";
 /* 自定义样式 */
 .cc-tit {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .down-icon {
-	height: 30px;
-	width: 30px;
-	float: right;
-	background: url(../images/down-icon.png) no-repeat center;
+    height: 30px;
+    width: 30px;
+    float: right;
+    background: url(../images/down-icon.png) no-repeat center;
 }
 
 .hicon {
-	background: url(../images/up-icon.png) no-repeat center !important;
+    background: url(../images/up-icon.png) no-repeat center !important;
 }
 
 #top-navigation {
-	padding-left: 14%;
+    padding-left: 14%;
 }
 
 .txt-cw {
-	width: 100px;
+    width: 100px;
 }
 
 .txt-cw2 {
-	width: 172px;
+    width: 172px;
 }
 
 .sel-cw {
-	width: 160px !important;
+    width: 160px !important;
 }
 
 .sel-cw2 {
-	width: 100px !important;
+    width: 100px !important;
 }
 
 .sel-cw3 {
-	width: 150px !important;
+    width: 150px !important;
 }
 
 .txta {
-	/* width: 550px; */
-	height: 90px;
-	box-sizing: border-box;
-	border: solid 1px #ddd;
-	width: 100%;
+    /* width: 550px; */
+    height: 90px;
+    box-sizing: border-box;
+    border: solid 1px #ddd;
+    width: 100%;
 }
 
 .sel-list {
-	display: inline-block;
-	width: 100%;
-	/* float: left; */
+    display: inline-block;
+    width: 100%;
+    /* float: left; */
 }
 
 .sel-list li {
-	min-width: 100px;
-	padding: 5px 8px;
-	height: 30px;
-	line-height: 30px;
-	float: left;
+    min-width: 100px;
+    padding: 5px 8px;
+    height: 30px;
+    line-height: 30px;
+    float: left;
 }
 
 .sel-list li i.imc {
-	width: 15px;
-	height: 30px;
-	line-height: 30px;
-	float: left;
-	color: red;
+    width: 15px;
+    height: 30px;
+    line-height: 30px;
+    float: left;
+    color: red;
 }
 
 .sel-list li p {
-	min-width: 100px;
-	height: 30px;
-	line-height: 30px;
-	float: right;
+    min-width: 100px;
+    height: 30px;
+    line-height: 30px;
+    float: right;
 }
 
 .sel-list2 li {
-	width: 420px;
+    width: 420px;
 }
 
 .sel-list li label {
-	width: 160px;
-	text-align: right;
-	float: left;
+    width: 160px;
+    text-align: right;
+    float: left;
 }
 
 .sel-list2 li p {
-	float: left;
+    float: left;
 }
 
 .tab-cap {
-	line-height: 30px;
-	height: 30px;
-	text-align: left;
-	font-weight: bold;
-	padding: 5px 8px;
-	border-top: 1px solid #ddd;
-	border-left: 1px solid #ddd;
-	border-right: 1px solid #ddd;
-	background: #DDDDDD
+    line-height: 30px;
+    height: 30px;
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 8px;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    background: #DDDDDD
 }
 
 /* 角色管理 */
 .role-nav-l {
-	height: auto;
-	/* width: 220px; */
-	float: left;
+    height: auto;
+    /* width: 220px; */
+    float: left;
 }
 
 .ztrh {
-	min-height: 455px;
-	margin: 10px;
+    min-height: 455px;
+    margin: 10px;
 }
 
 .role-nav-r {
-	height: auto;
-	min-height: 540px;
-	float: left;
-	border-left: 1px solid #DDDDDD;
+    height: auto;
+    min-height: 540px;
+    float: left;
+    border-left: 1px solid #DDDDDD;
 }
 
 .role-label {
-	text-align: right;
+    text-align: right;
 }
 
 .ztree-box {
-	min-width: 300px;
-	min-height: 100px;
-	border: 1px solid #DDDDDD;
+    min-width: 300px;
+    min-height: 100px;
+    border: 1px solid #DDDDDD;
 }
 
 .role-chk {
-	width: 300px;
-	height: auto;
-	min-height: 50px;
-	border: 1px solid #DDDDDD;
+    width: 300px;
+    height: auto;
+    min-height: 50px;
+    border: 1px solid #DDDDDD;
 }
 
 .role-chk li {
-	height: 25px;
-	line-height: 25px;
-	width: auto;
-	float: left;
-	margin: 0 5px;
+    height: 25px;
+    line-height: 25px;
+    width: auto;
+    float: left;
+    margin: 0 5px;
 }
 
 .tbl-pd {
-	padding: 0px !important;
+    padding: 0px !important;
 }
 
 /* 财务指标监控 */
 .row-rad {
-	/* width: 18%;
+    /* width: 18%;
     height: 120px; 
     margin-left: 2%; 
     padding: 10px;*/
-	border-radius: 10px;
-	border: 1px solid #dddddd;
-	float: left;
+    border-radius: 10px;
+    border: 1px solid #dddddd;
+    float: left;
 }
 
 .color-box {
-	width: 50px;
-	height: 50px;
-	float: left;
-	margin-top: 8px;
-	box-shadow: 5px 5px 5px #ccc;
+    width: 50px;
+    height: 50px;
+    float: left;
+    margin-top: 8px;
+    box-shadow: 5px 5px 5px #ccc;
 }
 
 .colx1 {
-	background-color: #ffdf25;
+    background-color: #ffdf25;
 }
 
 .colx2 {
-	background-color: #36a9ce;
+    background-color: #36a9ce;
 }
 
 .colx3 {
-	background-color: #d0e17d;
+    background-color: #d0e17d;
 }
 
 .colx4 {
-	background-color: #ef5aa1;
+    background-color: #ef5aa1;
 }
 
 .fcd-data-box {
-	width: 60%;
-	height: 120px;
-	float: left;
-	margin-left: 25px;
+    width: 60%;
+    height: 120px;
+    float: left;
+    margin-left: 25px;
 }
 
 .fcd-data-box label {
-	width: 100%;
-	height: 30px;
-	line-height: 30px;
-	float: left;
-	font-weight: bold;
-	font-family: "Microsoft Yahei";
-	font-size: 14px;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    float: left;
+    font-weight: bold;
+    font-family: "Microsoft Yahei";
+    font-size: 14px;
 }
 
 .fcd-data-box span {
-	width: 100%;
-	height: 30px;
-	line-height: 30px;
-	float: left;
-	font-family: "Microsoft Yahei";
-	font-size: 14px;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    float: left;
+    font-family: "Microsoft Yahei";
+    font-size: 14px;
 }
 
 #rMenu {
-	background: #DDDDDD;
-	display: block;
-	top: 299px;
-	left: 156px;
-	visibility: visible;
-	position: absolute;
+    background: #DDDDDD;
+    display: block;
+    top: 299px;
+    left: 156px;
+    visibility: visible;
+    position: absolute;
 }
 
 #rMenu li:hover, #rMenu a:hover {
-	background: darkslategray;
-	color: #ffffff;
+    background: darkslategray;
+    color: #ffffff;
 }
 
 #rMenu a, #rMenu a:hover {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 #rMenu li {
-	height: 35px;
-	line-height: 35px;
-	border-bottom: 1px solid #ffffff;
+    height: 35px;
+    line-height: 35px;
+    border-bottom: 1px solid #ffffff;
 }
 
 #rMenu a {
-	display: block;
-	padding: 0px 10px;
-	font-size: 12px;
+    display: block;
+    padding: 0px 10px;
+    font-size: 12px;
 }
 
 /*机构管理*/
 .text-ow {
-	width: 370px;
-	margin: 0px;
+    width: 370px;
+    margin: 0px;
 }
 
 .opt-btn {
-	height: 440px;
+    height: 440px;
 }
 
 .btn-o {
-	margin-top: 62px;
+    margin-top: 62px;
 }
 
 .btn-t {
-	margin-top: 230px;
+    margin-top: 230px;
 }
 
 .dept-ztree {
-	min-height: 440px;
-	width: 90%;
-	padding: 20px;
-	background-color: #ddd;
+    min-height: 440px;
+    width: 90%;
+    padding: 20px;
+    background-color: #ddd;
 }
 
 .new-dept {
-	width: 390px;
-	height: 100px;
-	border: 1px solid #dddddd;
-	margin-left: 10px;
+    width: 390px;
+    height: 100px;
+    border: 1px solid #dddddd;
+    margin-left: 10px;
 }
 
 /* .new-dept span{
@@ -283,662 +283,697 @@
 	color: #19a97b;
 } */
 .new-dept span a {
-	margin-left: 5px;
-	color: red;
-	text-decoration: none;
+    margin-left: 5px;
+    color: red;
+    text-decoration: none;
 }
 
 .labt {
-	width: auto;
-	padding-left: 8px;
-	padding-top: 8px;
+    width: auto;
+    padding-left: 8px;
+    padding-top: 8px;
 }
 
 .new-depttree {
-	min-height: 200px;
-	width: 50%;
-	padding: 20px;
-	background-color: #ddd;
+    min-height: 200px;
+    width: 50%;
+    padding: 20px;
+    background-color: #ddd;
 }
 
 .intr-word {
-	float: left;
-	height: 30px;
-	line-height: 30px;
-	margin-left: 10px;
-	color: #ccc;
-	font-size: 12px;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 10px;
+    color: #ccc;
+    font-size: 12px;
 }
 
 /* 导入xlsx */
 .excelName {
-	width: auto;
-	height: 30px;
-	line-height: 30px;
-	float: left;
+    width: auto;
+    height: 30px;
+    line-height: 30px;
+    float: left;
 }
 
 /*宏观经济分析*/
 .c-greenligh {
-	color: #33FF00
+    color: #33FF00
 }
 
 .c-grl {
-	color: #31ac00
+    color: #31ac00
 }
 
 .tabCon {
-	min-height: 100px;
+    min-height: 100px;
 }
 
 .tabBar {
-	/* padding: 0 7%; */
-	border-bottom: none;
+    /* padding: 0 7%; */
+    border-bottom: none;
 }
 
 .tabBar span {
-	/* width: 27%; */
-	text-align: center;
+    /* width: 27%; */
+    text-align: center;
 }
 
 .dataBox {
-	border: 1px solid #ddd;
-	border-radius: 10px;
-	/* min-height: 100px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    /* min-height: 100px;
     margin: 13px 2%;
     padding: 10px 30px; */
 }
 
 .p-data {
-	width: 100%;
-	/* height: 30px;
+    width: 100%;
+    /* height: 30px;
     line-height: 30px; */
 }
 
 .p-data span {
-	width: 50%;
-	/* height: 40px;
+    width: 50%;
+    /* height: 40px;
     line-height: 40px; */
-	text-align: left;
-	display: block;
-	float: left;
+    text-align: left;
+    display: block;
+    float: left;
 }
 
 .append-table {
-	display: none;
+    display: none;
 }
 
 .plate-hr {
-	border-top: 2px solid #31ac00;
+    border-top: 2px solid #31ac00;
 }
 
 .tit-i {
-	height: 24px;
-	width: 3px;
-	background-color: red;
-	float: left;
-	margin: 4px 10px 0 0;
+    height: 24px;
+    width: 3px;
+    background-color: red;
+    float: left;
+    margin: 4px 10px 0 0;
 }
 
 .tit-i2 {
-	height: 24px;
-	width: 3px;
-	background-color: red;
-	float: left;
-	margin: 8px 10px 0 0;
+    height: 24px;
+    width: 3px;
+    background-color: red;
+    float: left;
+    margin: 8px 10px 0 0;
 }
 
 .bdbr-d {
-	border-bottom: 1px dotted #ddd;
+    border-bottom: 1px dotted #ddd;
 }
 
 /* table排序 */
 table thead .sorting {
-	background-image: url(../images/sort_both.png)
+    background-image: url(../images/sort_both.png)
 }
 
 table thead .sorting_asc {
-	background-image: url(../images/sort_asc.png)
+    background-image: url(../images/sort_asc.png)
 }
 
 table thead .sorting_desc {
-	background-image: url(../images/sort_desc.png)
+    background-image: url(../images/sort_desc.png)
 }
 
 table thead .sort {
-	height: 20px;
-	width: 20px;
-	float: right;
+    height: 20px;
+    width: 20px;
+    float: right;
 }
 
 table thead .actCls {
-	background-color: #e0effc;
+    background-color: #e0effc;
 }
 
 /* 授权认证 */
 .user-info {
-	margin-top: 10px;
+    margin-top: 10px;
 }
 
 .user-info dl dd span {
-	color: #fff;
+    color: #fff;
 }
 
 .user-info dl img {
-	border-radius: 32px;
+    border-radius: 32px;
 }
 
 .userinfo-list {
-	width: 100%;
-	height: auto;
-	float: left;
+    width: 100%;
+    height: auto;
+    float: left;
 }
 
 .userinfo-list dl {
-	width: 100%;
-	height: 30px;
-	line-height: 30px;
-	float: left;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    float: left;
 }
 
 .userinfo-list dt {
-	width: 50%;
-	float: left;
-	text-align: right;
+    width: 50%;
+    float: left;
+    text-align: right;
 }
 
 .userinfo-list dd {
-	width: 40%;
-	float: left;
-	padding-left: 10px;
+    width: 40%;
+    float: left;
+    padding-left: 10px;
 }
 
 /* 客户管理 */
 .linet {
-	border-bottom: solid 1px #ccc;
+    border-bottom: solid 1px #ccc;
 }
 
 .tabTit {
-	border-bottom: 2px solid #0069A6;
+    border-bottom: 2px solid #0069A6;
 }
 
 .tabTit span {
-	/* width: 25%; */
-	padding: 5px 15px;
-	float: left;
-	text-align: center;
-	cursor: pointer;
-	background-color: #F8F8F8;
+    /* width: 25%; */
+    padding: 5px 15px;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+    background-color: #F8F8F8;
 }
 
 .tabTit span.current {
-	background-color: #0069A6;
-	color: #fff;
+    background-color: #0069A6;
+    color: #fff;
 }
 
 .dbj-txta {
-	width: 562px;
-	float: left;
-	height: 90px;
-	box-sizing: border-box;
-	border: 1px solid #ddd;
+    width: 562px;
+    float: left;
+    height: 90px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
 }
 
 /* 项目管理 */
 .cashflow-intr p {
-	
+
 }
 
 /* RORAC/EVA数据测算 */
 .eva-warp {
-	height: 580px;
-	width: 1096px;
-	margin: 0 auto;
-	background: url("../images/body-bg.jpg") center 15px no-repeat;
+    height: 580px;
+    width: 1096px;
+    margin: 0 auto;
+    background: url("../images/body-bg.jpg") center 15px no-repeat;
 }
 
 .data-div {
-	float: left;
-	margin-left: 3px;
-	background-color: #91beff;
-	border: 2px solid #6198e8;
-	border-radius: 3px;
+    float: left;
+    margin-left: 3px;
+    background-color: #91beff;
+    border: 2px solid #6198e8;
+    border-radius: 3px;
 }
 
 .p-h1 {
-	height: 90px;
-	width: 100%;
-	float: left;
+    height: 90px;
+    width: 100%;
+    float: left;
 }
 
 .t-div1 {
-	height: 65px;
-	width: 115px;
-	margin-top: 5px;
-	margin-left: -10px;
+    height: 65px;
+    width: 115px;
+    margin-top: 5px;
+    margin-left: -10px;
 }
 
 .t-div2 {
-	height: 65px;
-	width: 115px;
-	margin-top: 5px;
-	margin-left: 30px;
+    height: 65px;
+    width: 115px;
+    margin-top: 5px;
+    margin-left: 30px;
 }
 
 .t-div3 {
-	height: 65px;
-	width: 100px;
-	margin-top: 5px;
-	margin-left: 23px;
+    height: 65px;
+    width: 100px;
+    margin-top: 5px;
+    margin-left: 23px;
 }
 
 .t-div4 {
-	height: 65px;
-	width: 110px;
-	margin-top: 5px;
-	margin-left: 35px;
+    height: 65px;
+    width: 110px;
+    margin-top: 5px;
+    margin-left: 35px;
 }
 
 .t-div5 {
-	height: 65px;
-	width: 115px;
-	margin-top: 5px;
-	margin-left: 20px;
+    height: 65px;
+    width: 115px;
+    margin-top: 5px;
+    margin-left: 20px;
 }
 
 .t-div6 {
-	height: 65px;
-	width: 115px;
-	margin-top: 5px;
-	margin-left: 20px;
+    height: 65px;
+    width: 115px;
+    margin-top: 5px;
+    margin-left: 20px;
 }
 
 .t-div7 {
-	height: 65px;
-	width: 125px;
-	margin-top: 5px;
-	margin-left: 25px;
+    height: 65px;
+    width: 125px;
+    margin-top: 5px;
+    margin-left: 25px;
 }
 
 .t-div8 {
-	height: 65px;
-	width: 100px;
-	margin-top: 5px;
-	margin-left: 20px;
+    height: 65px;
+    width: 100px;
+    margin-top: 5px;
+    margin-left: 20px;
 }
 
 .p-h2 {
-	height: 90px;
-	width: 100%;
-	float: left;
-	margin-top: 68px;
+    height: 90px;
+    width: 100%;
+    float: left;
+    margin-top: 68px;
 }
 
 .t-div9 {
-	height: 55px;
-	width: 120px;
-	margin-left: 130px;
+    height: 55px;
+    width: 120px;
+    margin-left: 130px;
 }
 
 .t-div10 {
-	height: 60px;
-	width: 120px;
-	margin-left: 20px;
+    height: 60px;
+    width: 120px;
+    margin-left: 20px;
 }
 
 .t-div11 {
-	height: 60px;
-	width: 120px;
-	margin-left: 35px;
+    height: 60px;
+    width: 120px;
+    margin-left: 35px;
 }
 
 .t-div12 {
-	height: 60px;
-	width: 120px;
-	margin-left: 10px;
+    height: 60px;
+    width: 120px;
+    margin-left: 10px;
 }
 
 .t-div13 {
-	height: 60px;
-	width: 120px;
-	margin-left: 10px;
+    height: 60px;
+    width: 120px;
+    margin-left: 10px;
 }
 
 .t-div14 {
-	height: 60px;
-	width: 140px;
-	margin-left: 15px;
+    height: 60px;
+    width: 140px;
+    margin-left: 15px;
 }
 
 .p-h3 {
-	height: 120px;
-	width: 100%;
-	float: left;
-	margin-top: 35px;
+    height: 120px;
+    width: 100%;
+    float: left;
+    margin-top: 35px;
 }
 
 .t-div15 {
-	height: 65px;
-	width: 125px;
-	margin-left: 125px;
+    height: 65px;
+    width: 125px;
+    margin-left: 125px;
 }
 
 .t-div16 {
-	height: 65px;
-	width: 120px;
-	margin-left: 180px;
+    height: 65px;
+    width: 120px;
+    margin-left: 180px;
 }
 
 .p-h4 {
-	height: 120px;
-	width: 100%;
-	float: left;
+    height: 120px;
+    width: 100%;
+    float: left;
 }
 
 .t-div17 {
-	height: 55px;
-	width: 140px;
-	margin-left: 250px;
+    height: 55px;
+    width: 140px;
+    margin-left: 250px;
 }
 
 .t-div18 {
-	height: 55px;
-	width: 120px;
-	margin-left: 300px;
+    height: 55px;
+    width: 120px;
+    margin-left: 300px;
 }
 
 .t-div19 {
-	height: 55px;
-	width: 110px;
-	margin-top: 100px;
-	margin-left: 20px;
+    height: 55px;
+    width: 110px;
+    margin-top: 100px;
+    margin-left: 20px;
 }
 
 .var-name {
-	line-height: 25px;
-	width: 100%;
-	color: #fff;
-	text-align: center;
+    line-height: 25px;
+    width: 100%;
+    color: #fff;
+    text-align: center;
 }
 
 .val-num {
-	line-height: 25px;
-	width: 100%;
-	color: #fff;
-	margin-top: 3px;
-	text-align: center;
+    line-height: 25px;
+    width: 100%;
+    color: #fff;
+    margin-top: 3px;
+    text-align: center;
 }
 
 .val-num input {
-	border: 1px solid #ddd;
-	width: 60px;
-	text-align: center;
+    border: 1px solid #ddd;
+    width: 60px;
+    text-align: center;
 }
 
 /* 进度条样式 */
 .progress-box {
-	height: 25px;
-	width: 100%;
+    height: 25px;
+    width: 100%;
 }
 
 .scroll {
-	display: inline-block;
-	width: 110px;
-	height: 4px;
-	background: #ddd;
-	border-radius: 3px;
-	position: relative;
-	margin-top: 8px;
+    display: inline-block;
+    width: 110px;
+    height: 4px;
+    background: #ddd;
+    border-radius: 3px;
+    position: relative;
+    margin-top: 8px;
 }
 
 .num-input {
-	line-height: 18px;
-	width: 100%;
-	text-align: center;
-	color: #fff;
+    line-height: 18px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
 }
 
 .num-input input {
-	border: 1px solid #ddd;
-	width: 30px;
-	text-align: center;
+    border: 1px solid #ddd;
+    width: 30px;
+    text-align: center;
 }
 
 .bar {
-	display: inline-block;
-	width: 12px;
-	height: 12px;
-	border-radius: 50% 50%;
-	background: #177ad8;
-	position: absolute;
-	margin-top: -4px;
-	cursor: pointer;
-	box-shadow: 0px 0px 3px #177ad8;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50% 50%;
+    background: #177ad8;
+    position: absolute;
+    margin-top: -4px;
+    cursor: pointer;
+    box-shadow: 0px 0px 3px #177ad8;
 }
 
 .masky {
-	width: 0px;
-	height: 4px;
-	background-color: #177ad8;
-	border-radius: 3px;
+    width: 0px;
+    height: 4px;
+    background-color: #177ad8;
+    border-radius: 3px;
 }
 
 .table-title-hidden {
-	display: none;
+    display: none;
 }
 
 /* 多分辨率 */
 @media screen and ( min-width: 1400px) {
-	.container {
-		width: 95%
-	}
-	.tabBar span {
-		width: 27%;
-	}
+    .container {
+        width: 95%
+    }
+
+    .tabBar span {
+        width: 27%;
+    }
 }
 
 @media screen and ( min-width: 1300px) {
-	.container {
-		width: 1270px
-	}
-	.row-rad {
-		width: 75%;
-		height: 120px;
-		margin-left: 2%;
-		padding: 10px 30px;
-	}
-	.tabBar span {
-		width: 27%;
-	}
-	.table-font thead th {
-		font-size: 14px;
-	}
+    .container {
+        width: 1270px
+    }
+
+    .row-rad {
+        width: 75%;
+        height: 120px;
+        margin-left: 2%;
+        padding: 10px 30px;
+    }
+
+    .tabBar span {
+        width: 27%;
+    }
+
+    .table-font thead th {
+        font-size: 14px;
+    }
 }
 
 @media screen and ( min-width: 1200px) {
-	.container {
-		width: 1170px
-	}
-	.row-rad {
-		width: 75%;
-		height: 120px;
-		margin-left: 2%;
-		padding: 10px 30px;
-	}
-	.append-table {
-		width: 98%;
-		overflow-x: auto;
-	}
-	.tabBar span {
-		width: 27%;
-	}
-	.table-font thead th {
-		font-size: 14px;
-	}
+    .container {
+        width: 1170px
+    }
+
+    .row-rad {
+        width: 75%;
+        height: 120px;
+        margin-left: 2%;
+        padding: 10px 30px;
+    }
+
+    .append-table {
+        width: 98%;
+        overflow-x: auto;
+    }
+
+    .tabBar span {
+        width: 27%;
+    }
+
+    .table-font thead th {
+        font-size: 14px;
+    }
 }
 
 @media screen and ( min-width: 1023px) {
-	.tabBar span {
-		width: 24.5%;
-	}
-	.selli {
-		font-size: 12px;
-	}
+    .tabBar span {
+        width: 24.5%;
+    }
+
+    .selli {
+        font-size: 12px;
+    }
 }
 
 @media screen and ( min-width: 992px) {
-	.container {
-		width: 970px
-	}
-	.row-rad {
-		width: 85%;
-		height: 120px;
-		margin: 5px 0 5px 2%;
-		padding: 10px;
-	}
-	.append-table {
-		width: 98%;
-		overflow-x: auto;
-	}
-	.tabBar span {
-		width: 27%;
-	}
-	.table-font thead th {
-		font-size: 14px;
-	}
+    .container {
+        width: 970px
+    }
+
+    .row-rad {
+        width: 85%;
+        height: 120px;
+        margin: 5px 0 5px 2%;
+        padding: 10px;
+    }
+
+    .append-table {
+        width: 98%;
+        overflow-x: auto;
+    }
+
+    .tabBar span {
+        width: 27%;
+    }
+
+    .table-font thead th {
+        font-size: 14px;
+    }
 }
 
 @media screen and ( min-width: 767px) {
-	.container {
-		width: 750px
-	}
-	.row-rad {
-		width: 85%;
-		height: 120px;
-		margin: 5px 0 5px 2%;
-		padding: 10px;
-	}
-	.append-table {
-		width: 98%;
-		overflow-x: auto;
-	}
-	.tabBar span {
-		width: 27%;
-	}
-	.dataBox {
-		min-height: 100px;
-		margin: 13px 2%;
-		padding: 10px 30px;
-	}
-	.p-data {
-		height: 40px;
-		line-height: 40px;
-	}
-	.p-data span {
-		height: 40px;
-		line-height: 40px;
-		font-size: 14px;
-	}
-	.tit-fz span {
-		font-size: 18px;
-		heigth: 30px;
-		line-height: 30px;
-	}
-	.table-font thead th {
-		font-size: 14px;
-	}
+    .container {
+        width: 750px
+    }
+
+    .row-rad {
+        width: 85%;
+        height: 120px;
+        margin: 5px 0 5px 2%;
+        padding: 10px;
+    }
+
+    .append-table {
+        width: 98%;
+        overflow-x: auto;
+    }
+
+    .tabBar span {
+        width: 27%;
+    }
+
+    .dataBox {
+        min-height: 100px;
+        margin: 13px 2%;
+        padding: 10px 30px;
+    }
+
+    .p-data {
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .p-data span {
+        height: 40px;
+        line-height: 40px;
+        font-size: 14px;
+    }
+
+    .tit-fz span {
+        font-size: 18px;
+        heigth: 30px;
+        line-height: 30px;
+    }
+
+    .table-font thead th {
+        font-size: 14px;
+    }
 }
 
 @media screen and ( max-width: 768px) {
-	/**报表查询**/
-	.row-rad {
-		width: 74%;
-		height: 120px;
-		margin: 5px 0 5px 5%;
-		padding: 10px 30px;
-	}
-	.append-table {
-		width: 98%;
-		overflow-x: auto;
-	}
-	.tabBar span {
-		width: 27%;
-	}
-	.dataBox {
-		min-height: 50px;
-		margin: 5px 2.5%;
-		padding: 10px 10px;
-	}
-	.p-data {
-		height: 20px;
-		line-height: 20px;
-	}
-	.p-data span {
-		height: 20px;
-		line-height: 20px;
-		font-size: 0.875em;
-	}
-	.tit-fz span {
-		font-size: 16px;
-	}
-	.selli {
-		font-size: 10px;
-	}
-	.bdbr-d {
-		font-size: 9px;
-	}
+    /**报表查询**/
+    .row-rad {
+        width: 74%;
+        height: 120px;
+        margin: 5px 0 5px 5%;
+        padding: 10px 30px;
+    }
+
+    .append-table {
+        width: 98%;
+        overflow-x: auto;
+    }
+
+    .tabBar span {
+        width: 27%;
+    }
+
+    .dataBox {
+        min-height: 50px;
+        margin: 5px 2.5%;
+        padding: 10px 10px;
+    }
+
+    .p-data {
+        height: 20px;
+        line-height: 20px;
+    }
+
+    .p-data span {
+        height: 20px;
+        line-height: 20px;
+        font-size: 0.875em;
+    }
+
+    .tit-fz span {
+        font-size: 16px;
+    }
+
+    .selli {
+        font-size: 10px;
+    }
+
+    .bdbr-d {
+        font-size: 9px;
+    }
 }
 
 @media screen and (max-width: 421px) {
-	.tabBar span {
-		width: 27%;
-	}
+    .tabBar span {
+        width: 27%;
+    }
 }
 
 @media screen and (max-width: 415px) {
-	.tabBar span {
-		width: 24%;
-	}
-	.p-data span {
-		height: 20px;
-		line-height: 20px;
-		font-size: 11px;
-	}
-	.table-font thead th {
-		font-size: 8px;
-	}
+    .tabBar span {
+        width: 24%;
+    }
+
+    .p-data span {
+        height: 20px;
+        line-height: 20px;
+        font-size: 11px;
+    }
+
+    .table-font thead th {
+        font-size: 8px;
+    }
 }
 
 @media screen and (max-width: 376px) {
-	.table-font thead th {
-		font-size: 7px;
-	}
+    .table-font thead th {
+        font-size: 7px;
+    }
 }
 
 @media screen and (max-width: 361px) {
-	.table-font thead th {
-		font-size: 7px;
-	}
-	.bdbr-d {
-		font-size: 10px;
-	}
+    .table-font thead th {
+        font-size: 7px;
+    }
+
+    .bdbr-d {
+        font-size: 10px;
+    }
 }
 
 @media screen and (max-width: 321px) {
-	.tabBar span {
-		width: 22%;
-	}
-	.table-font thead th {
-		font-size: 5px;
-	}
-	.p-data span {
-		height: 20px;
-		line-height: 20px;
-		font-size: 10px;
-	}
-	.bdbr-d {
-		font-size: 9px;
-	}
+    .tabBar span {
+        width: 22%;
+    }
+
+    .table-font thead th {
+        font-size: 5px;
+    }
+
+    .p-data span {
+        height: 20px;
+        line-height: 20px;
+        font-size: 10px;
+    }
+
+    .bdbr-d {
+        font-size: 9px;
+    }
 }
 
 /* .autocomplete_pt {
@@ -948,116 +983,115 @@ table thead .actCls {
 	background-color:#ccc;
 } */
 .autocomplete-suggestions {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	border: 1px solid #999;
-	background: #FFF;
-	cursor: default;
-	overflow: auto;
-	-webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
-	-moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
-	box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #999;
+    background: #FFF;
+    cursor: default;
+    overflow: auto;
+    -webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
+    -moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
+    box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
 }
 
 .autocomplete-suggestion {
-	padding: 2px 5px;
-	white-space: nowrap;
-	overflow: hidden;
+    padding: 2px 5px;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .autocomplete-no-suggestion {
-	padding: 2px 5px;
+    padding: 2px 5px;
 }
 
 .autocomplete-selected {
-	background: #F0F0F0;
+    background: #F0F0F0;
 }
 
 .autocomplete-suggestions strong {
-	font-weight: bold;
-	color: #000;
+    font-weight: bold;
+    color: #000;
 }
 
 .autocomplete-group {
-	padding: 2px 5px;
+    padding: 2px 5px;
 }
 
 .autocomplete-group strong {
-	font-weight: bold;
-	font-size: 16px;
-	color: #000;
-	display: block;
-	border-bottom: 1px solid #000;
+    font-weight: bold;
+    font-size: 16px;
+    color: #000;
+    display: block;
+    border-bottom: 1px solid #000;
 }
 
 .borpage-none .text-r {
-	text-align: center !important;
+    text-align: center !important;
 }
 
 /* 查看详情模板样式 */
 .templet-box {
-	background-color: #efefef;
-	padding-top: 10px;
+    background-color: #efefef;
+    padding-top: 10px;
 }
 
 .form-group {
-	display: block;
+    display: block;
 }
 
 .form-group.row {
-	margin: 0px;
+    margin: 0px;
 }
 
 .form-group:after {
-	content: "\20";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;
+    content: "\20";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
 }
 
 .form-item {
-	line-height: 30px;
-	min-height: 30px;
-	padding-top: 5px;
-	padding-bottom: 5px;
+    line-height: 30px;
+    min-height: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .form-item-label {
-	width: 150px;
-	float: left;
-	text-align: right;
+    width: 150px;
+    float: left;
+    text-align: right;
 }
 
 .form-item-label .icon {
-	color: red;
+    color: red;
 }
 
 .form-item-content {
-	margin-left: 160px;
-	text-align: left;
+    margin-left: 160px;
+    text-align: left;
 }
 
 .form-item-content .view {
-	color: #999;
-	text-align: left;
-	max-height: 150px;
-	overflow: auto;
-	word-break: break-all;
+    color: #999;
+    text-align: left;
+    max-height: 150px;
+    overflow: auto;
+    word-break: break-all;
 }
 
 .form-item-content .iframe-box {
-	border-radius: 4px;
-	background: #ffffff;
-	overflow: auto;
+    border-radius: 4px;
+    background: #ffffff;
+    overflow: auto;
 }
 
-.form-item.col-lg-4 .view, .form-item.col-md-6 .view, .form-item.col-sm-6 .view
-	{
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+.form-item.col-lg-4 .view, .form-item.col-md-6 .view, .form-item.col-sm-6 .view {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .form-item
@@ -1070,302 +1104,328 @@ table, .form-item
 .col-12
 .form-item-content
 .iframe-box {
-	width: 90%;
+    width: 90%;
 }
 
 .approve {
-	padding: 10px;
+    padding: 10px;
 }
 
 /* 新增编辑模板样式  */
 .form-item .input-text {
-	padding-left: 8px;
-	padding-right: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 .form-item .input-text, .form-item .radiu-box, .form-item .select-box,
-	.form-item .input-calendar, .form-item .input-search {
-	height: 30px;
+.form-item .input-calendar, .form-item .input-search {
+    height: 30px;
 }
 
 .form-item.col-12 .textarea-box {
-	width: 90%;
-	position: relative;
+    width: 90%;
+    position: relative;
 }
 
 .form-item .input-text.readonly {
-	border: none;
-	background-color: transparent;
+    border: none;
+    background-color: transparent;
 }
 
 .form-item .select-box {
-	background: #ffffff;
-	display: block;
+    background: #ffffff;
+    display: block;
 }
 
 .input-search, .input-calendar {
-	position: relative;
+    position: relative;
 }
 
 .input-search .Hui-iconfont, .input-calendar .Hui-iconfont {
-	position: absolute;
-	right: 12px;
-	z-index: 1;
+    position: absolute;
+    right: 12px;
+    z-index: 1;
 }
 
 #voteDataList table tbody {
-	display: block;
-	height: 300px;
-	overflow-y: scroll;
-	overflow-x: hidden;
+    display: block;
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 #voteDataList table thead, #voteDataList tbody tr {
-	display: table;
-	width: 100%;
-	table-layout: fixed;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
 }
 
 #voteDataList table thead {
-	width: calc(100% - 1em);
+    width: calc(100% - 1em);
 }
 
 .m-uploader .webuploader-pick {
-	height: 30px;
-	padding-top: 0px;
-	padding-bottom: 0px;
+    height: 30px;
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 
 .m-uploader .uploader-list {
-	width: auto;
-	float: left;
+    width: auto;
+    float: left;
 }
 
 .itemcell.file-item {
-	text-align: left;
+    text-align: left;
 }
 
 .m-uploader .webuploadDelbtn {
-	display: none;
+    display: none;
 }
 
 .webuploadDelbtn.show {
-	display: inline-block;
+    display: inline-block;
 }
 
 .form-item-content .input-text[type="number"] {
-	width: 100%;
+    width: 100%;
 }
 
 .layui-table-page {
-	text-align: right;
+    text-align: right;
 }
 
 .radio-box label {
-	margin-left: 20px;
+    margin-left: 20px;
 }
 
 .search-block {
-	border-radius: 2px;
-	padding: 10px 0 0 0;
+    border-radius: 2px;
+    padding: 10px 0 0 0;
 }
 
 table {
-	width: auto;
+    width: auto;
 }
 
 .datagrid-btable tr td, .datagrid-htable tr td {
-	font-size: 14px;
-	width: auto;
+    font-size: 14px;
+    width: auto;
 }
 
 .datagrid-btable {
-	width: 100%;
+    width: 100%;
 }
 
 .layui-btn-container {
-	margin-top: 10px;
+    margin-top: 10px;
 }
 
 .panel {
-	margin: 10px 0px 10px 15px !important;
+    margin: 10px 0px 10px 15px !important;
 }
 
 .layui-form-item {
-	margin-bottom: 0px !important;
+    margin-bottom: 0px !important;
 }
 
 .grid-main {
-	margin-left: 15px;
+    margin-left: 15px;
 }
 
 .create-form {
-	padding: 10px 10px 0 10px;
+    padding: 10px 10px 0 10px;
 }
 
 .create-form .layui-form-pane .layui-form-label {
-	text-overflow: clip;
-	text-align: right;
-	width: 160px !important;
+    text-overflow: clip;
+    text-align: right;
+    width: 160px !important;
 }
 
 .layui-form-pane .layui-input-block {
-	margin-left: 160px !important;
+    margin-left: 160px !important;
 }
 
 .create-form label i {
-	width: 10px;
-	color: red;
-	padding: 5px;
+    width: 10px;
+    color: red;
+    padding: 5px;
 }
 
 .layui-form-item {
-	margin-bottom: 5px !important;
+    margin-bottom: 5px !important;
 }
 
 .layui-form-item .layui-inline {
-	width: 387px;
+    width: 387px;
 }
 
 .search-block .layui-input-inline input, .search-block.layui-input-inline select,
-	.search-block .layui-select-title, .search-block .layui-form-select {
-	width: 270px;
+.search-block .layui-select-title, .search-block .layui-form-select {
+    width: 270px;
 }
 
 .plugin-action {
-	display: inline-block;
-	color: steelblue;
-	margin-right: 10px;
-	cursor: pointer;
-	text-decoration: none;
+    display: inline-block;
+    color: steelblue;
+    margin-right: 10px;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .plugin-action:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 .search-area {
-	padding: 10px 20px;
-	border: 1px solid #ccc;
-	background: #efefef;
-	margin-bottom: 15px;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    background: #efefef;
+    margin-bottom: 15px;
 }
 
 .search-area .sa-ele {
-	display: inline-block;
-	margin-right: 20px;
-	font-size: 12px;
+    display: inline-block;
+    margin-right: 20px;
+    font-size: 12px;
 }
 
 .search-area .sa-ele .se-title {
-	display: inline-block;
-	margin-right: 10px;
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .search-area .sa-ele .se-con {
-	display: inline-block;
-	width: 180px;
-	height: 24px;
-	border: 1px solid #ccc;
-	padding: 0 4px;
-	line-height: 24px;
+    display: inline-block;
+    width: 180px;
+    height: 24px;
+    border: 1px solid #ccc;
+    padding: 0 4px;
+    line-height: 24px;
 }
 
-.search-area .sa-ele .search-action, .search-area .sa-ele .reset-action
-	{
-	display: inline-block;
-	width: 80px;
-	height: 26px;
-	border: 1px solid #ccc;
-	background: #e8e8e8;
-	padding: 0 4px;
-	line-height: 26px;
-	text-align: center;
-	cursor: pointer;
-	margin-right: 10px;
+.search-area .sa-ele .search-action, .search-area .sa-ele .reset-action {
+    display: inline-block;
+    width: 80px;
+    height: 26px;
+    border: 1px solid #ccc;
+    background: #e8e8e8;
+    padding: 0 4px;
+    line-height: 26px;
+    text-align: center;
+    cursor: pointer;
+    margin-right: 10px;
 }
 
-.search-area .sa-ele .search-action:hover, .search-area .sa-ele .reset-action:hover
-	{
-	opacity: 0.7;
+.search-area .sa-ele .search-action:hover, .search-area .sa-ele .reset-action:hover {
+    opacity: 0.7;
 }
 
 .void-template {
-	height: 300px;
-	line-height: 300px;
-	text-align: center;
-	font-size: 24px;
-	color: #ccc;
+    height: 300px;
+    line-height: 300px;
+    text-align: center;
+    font-size: 24px;
+    color: #ccc;
 }
 
 .layui-btn-container {
-	margin-bottom: -5px;
+    margin-bottom: -5px;
 }
 
 .layui-btn-container .layui-btn {
-	margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 .hr-line {
-	border-bottom: 1px dashed cadetblue;
-	margin: 0 0 0 0px
+    border-bottom: 1px dashed cadetblue;
+    margin: 0 0 0 0px
 }
 
 .td-content {
-	padding-left: 15px;
+    padding-left: 15px;
 }
 
 .layui-btn-container .layui-btn {
-	line-height: 30px !important;
+    line-height: 30px !important;
 }
 
 pre {
-	line-height: 0px;
+    line-height: 0px;
 }
 
 .layui-icon {
-	margin-right: 5px;
+    margin-right: 5px;
 }
 
 /* .table-wrap .table-div table[grid-manager] tbody tr td {
 	padding: 5px 4px !important;
 } */
 .downpanel .layui-select-title span {
-	line-height: 38px;
+    line-height: 38px;
 }
 
 /*继承父类颜色*/
 .downpanel dl dd:hover {
-	background-color: inherit;
+    background-color: inherit;
 }
 
 body {
-	height: 100%;
-	width: 100%;
-	background-size: cover;
-	margin: 0 auto;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    margin: 0 auto;
 }
 
 td {
-	font-size: 12px !important;
+    font-size: 12px !important;
 }
 
 .layui-form-checkbox span {
-	height: 30px;
+    height: 30px;
 }
 
 .layui-field-title {
-	border-top: 1px solid white;
+    border-top: 1px solid white;
 }
 
 /* table {
 	width: 100% !important;
 } */
 .layui-table-page select {
-	height: 20px !important;
-	margin-top: -2px;
+    height: 20px !important;
+    margin-top: -2px;
 }
 
 .label {
-	padding: 5px 10px;
+    padding: 5px 10px;
+}
+
+.search-select > .layui-form-select {
+    display: none;
+}
+
+.select2-container--default .select2-selection--single {
+    border-radius: 0 2px 2px 0;
+    border: 1px solid #D2D2D2 !important;
+    line-height: 38px;
+    height: 38px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 38px;
+    height: 38px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    right: 7px;
+    height: 38px;
+}
+
+.select2-result-repository div{
+    display: inline-block;
+}
+.select2-result-repository div i.Hui-iconfont{
+   margin-right: 6px;
 }

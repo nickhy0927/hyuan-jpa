@@ -121,7 +121,7 @@
 					eval(func).call(this, tableInstance, res);
 			});
 		});
-	}
+	};
 	$.fn.dataTable = function(options) {
 		var _this = $(this);
 		var d = $(document).height();
@@ -131,7 +131,7 @@
 		$('body').css({
 			'overflow': 'hidden'
 		})
-	}
+	};
 	$.fn.refreshTable = function() {
 		if(!globleOpts) globleOpts = {};
 		var _this = $(this);
@@ -139,7 +139,7 @@
 		var h = $('#search-form').height() + 25 + 10;
 		globleOpts.height = d - h;
 		_init_table(globleOpts, $(this))
-	}
+	};
 	$(window).resize(function() {
 		var d = $(document).height();
 		var h = $('#search-form').height() + 25;
@@ -148,7 +148,7 @@
 		_init_table(globleOpts, $('#tableList'));
 		$('body').css({
 			'overflow': 'hidden'
-		})
+		});
 		$('.ztree-form').height(d - h - 164);
 	})
 })(jQuery, window, document);
@@ -201,7 +201,7 @@ var _parentOpenWindow = function(options) {
 // 关闭加载框
 var _closeLoading = function() {
     layer.closeAll();
-}
+};
 
 // 打开加载框
 var _openLoading = function(msg) {

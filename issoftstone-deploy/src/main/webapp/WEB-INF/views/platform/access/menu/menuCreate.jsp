@@ -3,13 +3,63 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set value="${pageContext.request.contextPath}" var="ctx"></c:set>
 <hy:extends name="title">新增菜单</hy:extends>
+<hy:extends name="css">
+    <style type="text/css">
+
+
+    </style>
+</hy:extends>
 <hy:extends name="javascript">
 	<script type="text/javascript">
 		$(function () {
+            $("#iconId").select2({
+                placeholder: '请选择图标',
+                width: '100%',
+                ajax: {
+                    url: '${ctx}/platform/access/icon/queryIconList.json',
+                    dataType: 'json',
+                    data: function (params) {
+                        var query = {
+                            name_li: params.term,
+                            type: 'public'
+                        }
+                        return query;
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: data.results
+                        };
+                    },
+                    cache: true
+                },
+                templateResult: formatRepo,
+                templateSelection: formatRepoSelection,
+                escapeMarkup: function (markup) {
+                    console.log('escapeMarkup== ', markup)
+                    return markup;
+                }
+            })
+
+
+            function formatRepo(repo) {
+                if (repo.loading) {
+                    return repo.text;
+                }
+                var markup = "<div class='select2-result-repository clearfix'>" +
+                            "<div class='select2-result-repository__avatar'>" + repo.iconClass + "</div>" +
+                            "<div class='select2-result-repository__meta'>" +
+                        "<div class='select2-result-repository__title'>" + repo.name + "</div>";
+                return markup;
+            }
+
+            function formatRepoSelection(repo) {
+                 return repo.name || repo.id;
+            }
 			layui.use(['form', 'tree'], function () {
                 var form = layui.form;
                 //监听提交
                 form.on('submit(create-form)', function (data) {
+                    console.log($('form').getForm());
                 	$.saveInfo({
                 		url: '${ctx}/platform/access/menu/menuSave.json',//发送请求
 				    	data: data.field,
@@ -30,15 +80,6 @@
                     contentType: "application/json; charset=utf-8",
                     data: {},
                     success: function(res) {
-		            	$('#iconId').select({
-		            		data: res.content['icons'],
-		        			holder: '请选择图标样式',
-		        			fields: {
-		        				val: 'id', // value值的名称
-		        				name: 'name' // name值的名称
-		        			},
-		                });
-                    	form.render('select');
                     	$("#classtree").html("");
          	         	layui.tree({
                             elem: "#classtree",
@@ -58,6 +99,10 @@
                     layui.stope(e);
                 }).on("click", "dl i", function (e) {
                     layui.stope(e);
+                });
+                console.log($('.select2').parent().find('.layui-form-select'))
+                $('.select2').parent().find('.layui-form-select').css({
+                    "display": 'none'
                 });
             });
 		})
@@ -112,9 +157,6 @@
 		            <div class="layui-unselect layui-form-select downpanel">
 		                <div class="layui-select-title">
 		                   <span class="layui-input layui-unselect" id="treeclass">请选择上级菜单</span>
-		                   <!--  <select name="treeclass" id="treeclass" lay-verType="tips">
-		                    	<option value="">请选择上级菜单</option>
-		                    </select> -->
 		                    <input type="hidden" name="parentId" value="">
 		                    <i class="layui-edge"></i>
 		                </div>
@@ -158,8 +200,8 @@
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label"><i>*</i>选择图标</label>
-                <div class="layui-input-block">
-                    <select name="iconId" id="iconId" lay-verType="tips"></select>
+                <div class="layui-input-block search-select">
+                    <select name="iconId" class="select2" placeholder="请选择图标" id="iconId" lay-verType="tips"></select>
                 </div>
             </div>
             <div class="layui-form-item" style="text-align: right">
