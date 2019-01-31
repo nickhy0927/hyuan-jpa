@@ -56,7 +56,6 @@
                 </label>
                 <div class="layui-input-block">
                     <input type="text" name="dictName" 
-                    		required="dictName"
                            lay-verify="required"
                            lay-verType="tips"
                            placeholder="请输入字典名称"
@@ -68,12 +67,12 @@
                 	<i>*</i>字典类型
                 </label>
                 <div class="layui-input-block">
-                    <input type="text" name="dictType" 
-                    		required="dictType"
-                           lay-verify="required"
-                           lay-verType="tips"
-                           placeholder="请输入字典类型"
-                           autocomplete="off" class="layui-input">
+                	<select name="parentId" id="parentId" lay-verType="tips" lay-verify="required">
+                		<option value="">请选择字典类型</option>
+                		<c:forEach var="dict" items="${dictTypeList}">
+                			<option value="${dict.id}">${dict.dictName}</option>
+                		</c:forEach>
+                	</select>
                 </div>
             </div>
            	<div class="layui-form-item">
@@ -82,18 +81,13 @@
                     <input type="radio" name="enable" value="1" title="是" checked>
                     <input type="radio" name="enable" value="0" title="否">
                 </div>
-                <!-- <label class="layui-form-label"><i></i>是否锁定</label>
-                <div class="layui-input-inline">
-                    <input type="radio" name="locked" value="0" title="否" checked>
-                    <input type="radio" name="locked" value="1" title="是">
-                </div> -->
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">
                 	<i>*</i>字典值
                 </label>
                 <div class="layui-input-block">
-                    <input type="text" name="dictValue" required="dictValue"
+                    <input type="text" name="dictValue"
                            lay-verify="required"
                            lay-verType="tips"
                            placeholder="请输入字典值"
@@ -103,7 +97,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label"><i>*</i>字典描述</label>
                 <div class="layui-input-block">
-                    <input type="text" name="remarks" required="required"
+                    <input type="text" name="remarks" 
                            lay-verify="required"
                            lay-verType="tips"
                            placeholder="请输入字典描述"

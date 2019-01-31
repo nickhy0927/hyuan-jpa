@@ -1,3 +1,4 @@
+<%@page import="com.iss.oauth.user.UserPrincipal"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://www.hy.include" prefix="hy" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -51,6 +52,7 @@
    	<script src="${basePath}/assets/lib/layui/layui.js"></script>
 	<script type="text/javascript">
 	    var ctx = '${basePath}';
+	    var username = '<%= UserPrincipal.getContextUser().getLoginName() %>';
 	</script>
 	<!--[if lt IE 9]>
 	<script type="text/javascript" src="${basePath}/assets/lib/html5shiv.js"></script>

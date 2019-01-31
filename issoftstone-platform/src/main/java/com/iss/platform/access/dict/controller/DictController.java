@@ -36,6 +36,8 @@ public class DictController {
 	@AccessAuthority(alias = "dict-save", name = "进入新增数据字典页面")
 	@RequestMapping(value = "/platform/access/dict/dictCreate.do", method = RequestMethod.GET)
 	public String dictCreate(Model model) {
+		List<Dict> dictTypeList = dictService.queryDictByParentNull();
+		model.addAttribute("dictTypeList", dictTypeList);
 		model.addAttribute("dictCode", new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()));
 		return "platform/access/dict/dictCreate";
 	}
@@ -44,6 +46,8 @@ public class DictController {
 	@RequestMapping(value = "/platform/access/dict/dictEdit.do", method = RequestMethod.GET)
 	public String dictEdit(String id, Model model) {
 		model.addAttribute("id", id);
+		List<Dict> dictTypeList = dictService.queryDictByParentNull();
+		model.addAttribute("dictTypeList", dictTypeList);
 		return "platform/access/dict/dictEdit";
 	}
 	

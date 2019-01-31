@@ -110,12 +110,15 @@
         	</button>
 	    </div>
 	    <div style="display:none" id="operateBar">
-	        <a class="btn btn-secondary-outline radius size-S" lay-event="editAction">
-	        	<i class="Hui-iconfont Hui-iconfont-edit"></i>
-	        </a>&nbsp;&nbsp;
-	        <a class="btn btn-danger-outline radius size-S" lay-event="delAction">
-	        	<i class="Hui-iconfont Hui-iconfont-del2"></i>
-	        </a>
+	    	{{# if(d.dict != null) { }}
+    			<a class="btn btn-secondary-outline radius size-S" lay-event="editAction">
+		        	<i class="Hui-iconfont Hui-iconfont-edit"></i>
+		        </a>&nbsp;&nbsp;
+		        <a class="btn btn-danger-outline radius size-S" lay-event="delAction">
+		        	<i class="Hui-iconfont Hui-iconfont-del2"></i>
+		        </a>
+	    	{{# } }}
+	    	{{ ctx }}
 	    </div>
     </div>
 </hy:extends>

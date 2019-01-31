@@ -14,6 +14,8 @@ import com.iss.common.utils.JsonMapper;
  */
 public class AccessConstant {
 
+	public final static String DATA_SOURCE_TYPE = "DATA_SOURCE_TYPE";
+	
 	/**
 	 * 是否显示
 	 */

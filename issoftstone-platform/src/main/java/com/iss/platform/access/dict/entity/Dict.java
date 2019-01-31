@@ -2,6 +2,8 @@ package com.iss.platform.access.dict.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -40,6 +42,11 @@ public class Dict extends IdEntity {
 	 * 是否启用 true 启用 false 停用
 	 */
 	private Boolean enable;
+	
+	/**
+	 * 上级名称
+	 */
+	private Dict dict;
 	
 	/**
 	 * 字典描述
@@ -104,6 +111,16 @@ public class Dict extends IdEntity {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name = "parent_id", columnDefinition = "varchar(64) comment '字典ID'")
+	public Dict getDict() {
+		return dict;
+	}
+	
+	public void setDict(Dict dict) {
+		this.dict = dict;
 	}
 	
 	@Transient
