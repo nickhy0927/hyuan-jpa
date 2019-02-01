@@ -1,4 +1,3 @@
-<%@page import="com.iss.oauth.user.UserPrincipal"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://www.hy.include" prefix="hy" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -29,7 +28,7 @@
     <link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/webuploader/0.1.5/webuploader.css">
     <link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/webuploader/webloader.css">
     <link rel="stylesheet" type="text/css" href="${basePath}/assets/lib/select2/css/select2.css"/>
-    <link rel="stylesheet" type="text/css" href="${basePath}/assets/css/global.css"/>
+    <%-- <link rel="stylesheet" type="text/css" href="${basePath}/assets/css/global.css"/> --%>
     <link rel="stylesheet" type="text/css" href="${basePath}/assets/css/style.css"/> <!-- 自定义样式 -->
 	<style type="text/css">
 	   .ui-widget-overlay {
@@ -47,12 +46,16 @@
 	   .check-box, .radio-box {
 	       padding-left: 5px;
 	   }
+	   .layui-layer-title {
+	        font-weight: bold;
+	        color: white !important;
+		    background-color: #9775ea !important;
+		}
 	</style>
     <link rel="stylesheet" href="${basePath}/assets/lib/layui/css/layui.css" media="all">
    	<script src="${basePath}/assets/lib/layui/layui.js"></script>
 	<script type="text/javascript">
 	    var ctx = '${basePath}';
-	    var username = '<%= UserPrincipal.getContextUser().getLoginName() %>';
 	</script>
 	<!--[if lt IE 9]>
 	<script type="text/javascript" src="${basePath}/assets/lib/html5shiv.js"></script>
@@ -66,6 +69,7 @@
 	<script type="text/javascript" src="${basePath}/assets/lib/jquery/1.9.1/jquery.core.autocomplete.js"></script>
 	<script type="text/javascript" src="${basePath}/assets/lib/layer/2.4/layer.js"></script>
 	<script type="text/javascript" src="${basePath}/assets/lib/layui/layui-xtree.js"></script>
+	<script type="text/javascript" src="${basePath}/assets/lib/layui/treetable.js"></script>
 	<script type="text/javascript" src="${basePath}/assets/lib/zTree/v3/js/jquery.ztree.all-3.5.min.js"></script>
 	<script type="text/javascript" src="${basePath}/assets/js/H-ui.min.js"></script>
 	<script type="text/javascript" src="${basePath}/assets/js/H-ui.admin.js"></script>

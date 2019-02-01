@@ -31,6 +31,8 @@
 		    			  	"dictName": res.content['dictName'],
 		    			  	"dictType": res.content['dictType'],
 		    			  	"dictValue": res.content['dictValue'],
+		    			  	"pid": res.content['dict'] ? res.content['dict'].id : '',
+		    			  	"version": res.content['version'],
 		    			  	"enable": res.content['enable'],
 		    			  	"remarks": res.content['remarks'],
 		    			})
@@ -51,6 +53,7 @@
 	<div class="create-form">
         <form class="layui-form layui-form-pane" lay-filter="edit-form">
         	<input name="id" type="hidden" id="id">
+        	<input name="version" type="hidden" id="version"/>
             <div class="layui-form-item">
                 <label class="layui-form-label">
                 	<i>*</i>字典编号
@@ -83,7 +86,7 @@
                 	<i>*</i>字典类型
                 </label>
                 <div class="layui-input-block">
-                	<select name="parentId" id="parentId" lay-verType="tips" lay-verify="required">
+                	<select name="pid" id="pid" lay-verType="tips" lay-verify="required">
                 		<option value="">请选择字典类型</option>
                 		<c:forEach var="dict" items="${dictTypeList}">
                 			<option value="${dict.id}">${dict.dictName}</option>

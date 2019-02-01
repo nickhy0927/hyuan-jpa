@@ -91,7 +91,7 @@
                 operate: {
                 	editAction: function (tableInstance, data) {
                 		$.openWindow({
-							title: '修改角色信息',
+							title: '<i class="layui-icon layui-icon-form"></i>&nbsp;修改角色信息',
 							height: '300px',
 							width: '70%',
 							url: '${ctx}/platform/access/role/roleEdit.do?id=' + data[0].id 
@@ -108,7 +108,7 @@
                 groupBtn: {
                 	createAction: function () {
                 		$.openWindow({
-							title: '新增角色信息',
+							title: '<i class="layui-icon layui-icon-form"></i>&nbsp;新增角色信息',
 							height: '300px',
 							width: '70%',
 							url: '${ctx}/platform/access/role/roleCreate.do'
@@ -121,7 +121,7 @@
 						deleteInfo(tableInstance, data);
 					},
 					searchAction: function (tableInstance) {
-						tableInstance.reload({
+						$("#tableList").refreshTable({
 							where : $("#search-form").getForm()
 						});
 					}

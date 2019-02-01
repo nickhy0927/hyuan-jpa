@@ -33,23 +33,30 @@
                 url: "${ctx}/platform/access/dict/dictList.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
-                    { field: "dictCode", title: '字典编号', width: 180, fixed: "left", unresize: true},
+                    { field: "dictCode", title: '字典编号', minWidth: 200, fixed: "left", unresize: true},
                     { field: "dictName",  title: "字典名称", width: 160},
-                    { field: "dictValue",  title: "字典值", width: 100},
-                    { field: "dictType",  title: "类型名称", width: 260},
+                    { field: "dictValue",  title: "字典值", width: 90},
+                    { field: "dictType",  title: "类型名称", minWidth: 200},
+                    { title: "上级名称", align: "left", minWidth: 130, templet: function (d) {
+                    	console.log(d.dict)
+						if (d.dict) {
+							return d.dict.dictName;
+						}
+						return '';
+					}},
                     { field: "enable",  title: "启用", align: "center", width: 80, templet: function (d) {
 						if (d.enable) {
 							return '<span class="label label-success radius">是</span>'
 						}
 						return '<span class="label label-warning radius">否</span>'
 					}},
-                    { field: "remarks",  title: "字典描述", align: "left", minWidth: 200},
+                    { field: "remarks",  title: "字典描述", align: "left", minWidth: 160},
                     { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 120, unresize: true}
                 ]],
                 operate: {
                 	editAction: function (tableInstance, data) {
                 		$.openWindow({
-							title: '修改字典信息',
+                			title: '<i class="layui-icon layui-icon-form"></i>&nbsp;修改字典信息',
 							height: '360px',
 							width: '60%',
 							url: '${ctx}/platform/access/dict/dictEdit.do?id=' + data[0].id 
@@ -62,7 +69,7 @@
                 groupBtn: {
                 	createAction: function () {
                 		$.openWindow({
-							title: '新增字典信息',
+							title: '<i class="layui-icon layui-icon-form"></i>&nbsp;新增字典信息',
 							height: '360px',
 							width: '60%',
 							url: '${ctx}/platform/access/dict/dictCreate.do'
@@ -72,7 +79,7 @@
 						deleteInfo(tableInstance, data);
 					},
 					searchAction: function (tableInstance) {
-						tableInstance.reload({
+						$("#tableList").refreshTable({
 							where : $("#search-form").getForm()
 						});
 					}
@@ -118,7 +125,6 @@
 		        	<i class="Hui-iconfont Hui-iconfont-del2"></i>
 		        </a>
 	    	{{# } }}
-	    	{{ ctx }}
 	    </div>
     </div>
 </hy:extends>

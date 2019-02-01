@@ -8,9 +8,11 @@
     	function refresh() {
     		$("#tableList").refreshTable();
 		}
-        $(function() {
+        layui.use(['form'], function () {
+        	var form = layui.form;
         	$("#tableList").dataTable({
                 toolbar: "#tableBar",
+                title: '菜单管理列表',
                 searchForm: 'search-form',
                 url: "${ctx}/platform/access/menu/menuList.json",
                 cols: [[
@@ -23,17 +25,13 @@
 					}},
                     { field: "url", title: "访问地址",minWidth: 200},
                     { field: "localCode", title: "国际化编码", minWidth: 160},
-					{ field: "enable",  title: "启用", width: 80, align: 'center', templet: function (d) {
-						if (d.enable) {
-							return '<span class="label label-success radius">是</span>'
-						}
-						return '<span class="label label-warning radius">否</span>'
+                    { field: "enable",  title: "启用", width: 110, align: 'center', templet: function (d) {
+						var checked = d.enable == 1 ? "checked='checked'" : "";
+						return '<input data-v=' + d.version + ' ' + checked + ' data-id=' + d.id + ' type="checkbox" lay-skin="switch" lay-filter="enable" lay-text="停用|启用">';
 					}},
-					{ field: "locked",  title: "锁定", width: 80, align: 'center', templet: function (d) {
-						if (d.enable) {
-							return '<span class="label label-success radius">是</span>'
-						}
-						return '<span class="label label-warning radius">否</span>'
+					{ field: "locked",  title: "锁定", width: 110, align: 'center', templet: function (d) {
+						var checked = d.locked == 0 ? "checked='checked'" : "";
+						return '<input data-v=' + d.version + ' ' + checked+ ' data-id=' + d.id + ' type="checkbox" lay-skin="switch" lay-filter="locked" lay-text="锁定|解锁">';
 					}},
                     { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 120, unresize: true}
                 ]],
@@ -53,7 +51,7 @@
                 groupBtn: {
                 	createAction: function () {
                 		$.openWindow({
-							title: '新增菜单',
+							title: '<i class="layui-icon layui-icon-form"></i>&nbsp;新增菜单',
 							height: '450px',
 							width: '800px',
 							url: '${ctx}/platform/access/menu/menuCreate.do'
@@ -75,13 +73,37 @@
 						})
 					},
 					searchAction: function (tableInstance) {
-						tableInstance.reload({
+						$("#tableList").refreshTable({
 							where : $("#search-form").getForm()
 						});
 					}
                 }
             });
-        })
+        	form.on('switch(enable)', function (data) {
+				var enable = this.checked ? '1' : '0';
+				$.saveInfo({
+					url: '${ctx}/platform/access/menu/menuStatusEdit.json',
+					data: {id: $(data.elem).attr('data-id'), enable: enable, version: $(data.elem).attr('data-v')},
+					success: function (res) {
+						$("#tableList").refreshTable({
+							where : $("#search-form").getForm()
+						});
+					}
+				})
+			})
+            form.on('switch(locked)', function (data) {
+				var locked = this.checked ? '0' : '1';
+				$.saveInfo({
+					url: '${ctx}/platform/access/menu/menuStatusEdit.json',
+					data: {id: $(data.elem).attr('data-id'), locked: locked, version: $(data.elem).attr('data-v')},
+					success: function (res) {
+						$("#tableList").refreshTable({
+							where : $("#search-form").getForm()
+						});
+					}
+				})
+			})
+		})
     </script>
 </hy:extends>
 <hy:extends name="body">

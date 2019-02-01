@@ -36,6 +36,7 @@
 			    		form.val("edit-form", {
 		    			  	"id": res.content['id'],
 		    			  	"name": res.content['name'],
+		    			  	"version": res.content['version'],
 		    			  	"code": res.content['code'],
 		    			  	"remark": res.content['remark'],
 		    			})
@@ -61,6 +62,7 @@
                 </label>
                 <div class="layui-input-block">
                 	<input type="hidden" id="id" name="id">
+                	<input name="version" type="hidden" id="version"/>
                     <input type="text" name="code" required="required"
                            lay-verify="required"
                            lay-verType="tips" readonly="readonly"

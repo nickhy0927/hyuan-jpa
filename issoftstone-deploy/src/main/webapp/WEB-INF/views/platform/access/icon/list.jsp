@@ -45,7 +45,7 @@
                 operate: {
                 	editAction: function () {
                 		$.openWindow({
-							title: '修改图标',
+							title: '<i class="layui-icon layui-icon-form"></i>&nbsp;修改图标信息',
 							height: '240px',
 							width: '70%',
 							url: '${ctx}/platform/access/icon/edit.do?id=' + data[0].id 
@@ -58,7 +58,7 @@
                 groupBtn: {
                 	createAction: function () {
                 		$.openWindow({
-							title: '新增图标',
+                			title: '<i class="layui-icon layui-icon-form"></i>&nbsp;新增图标信息',
 							height: '200px',
 							width: '70%',
 							url: '${ctx}/platform/access/icon/create.do'
@@ -68,9 +68,9 @@
 						deleteInfo(tableInstance, data);
 					},
 					searchAction: function (tableInstance) {
-						tableInstance.reload({
+						$("#tableList").refreshTable({
 							where : $("#search-form").getForm()
-						})
+						});
 					}
                 }
             })

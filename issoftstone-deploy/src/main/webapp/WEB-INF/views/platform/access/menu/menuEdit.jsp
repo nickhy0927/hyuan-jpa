@@ -41,6 +41,7 @@
 		    			  	"url": res.content.menu['url'],
 		    			  	"parentId": res.content.menu['menu'] ? res.content.menu['menu']['id'] : "",
 		    			  	"enable": res.content.menu['enable'],
+		    			  	"version": res.content.menu['version'],
 		    			  	"locked": res.content.menu['locked'],
 		    			  	"localCode": res.content.menu['localCode'],
 		    			  	"orders": res.content.menu['orders'],
@@ -93,6 +94,7 @@
                 </label>
                 <div class="layui-input-block">
                 	<input name="id" type="hidden" id="id"/>
+                	<input name="version" type="hidden" id="version"/>
                     <input type="text" name="name"
                            lay-verify="required"
                            lay-verType="tips"

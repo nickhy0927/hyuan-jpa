@@ -9,7 +9,8 @@
     		$("#tableList").dataTable({
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
-                limit: 10,
+                limit: 20,
+                size : 'sm', // 小尺寸的表格
                 url: "${ctx}/platform/access/role/list.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },

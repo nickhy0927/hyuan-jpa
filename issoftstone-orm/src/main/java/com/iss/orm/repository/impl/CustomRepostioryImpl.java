@@ -1,6 +1,7 @@
 package com.iss.orm.repository.impl;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -30,7 +31,8 @@ import com.iss.orm.repository.CustomRepostiory;
 
 @Repository
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements CustomRepostiory<T, ID> {
+public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID>
+		implements CustomRepostiory<T, ID> {
 
 	private Class<T> entityClass;
 	private EntityManager entityManager;
@@ -215,8 +217,46 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 
 	@Override
 	public T saveEntity(T entity) throws DaoException {
-		if ((entity instanceof IdEntity)) {
-			((IdEntity) entity).setUpdateTime(new Date());
+		if ((entity instanceof IdEntity) ) {
+			try {
+				IdEntity idEntity = (IdEntity) entity;
+				if (StringUtils.isNotEmpty(idEntity.getId())) {
+					((IdEntity) entity).setUpdateTime(new Date());
+					String id = idEntity.getId();
+					T t = findOne((ID) id);
+					Field[] fields = t.getClass().getDeclaredFields();
+					Field[] eFields = entity.getClass().getDeclaredFields();
+					for (Field field : fields) {
+						for (Field f : eFields) {
+							if (StringUtils.equals(field.getName(), f.getName())) {
+								field.setAccessible(true);
+								f.setAccessible(true);
+								Object object = f.get(entity);
+								if (object != null) {
+									field.set(t, object);
+								}
+							}
+						}
+					}
+					Field[] entityFields = entity.getClass().getSuperclass().getDeclaredFields();
+					Field[] tFields = t.getClass().getSuperclass().getDeclaredFields();
+					for (Field tf : tFields) {
+						for (Field field : entityFields) {
+							if (StringUtils.equals(field.getName(), tf.getName())) {
+								tf.setAccessible(true);
+								field.setAccessible(true);
+								Object object = field.get(entity);
+								if (object != null) {
+									tf.set(t, object);
+								}
+							}
+						}
+					}
+					return saveAndFlush(t);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return saveAndFlush(entity);
 	}
@@ -291,8 +331,7 @@ public class CustomRepostioryImpl<T, ID extends Serializable> extends SimpleJpaR
 		return criteria.setFirstResult(offset).setMaxResults(limit).list();
 	}
 
-	public List<T> queryByCriteria(Criteria criteria, int offset, int limit,
-			Sort sort) throws DaoException {
+	public List<T> queryByCriteria(Criteria criteria, int offset, int limit, Sort sort) throws DaoException {
 		criteria.setFirstResult(offset).setMaxResults(limit);
 		Iterator<Sort.Order> it;
 		if (sort != null) {

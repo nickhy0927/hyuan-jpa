@@ -32,6 +32,7 @@
 			    		form.val("edit-form", {
 		    			  	"id": res.content['id'],
 		    			  	"name": res.content['name'],
+		    			  	"version": res.content['version'],
 		    			  	"iconClass": res.content['iconClass'],
 		    			  	"className": res.content['className']
 		    			})
@@ -53,6 +54,7 @@
 	<div class="create-form">
         <form class="layui-form layui-form-pane" lay-filter="edit-form">
         	<input name="id" type="hidden" id="id">
+        	<input name="version" type="hidden" id="version"/>
             <div class="layui-form-item">
                 <label class="layui-form-label">
                 	<i>*</i>图标名称

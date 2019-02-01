@@ -13,6 +13,9 @@
 </hy:extends>
 <hy:extends name="javascript">
     <script type="text/javascript">
+	    if(top.location !== self.location){ 
+	        top.location.href = self.location.href; 
+	    } 
         function doLogin() {
             $.ajax({
                 url: '${ctx}/user/login.json',
@@ -37,6 +40,12 @@
                 doLogin();
             })
         })
+        document.onkeydown = function (event) {
+	        var e = event || window.event;
+	        if (e && e.keyCode == 13) { //回车键的键值为13
+	            $("#doLogin").click(); //调用登录按钮的登录事件
+	        }
+	    }; 
     </script>
 </hy:extends>
 <hy:extends name="body">

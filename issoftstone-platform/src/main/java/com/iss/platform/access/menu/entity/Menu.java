@@ -9,6 +9,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.iss.common.utils.IdEntity;
 import com.iss.constant.AccessConstant;
 import com.iss.platform.access.icon.entity.Icon;
@@ -18,6 +21,8 @@ import com.iss.platform.access.icon.entity.Icon;
  */
 @Entity
 @SuppressWarnings("serial")
+@DynamicInsert
+@DynamicUpdate
 @Table(name = "t_p_a_menu")
 public class Menu extends IdEntity {
 

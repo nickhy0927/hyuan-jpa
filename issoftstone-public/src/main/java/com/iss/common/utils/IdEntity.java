@@ -17,7 +17,7 @@ import org.hibernate.annotations.GenericGenerator;
 @SuppressWarnings("serial")
 @MappedSuperclass
 @Access(AccessType.PROPERTY)
-public class IdEntity implements Serializable {
+public class IdEntity extends PageSupport implements Serializable {
 	protected String id;// ID
 	protected Date createTime = new Date();
 	protected Date updateTime;
@@ -28,7 +28,7 @@ public class IdEntity implements Serializable {
 	/**
 	 * 版本号
 	 */
-	private int version = 0;
+	protected int version = 0;
 
 	@Override
 	public boolean equals(Object obj) {

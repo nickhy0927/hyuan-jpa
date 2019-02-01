@@ -20,14 +20,14 @@ public class AccessConstant {
 	 * 是否显示
 	 */
 	public static class Enable {
-		public static Boolean YES = Boolean.TRUE;
-		public static Boolean NO = Boolean.FALSE;
+		public static String YES = "1";
+		public static String NO = "0";
 
 		public static String getName(String code) {
-			if (StringUtils.equals(code, "1")) {
-				return "是";
+			if (StringUtils.equals(code, YES)) {
+				return "启用";
 			} else {
-				return "否";
+				return "停用";
 			}
 		}
 		
@@ -52,14 +52,14 @@ public class AccessConstant {
      * 是否锁定
      */
 	public static class Locked {
-		public static Boolean YES = Boolean.TRUE;
-		public static Boolean NO = Boolean.FALSE;
+		public static String YES = "1";
+		public static String NO = "0";
 		
 		public static String getName(String code) {
-			if (StringUtils.equals(code, "0")) {
-				return "是";
+			if (StringUtils.equals(code, YES)) {
+				return "锁定";
 			} else {
-				return "否";
+				return "解锁";
 			}
 		}
 		public String getSelectList() {

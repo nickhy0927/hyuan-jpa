@@ -170,6 +170,100 @@
             return repo.name || repo.id;
         }
     </script>
+    
+    <script type="text/javascript">
+	    layui.config({
+			base: '${ctx}/assets/lib/layui/module/',
+		}).use(['layer', 'table', 'treetable'], function () {
+            var $ = layui.jquery;
+            var table = layui.table;
+            var layer = layui.layer;
+            var treetable = layui.treetable;
+            // 渲染表格
+            var renderTable = function () {//树桩表格参考文档：https://gitee.com/whvse/treetable-lay
+                /* layer.load(2); */
+                treetable.render({
+                    treeColIndex: 1,//树形图标显示在第几列
+                    treeSpid: 0,//最上级的父级id
+                    treeIdName: 'id',//id字段的名称
+                    treePidName: 'parentId',//pid字段的名称
+                    treeDefaultClose: false,//是否默认折叠
+                    treeLinkage: true,//父级展开时是否自动展开所有子级
+                    elem: '#permissionTable',
+                    url: '${ctx}/platform/access/menu/menuTreeListToJson.json',
+                    page: false,
+                    cols: [[
+                    	{ type: "checkbox", fixed: "left" },
+                    	{ field: "name", title: '菜单名称', width: 260, fixed: "left", unresize: true},
+                        { field: "alias",  title: "菜单别名", width: 200, fixed: "left", unresize: true},
+                        { field: "parentName", title: "上级菜单", width: 120, unresize: true},
+                        { title: "图标", width: 80, unresize: true, align: 'center', templet: function (d) {
+    						return d.icon ? d.icon.iconClass : "";
+    					}},
+                        { field: "url", title: "访问地址",minWidth: 200},
+                        { field: "localCode", title: "国际化编码", minWidth: 160},
+    					{ field: "enable",  title: "启用", width: 80, align: 'center', templet: function (d) {
+    						if (d.enable) {
+    							return '<span class="label label-success radius">是</span>'
+    						}
+    						return '<span class="label label-warning radius">否</span>'
+    					}},
+    					{ field: "locked",  title: "锁定", width: 80, align: 'center', templet: function (d) {
+    						if (d.enable) {
+    							return '<span class="label label-success radius">是</span>'
+    						}
+    						return '<span class="label label-warning radius">否</span>'
+    					}},
+                        {templet: complain, title: '操作'}
+                    ]],
+                    done: function () {
+                        layer.closeAll('loading');
+                    }
+                });
+            };
+            renderTable();
+    		//触发三个button按钮
+            $('#btn-expand').click(function () {
+                treetable.expandAll('#permissionTable');
+            });
+
+            $('#btn-fold').click(function () {
+                treetable.foldAll('#permissionTable');
+            });
+
+            $('#btn-refresh').click(function () {
+                renderTable();
+            });
+    		
+            
+            function complain(d){//操作中显示的内容
+            	if(d.url!=null){
+            		return [
+                            '<a class="operation" lay-event="edit" href="javascript:void(0)" title="编辑">',
+                	     	'<i class="layui-icon layui-icon-edit"></i></a>',
+                	     	'<a class="operation" lay-event="del" href="javascript:void(0)" title="删除">',
+                	     	'<i class="layui-icon layui-icon-delete" ></i></a>',
+                	     	].join('');
+            	}else{
+            		return '';
+            	}
+            	
+            }
+            //监听工具条
+            table.on('tool(permissionTable)', function (obj) {
+                var data = obj.data;
+                console.log(obj);
+                var layEvent = obj.event;
+    			if(data.permissionName!=null){
+    				if (layEvent === 'del') {
+    	                layer.msg('删除' + data.id);
+    	            } else if (layEvent === 'edit') {
+    	                layer.msg('修改' + data.id);
+    	            }
+    			}
+            });
+        });
+    </script>
 </hy:extends>
 <hy:extends name="body">
     <form class="layui-form search-select">
@@ -188,25 +282,16 @@
             <option value="5">laytpl</option>
             <option value="6">upload</option>
             <option value="7">laydate</option>
-            <option value="8">laypage</option>
-            <option value="9">flow</option>
-            <option value="10">util</option>
-            <option value="11">code</option>
-            <option value="12">tree</option>
-            <option value="13">layedit</option>
-            <option value="14">nav</option>
-            <option value="15">tab</option>
-            <option value="16">table</option>
-            <option value="17">select</option>
-            <option value="18">checkbox</option>
-            <option value="19">switch</option>
-            <option value="20">radio</option>
         </select>
-
-        <!-- <span>区域：</span>
-         <select id="test1" class="select2" >
-             <option value="" selected="selected">请选择区域</option>
-         </select>-->
     </form>
+    
+    <div class="create-form">
+        <form class="layui-form layui-form-pane" lay-filter="edit-form">
+        	<input name="id" type="hidden" id="id">
+            <div class="layui-form-item">
+                <table id="permissionTable" class="layui-table" lay-filter="permissionTable"></table>
+            </div>
+        </form>
+    </div>
 </hy:extends>
 <jsp:include page="/page/basepage.jsp"/>

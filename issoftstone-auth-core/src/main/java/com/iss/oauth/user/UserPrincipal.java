@@ -43,6 +43,9 @@ public class UserPrincipal extends User {
 	}
 	
 	public static com.iss.platform.access.user.entity.User getContextUser() {
+		if (request == null) {
+			return new com.iss.platform.access.user.entity.User();
+		}
 		HttpSession session = request.getSession();
 		Object object = session.getAttribute("SPRING_SECURITY_CONTEXT");
 		SecurityContextImpl securityContextImpl = (SecurityContextImpl) object;

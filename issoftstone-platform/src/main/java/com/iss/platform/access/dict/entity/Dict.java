@@ -58,6 +58,11 @@ public class Dict extends IdEntity {
 	 * 字典类型
 	 */
 	private String dictTypeName;
+	
+	/**
+	 * 上级字典ID
+	 */
+	private String pid;
 
 	@Column(columnDefinition = "varchar(64) comment '字典编号'")
 	public String getDictCode() {
@@ -130,5 +135,14 @@ public class Dict extends IdEntity {
 	
 	public void setDictTypeName(String dictTypeName) {
 		this.dictTypeName = dictTypeName;
+	}
+	
+	@Transient
+	public String getPid() {
+		return pid;
+	}
+	
+	public void setPid(String pid) {
+		this.pid = pid;
 	}
 }

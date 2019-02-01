@@ -65,6 +65,9 @@ public class DictController {
 		MessageObject<Dict> messageObject = MessageObject.getDefaultInstance();
 		try {
 			String id = dict.getId();
+			if (StringUtils.isNotEmpty(dict.getPid()) ) {
+				dict.setDict(dictService.get(dict.getPid()));
+			}
 			dict.setStatus(IsDelete.NO);
 			dictService.saveEntity(dict);
 			if (StringUtils.isEmpty(id)) {
@@ -110,6 +113,21 @@ public class DictController {
 			messageObject.error("查询数据字典异常");
 		}
 		return messageObject;
+	}
+	
+	@ResponseBody
+	@AccessAuthority(alias = "dict-tree-list", name = "数据字典列表")
+	@RequestMapping(value = "/platform/access/dict/dictTableList.json", method = { RequestMethod.POST })
+	public List<Dict> dictTableList(HttpServletRequest request, PageSupport support) {
+		try {
+			Map<String, Object> map = WebUtils.getRequestToMap(request);
+			map.put("status_eq", IsDelete.NO);
+			List<Dict> tools = dictService.queryByMap(map);
+			return tools;
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		return Lists.newArrayList();
 	}
 
 	@ResponseBody

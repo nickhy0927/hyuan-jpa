@@ -74,7 +74,7 @@
                 groupBtn: {
                 	createAction: function () {
                 		$.openWindow({
-							title: '新增用户信息',
+							title: '<i class="layui-icon layui-icon-form"></i>&nbsp;新增用户信息',
 							height: '520px',
 							width: '70%',
 							url: '${ctx}/platform/access/user/userCreate.do'
@@ -84,7 +84,7 @@
 						deleteInfo(tableInstance, data);
 					},
 					searchAction: function (tableInstance) {
-						tableInstance.reload({
+						$("#tableList").refreshTable({
 							where : $("#search-form").getForm()
 						});
 					}

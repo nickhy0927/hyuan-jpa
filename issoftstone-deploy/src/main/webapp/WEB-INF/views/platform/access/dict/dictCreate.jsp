@@ -67,7 +67,7 @@
                 	<i>*</i>字典类型
                 </label>
                 <div class="layui-input-block">
-                	<select name="parentId" id="parentId" lay-verType="tips" lay-verify="required">
+                	<select name="pid" id="pid" lay-verType="tips" lay-verify="required">
                 		<option value="">请选择字典类型</option>
                 		<c:forEach var="dict" items="${dictTypeList}">
                 			<option value="${dict.id}">${dict.dictName}</option>

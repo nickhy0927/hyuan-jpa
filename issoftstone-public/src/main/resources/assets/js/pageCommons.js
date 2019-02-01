@@ -74,7 +74,7 @@
 				loading : true, // 翻页加loading
 				url : '',
 				cols : [],
-				height : "full", // 高度最大化减去差值
+				height : "100%", // 高度最大化减去差值
 				size : 'lg', // 小尺寸的表格
 				groupBtn : {},
 				operate : {},
@@ -132,24 +132,17 @@
 			'overflow': 'hidden'
 		})
 	};
-	$.fn.refreshTable = function() {
+	$.fn.refreshTable = function(config) {
 		if(!globleOpts) globleOpts = {};
 		var _this = $(this);
 		var d = $(document).height();
 		var h = $('#search-form').height() + 25 + 10;
 		globleOpts.height = d - h;
-		_init_table(globleOpts, $(this))
+		var $settings = $.extend(globleOpts, config || {})
+		_init_table($settings, $(this))
 	};
 	$(window).resize(function() {
-		var d = $(document).height();
-		var h = $('#search-form').height() + 25;
-		if(!globleOpts) globleOpts = {};
-		globleOpts.height = d - h;
-		_init_table(globleOpts, $('#tableList'));
-		$('body').css({
-			'overflow': 'hidden'
-		});
-		$('.ztree-form').height(d - h - 164);
+		document.execCommand('Refresh')
 	})
 })(jQuery, window, document);
 
@@ -220,6 +213,18 @@ var _openTip = function(content, callback) {
         if (callback != undefined)
             callback();
     });
+}
+var _confirmTip = function(content, callback) {
+	layer.comfirm(content, {
+		skin: 'layui-layer-molv', 
+		// anim: 2, //动画类型
+		icon: 6, // icon   
+		closeBtn: 0,
+		btn: ['确定'] //按钮
+	}, function () {
+		if (callback != undefined)
+			callback();
+	});
 }
 $(document).ready(function () {
 	$.ajaxSetup({

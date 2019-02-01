@@ -22,6 +22,7 @@ import com.iss.common.utils.PageSupport;
 import com.iss.common.utils.PagerInfo;
 import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.WebUtils;
+import com.iss.constant.AccessConstant;
 import com.iss.constant.DataType;
 import com.iss.platform.access.icon.entity.Icon;
 import com.iss.platform.access.icon.service.IconService;
@@ -136,6 +137,25 @@ public class MenuController {
 		}
 		return messageObject;
 	}
+	@ResponseBody
+	@AccessAuthority(alias = "menu-tree-list", name = "获取菜单列表")
+	@RequestMapping(value = "/platform/access/menu/menuTreeListToJson.json", method = { RequestMethod.GET })
+	public Map<String, Object> menuTreeList(HttpServletRequest request) {
+		Map<String, Object> map = WebUtils.getRequestToMap(request);
+		try {
+			map.put("status_eq", IsDelete.NO);
+			List<Menu> menus = menuService.queryByMap(map);
+			for (Menu menu : menus) {
+				menu.setParentId(menu.getMenu() == null ? "" : menu.getMenu().getId());
+			}
+			map.put("code", 0);
+			map.put("msg", true);
+			map.put("data", menus);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
 
 	@ResponseBody
 	@AccessAuthority(alias = "menu-save|menu-edit", name = "保存菜单信息")
@@ -157,6 +177,24 @@ public class MenuController {
 			messageObject.openTip("新增菜单成功");
 			if (StringUtils.isNotEmpty(id)) {
 				messageObject.openTip("修改菜单成功");
+			}
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		return messageObject;
+	}
+	@ResponseBody
+	@AccessAuthority(alias = "menu-save|menu-edit", name = "保存菜单信息")
+	@OperateLog(message = "新增菜单信息", method = "menuStatusEdit", optType = DataType.OptType.INSERT, service = MenuService.class)
+	@RequestMapping(value = "/platform/access/menu/menuStatusEdit.json", method = RequestMethod.POST)
+	public MessageObject<Menu> menuStatusEdit(Menu menu) {
+		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
+		try {
+			menuService.saveEntity(menu);
+			if (StringUtils.isNoneEmpty(menu.getEnable())) {
+				messageObject.openTip("菜单" + AccessConstant.Enable.getName(menu.getEnable()) + "成功");
+			} else {
+				messageObject.openTip("菜单" + AccessConstant.Locked.getName(menu.getLocked()) + "成功");
 			}
 		} catch (ServiceException e) {
 			e.printStackTrace();

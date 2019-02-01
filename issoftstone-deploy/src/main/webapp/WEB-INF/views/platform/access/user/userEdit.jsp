@@ -46,6 +46,7 @@
     	    			  	"email": res.content['email'],
     	    			  	"enable": res.content['enable'],
     	    			  	"locked": res.content['locked'],
+    	    			  	"version": res.content['version'],
     	    			  	"remark": res.content['remark'],
     	    			  	"brithday": res.content['brithday'],
     	    			})
@@ -73,6 +74,7 @@
                 </label>
                 <div class="layui-input-block">
                 	<input id="id" name="id" type="hidden">
+                	<input name="version" type="hidden" id="version"/>
                     <input type="text" name="nickName" required="required"
                            lay-verify="required"
                            lay-verType="tips"
