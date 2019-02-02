@@ -1,4 +1,4 @@
-package com.iss.news;
+package com.iss.news.constants;
 
 import java.util.List;
 import java.util.Map;
