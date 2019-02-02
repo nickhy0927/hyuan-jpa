@@ -12,7 +12,7 @@ import com.iss.platform.access.dict.entity.Dict;
 
 /**
  * 数据源管理
- * 
+ *
  * @author Mr'Huang
  */
 @Entity
