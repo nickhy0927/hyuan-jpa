@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +26,7 @@ import com.iss.constant.DataType;
 import com.iss.news.comments.entity.Comments;
 import com.iss.news.comments.service.CommentService;
 
+@Controller
 public class CommentsController {
 
 	@Autowired
@@ -73,7 +75,6 @@ public class CommentsController {
 
 	@ResponseBody
 	@AccessAuthority(alias = "Comments-edit", name = "修改评论信息")
-	@OperateLog(message = "修改评论信息", method = "commentsEdit", optType = DataType.OptType.UPDATE, service = CommentService.class)
 	@RequestMapping(value = "/content/news/comments/commentsEdit.json", method = RequestMethod.POST)
 	public MessageObject<Comments> commentsEdit(String id) {
 		MessageObject<Comments> messageObject = MessageObject.getDefaultInstance();

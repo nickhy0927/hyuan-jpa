@@ -36,11 +36,15 @@ import com.iss.platform.access.menu.service.MenuService;
 @Controller
 public class MenuController {
 
-	@Autowired
-	private IconService iconService;
+	private final IconService iconService;
+
+	private final MenuService menuService;
 
 	@Autowired
-	private MenuService menuService;
+	public MenuController(IconService iconService, MenuService menuService) {
+		this.iconService = iconService;
+		this.menuService = menuService;
+	}
 
 	@AccessAuthority(alias = "menu-save", name = "菜单新增页面")
 	@RequestMapping(value = "/platform/access/menu/menuCreate.do", method = RequestMethod.GET)
@@ -88,14 +92,13 @@ public class MenuController {
 
 	@ResponseBody
 	@AccessAuthority(alias = "menu-edit", name = "修改菜单")
-	@OperateLog(message = "修改菜单信息", method = "edit", optType = DataType.OptType.UPDATE, service = MenuService.class)
 	@RequestMapping(value = "/platform/access/menu/menuEdit.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuEdit(String id) {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
 		try {
 			Map<String, Object> params = Maps.newConcurrentMap();
-			List<MenuTree> menuTrees = menuService.queryMenuTree();
 			List<Icon> icons = iconService.queryByMap(params);
+			List<MenuTree> menuTrees = menuService.queryMenuTree();
 			params.put("menuTrees", menuTrees);
 			params.put("icons", icons);
 			Menu menu = menuService.get(id);
@@ -185,7 +188,7 @@ public class MenuController {
 	}
 	@ResponseBody
 	@AccessAuthority(alias = "menu-save|menu-edit", name = "保存菜单信息")
-	@OperateLog(message = "新增菜单信息", method = "menuStatusEdit", optType = DataType.OptType.INSERT, service = MenuService.class)
+	@OperateLog(message = "更新菜单状态信息", method = "menuStatusEdit", optType = DataType.OptType.INSERT, service = MenuService.class)
 	@RequestMapping(value = "/platform/access/menu/menuStatusEdit.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuStatusEdit(Menu menu) {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();

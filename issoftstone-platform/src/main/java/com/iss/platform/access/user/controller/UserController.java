@@ -35,14 +35,18 @@ public class UserController {
 
 	private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	@Autowired
-	private RoleService roleService;
+	private final RoleService roleService;
+
+	private final UserService userService;
 
 	@Autowired
-	private UserService userService;
+	public UserController(RoleService roleService, UserService userService) {
+		this.roleService = roleService;
+		this.userService = userService;
+	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "user-save", name = "新增用户信息")
+	@AccessAuthority(alias = "user-save|user-edit", name = "新增用户信息")
 	@OperateLog(message = "新增用户信息", method = "userSave", optType = DataType.OptType.INSERT, service = UserService.class)
 	@RequestMapping(value = "/platform/access/user/userSave.json", method = RequestMethod.POST)
 	public MessageObject<User> userSave(User user) {
@@ -152,11 +156,11 @@ public class UserController {
 		MessageObject<User> message = MessageObject.getDefaultInstance();
 		try {
 			String roleIds = request.getParameter("roleIds");
-			List<Role> roles = new ArrayList<Role>();
+			List<Role> roles = new ArrayList<>();
 			if (StringUtils.isNotEmpty(roleIds)) {
 				String[] ids = roleIds.split(",");
-				for (int i = 0; i < ids.length; i++) {
-					Role role = roleService.get(ids[i]);
+				for (String id1 : ids) {
+					Role role = roleService.get(id1);
 					if (role != null) {
 						roles.add(role);
 					}

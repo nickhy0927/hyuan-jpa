@@ -24,13 +24,17 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author
+ * @author Mr's Huang
  */
 @Controller
 public class IconControlller {
 
+    private final IconService iconService;
+
     @Autowired
-    private IconService iconService;
+    public IconControlller(IconService iconService) {
+        this.iconService = iconService;
+    }
 
     @ResponseBody
     @AccessAuthority(alias = "icon-save", name = "保存图标")
@@ -58,7 +62,7 @@ public class IconControlller {
         support.setLimit(20);
         paramMap.put("status_eq", IsDelete.NO);
         PagerInfo<Icon> pagerInfo = iconService.queryPageByMap(paramMap, support);
-        maps.put("incomplete_results", pagerInfo.getContent().size() > 0 ? true : false);
+        maps.put("incomplete_results", pagerInfo.getContent().size() > 0);
         maps.put("total_count", pagerInfo.getTotals());
         maps.put("results", pagerInfo.getContent());
         return maps;
@@ -66,7 +70,6 @@ public class IconControlller {
 
     @ResponseBody
     @AccessAuthority(alias = "icon-edit", name = "修改图标")
-    @OperateLog(message = "修改图标信息", method = "edit", optType = DataType.OptType.UPDATE, service = IconService.class)
     @RequestMapping(value = "/platform/access/icon/edit.json", method = RequestMethod.POST)
     public MessageObject<Icon> iconEdit(String id) {
         MessageObject<Icon> messageObject = MessageObject.getDefaultInstance();

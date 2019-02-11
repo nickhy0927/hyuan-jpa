@@ -29,9 +29,13 @@ import com.iss.news.section.service.SectionService;
 @Controller
 public class SectionController {
 
+	private final SectionService sectionService;
+
 	@Autowired
-	private SectionService sectionService;
-	
+	public SectionController(SectionService sectionService) {
+		this.sectionService = sectionService;
+	}
+
 	@AccessAuthority(alias = "section-save", name = "进入新增版块页面")
 	@RequestMapping(value = "/content/news/section/sectionCreate.do", method = RequestMethod.GET)
 	public String sectionCreate() {

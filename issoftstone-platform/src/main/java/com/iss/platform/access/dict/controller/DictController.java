@@ -30,9 +30,13 @@ import com.iss.platform.access.dict.service.DictService;
 
 @Controller
 public class DictController {
+	private final DictService dictService;
+
 	@Autowired
-	private DictService dictService;
-	
+	public DictController(DictService dictService) {
+		this.dictService = dictService;
+	}
+
 	@AccessAuthority(alias = "dict-save", name = "进入新增数据字典页面")
 	@RequestMapping(value = "/platform/access/dict/dictCreate.do", method = RequestMethod.GET)
 	public String dictCreate(Model model) {
@@ -84,7 +88,6 @@ public class DictController {
 
 	@ResponseBody
 	@AccessAuthority(alias = "dict-edit", name = "修改数据字典")
-	@OperateLog(message = "修改数据字典信息", method = "dictEdit", optType = DataType.OptType.UPDATE, service = DictService.class)
 	@RequestMapping(value = "/platform/access/dict/dictEdit.json", method = RequestMethod.POST)
 	public MessageObject<Dict> dictEdit(String id) {
 		MessageObject<Dict> messageObject = MessageObject.getDefaultInstance();
@@ -118,12 +121,11 @@ public class DictController {
 	@ResponseBody
 	@AccessAuthority(alias = "dict-tree-list", name = "数据字典列表")
 	@RequestMapping(value = "/platform/access/dict/dictTableList.json", method = { RequestMethod.POST })
-	public List<Dict> dictTableList(HttpServletRequest request, PageSupport support) {
+	public List<Dict> dictTableList(HttpServletRequest request) {
 		try {
 			Map<String, Object> map = WebUtils.getRequestToMap(request);
 			map.put("status_eq", IsDelete.NO);
-			List<Dict> tools = dictService.queryByMap(map);
-			return tools;
+			return dictService.queryByMap(map);
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}

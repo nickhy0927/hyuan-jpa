@@ -37,11 +37,15 @@ import com.iss.platform.access.role.service.RoleService;
 public class RoleController {
 	private static Logger logger = LoggerFactory.getLogger(RoleController.class);
 
+	private final RoleService roleService;
+
+	private final MenuService menuService;
+
 	@Autowired
-	private RoleService roleService;
-	
-	@Autowired
-	private MenuService menuService;
+	public RoleController(RoleService roleService, MenuService menuService) {
+		this.roleService = roleService;
+		this.menuService = menuService;
+	}
 
 	@ResponseBody
 	@AccessAuthority(alias = "role-create", name = "新增角色")
@@ -59,7 +63,7 @@ public class RoleController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "role-save", name = "保存角色")
+	@AccessAuthority(alias = "role-save|role-edit", name = "保存角色")
 	@OperateLog(message = "新增角色信息", method = "save", optType = DataType.OptType.INSERT, service = RoleService.class)
 	@RequestMapping(value = "/platform/access/role/save.json", method = RequestMethod.POST)
 	public MessageObject<Role> roleSave(Role role) {
@@ -99,7 +103,6 @@ public class RoleController {
 
 	@ResponseBody
 	@AccessAuthority(alias = "role-edit", name = "获取角色信息")
-	@OperateLog(message = "获取角色信息", method = "edit", optType = DataType.OptType.UPDATE, service = RoleService.class)
 	@RequestMapping(value = "/platform/access/role/roleEdit.json", method = RequestMethod.POST)
 	public MessageObject<Role> roleEdit(String id) {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
