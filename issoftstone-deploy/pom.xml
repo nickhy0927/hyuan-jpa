@@ -22,6 +22,10 @@
 			<groupId>com.iss</groupId>
 			<artifactId>issoftstone-content</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.iss</groupId>
+			<artifactId>issoftstone-job-core</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>issoftstone-deploy</finalName>

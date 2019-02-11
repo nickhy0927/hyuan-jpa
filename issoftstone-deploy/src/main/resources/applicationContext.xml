@@ -60,6 +60,7 @@
 				<value>classpath*:/application.development.properties</value>
 				<!-- 推荐使用file的方式引入，这样可以将配置和代码分离 -->
 				<value>classpath*:/InitEnvironment.properties</value>
+				<value>classpath*:/config/job/xxl-job-executor.properties</value>
 			</list>
 		</constructor-arg>
 	</bean>
@@ -115,4 +116,5 @@
 	</bean>
 	
 	<import resource="config/security/spring-security.xml"/>
+	<import resource="config/job/applicationcontext-xxl-job.xml"/>
 </beans>

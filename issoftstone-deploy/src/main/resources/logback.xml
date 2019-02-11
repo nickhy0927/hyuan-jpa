@@ -7,9 +7,9 @@
 	</appender>
 
 	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>logs/cms.log</file>
+		<file>logs/deploy.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>logs/cms.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>logs/deploy.%d{yyyy-MM-dd}.log</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
@@ -22,12 +22,17 @@
 	<logger name="java.sql.DatabaseMetaData" level="OFF"></logger>
  	<logger name="org.hibernate" level="WARN"/>
  	<logger name="org.springframework" level="WARN"/>
+ 	<logger name="org.eclipse" level="WARN"/>
+ 	<logger name="org.jetty" level="WARN"/>
+ 	<logger name="org.apache.http" level="WARN"/>
 	<!-- project default level -->
-	<logger name="com.cako" level="DEBUG" />
+	<logger name="com.iss" level="DEBUG" />
+	<logger name="com.xxl.job" level="DEBUG" />
+	<logger name="com.xxl.job.core.thread" level="WARN" />
 	<!--log4jdbc -->
 	<logger name="jdbc.sqltiming" level="INFO"/>
-	<root level="info">
+	<root level="DEBUG">
 		<appender-ref ref="console" />
-		<!--<appender-ref ref="rollingFile" />-->
+		<appender-ref ref="rollingFile" />
 	</root>
 </configuration>

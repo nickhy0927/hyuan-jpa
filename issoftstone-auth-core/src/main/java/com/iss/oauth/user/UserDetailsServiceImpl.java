@@ -43,7 +43,8 @@ public class UserDetailsServiceImpl implements UserDetailsService, CredentialsCo
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 		Set<String> aliasSet = userService.queryMenuAlias(user.getId());
 		for (String alias : aliasSet) {
-			authList.add(new SimpleGrantedAuthority(alias));
+			System.out.println(alias);
+			// authList.add(new SimpleGrantedAuthority(alias));
 		}
 		if (authList.size() == 0) {
 			authList.add(new SimpleGrantedAuthority("ROLE_USER"));

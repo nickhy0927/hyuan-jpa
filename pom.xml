@@ -41,6 +41,11 @@
 				<artifactId>issoftstone-content</artifactId>
 				<version>${issoftstone.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.iss</groupId>
+				<artifactId>issoftstone-job-core</artifactId>
+				<version>${issoftstone.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<build>
@@ -63,11 +68,9 @@
 		<module>issoftstone-public</module>
 		<module>issoftstone-orm</module>
 		<module>issoftstone-platform</module>
-		<module>issoftstone-news</module>
 		<module>issoftstone-auth-core</module>
-		<module>issoftstone-oauth</module>
 		<module>issoftstone-deploy</module>
-		<module>issoftstone-webapp</module>
 		<module>issoftstone-content</module>
+		<module>issoftstone-job-core</module>
 	</modules>
 </project>
