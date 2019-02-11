@@ -23,7 +23,32 @@
 				}
 			})
 		}
-        $(function() {
+    	layui.use(['form'], function () {
+            var form = layui.form;
+        	form.on('switch(enable)', function (data) {
+				var enable = this.checked ? '1' : '0';
+				$.saveInfo({
+					url: '${ctx}/platform/access/user/userStatusEdit.json',
+					data: {id: $(data.elem).attr('data-id'), enable: enable, version: $(data.elem).attr('data-v')},
+					success: function (res) {
+						$("#tableList").refreshTable({
+							where : $("#search-form").getForm()
+						});
+					}
+				})
+			});
+        	form.on('switch(locked)', function (data) {
+				var locked = this.checked ? '0' : '1';
+				$.saveInfo({
+					url: '${ctx}/platform/access/user/userStatusEdit.json',
+					data: {id: $(data.elem).attr('data-id'), locked: locked, version: $(data.elem).attr('data-v')},
+					success: function (res) {
+						$("#tableList").refreshTable({
+							where : $("#search-form").getForm()
+						});
+					}
+				})
+			})
         	$("#tableList").dataTable({
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
@@ -34,17 +59,13 @@
                     { field: "loginName",  title: "登录账户", width: 160, align: 'left', fixed: "left", unresize: true},
                     { field: "brithday",  title: "用户生日", width: 120, align: 'center'},
                     { field: "email",  title: "电子邮箱", width: 180},
-                    { field: "enable",  title: "启用", width: 80, align: 'center', templet: function (d) {
-						if (d.enable) {
-							return '<span class="label label-success radius">是</span>'
-						}
-						return '<span class="label label-warning radius">否</span>'
+                    { field: "enable",  title: "启用", width: 110, align: 'center', templet: function (d) {
+						var checked = d.enable == 1 ? "checked='checked'" : "";
+						return '<input data-v=' + d.version + ' ' + checked + ' data-id=' + d.id + ' type="checkbox" lay-skin="switch" lay-filter="enable" lay-text="停用|启用">';
 					}},
-                    { field: "locked",  title: "锁定", width: 80, align: 'center', templet: function (d) {
-						if (d.enable) {
-							return '<span class="label label-success radius">是</span>'
-						}
-						return '<span class="label label-warning radius">否</span>'
+					{ field: "locked",  title: "锁定", width: 110, align: 'center', templet: function (d) {
+						var checked = d.locked == 0 ? "checked='checked'" : "";
+						return '<input data-v=' + d.version + ' ' + checked+ ' data-id=' + d.id + ' type="checkbox" lay-skin="switch" lay-filter="locked" lay-text="锁定|解锁">';
 					}},
                     { field: "lastLoginTime",  title: "最后登录时间", minWidth: 130},
                     { field: "userTag",  title: "手机标识", minWidth: 200},

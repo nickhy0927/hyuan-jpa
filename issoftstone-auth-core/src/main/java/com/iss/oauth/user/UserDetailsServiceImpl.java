@@ -3,6 +3,7 @@ package com.iss.oauth.user;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,10 @@ public class UserDetailsServiceImpl implements UserDetailsService, CredentialsCo
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userService.findUserByLoginName(username);
-		Collection<GrantedAuthority> authorities = getAuthorities();
+		if (user == null) {
+			throw new UsernameNotFoundException("账户不存在", new Throwable());
+		}
+		Collection<GrantedAuthority> authorities = getAuthorities(user);
 		Boolean locked = StringUtils.equals(user.getLocked(), "1");
 		Boolean enable = StringUtils.equals(user.getEnable(), "1");
 		UserPrincipal userdetails = new UserPrincipal(username, 
@@ -35,10 +39,16 @@ public class UserDetailsServiceImpl implements UserDetailsService, CredentialsCo
 	}
 
 	/** * 获取用户的角色权限,为了降低实验的难度，这里去掉了根据用户名获取角色的步骤 * @param * @return */
-	private Collection<GrantedAuthority> getAuthorities() {
+	private Collection<GrantedAuthority> getAuthorities(User user) {
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
-		authList.add(new SimpleGrantedAuthority("ROLE_USER"));
-		authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		Set<String> aliasSet = userService.queryMenuAlias(user.getId());
+		for (String alias : aliasSet) {
+			authList.add(new SimpleGrantedAuthority(alias));
+		}
+		if (authList.size() == 0) {
+			authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+			authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		}
 		return authList;
 	}
 

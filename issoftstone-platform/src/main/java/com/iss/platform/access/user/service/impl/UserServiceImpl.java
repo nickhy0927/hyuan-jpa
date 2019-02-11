@@ -1,5 +1,6 @@
 package com.iss.platform.access.user.service.impl;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -15,6 +16,7 @@ import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.SaltUtils;
 import com.iss.common.utils.SysContants;
 import com.iss.orm.service.impl.BaseCustomService;
+import com.iss.platform.access.menu.entity.Menu;
 import com.iss.platform.access.user.dao.UserDao;
 import com.iss.platform.access.user.entity.User;
 import com.iss.platform.access.user.service.UserService;
@@ -111,6 +113,11 @@ public class UserServiceImpl extends BaseCustomService<User, String> implements 
 	@Override
 	public Set<String> queryMenuAlias(String id) {
 		return userDao.queryMenuAlias(id);
+	}
+	
+	@Override
+	public List<Menu> queryMenuList(String id) {
+		return userDao.queryMenuList(id);
 	}
 
 	@Override

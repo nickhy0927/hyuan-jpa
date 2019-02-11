@@ -24,9 +24,11 @@ import com.iss.common.utils.PageSupport;
 import com.iss.common.utils.PagerInfo;
 import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.WebUtils;
+import com.iss.constant.AccessConstant;
 import com.iss.constant.DataType;
 import com.iss.platform.access.dict.entity.Dict;
 import com.iss.platform.access.dict.service.DictService;
+import com.iss.platform.access.menu.entity.Menu;
 
 @Controller
 public class DictController {
@@ -82,6 +84,22 @@ public class DictController {
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			messageObject.openTip("操作出现异常，请稍后.");
+		}
+		return messageObject;
+	}
+	
+	@ResponseBody
+	@AccessAuthority(alias = "dict-save|dict-edit", name = "保存菜单信息")
+	@OperateLog(message = "更新数据字典状态信息", method = "dictStatusEdit", optType = DataType.OptType.INSERT, service = DictService.class)
+	@RequestMapping(value = "/platform/access/dict/dictStatusEdit.json", method = RequestMethod.POST)
+	public MessageObject<Menu> menuStatusEdit(Dict dict) {
+		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
+		try {
+			dictService.saveEntity(dict);
+			messageObject.openTip("数据字典" + AccessConstant.Enable.getName(dict.getEnable() ? "1" : "0") + "成功");
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.openTip("数据字典" + AccessConstant.Enable.getName(dict.getEnable() ? "1" : "0") + "失败");
 		}
 		return messageObject;
 	}

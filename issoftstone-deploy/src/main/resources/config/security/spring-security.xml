@@ -29,7 +29,8 @@
                 username-parameter="username"
                 always-use-default-target="true"/>
         <!-- <security:custom-filter ref="usernamePasswordAuthentication" before="FORM_LOGIN_FILTER"/> -->
-        <security:intercept-url pattern="/**" access="hasRole('ADMIN')"/>
+        <!-- <security:custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR" /> -->
+        <security:intercept-url pattern="/**" access="ROLE_ANONYMOUS"/>
         <!-- <security:csrf request-matcher-ref="csrfSecurityRequestMatcher"/> -->
         <security:csrf disabled="true"/>
         <security:logout delete-cookies="JSESSIONID" invalidate-session="true"/>
@@ -72,4 +73,36 @@
     <bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
         <property name="userPropertyToUse" value="salt" />
     </bean>
+    
+   <!--访问决定管理器 用于决定是否对请求进行拒绝或者允许通行 -->
+    <bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+        <constructor-arg name="decisionVoters">
+            <list>
+                <ref bean="roleVoter"/>
+                <ref bean="authenticatedVoter"/>
+            </list>
+        </constructor-arg>
+    </bean>
+    <!--角色投票器 -->
+    <bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter">
+        <property name="rolePrefix" value=""/>
+    </bean>
+    <!--鉴权投票器 -->
+    <bean id="authenticatedVoter" class="org.springframework.security.access.vote.AuthenticatedVoter" />
+    
+    <!-- <bean id="securityMetadataSource" class="com.iss.oauth.user.UrlFilterInvocationSecurityMetadataSource" />
+	<bean id="filterSecurityInterceptor" class="com.iss.oauth.user.UrlFilterSecurityInterceptor">
+	  	<property name="authenticationManager" ref="authenticationManager"/>
+	  	<property name="accessDecisionManager" ref="accessDecisionManager"/>
+	  	<property name="securityMetadataSource" ref="securityMetadataSource" />
+	</bean>
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+  		<constructor-arg>
+		    <list>
+		      	<bean id="authenticatedVoter" class="org.springframework.security.access.vote.AuthenticatedVoter" />
+		      	<bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter" />
+		      	<bean id="urlMatchVoter" class="com.iss.oauth.user.UrlMatchVoter" />
+	    	</list>
+  		</constructor-arg>
+	</bean> -->
 </beans>

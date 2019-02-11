@@ -24,6 +24,7 @@ import com.iss.common.utils.PageSupport;
 import com.iss.common.utils.PagerInfo;
 import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.WebUtils;
+import com.iss.constant.AccessConstant;
 import com.iss.constant.DataType;
 import com.iss.platform.access.role.entity.Role;
 import com.iss.platform.access.role.service.RoleService;
@@ -67,6 +68,32 @@ public class UserController {
 		}
 		return messageObject;
 	}
+	
+	@ResponseBody
+	@AccessAuthority(alias = "user-save|user-edit", name = "更新用户状态信息")
+	@OperateLog(message = "更新用户状态信息", method = "userStatusEdit", optType = DataType.OptType.INSERT, service = UserService.class)
+	@RequestMapping(value = "/platform/access/user/userStatusEdit.json", method = RequestMethod.POST)
+	public MessageObject<User> userStatusEdit(User user) {
+		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
+		try {
+			userService.updateUser(user);
+			if (StringUtils.isNoneEmpty(user.getEnable())) {
+				messageObject.openTip("用户" + AccessConstant.Enable.getName(user.getEnable()) + "成功");
+			} else {
+				messageObject.openTip("用户" + AccessConstant.Locked.getName(user.getLocked()) + "成功");
+			}
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			if (StringUtils.isNoneEmpty(user.getEnable())) {
+				messageObject.openTip("用户" + AccessConstant.Enable.getName(user.getEnable()) + "失败");
+			} else {
+				messageObject.openTip("用户" + AccessConstant.Locked.getName(user.getLocked()) + "失败");
+			}
+		}
+		return messageObject;
+	}
+	
+	
 	@ResponseBody
 	@AccessAuthority(alias = "user-role-list", name = "新增用户权限信息")
 	@OperateLog(message = "新增用户权限信息", method = "userRoleSave", optType = DataType.OptType.INSERT, service = UserService.class)

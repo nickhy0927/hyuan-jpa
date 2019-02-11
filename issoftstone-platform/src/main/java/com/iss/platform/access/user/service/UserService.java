@@ -1,9 +1,11 @@
 package com.iss.platform.access.user.service;
 
+import java.util.List;
 import java.util.Set;
 
 import com.iss.common.exception.ServiceException;
 import com.iss.orm.service.CustomService;
+import com.iss.platform.access.menu.entity.Menu;
 import com.iss.platform.access.user.entity.User;
 
 /**
@@ -46,6 +48,17 @@ public interface UserService extends CustomService<User, String> {
 	 */
 	Set<String> queryMenuAlias(String id);
 	
+	/**
+	 * 查询所有的菜单
+	 * @param id
+	 * @return
+	 */
+	List<Menu> queryMenuList(String id);
+	
+	/**
+	 * 查询所有的菜单
+	 * @return
+	 */
 	Set<String> queryAllMenuAlias();
 	
 	User updateUser(User entity) throws ServiceException;

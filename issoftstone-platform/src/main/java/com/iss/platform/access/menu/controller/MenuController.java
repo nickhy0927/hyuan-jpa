@@ -201,6 +201,11 @@ public class MenuController {
 			}
 		} catch (ServiceException e) {
 			e.printStackTrace();
+			if (StringUtils.isNoneEmpty(menu.getEnable())) {
+				messageObject.openTip("菜单" + AccessConstant.Enable.getName(menu.getEnable()) + "失败");
+			} else {
+				messageObject.openTip("菜单" + AccessConstant.Locked.getName(menu.getLocked()) + "失败");
+			}
 		}
 		return messageObject;
 	}

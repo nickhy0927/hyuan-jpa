@@ -1,11 +1,13 @@
 package com.iss.platform.access.user.dao;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.iss.orm.repository.CustomRepostiory;
+import com.iss.platform.access.menu.entity.Menu;
 import com.iss.platform.access.user.entity.User;
 
 /**
@@ -28,6 +30,9 @@ public interface UserDao extends CustomRepostiory<User, String> {
 	 */
 	@Query("select m.alias from User u join u.roles r join r.menus m where u.id = ?1 and u.status = 0")
 	Set<String> queryMenuAlias(String id);
+	
+	@Query("select m from User u join u.roles r join r.menus m where u.id = ?1 and u.status = 0")
+	List<Menu> queryMenuList(String id);
 
 	@Query("select m.alias from User u join u.roles r join r.menus m where u.status = 0")
 	Set<String> queryAllMenuAlias();

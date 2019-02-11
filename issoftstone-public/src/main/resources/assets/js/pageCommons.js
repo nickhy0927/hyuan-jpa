@@ -92,7 +92,7 @@
 				},
 				// 开启分页
 				page : {
-					groups : 5,
+					groups : 7,
 					first : '首页',
 					prev : '上一页',
 					next : '下一页',
@@ -102,6 +102,19 @@
 				},
 				limit : 15
 			}, options || {});
+			var l = settings.limit;
+			var limits = [10, l * 1, l * 2, l * 3, l * 4, l * 5, 100, 200]
+			limits.sort(function(a, b){
+		        if (a > b) {
+		            return 1;
+		        } else if(a < b){
+		            return -1
+		        } else{
+		            return 0;
+		        }    
+		    });
+			console.log('limits===', limits)
+			settings.limits = limits;
 			globleOpts = settings;
 			// 第一个实例
 			var tableInstance = table.render(settings);
