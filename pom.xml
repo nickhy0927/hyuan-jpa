@@ -72,5 +72,6 @@
 		<module>issoftstone-deploy</module>
 		<module>issoftstone-content</module>
 		<module>issoftstone-job-core</module>
+		<module>xxl-job</module>
 	</modules>
 </project>

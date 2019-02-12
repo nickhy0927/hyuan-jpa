@@ -15,6 +15,7 @@ import com.iss.common.encryption.Md5Encryption;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.SaltUtils;
 import com.iss.common.utils.SysContants;
+import com.iss.orm.anno.MethodMonitor;
 import com.iss.orm.service.impl.BaseCustomService;
 import com.iss.platform.access.menu.entity.Menu;
 import com.iss.platform.access.user.dao.UserDao;
@@ -50,6 +51,7 @@ public class UserServiceImpl extends BaseCustomService<User, String> implements 
 		return super.saveEntity(entity);
 	}
 
+	@MethodMonitor(msg = "用户登录")
 	@Override
 	public User findUserByLoginName(String loginName) {
 		User root = isRoot(loginName);

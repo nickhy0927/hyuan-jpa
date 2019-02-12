@@ -149,6 +149,10 @@
 					<groupId>junit</groupId>
 					<artifactId>junit-dep</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.aspectj</groupId>
+					<artifactId>aspectjrt</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<!-- spring orm -->
@@ -214,6 +218,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-websocket</artifactId>
 			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.9.2</version>
 		</dependency>
 		<!-- httpclient -->
 		<dependency>

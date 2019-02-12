@@ -29,6 +29,7 @@
 	<logger name="com.iss" level="DEBUG" />
 	<logger name="com.xxl.job" level="DEBUG" />
 	<logger name="com.xxl.job.core.thread" level="WARN" />
+	<logger name="log4jdbc.debug" level="WARN" />
 	<!--log4jdbc -->
 	<logger name="jdbc.sqltiming" level="INFO"/>
 	<root level="DEBUG">
