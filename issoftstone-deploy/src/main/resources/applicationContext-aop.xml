@@ -6,9 +6,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
-
-	<!--  -->
 	<bean id="jobLogAspect" class="com.iss.aspect.JobLogAspect" />
 	<aop:aspectj-autoproxy />
-	<context:component-scan base-package="me.laiyijie.demo" />
 </beans>

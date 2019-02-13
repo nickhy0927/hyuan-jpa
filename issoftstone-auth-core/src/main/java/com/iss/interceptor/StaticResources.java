@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.quartz.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.Maps;
@@ -86,7 +87,7 @@ public class StaticResources {
 		try {
 			List<AutoTask> autoTasks = autoTaskService.queryByMap(paramMap);
 			for (AutoTask autoTask : autoTasks) {
-				Class<?> clazz = Class.forName(autoTask.getClassName());
+				Class<? extends Job> clazz = Class.forName(autoTask.getClassName()).asSubclass(Job.class);
 				String job_name = autoTask.getTaskName();
 				QuartzManager.addJob(job_name, clazz, autoTask.getScheduler());
 			}
