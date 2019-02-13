@@ -31,17 +31,10 @@ public class JobLogController {
 	@Autowired
 	private JobLogService jobLogService;
 	
-	@AccessAuthority(alias = "jobLog-edit", name = "进入新增调度任务日志详情页面")
-	@RequestMapping(value = "/platform/system/jobLog/jobLogEdit.do", method = RequestMethod.GET)
-	public String jobLogEdit(String id, Model model) {
-		model.addAttribute("id", id);
-		return "platform/system/jobLog/jobLogEdit";
-	}
-	
 	@AccessAuthority(alias = "jobLog-list", name = "进入调度任务日志详情列表页面")
 	@RequestMapping(value = "/platform/system/jobLog/jobLogList.do", method = RequestMethod.GET)
 	public String jobLogList() {
-		return "platform/system/jobLog/jobLogList";
+		return "platform/system/joblog/jobLogList";
 	}
 	
 	@ResponseBody
