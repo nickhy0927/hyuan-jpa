@@ -2,6 +2,7 @@ package com.iss.oauth.user;
 
 import java.io.IOException;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -9,64 +10,55 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.springframework.security.access.SecurityMetadataSource;
+import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
+import org.springframework.security.access.intercept.InterceptorStatusToken;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
-public class UrlFilterSecurityInterceptor extends FilterSecurityInterceptor {
+public class UrlFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
+	
+	private FilterInvocationSecurityMetadataSource securityMetadataSource;
 
-	public UrlFilterSecurityInterceptor() {
-		super();
-	}
-
-	@Override
-	public void init(FilterConfig config) throws ServletException {
-		super.init(config);
-	}
-
-	@Override
-	public void destroy() {
-		super.destroy();
-	}
-
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		super.doFilter(request, response, chain);
-	}
-
-	@Override
 	public FilterInvocationSecurityMetadataSource getSecurityMetadataSource() {
-		return super.getSecurityMetadataSource();
+		return securityMetadataSource;
+	}
+
+	public void setSecurityMetadataSource(FilterInvocationSecurityMetadataSource securityMetadataSource) {
+		this.securityMetadataSource = securityMetadataSource;
+	}
+
+	@Override
+	public Class<? extends Object> getSecureObjectClass() {
+		return FilterInvocation.class;
 	}
 
 	@Override
 	public SecurityMetadataSource obtainSecurityMetadataSource() {
-		return super.obtainSecurityMetadataSource();
+		return this.securityMetadataSource;
 	}
 
-	@Override
-	public void setSecurityMetadataSource(FilterInvocationSecurityMetadataSource newSource) {
-		super.setSecurityMetadataSource(newSource);
+	public void destroy() {
+
 	}
 
-	@Override
-	public Class<?> getSecureObjectClass() {
-		return super.getSecureObjectClass();
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		FilterInvocation fi = new FilterInvocation(request, response, chain);
+		invoke(fi);
+
 	}
 
-	@Override
+	public void init(FilterConfig config) throws ServletException {
+
+	}
+
 	public void invoke(FilterInvocation fi) throws IOException, ServletException {
-		super.invoke(fi);
+		InterceptorStatusToken token = super.beforeInvocation(fi);
+		try {
+			fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
+		} finally {
+			super.afterInvocation(token, null);
+		}
 	}
 
-	@Override
-	public boolean isObserveOncePerRequest() {
-		return super.isObserveOncePerRequest();
-	}
-
-	@Override
-	public void setObserveOncePerRequest(boolean observeOncePerRequest) {
-		super.setObserveOncePerRequest(observeOncePerRequest);
-	}
 }
