@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
 	<!--  -->
-	<bean id="jobLogAspect" class="com.iss.orm.aspect.JobLogAspect" />
+	<bean id="jobLogAspect" class="com.iss.aspect.JobLogAspect" />
 	<aop:aspectj-autoproxy />
 	<context:component-scan base-package="me.laiyijie.demo" />
 </beans>

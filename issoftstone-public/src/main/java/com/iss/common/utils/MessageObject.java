@@ -35,8 +35,8 @@ public class MessageObject<T> {
 	public static class ResultCode {
 		public static int SUCCESS = 0;
 		public static int SAVE_SUCCESS = 1;
+		public static int FAILIAR = 2;
 		public static int UNAUTH = 201;
-		public static int FAILIAR = 403;
 
 	}
 

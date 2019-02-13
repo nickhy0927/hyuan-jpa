@@ -51,8 +51,8 @@ public class UserServiceImpl extends BaseCustomService<User, String> implements 
 		return super.saveEntity(entity);
 	}
 
-	@MethodMonitor(msg = "用户登录")
 	@Override
+	@MethodMonitor(desc = "用户登录")
 	public User findUserByLoginName(String loginName) {
 		User root = isRoot(loginName);
 		if (root == null) {

@@ -18,7 +18,7 @@
 		<hibernate.version>4.3.4.Final</hibernate.version>
 		<spring-data-jpa.version>1.5.0.RELEASE</spring-data-jpa.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
-		<quartz.version>2.2.1</quartz.version>
+		<quartz.version>2.3.0</quartz.version>
 		<ehcache.version>2.6.8</ehcache.version>
 		<jackson.version>2.3.2</jackson.version>
 		<slf4j.version>1.8.0-beta2</slf4j.version>
@@ -250,6 +250,11 @@
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
+			<version>${quartz.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz-jobs</artifactId>
 			<version>${quartz.version}</version>
 		</dependency>
 		<!-- WEB end -->

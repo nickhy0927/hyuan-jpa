@@ -16,11 +16,13 @@
 	</properties>
 	<dependencyManagement>
 		<dependencies>
+			<!-- 公共模块 -->
 			<dependency>
 				<groupId>com.iss</groupId>
 				<artifactId>issoftstone-public</artifactId>
 				<version>${issoftstone.version}</version>
 			</dependency>
+			<!-- 核心模块 -->
 			<dependency>
 				<groupId>com.iss</groupId>
 				<artifactId>issoftstone-orm</artifactId>
@@ -31,19 +33,28 @@
 				<artifactId>issoftstone-platform</artifactId>
 				<version>${issoftstone.version}</version>
 			</dependency>
+			<!-- 用户认证 -->
 			<dependency>
 				<groupId>com.iss</groupId>
 				<artifactId>issoftstone-auth-core</artifactId>
 				<version>${issoftstone.version}</version>
 			</dependency>
+			<!-- 内容发布 -->
 			<dependency>
 				<groupId>com.iss</groupId>
 				<artifactId>issoftstone-content</artifactId>
 				<version>${issoftstone.version}</version>
 			</dependency>
+			<!-- 任务调度 -->
 			<dependency>
 				<groupId>com.iss</groupId>
 				<artifactId>issoftstone-job-core</artifactId>
+				<version>${issoftstone.version}</version>
+			</dependency>
+			<!-- 统计 -->
+			<dependency>
+				<groupId>com.iss</groupId>
+				<artifactId>issoftstone-statistics</artifactId>
 				<version>${issoftstone.version}</version>
 			</dependency>
 		</dependencies>
@@ -73,5 +84,6 @@
 		<module>issoftstone-content</module>
 		<module>issoftstone-job-core</module>
 		<module>xxl-job</module>
+		<module>issoftstone-statistics</module>
 	</modules>
 </project>

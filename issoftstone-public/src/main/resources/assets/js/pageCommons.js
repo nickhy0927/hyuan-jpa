@@ -113,7 +113,6 @@
 		            return 0;
 		        }    
 		    });
-			console.log('limits===', limits)
 			settings.limits = limits;
 			globleOpts = settings;
 			// 第一个实例
@@ -221,6 +220,7 @@ var _openTip = function(content, callback) {
         // anim: 2, //动画类型
         icon: 6, // icon   
         closeBtn: 0,
+        title: '提示信息',
         btn: ['确定'] //按钮
     }, function () {
         if (callback != undefined)
@@ -254,12 +254,12 @@ $(document).ready(function () {
     	_openLoading(opt.loadMsg);
     }).ajaxSuccess(function (event, xhr, settings) {
     	var res = JSON.parse(xhr.responseText);
-    	if (res.code != 1) {
+    	if (res.code != 1 && res.code != 2) {
     		_closeLoading();
     	}
     }).ajaxError(function () {
         $.closeLoading();
-        console.log('全局错误处理...')
+        console.log('全局错误处理...');
     })
     $.extend({
 		openWindow : _openWindow,
@@ -273,10 +273,17 @@ $(document).ready(function () {
 		    	data: option.data,
 		    	loadMsg: option.loadMsg, 
 		    	success: function(res) {
-		    		$.openTip(res.message, function() {
-		    			var fn = eval(option.success);
-		                fn.call(this, res);
-		    		});
+		    		if(res.code == 1) {
+		    			$.openTip(res.message, function() {
+			    			var fn = eval(option.success);
+			                fn.call(this, res);
+			    		});
+		    		} else if (res.code == 2){
+		    			$.openTip(res.message, function() {
+		    				_closeLoading();
+			    		});
+		    			return;
+		    		}
 		    	}
 			})
 	    },
@@ -300,15 +307,20 @@ $(document).ready(function () {
 			    	data: {id: ids.join(",")},
 			    	loadMsg: options.loadMsg, 
 			    	success: function(res) {
-			    		$.openTip(res.message, function() {
-			    			var fn = eval(options.success);
-			                fn.call(this, res);
-			    		});
+			    		if(res.code == 1) {
+			    			$.openTip(res.message, function() {
+				    			var fn = eval(options.success);
+				                fn.call(this, res);
+				    		});
+			    		} else if (res.code == 2){
+			    			$.openTip(res.message, function() {
+			    				_closeLoading();
+				    		});
+			    			return;
+			    		}
 			    	}
 				})
 	        }, function () {
-	        	
-	        	console.log('1')
 	            _closeLoading();
 	        });
 	    }
