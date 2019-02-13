@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.quartz.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -162,7 +163,7 @@ public class AutoTaskController {
 		MessageObject<Object> messageObject = MessageObject.getDefaultInstance();
 		AutoTask autoTask = autoTaskService.get(id);
 		try {
-			Class<?> clazz = Class.forName(autoTask.getClassName());
+			Class<? extends Job> clazz = Class.forName(autoTask.getClassName()).asSubclass(Job.class);
 			String job_name = autoTask.getTaskName();
 			if (autoTask.getStartStatus() == SysContants.IsStart.YES) {
 				QuartzManager.removeJob(job_name);
