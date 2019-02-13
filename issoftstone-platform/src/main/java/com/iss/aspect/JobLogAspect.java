@@ -30,7 +30,7 @@ public class JobLogAspect {
 	@Autowired
 	private JobLogService jobLogService;
 
-	@Pointcut(value = "@annotation(com.iss.orm.anno.ServiceMonitor)")
+	@Pointcut(value = "@annotation(com.iss.aspect.anno.ServiceMonitor)")
 	private void pointcut() {
 
 	}
