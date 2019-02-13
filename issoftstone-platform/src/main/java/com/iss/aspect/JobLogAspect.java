@@ -14,17 +14,22 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
 import com.iss.orm.anno.MethodMonitor;
 import com.iss.platform.system.joblog.entity.JobLog;
+import com.iss.platform.system.joblog.service.JobLogService;
 
 @Component
 @Aspect
 public class JobLogAspect {
 	
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
+	
+	@Autowired
+	private JobLogService jobLogService;
 
 	@Before("execution(* com.iss.**.service..*.*(..))")
 	@Pointcut(value = "@annotation(com.iss.orm.anno.MethodMonitor)")
@@ -34,7 +39,6 @@ public class JobLogAspect {
 
 	@Around(value = "pointcut() && @annotation(methodMonitor)")
 	public Object around(ProceedingJoinPoint point, MethodMonitor methodMonitor) {
-		System.out.println("注解参数：" + methodMonitor.desc());
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		JobLog log = new JobLog();
 		String startTime = format.format(new Date());
@@ -72,6 +76,7 @@ public class JobLogAspect {
 		long end = System.currentTimeMillis();
 		log.setLastTime(end - start);
 		LOG.debug(String.format("方法执行持续时间：%d ms", (end - start)));
+		jobLogService.saveEntity(log);
 		// 返回通知
 		return result;
 	}

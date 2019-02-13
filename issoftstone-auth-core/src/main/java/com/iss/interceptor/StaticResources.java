@@ -8,15 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.Maps;
 import com.iss.common.config.InitEnvironment;
+import com.iss.common.exception.ServiceException;
 import com.iss.common.spring.SpringContextHolder;
 import com.iss.common.utils.SysContants.IsDelete;
+import com.iss.common.utils.SysContants.IsStart;
+import com.iss.orm.quartz.QuartzManager;
 import com.iss.platform.access.user.entity.User;
 import com.iss.platform.access.user.service.UserService;
+import com.iss.platform.system.autotask.entity.AutoTask;
+import com.iss.platform.system.autotask.service.AutoTaskService;
 
 public class StaticResources {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private AutoTaskService autoTaskService;
 
 	private List<String> urls;
 	private String loginUrl;
@@ -74,6 +82,19 @@ public class StaticResources {
 		}
 		permissionSet.put("root", userService.queryAllMenuAlias());
 		InitEnvironment.setPermissionSet(permissionSet);
+		paramMap.put("startStatus_eq", IsStart.YES);
+		try {
+			List<AutoTask> autoTasks = autoTaskService.queryByMap(paramMap);
+			for (AutoTask autoTask : autoTasks) {
+				Class<?> clazz = Class.forName(autoTask.getClassName());
+				String job_name = autoTask.getTaskName();
+				QuartzManager.addJob(job_name, clazz, autoTask.getScheduler());
+			}
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

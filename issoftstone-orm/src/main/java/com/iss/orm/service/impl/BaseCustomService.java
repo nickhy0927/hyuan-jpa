@@ -26,7 +26,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	private CustomRepostiory<E, ID> dao;
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = false)
 	public E saveEntity(E entity) throws ServiceException {
 		try {
 			return this.dao.saveEntity(entity);
@@ -37,7 +37,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	}
 	
 	@Override
-	@Transactional
+	@Transactional(readOnly = false)
 	public void saveBatch(List<E> entities) throws ServiceException {
 		try {
 			this.dao.save(entities);
@@ -48,7 +48,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	}
 	
 	@Override
-	@Transactional
+	@Transactional(readOnly = false)
 	public void delete(ID id) throws ServiceException {
 		try {
 			E t = get(id);
@@ -63,7 +63,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 
 	
 	@Override
-	@Transactional
+	@Transactional(readOnly = false)
 	public void delete(Iterable<E> entities) throws ServiceException {
 		try {
 			this.dao.delete(entities);
@@ -74,7 +74,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = false)
 	public void deleteAll() throws ServiceException {
 		try {
 			this.dao.deleteAll();
@@ -86,7 +86,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 
 	
 	@Override
-	@Transactional
+	@Transactional(readOnly = false)
 	public void deleteBatch(ID[] ids) throws ServiceException {
 		try {
 			if (ids != null && ids.length > 0) {

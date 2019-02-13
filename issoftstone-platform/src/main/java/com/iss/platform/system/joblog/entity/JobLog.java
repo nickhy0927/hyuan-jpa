@@ -1,7 +1,9 @@
 package com.iss.platform.system.joblog.entity;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import com.iss.common.utils.IdEntity;
@@ -92,7 +94,9 @@ public class JobLog extends IdEntity {
 		this.params = params;
 	}
 
-	@Column(columnDefinition = "varchar(2000) comment '执行结果'")
+	@Lob
+	@Basic
+	@Column(columnDefinition = "text comment '执行结果'")
 	public String getResult() {
 		return result;
 	}

@@ -1,4 +1,4 @@
-package com.iss.platform.system.joblog;
+package com.iss.platform.system.joblog.controller;
 
 import java.util.List;
 import java.util.Map;
