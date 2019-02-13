@@ -28,9 +28,9 @@
                 password-parameter="password"
                 username-parameter="username"
                 always-use-default-target="true"/>
-        <!-- <security:custom-filter ref="usernamePasswordAuthentication" before="FORM_LOGIN_FILTER"/> -->
+        <!-- 增加一个filter，这点与Acegi是不一样的，不能修改默认的filter了，这个filter位于FILTER_SECURITY_INTERCEPTOR之前 -->  
+		<security:custom-filter ref="interceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
         <security:intercept-url pattern="/**" access="hasRole('ADMIN')"/>
-        <!-- <security:csrf request-matcher-ref="csrfSecurityRequestMatcher"/> -->
         <security:csrf disabled="true"/>
         <security:logout delete-cookies="JSESSIONID" invalidate-session="true"/>
         <security:expression-handler ref="webexpressionHandler"/>
@@ -53,13 +53,8 @@
     <security:authentication-manager alias="authenticationManager">
         <security:authentication-provider ref="authenticationProvider"/>
     </security:authentication-manager>
-    <!-- <bean id="usernamePasswordAuthentication" class="com.iss.oauth.password.UsernamePasswordAuthentication">
-        <property name="authenticationManager" ref="authenticationManager"/>
-    </bean> -->
-
     <!-- Md5加密 -->
     <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>
-
     <bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
         <property name="hideUserNotFoundExceptions" value="true"/>
         <property name="userDetailsService" ref="userDetailsService"/>
@@ -67,9 +62,19 @@
         <property name="saltSource" ref="saltSource"/>
     </bean>
     <bean id="userDetailsService" class="com.iss.oauth.user.UserDetailsServiceImpl"/>
-
     <!-- 盐值加密 salt对应数据库字段-->
     <bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
         <property name="userPropertyToUse" value="salt" />
     </bean>
+    <bean id="accessDecisionManager" class="com.iss.oauth.user.UrlAccessDecisionManager" />
+    <bean id="interceptor" class="com.iss.oauth.user.UrlFilterSecurityInterceptor">
+    	<property name="authenticationManager" ref="authenticationManager" />
+    	<property name="accessDecisionManager" ref="accessDecisionManager" />
+    	<property name="securityMetadataSource" ref="securityMetadataSource" />
+    </bean>
+    <!--角色投票器 -->
+    <bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter">
+        <property name="rolePrefix" value=""/>
+    </bean>
+    <bean id="securityMetadataSource" class="com.iss.oauth.user.UrlFilterSecurityMetadataSource" />
 </beans>
