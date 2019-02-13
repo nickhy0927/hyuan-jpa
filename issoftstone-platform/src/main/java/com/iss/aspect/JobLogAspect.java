@@ -9,7 +9,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
@@ -31,7 +30,6 @@ public class JobLogAspect {
 	@Autowired
 	private JobLogService jobLogService;
 
-	@Before("execution(* com.iss.**.service..*.*(..))")
 	@Pointcut(value = "@annotation(com.iss.orm.anno.MethodMonitor)")
 	private void pointcut() {
 
