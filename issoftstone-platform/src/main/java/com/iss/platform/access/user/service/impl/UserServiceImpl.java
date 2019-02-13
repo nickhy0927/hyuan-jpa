@@ -10,12 +10,12 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.iss.aspect.anno.ServiceMonitor;
 import com.iss.common.config.InitEnvironment;
 import com.iss.common.encryption.Md5Encryption;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.SaltUtils;
 import com.iss.common.utils.SysContants;
-import com.iss.orm.anno.MethodMonitor;
 import com.iss.orm.service.impl.BaseCustomService;
 import com.iss.platform.access.menu.entity.Menu;
 import com.iss.platform.access.user.dao.UserDao;
@@ -52,7 +52,7 @@ public class UserServiceImpl extends BaseCustomService<User, String> implements 
 	}
 
 	@Override
-	@MethodMonitor(desc = "用户登录")
+	@ServiceMonitor(desc = "用户登录")
 	public User findUserByLoginName(String loginName) {
 		User root = isRoot(loginName);
 		if (root == null) {

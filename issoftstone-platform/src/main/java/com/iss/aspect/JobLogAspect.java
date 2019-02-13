@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
-import com.iss.orm.anno.MethodMonitor;
+import com.iss.aspect.anno.ServiceMonitor;
 import com.iss.platform.system.joblog.entity.JobLog;
 import com.iss.platform.system.joblog.service.JobLogService;
 
@@ -30,13 +30,13 @@ public class JobLogAspect {
 	@Autowired
 	private JobLogService jobLogService;
 
-	@Pointcut(value = "@annotation(com.iss.orm.anno.MethodMonitor)")
+	@Pointcut(value = "@annotation(com.iss.orm.anno.ServiceMonitor)")
 	private void pointcut() {
 
 	}
 
-	@Around(value = "pointcut() && @annotation(methodMonitor)")
-	public Object around(ProceedingJoinPoint point, MethodMonitor methodMonitor) {
+	@Around(value = "pointcut() && @annotation(serviceMonitor)")
+	public Object around(ProceedingJoinPoint point, ServiceMonitor serviceMonitor) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		JobLog log = new JobLog();
 		String startTime = format.format(new Date());
@@ -48,7 +48,7 @@ public class JobLogAspect {
 		Method method = ((MethodSignature) point.getSignature()).getMethod();
 		String methodName = clazz.getSimpleName() + "_" + method.getName();
 		log.setMethodName(methodName);
-		log.setMethodDesc(methodMonitor.desc());
+		log.setMethodDesc(serviceMonitor.desc());
 		log.setParams(JSON.toJSONString(point.getArgs()));
 		// 方法返回结果
 		Object result = null;
@@ -85,8 +85,8 @@ public class JobLogAspect {
 	 * @param joinPoint
 	 * @param result
 	 */
-	@AfterReturning(value = "pointcut() && @annotation(methodMonitor)", returning = "result")
-	public Object afterReturning(JoinPoint joinPoint, MethodMonitor methodMonitor, Object result) {
+	@AfterReturning(value = "pointcut() && @annotation(serviceMonitor)", returning = "result")
+	public Object afterReturning(JoinPoint joinPoint, ServiceMonitor serviceMonitor, Object result) {
 		System.out.println("----> afterReturning");
 		String methodName = joinPoint.getSignature().getName();
 		System.out.println("The method " + methodName + " return with " + result);

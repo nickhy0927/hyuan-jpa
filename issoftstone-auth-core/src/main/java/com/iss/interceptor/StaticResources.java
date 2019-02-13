@@ -8,12 +8,12 @@ import org.quartz.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.Maps;
+import com.iss.aspect.quartz.QuartzManager;
 import com.iss.common.config.InitEnvironment;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.spring.SpringContextHolder;
 import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.SysContants.IsStart;
-import com.iss.orm.quartz.QuartzManager;
 import com.iss.platform.access.user.entity.User;
 import com.iss.platform.access.user.service.UserService;
 import com.iss.platform.system.autotask.entity.AutoTask;
