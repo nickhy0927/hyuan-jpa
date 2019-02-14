@@ -11,11 +11,9 @@
 			})
 			layui.use(['form', 'tree'], function () {
                 var form = layui.form;
-                //监听提交
                 form.on('submit(create-form)', function (data) {    
-                	// console.log($('form').serializeObject())
                 	$.ajax({
-                		url: '${ctx}/platform/access/icon/save.json',//发送请求
+                		url: '${ctx}/platform/access/icon/iconSave.json',//发送请求
 				    	data: $('form').getForm(),
 				    	openType: 'alert',
 				    	success: function(result) {

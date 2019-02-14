@@ -14,6 +14,7 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.util.AntPathMatcher;
 
+import com.google.common.collect.Lists;
 import com.iss.platform.access.menu.entity.Menu;
 import com.iss.platform.access.user.service.UserService;
 
@@ -26,11 +27,7 @@ public class UrlFilterSecurityMetadataSource implements FilterInvocationSecurity
 
 	private static Map<String, Collection<ConfigAttribute>> resourceMap = null;
 
-	public UrlFilterSecurityMetadataSource(UserService userService) {
-		this.loadResourceDefine();
-	}
-
-	private void loadResourceDefine() {
+	public void loadResourceDefine() {
 		resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
 		List<Menu> menuAlias = userService.queryMenuList(UserPrincipal.getContextUser().getId());
 		ConfigAttribute ca = null;
@@ -50,6 +47,9 @@ public class UrlFilterSecurityMetadataSource implements FilterInvocationSecurity
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		String url = ((FilterInvocation) object).getRequestUrl();
+		if (resourceMap.isEmpty()) {
+			loadResourceDefine();
+		}
 		Iterator<String> ite = resourceMap.keySet().iterator();
 		while (ite.hasNext()) {
 			String resURL = ite.next();
@@ -57,12 +57,12 @@ public class UrlFilterSecurityMetadataSource implements FilterInvocationSecurity
 				return resourceMap.get(resURL);
 			}
 		}
-		return null;
+		return Lists.newArrayList();
 	}
 
 	@Override
 	public Collection<ConfigAttribute> getAllConfigAttributes() {
-		return null;
+		return new ArrayList<>();
 	}
 
 	@Override

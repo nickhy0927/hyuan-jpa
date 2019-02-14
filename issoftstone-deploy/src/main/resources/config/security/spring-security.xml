@@ -30,7 +30,7 @@
                 always-use-default-target="true"/>
         <!-- 增加一个filter，这点与Acegi是不一样的，不能修改默认的filter了，这个filter位于FILTER_SECURITY_INTERCEPTOR之前 -->  
 		<security:custom-filter ref="interceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
-        <security:intercept-url pattern="/**" access="hasRole('ADMIN')"/>
+        <!-- <security:intercept-url pattern="/**" access="hasRole('ADMIN')"/> -->
         <security:csrf disabled="true"/>
         <security:logout delete-cookies="JSESSIONID" invalidate-session="true"/>
         <security:expression-handler ref="webexpressionHandler"/>
@@ -76,5 +76,7 @@
     <bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter">
         <property name="rolePrefix" value=""/>
     </bean>
-    <bean id="securityMetadataSource" class="com.iss.oauth.user.UrlFilterSecurityMetadataSource" />
+    <bean id="securityMetadataSource" class="com.iss.oauth.user.UrlFilterSecurityMetadataSource" init-method="loadResourceDefine">
+    	<property name="userService" ref="userServiceImpl" />
+    </bean>
 </beans>
