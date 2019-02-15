@@ -11,7 +11,7 @@
                 //监听提交
                 form.on('submit(create-form)', function (data) {    
                 	$.saveInfo({
-                		url: '${ctx}/platform/access/dict/dictSave.json',//发送请求
+                		url: '${ctx}/platform/access/dict/dictCreateSave.json',//发送请求
 				    	data: $('form').getForm(),
 				    	success: function(result) {
 	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引

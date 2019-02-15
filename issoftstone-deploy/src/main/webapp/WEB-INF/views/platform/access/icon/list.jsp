@@ -31,7 +31,7 @@
         	$("#tableList").dataTable({
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
-                url: "${ctx}/platform/access/icon/list.json",
+                url: "${ctx}/platform/access/icon/iconList.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
                     { field: "name", title: '图标名称', width: 160, fixed: "left", unresize: true},

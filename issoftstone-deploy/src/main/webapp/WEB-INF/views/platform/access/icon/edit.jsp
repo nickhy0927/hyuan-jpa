@@ -14,7 +14,7 @@
                 //监听提交
                 form.on('submit(create-form)', function (data) {
                 	$.ajax({
-                		url: '${ctx}/platform/access/icon/save.json',//发送请求
+                		url: '${ctx}/platform/access/icon/iconEditUpdate.json',//发送请求
 				    	data: $('form').getForm(),
 				    	openType: 'alert',
 				    	success: function(result) {
@@ -26,7 +26,7 @@
                 	return false;
                 });
                 $.ajax({
-			    	url: '${ctx}/platform/access/icon/edit.json',//发送请求
+			    	url: '${ctx}/platform/access/icon/iconEditJson.json',//发送请求
 			    	data: {id : '${id}'},
 			    	success: function(res) {
 			    		form.val("edit-form", {

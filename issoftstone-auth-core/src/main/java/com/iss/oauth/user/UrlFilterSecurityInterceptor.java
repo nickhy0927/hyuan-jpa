@@ -45,7 +45,6 @@ public class UrlFilterSecurityInterceptor extends AbstractSecurityInterceptor im
 			throws IOException, ServletException {
 		FilterInvocation fi = new FilterInvocation(request, response, chain);
 		invoke(fi);
-
 	}
 
 	public void init(FilterConfig config) throws ServletException {

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.quartz.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.common.collect.Lists;
 import com.iss.aspect.anno.OperateLog;
 import com.iss.aspect.quartz.QuartzManager;
-import com.iss.common.anno.AccessAuthority;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.PageSupport;
@@ -35,46 +33,36 @@ public class AutoTaskController {
 	@Autowired
 	private AutoTaskService autoTaskService;
 
-	@AccessAuthority(alias = "AUTOTASK-SAVE", name = "新增定时任务")
-	@RequestMapping(value = "/platform/system/autotask/autoTaskCreate.do", method = RequestMethod.GET)
+	@RequestMapping(name = "新增调度任务页面", value = "/platform/system/autotask/autoTaskCreate.do", method = RequestMethod.GET)
 	public String autoTaskCreate() {
 		return "platform/system/autotask/autoTaskCreate";
 	}
 
-	@AccessAuthority(alias = "AUTOTASK-EDIT", name = "修改定时任务")
-	@RequestMapping(value = "/platform/system/autotask/autoTaskEdit.do", method = RequestMethod.GET)
+	@RequestMapping(name = "修改调度任务页面", value = "/platform/system/autotask/autoTaskEdit.do", method = RequestMethod.GET)
 	public String autoTaskEdit(String id, Model model) {
 		model.addAttribute("id", id);
 		return "platform/system/autotask/autoTaskEdit";
 	}
 
-	@AccessAuthority(alias = "AUTOTASK-LIST", name = "保存定时任务")
-	@RequestMapping(value = "/platform/system/autotask/autoTaskList.do", method = RequestMethod.GET)
+	@RequestMapping(name = "调度任务列表页面", value = "/platform/system/autotask/autoTaskList.do", method = RequestMethod.GET)
 	public String autoTaskList() {
 		return "platform/system/autotask/autoTaskList";
 	}
 
-	@AccessAuthority(alias = "AUTOTASK-VIEW", name = "查看定时任务")
-	@RequestMapping(value = "/platform/system/autotask/autoTaskView.do", method = RequestMethod.GET)
+	@RequestMapping(name = "查看调度任务详情", value = "/platform/system/autotask/autoTaskView.do", method = RequestMethod.GET)
 	public String autoTaskView() {
 		return "platform/system/autotask/autoTaskView";
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "AUTOTASK-SAVE|AUTOTASK-EDIT", name = "保存定时任务")
-	@OperateLog(message = "保存定时任务", method = "autoTaskSave", optType = DataType.OptType.INSERT, service = AutoTaskService.class)
-	@RequestMapping(value = "/platform/access/autoTask/autoTaskSave.json", method = RequestMethod.POST)
-	public MessageObject<AutoTask> autoTaskSave(AutoTask autoTask) {
+	@OperateLog(message = "保存调度任务", optType = DataType.OptType.INSERT, service = AutoTaskService.class)
+	@RequestMapping(name = "保存调度任务", value = "/platform/access/autoTask/autoTaskCraeteSave.json", method = RequestMethod.POST)
+	public MessageObject<AutoTask> autoTaskCraeteSave(AutoTask autoTask) {
 		MessageObject<AutoTask> messageObject = MessageObject.getDefaultInstance();
 		try {
-			String id = autoTask.getId();
 			autoTask.setStatus(IsDelete.NO);
 			autoTaskService.saveEntity(autoTask);
-			if (StringUtils.isNotEmpty(id)) {
-				messageObject.openTip("新增定时任务成功");
-			} else {
-				messageObject.openTip("修改定时任务成功");
-			}
+			messageObject.openTip("新增调度任务成功");
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
@@ -82,8 +70,22 @@ public class AutoTaskController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "AUTOTASK-LIST", name = "获取所有定时任务")
-	@RequestMapping(value = "/platform/access/autoTask/queryAutoTaskList.json", method = RequestMethod.POST)
+	@OperateLog(message = "修改调度任务", optType = DataType.OptType.UPDATE, service = AutoTaskService.class)
+	@RequestMapping(name = "修改调度任务", value = "/platform/access/autoTask/autoTaskEditUpdate.json", method = RequestMethod.POST)
+	public MessageObject<AutoTask> autoTaskEditUpdate(AutoTask autoTask) {
+		MessageObject<AutoTask> messageObject = MessageObject.getDefaultInstance();
+		try {
+			autoTask.setStatus(IsDelete.NO);
+			autoTaskService.saveEntity(autoTask);
+			messageObject.openTip("修改调度任务成功");
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		return messageObject;
+	}
+
+	@ResponseBody
+	@RequestMapping(name = "获取调度任务列表分页", value = "/platform/access/autoTask/queryAutoTaskList.json", method = RequestMethod.POST)
 	public MessageObject<AutoTask> queryAutoTaskList(HttpServletRequest request, PageSupport support) {
 		MessageObject<AutoTask> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -99,41 +101,38 @@ public class AutoTaskController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "AUTOTASK-EDIT", name = "修改定时任务")
-	@RequestMapping(value = "/platform/access/autoTask/autoTaskEdit.json", method = RequestMethod.POST)
-	public MessageObject<AutoTask> autoTaskEdit(String id) {
+	@RequestMapping(name = "获取调度任务详情", value = "/platform/access/autoTask/autoTaskEditJson.json", method = RequestMethod.POST)
+	public MessageObject<AutoTask> autoTaskEditJson(String id) {
 		MessageObject<AutoTask> messageObject = MessageObject.getDefaultInstance();
 		try {
 			AutoTask autoTask = autoTaskService.get(id);
-			messageObject.ok("修改查询定时任务成功", autoTask);
+			messageObject.ok("修改查询调度任务成功", autoTask);
 		} catch (ServiceException e) {
 			e.printStackTrace();
-			messageObject.error("修改查询定时任务异常");
+			messageObject.error("修改查询调度任务异常");
 		}
 		return messageObject;
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "AUTOTASK-LIST", name = "定时任务列表")
-	@RequestMapping(value = "/platform/access/autoTask/autoTaskList.json", method = { RequestMethod.POST })
+	@RequestMapping(name = "调度任务列表分页", value = "/platform/access/autoTask/autoTaskList.json", method = { RequestMethod.POST })
 	public MessageObject<AutoTask> autoTaskList(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
 		MessageObject<AutoTask> messageObject = MessageObject.getDefaultInstance();
 		try {
 			map.put("status_eq", IsDelete.NO);
 			PagerInfo<AutoTask> tools = autoTaskService.queryPageByMap(map, support);
-			messageObject.ok("查询定时任务成功", tools);
+			messageObject.ok("查询调度任务成功", tools);
 		} catch (ServiceException e) {
 			e.printStackTrace();
-			messageObject.error("查询定时任务异常");
+			messageObject.error("查询调度任务异常");
 		}
 		return messageObject;
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "AUTOTASK-DELETE", name = "删除定时任务")
-	@OperateLog(message = "删除定时任务", method = "autoTaskDelete", optType = DataType.OptType.DELETE, service = AutoTaskService.class)
-	@RequestMapping(value = "/platform/access/autoTask/autoTaskDelete.json", method = RequestMethod.POST)
+	@OperateLog(message = "删除调度任务", optType = DataType.OptType.DELETE, service = AutoTaskService.class)
+	@RequestMapping(name = "删除调度任务", value = "/platform/access/autoTask/autoTaskDelete.json", method = RequestMethod.POST)
 	public MessageObject<AutoTask> autoTaskDelete(String id) {
 		MessageObject<AutoTask> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -146,19 +145,18 @@ public class AutoTaskController {
 					autoTasks.add(autoTask);
 				}
 				autoTaskService.saveBatch(autoTasks);
-				messageObject.openTip("删除定时任务成功", null);
+				messageObject.openTip("删除调度任务成功", null);
 			}
 		} catch (ServiceException e) {
 			e.printStackTrace();
-			messageObject.error("删除定时任务异常");
+			messageObject.error("删除调度任务异常");
 		}
 		return messageObject;
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "EXCUTE-TASK", name = "执行调度任务")
-	@OperateLog(message = "执行调度任务", method = "excuteTask", optType = DataType.OptType.DELETE, service = AutoTaskService.class)
-	@RequestMapping(value = "/platform/access/autoTask/excuteTask.json", method = RequestMethod.POST)
+	@OperateLog(message = "执行调度任务", optType = DataType.OptType.EXCUTE, service = AutoTaskService.class)
+	@RequestMapping(name = "执行调度任务", value = "/platform/access/autoTask/excuteTask.json", method = RequestMethod.POST)
 	public MessageObject<Object> excuteTask(String id) {
 		MessageObject<Object> messageObject = MessageObject.getDefaultInstance();
 		AutoTask autoTask = autoTaskService.get(id);

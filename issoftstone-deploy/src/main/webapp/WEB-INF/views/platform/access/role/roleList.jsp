@@ -80,7 +80,7 @@
         	$("#tableList").dataTable({
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
-                url: "${ctx}/platform/access/role/list.json",
+                url: "${ctx}/platform/access/role/roleList.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
                     { field: "code", title: '角色编号', width: 200, fixed: "left", unresize: true},
@@ -138,7 +138,6 @@
 				var roleId = $('#roleId').val();
 				var ids = [];
 				for (var i = 0; i < nodes.length; i++) ids.push(nodes[i].id);
-				console.log(ids);
 				$.saveInfo({
                 	url: '${ctx}/platform/access/role/roleMenuSave.json',
                 	data: {roleId: roleId, menuIds: ids.join(',')},

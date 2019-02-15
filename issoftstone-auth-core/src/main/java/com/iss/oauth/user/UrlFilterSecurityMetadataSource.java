@@ -25,10 +25,9 @@ public class UrlFilterSecurityMetadataSource implements FilterInvocationSecurity
 
 	private AntPathMatcher matcher = new AntPathMatcher();
 
-	private static Map<String, Collection<ConfigAttribute>> resourceMap = null;
+	private static Map<String, Collection<ConfigAttribute>> resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
 
 	public void loadResourceDefine() {
-		resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
 		List<Menu> menuAlias = userService.queryMenuList(UserPrincipal.getContextUser().getId());
 		ConfigAttribute ca = null;
 		Collection<ConfigAttribute> cca = new ArrayList<ConfigAttribute>();

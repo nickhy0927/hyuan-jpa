@@ -69,7 +69,6 @@ public class PerformanceViewController {
 		calendar.setTime(date);
 		calendar.add(Calendar.DAY_OF_MONTH, day - 1);
 		date = calendar.getTime();
-		System.out.println(sdf.format(date));
 		return sdf.format(date);
 	}
 

@@ -9,28 +9,26 @@
 </hy:extends>
 <hy:extends name="javascript">
 	<script type="text/javascript">
-		$(function () {
+		layui.use(['form', 'tree', 'laydate'], function () {
 			$("body").css({
 				'overflow':'auto'
 			})
-			layui.use(['form', 'tree', 'laydate'], function () {
-                var form = layui.form;
-                //监听提交
-                form.on('submit(create-form)', function (data) {    
-                	$.saveInfo({
-                		url: '${ctx}/platform/access/role/save.json',//发送请求
-				    	data: $('form').getForm(),
-				    	loadMsg: '正在保存角色信息，请稍等...', 
-				    	success: function (res) {
-				    		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-		    				parent.layer.close(index); //再执行关闭
-		    				window.parent.refresh();
-						}
-                	})
-                	return false;
-                });
-            });
-		})
+	        var form = layui.form;
+	        //监听提交
+	        form.on('submit(create-form)', function (data) {    
+	        	$.saveInfo({
+	        		url: '${ctx}/platform/access/role/roleCreateSave.json',//发送请求
+			    	data: $('form').getForm(),
+			    	loadMsg: '正在保存角色，请稍等...', 
+			    	success: function (res) {
+			    		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+	    				parent.layer.close(index); //再执行关闭
+	    				window.parent.refresh();
+					}
+	        	})
+	        	return false;
+	        });
+	    });
 		
 		function reset() {
             layui.use('form', function () {

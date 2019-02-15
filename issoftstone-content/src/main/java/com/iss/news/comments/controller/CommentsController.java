@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Lists;
 import com.iss.aspect.anno.OperateLog;
-import com.iss.common.anno.AccessAuthority;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.PageSupport;
@@ -27,45 +25,37 @@ import com.iss.news.comments.entity.Comments;
 import com.iss.news.comments.service.CommentService;
 
 @Controller
+@RequestMapping(value = "/content/news/comments")
 public class CommentsController {
 
 	@Autowired
 	private CommentService commentService;
-	
-	@AccessAuthority(alias = "comments-save", name = "进入评论新增页面")
-	@RequestMapping(value = "/content/news/comments/commentsCreate.do", method = RequestMethod.GET)
-	public String CommentsCreate() {
+
+	@RequestMapping(name = "新增评论页面", value = "/commentsCreate.do", method = RequestMethod.GET)
+	public String commentsCreate() {
 		return "content/comments/commentsCreate";
 	}
-	
-	@AccessAuthority(alias = "comments-edit", name = "进入评论编辑页面")
-	@RequestMapping(value = "/content/news/comments/commentsEdit.do", method = RequestMethod.GET)
+
+	@RequestMapping(name = "修改评论页面", value = "/commentsEdit.do", method = RequestMethod.GET)
 	public String CommentsEdit(String id, Model model) {
 		model.addAttribute("id", id);
 		return "content/comments/commentsEdit";
 	}
-	
-	@AccessAuthority(alias = "comments-save", name = "进入评论列表页面")
-	@RequestMapping(value = "/content/news/comments/commentsList.do", method = RequestMethod.GET)
+
+	@RequestMapping(name = "评论列表页面", value = "/commentsList.do", method = RequestMethod.GET)
 	public String commentsList() {
 		return "content/comments/commentsList";
 	}
-	
+
 	@ResponseBody
-	@AccessAuthority(alias = "comments-save", name = "保存评论信息")
-	@OperateLog(message = "保存评论信息", method = "commentsSave", optType = DataType.OptType.INSERT, service = CommentService.class)
-	@RequestMapping(value = "/content/news/comments/commentsSave.json", method = RequestMethod.POST)
-	public MessageObject<Comments> commentsSave(Comments comments) {
+	@OperateLog(message = "保存评论", optType = DataType.OptType.INSERT, service = CommentService.class)
+	@RequestMapping(name = "保存评论", value = "/commentsCreateSave.json", method = RequestMethod.POST)
+	public MessageObject<Comments> commentsCreateSave(Comments comments) {
 		MessageObject<Comments> messageObject = MessageObject.getDefaultInstance();
 		try {
-			String id = comments.getId();
 			comments.setStatus(IsDelete.NO);
 			commentService.saveEntity(comments);
-			if (StringUtils.isEmpty(id)) {
-				messageObject.openTip("新增评论成功");
-			} else {
-				messageObject.openTip("修改评论成功");
-			}
+			messageObject.openTip("新增评论成功");
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			messageObject.openTip("操作出现异常，请稍后.");
@@ -74,23 +64,37 @@ public class CommentsController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "Comments-edit", name = "修改评论信息")
-	@RequestMapping(value = "/content/news/comments/commentsEdit.json", method = RequestMethod.POST)
-	public MessageObject<Comments> commentsEdit(String id) {
+	@OperateLog(message = "修改评论", optType = DataType.OptType.UPDATE, service = CommentService.class)
+	@RequestMapping(name = "修改评论", value = "/commentsEditUpdate.json", method = RequestMethod.POST)
+	public MessageObject<Comments> commentsEditUpdate(Comments comments) {
 		MessageObject<Comments> messageObject = MessageObject.getDefaultInstance();
 		try {
-			Comments comments = commentService.get(id);
-			messageObject.ok("修改查询评论成功", comments);
+			comments.setStatus(IsDelete.NO);
+			commentService.saveEntity(comments);
+			messageObject.openTip("修改评论成功");
 		} catch (ServiceException e) {
 			e.printStackTrace();
-			messageObject.error("修改查询评论异常");
+			messageObject.openTip("操作出现异常，请稍后.");
 		}
 		return messageObject;
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "comments-list", name = "评论信息列表")
-	@RequestMapping(value = "/content/news/comments/commentsList.json", method = { RequestMethod.POST })
+	@RequestMapping(name = "获取评论详情", value = "/commentsEdit.json", method = RequestMethod.POST)
+	public MessageObject<Comments> commentsEdit(String id) {
+		MessageObject<Comments> messageObject = MessageObject.getDefaultInstance();
+		try {
+			Comments comments = commentService.get(id);
+			messageObject.ok("获取评论详情成功", comments);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.error("获取评论详情异常");
+		}
+		return messageObject;
+	}
+
+	@ResponseBody
+	@RequestMapping(name = "评论列表分页", value = "/commentsList.json", method = RequestMethod.POST)
 	public MessageObject<Comments> commentsList(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
 		MessageObject<Comments> messageObject = MessageObject.getDefaultInstance();
@@ -106,9 +110,8 @@ public class CommentsController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "comments-delete", name = "删除评论信息")
-	@OperateLog(message = "删除评论信息", method = "commentsDelete", optType = DataType.OptType.DELETE, service = CommentService.class)
-	@RequestMapping(value = "/content/news/Comments/commentsDelete.json", method = RequestMethod.POST)
+	@OperateLog(message = "删除评论", optType = DataType.OptType.DELETE, service = CommentService.class)
+	@RequestMapping(name = "删除评论", value = "/commentsDelete.json", method = RequestMethod.POST)
 	public MessageObject<Comments> CommentsDelete(String id) {
 		MessageObject<Comments> messageObject = MessageObject.getDefaultInstance();
 		try {

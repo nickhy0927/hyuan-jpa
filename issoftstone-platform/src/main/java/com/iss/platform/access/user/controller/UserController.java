@@ -11,14 +11,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Lists;
 import com.iss.aspect.anno.OperateLog;
-import com.iss.common.anno.AccessAuthority;
 import com.iss.common.exception.ServiceException;
+import com.iss.common.utils.JsonMapper;
 import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.PageSupport;
 import com.iss.common.utils.PagerInfo;
@@ -47,10 +48,50 @@ public class UserController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "user-save|user-edit", name = "新增用户信息")
-	@OperateLog(message = "新增用户信息", method = "userSave", optType = DataType.OptType.INSERT, service = UserService.class)
-	@RequestMapping(value = "/platform/access/user/userSave.json", method = RequestMethod.POST)
-	public MessageObject<User> userSave(User user) {
+	@RequestMapping(name = "添加权限", value = "/platform/access/user/role.json", method = RequestMethod.POST)
+	@OperateLog(message = "添加权限", optType = DataType.OptType.INSERT, service = UserService.class)
+	public MessageObject<User> addRole(String id, HttpServletRequest request) {
+		MessageObject<User> message = MessageObject.getDefaultInstance();
+		try {
+			String roleIds = request.getParameter("roleIds");
+			List<Role> roles = new ArrayList<>();
+			if (StringUtils.isNotEmpty(roleIds)) {
+				String[] ids = roleIds.split(",");
+				for (String id1 : ids) {
+					Role role = roleService.get(id1);
+					if (role != null) {
+						roles.add(role);
+					}
+				}
+			}
+			if (StringUtils.isNotEmpty(id)) {
+				User user = userService.get(id);
+				if (user != null) {
+					user.setRoles(roles);
+					userService.saveEntity(user);
+					message.openTip("添加角色成功", null);
+				} else {
+					message.error("添加角色失败");
+				}
+			} else {
+				message.error("添加角色失败");
+			}
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			message.error("保存角色失败");
+		}
+		return message;
+	}
+
+	@RequestMapping(name = "用户新增页面", value = "/platform/access/user/userCreate.do")
+	public String userCreate() {
+		return "platform/access/user/userCreate";
+	}
+
+	@ResponseBody
+	@OperateLog(message = "保存用户", optType = DataType.OptType.INSERT, service = UserService.class)
+	@RequestMapping(name = "保存用户", value = "/platform/access/user/userCreateSave.json", method = RequestMethod.POST)
+	public MessageObject<User> userCreateSave(User user) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
 			String id = user.getId();
@@ -68,12 +109,123 @@ public class UserController {
 		}
 		return messageObject;
 	}
-	
+
 	@ResponseBody
-	@AccessAuthority(alias = "user-save|user-edit", name = "更新用户状态信息")
-	@OperateLog(message = "更新用户状态信息", method = "userStatusEdit", optType = DataType.OptType.INSERT, service = UserService.class)
-	@RequestMapping(value = "/platform/access/user/userStatusEdit.json", method = RequestMethod.POST)
-	public MessageObject<User> userStatusEdit(User user) {
+	@OperateLog(message = "删除用户", optType = DataType.OptType.INSERT, service = UserService.class)
+	@RequestMapping(name = "删除用户",value = "/platform/access/user/userDelete.json", method = RequestMethod.POST)
+	public MessageObject<User> userDelete(String id) {
+		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
+		try {
+			List<User> users = Lists.newArrayList();
+			String[] ids = id.split(",");
+			for (String str : ids) {
+				User user = userService.get(str);
+				user.setStatus(IsDelete.YES);
+				users.add(user);
+			}
+			userService.saveBatch(users);
+			messageObject.openTip("刪除用户成功", null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			messageObject.error("刪除用户异常");
+		}
+		return messageObject;
+	}
+	
+	@RequestMapping(name = "用户修改页面",value = "/platform/access/user/userEdit.do")
+	public String userEdit(String id, Model model) {
+		model.addAttribute("id", id);
+		return "platform/access/user/userEdit";
+	}
+
+	@ResponseBody
+	@OperateLog(message = "获取用户", optType = DataType.OptType.UPDATE, service = UserService.class)
+	@RequestMapping(value = "/platform/access/user/userEditJson.json", method = RequestMethod.POST)
+	public MessageObject<User> userEditJson(String id) {
+		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
+		try {
+			User user = userService.get(id);
+			user.setPassword(null);
+			messageObject.ok("修改查询用户成功", user);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.error("修改查询用户异常");
+		}
+		return messageObject;
+	}
+
+	@ResponseBody
+	@OperateLog(message = "保存用户", optType = DataType.OptType.INSERT, service = UserService.class)
+	@RequestMapping(name = "保存用户", value = "/platform/access/user/userEditUpdate.json", method = RequestMethod.POST)
+	public MessageObject<User> userEditUpdate(User user) {
+		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
+		try {
+			user.setStatus(IsDelete.NO);
+			userService.saveEntity(user);
+			messageObject.openTip("保存用户成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			messageObject.error("保存用户异常");
+		}
+		return messageObject;
+	}
+
+	@RequestMapping(name = "用户修改页面", value = "/platform/access/user/list.do")
+	public String userList() {
+		return "platform/access/user/userList";
+	}
+
+	@ResponseBody
+	@RequestMapping(name = "获取用户列表分页", value = "/platform/access/user/list.json", method = RequestMethod.POST)
+	public MessageObject<User> userList(HttpServletRequest request, PageSupport support) {
+		logger.debug("查询用户");
+		MessageObject<User> message = MessageObject.getDefaultInstance();
+		Map<String, Object> paramMap = WebUtils.getRequestToMap(request);
+		try {
+			paramMap.put("status_eq", IsDelete.NO);
+			PagerInfo<User> users = userService.queryPageByMap(paramMap, support);
+			message.ok("查询用户成功", users);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			message.error("查询用户异常");
+		}
+		return message;
+	}
+
+	@RequestMapping(name = "获取用户权限信息", value = "/platform/access/user/userRoleList.do", method = RequestMethod.GET)
+	public String userRoleList(String userId, Model model) {
+		model.addAttribute("userId", userId);
+		User user = userService.get(userId);
+		if (user != null)
+			model.addAttribute("roles", new JsonMapper().toJson(user.getRoles()));
+		return "platform/access/user/roleList";
+	}
+	@ResponseBody
+	@OperateLog(message = "保存用户权限", optType = DataType.OptType.INSERT, service = UserService.class)
+	@RequestMapping(name = "保存用户权限", value = "/platform/access/user/userRoleSave.json", method = RequestMethod.POST)
+	public MessageObject<User> userRoleSave(String userId, String roleIds) {
+		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
+		try {
+			User user = userService.get(userId);
+			String[] split = roleIds.split(",");
+			List<Role> roles = Lists.newArrayList();
+			for (String string : split) {
+				roles.add(roleService.get(string));
+			}
+			user.setRoles(roles);
+			userService.updateUser(user);
+			messageObject.openTip("保存用户权限成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			messageObject.error("保存用户权限异常");
+		}
+		return messageObject;
+	}
+
+	@ResponseBody
+	@OperateLog(message = "更新用户状态", optType = DataType.OptType.UPDATE, service = UserService.class)
+	@RequestMapping(value = "/platform/access/user/userStatusUpdate.json", method = RequestMethod.POST)
+	public MessageObject<User> userStatusUpdate(User user) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
 			userService.updateUser(user);
@@ -94,121 +246,4 @@ public class UserController {
 	}
 	
 	
-	@ResponseBody
-	@AccessAuthority(alias = "user-role-list", name = "新增用户权限信息")
-	@OperateLog(message = "新增用户权限信息", method = "userRoleSave", optType = DataType.OptType.INSERT, service = UserService.class)
-	@RequestMapping(value = "/platform/access/user/userRoleSave.json", method = RequestMethod.POST)
-	public MessageObject<User> userRoleSave(String userId, String roleIds) {
-		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
-		try {
-			User user = userService.get(userId);
-			String[] split = roleIds.split(",");
-			List<Role> roles = Lists.newArrayList();
-			for (String string : split) {
-				roles.add(roleService.get(string));
-			}
-			user.setRoles(roles);
-			userService.updateUser(user);
-			messageObject.openTip("保存用户权限成功");
-		} catch (Exception e) {
-			e.printStackTrace();
-			messageObject.error("保存用户权限异常");
-		}
-		return messageObject;
-	}
-	
-	@ResponseBody
-	@AccessAuthority(alias = "user-delete", name = "删除用户信息")
-	@OperateLog(message = "删除用户信息", method = "userDelete", optType = DataType.OptType.INSERT, service = UserService.class)
-	@RequestMapping(value = "/platform/access/user/userDelete.json", method = RequestMethod.POST)
-	public MessageObject<User> userDelete(String id) {
-		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
-		try {
-			List<User> users = Lists.newArrayList();
-			String[] ids = id.split(",");
-			for (String str : ids) {
-				User user = userService.get(str);
-				user.setStatus(IsDelete.YES);
-				users.add(user);
-			}
-			userService.saveBatch(users);
-			messageObject.openTip("刪除用户成功", null);
-		} catch (Exception e) {
-			e.printStackTrace();
-			messageObject.error("刪除用户异常");
-		}
-		return messageObject;
-	}
-
-	@ResponseBody
-	@AccessAuthority(alias = "queryUserInfo", name = "获取用户信息")
-	@OperateLog(message = "获取用户信息", method = "edit", optType = DataType.OptType.UPDATE, service = UserService.class)
-	@RequestMapping(value = "/platform/access/user/queryUserInfo.json", method = RequestMethod.POST)
-	public MessageObject<User> queryUserInfo(String id) {
-		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
-		try {
-			User user = userService.get(id);
-			user.setPassword(null);
-			messageObject.ok("修改查询用户成功", user);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			messageObject.error("修改查询用户异常");
-		}
-		return messageObject;
-	}
-	
-	@ResponseBody
-	@AccessAuthority(alias = "user-list", name = "获取用户信息列表")
-	@RequestMapping(value = "/platform/access/user/list.json", method = RequestMethod.POST)
-	public MessageObject<User> userList(HttpServletRequest request, PageSupport support) {
-		logger.debug("查询用户信息");
-		MessageObject<User> message = MessageObject.getDefaultInstance();
-		Map<String, Object> paramMap = WebUtils.getRequestToMap(request);
-		try {
-			paramMap.put("status_eq", IsDelete.NO);
-			PagerInfo<User> users = userService.queryPageByMap(paramMap, support);
-			message.ok("查询用户成功", users);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			message.error("查询用户异常");
-		}
-		return message;
-	}
-
-	@ResponseBody
-	@AccessAuthority(alias = "user-role-save", name = "新增用户权限信息")
-	@RequestMapping(value = "/platform/access/user/role.json", method = RequestMethod.POST)
-	@OperateLog(message = "用户添加权限信息", method = "saveRole", optType = DataType.OptType.UPDATE, service = UserService.class)
-	public MessageObject<User> addRole(String id, HttpServletRequest request) {
-		MessageObject<User> message = MessageObject.getDefaultInstance();
-		try {
-			String roleIds = request.getParameter("roleIds");
-			List<Role> roles = new ArrayList<>();
-			if (StringUtils.isNotEmpty(roleIds)) {
-				String[] ids = roleIds.split(",");
-				for (String id1 : ids) {
-					Role role = roleService.get(id1);
-					if (role != null) {
-						roles.add(role);
-					}
-				}
-			}
-			if (StringUtils.isNotEmpty(id)) {
-				User user = userService.get(id);
-				if (user != null) {
-					user.setRoles(roles);
-					userService.saveEntity(user);
-					message.openTip("保存角色信息成功", null);
-				} else {
-					message.error("保存角色信息失败");
-				}
-			} else {
-				message.error("保存角色信息失败");
-			}
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			message.error("保存角色信息失败");
-		}
-		return message;
-	}
 }

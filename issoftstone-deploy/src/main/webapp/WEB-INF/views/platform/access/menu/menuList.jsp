@@ -17,7 +17,7 @@
                 url: "${ctx}/platform/access/menu/menuList.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
-                    { field: "name", title: '菜单名称', width: 160, fixed: "left", unresize: true},
+                    { field: "name", title: '菜单名称', width: 200, fixed: "left", unresize: true},
                     { field: "alias",  title: "菜单别名", width: 200, fixed: "left", unresize: true},
                     { field: "parentName", title: "上级菜单", width: 120, unresize: true},
                     { title: "图标", width: 80, unresize: true, align: 'center', templet: function (d) {
@@ -82,7 +82,7 @@
         	form.on('switch(enable)', function (data) {
 				var enable = this.checked ? '1' : '0';
 				$.saveInfo({
-					url: '${ctx}/platform/access/menu/menuStatusEdit.json',
+					url: '${ctx}/platform/access/menu/menuStatusUpdate.json',
 					data: {id: $(data.elem).attr('data-id'), enable: enable, version: $(data.elem).attr('data-v')},
 					success: function (res) {
 						$("#tableList").refreshTable({
@@ -94,7 +94,7 @@
             form.on('switch(locked)', function (data) {
 				var locked = this.checked ? '0' : '1';
 				$.saveInfo({
-					url: '${ctx}/platform/access/menu/menuStatusEdit.json',
+					url: '${ctx}/platform/access/menu/menuStatusUpdate.json',
 					data: {id: $(data.elem).attr('data-id'), locked: locked, version: $(data.elem).attr('data-v')},
 					success: function (res) {
 						$("#tableList").refreshTable({

@@ -48,14 +48,15 @@
                 <nav class="nav navbar-nav">
                     <ul class="cl">
                     	<c:forEach items="${menus}" var="menu" varStatus="index">
-                    		<hy:permission alias="${menu.alias}">
-	                    		<li class="navbar-levelone <c:if test="${index.index ==0}">current</c:if>">
+                    		<%-- <hy:permission alias="${menu.alias}">
+	                    		
+	                       	</hy:permission> --%>
+	                       	<li class="navbar-levelone <c:if test="${index.index ==0}">current</c:if>">
 		                           <a href="javascript:;">
 		                              	<c:if test="${not empty menu.iconClass}">${menu.iconClass}</c:if>
 		                              	${menu.name}
 		                           </a>
 		                       	</li>
-	                       	</hy:permission>
                     	</c:forEach>
                     </ul>
                 </nav>
