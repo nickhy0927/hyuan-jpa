@@ -76,7 +76,7 @@
     <bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter">
         <property name="rolePrefix" value=""/>
     </bean>
-    <bean id="securityMetadataSource" class="com.iss.oauth.user.UrlFilterSecurityMetadataSource" init-method="loadResourceDefine">
+    <bean id="securityMetadataSource" class="com.iss.oauth.user.UrlFilterSecurityMetadataSource">
     	<property name="userService" ref="userServiceImpl" />
     </bean>
 </beans>

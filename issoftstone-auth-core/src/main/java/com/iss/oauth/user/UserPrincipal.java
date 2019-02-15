@@ -3,11 +3,12 @@ package com.iss.oauth.user;
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.iss.common.spring.SpringContextHolder;
 import com.iss.platform.access.user.service.UserService;
@@ -43,16 +44,16 @@ public class UserPrincipal extends User {
 	}
 	
 	public static com.iss.platform.access.user.entity.User getContextUser() {
-		if (request == null) {
-			return new com.iss.platform.access.user.entity.User();
+		try {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Object principal = authentication.getPrincipal();
+			UserDetails userDetails = (UserDetails) principal;
+			UserService userService = SpringContextHolder.getBean(UserService.class);
+			com.iss.platform.access.user.entity.User user = userService.findUserByLoginName(userDetails.getUsername());
+			return user;
+		} catch (Exception e) {
 		}
-		HttpSession session = request.getSession();
-		Object object = session.getAttribute("SPRING_SECURITY_CONTEXT");
-		SecurityContextImpl securityContextImpl = (SecurityContextImpl) object;
-		String username = securityContextImpl.getAuthentication().getName();
-		UserService userService = SpringContextHolder.getBean(UserService.class);
-		com.iss.platform.access.user.entity.User user = userService.findUserByLoginName(username);
-		return user;
+		return new com.iss.platform.access.user.entity.User();
 	}
 	
 }

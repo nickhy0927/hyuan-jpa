@@ -34,7 +34,7 @@ public class OperateLogInterceptor implements HandlerInterceptor {
             if (operateLog != null) {
             	OptLog log = new OptLog();
             	Map<String, Object> parameterMap = WebUtils.getRequestParamterToMap(request);
-            	log.setClazz(handlerMethod.getMethod().getDeclaringClass().getName() + "." + handlerMethod.getMethod().getName());
+            	log.setClazz(handlerMethod.getMethod().getDeclaringClass().getSimpleName() + "_" + handlerMethod.getMethod().getName());
             	log.setMessage(operateLog.message());
             	log.setOptType(operateLog.optType());
             	User user = UserPrincipal.getContextUser();
@@ -44,8 +44,8 @@ public class OperateLogInterceptor implements HandlerInterceptor {
             	String methodName = handlerMethod.getMethod().getName();
             	log.setMethod(methodName);
             	Class<?> service = operateLog.service();
-                Object bean = SpringContextHolder.getBean(service);
                 if (handlerMethod.getMethod().getName().toLowerCase().contains("delete")) {
+                	Object bean = SpringContextHolder.getBean(service);
                     Method method = bean.getClass().getMethod("get", new Class[] { Serializable.class });
                     String[] ids = request.getParameter("id").split(",");
 					List<Object> objects = new ArrayList<>();
@@ -61,13 +61,6 @@ public class OperateLogInterceptor implements HandlerInterceptor {
                 }
             	OptLogService optLogService = SpringContextHolder.getBean(OptLogService.class);
             	optLogService.saveEntity(log);
-            	if (handlerMethod.getMethod().getName().toLowerCase().contains("insert")) {
-            		Method method = bean.getClass().getMethod("insert", new Class[] { Object.class });
-            		Class<?>[] parameterTypes = method.getParameterTypes();
-            		for (Class<?> class1 : parameterTypes) {
-						System.out.println(class1.getName());
-					}
-				}
             }
         }
         return true;

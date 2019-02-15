@@ -15,7 +15,7 @@
                 form.on('submit(create-form)', function (data) {
                 	$.openLoading('正在保存数据，请稍等...');
                 	$.ajax({
-				    	url: '${ctx}/platform/access/menu/menuSave.json',//发送请求
+				    	url: '${ctx}/platform/access/menu/menuEditUpdate.json',//发送请求
 				    	data: $('form').getForm(),
 				    	success: function (res) {
 				    		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
@@ -30,7 +30,7 @@
                 });
                 $.ajax({
 			    	type: 'POST',
-			    	url: '${ctx}/platform/access/menu/menuEdit.json',//发送请求
+			    	url: '${ctx}/platform/access/menu/menuEditJson.json',//发送请求
 			    	data: {id : '${id}'},
 			    	dataType : "json",
 			    	success: function(res) {

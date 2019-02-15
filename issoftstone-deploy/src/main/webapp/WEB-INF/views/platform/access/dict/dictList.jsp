@@ -31,7 +31,7 @@
         	form.on('switch(enable)', function (data) {
 				var enable = this.checked ? '1' : '0';
 				$.saveInfo({
-					url: '${ctx}/platform/access/dict/dictStatusEdit.json',
+					url: '${ctx}/platform/access/dict/dictStatusUpdate.json',
 					data: {id: $(data.elem).attr('data-id'), enable: enable, version: $(data.elem).attr('data-v')},
 					success: function (res) {
 						$("#tableList").refreshTable({

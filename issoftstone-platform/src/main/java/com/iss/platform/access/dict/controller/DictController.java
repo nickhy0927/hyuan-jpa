@@ -39,75 +39,66 @@ public class DictController {
 		this.dictService = dictService;
 	}
 
-	@AccessAuthority(alias = "dict-save", name = "进入新增数据字典页面")
-	@RequestMapping(value = "/platform/access/dict/dictCreate.do", method = RequestMethod.GET)
+	@RequestMapping(name = "新增数据字典页面", value = "/platform/access/dict/dictCreate.do", method = RequestMethod.GET)
 	public String dictCreate(Model model) {
 		List<Dict> dictTypeList = dictService.queryDictByParentNull();
 		model.addAttribute("dictTypeList", dictTypeList);
 		model.addAttribute("dictCode", new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()));
 		return "platform/access/dict/dictCreate";
 	}
-	
-	@AccessAuthority(alias = "dict-edit", name = "进入新增数据字典页面")
-	@RequestMapping(value = "/platform/access/dict/dictEdit.do", method = RequestMethod.GET)
-	public String dictEdit(String id, Model model) {
-		model.addAttribute("id", id);
-		List<Dict> dictTypeList = dictService.queryDictByParentNull();
-		model.addAttribute("dictTypeList", dictTypeList);
-		return "platform/access/dict/dictEdit";
-	}
-	
-	@AccessAuthority(alias = "dict-list", name = "进入数据字典列表页面")
-	@RequestMapping(value = "/platform/access/dict/dictList.do", method = RequestMethod.GET)
-	public String dictList() {
-		return "platform/access/dict/dictList";
-	}
-	
+
 	@ResponseBody
-	@AccessAuthority(alias = "dict-save|dict-edit", name = "保存数据字典")
-	@OperateLog(message = "保存数据字典信息", method = "dictSave", optType = DataType.OptType.INSERT, service = DictService.class)
-	@RequestMapping(value = "/platform/access/dict/dictSave.json", method = RequestMethod.POST)
-	public MessageObject<Dict> dictSave(Dict dict) {
+	@OperateLog(message = "保存数据字典信息", optType = DataType.OptType.INSERT, service = DictService.class)
+	@RequestMapping(name = "保存数据字典信息", value = "/platform/access/dict/dictCreateSave.json", method = RequestMethod.POST)
+	public MessageObject<Dict> dictCreateSave(Dict dict) {
 		MessageObject<Dict> messageObject = MessageObject.getDefaultInstance();
 		try {
-			String id = dict.getId();
-			if (StringUtils.isNotEmpty(dict.getPid()) ) {
+			if (StringUtils.isNotEmpty(dict.getPid())) {
 				dict.setDict(dictService.get(dict.getPid()));
 			}
 			dict.setStatus(IsDelete.NO);
 			dictService.saveEntity(dict);
-			if (StringUtils.isEmpty(id)) {
-				messageObject.openTip("新增数据字典成功");
-			} else {
-				messageObject.openTip("修改数据字典成功");
-			}
+			messageObject.openTip("新增数据字典成功");
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			messageObject.openTip("操作出现异常，请稍后.");
 		}
 		return messageObject;
 	}
-	
+
 	@ResponseBody
-	@AccessAuthority(alias = "dict-save|dict-edit", name = "保存菜单信息")
-	@OperateLog(message = "更新数据字典状态信息", method = "dictStatusEdit", optType = DataType.OptType.INSERT, service = DictService.class)
-	@RequestMapping(value = "/platform/access/dict/dictStatusEdit.json", method = RequestMethod.POST)
-	public MessageObject<Menu> menuStatusEdit(Dict dict) {
-		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
+	@OperateLog(message = "删除数据字典信息", optType = DataType.OptType.DELETE, service = DictService.class)
+	@RequestMapping(name = "删除数据字典信息", value = "/platform/access/dict/dictDelete.json", method = RequestMethod.POST)
+	public MessageObject<Dict> dictDelete(String id) {
+		MessageObject<Dict> messageObject = MessageObject.getDefaultInstance();
 		try {
-			dictService.saveEntity(dict);
-			messageObject.openTip("数据字典" + AccessConstant.Enable.getName(dict.getEnable() ? "1" : "0") + "成功");
+			String[] ids = id.split(",");
+			List<Dict> dicts = Lists.newArrayList();
+			for (String dictId : ids) {
+				Dict dict = dictService.get(dictId);
+				dict.setStatus(IsDelete.YES);
+				dicts.add(dict);
+			}
+			dictService.saveBatch(dicts);
+			messageObject.openTip("删除数据字典成功", null);
 		} catch (ServiceException e) {
 			e.printStackTrace();
-			messageObject.openTip("数据字典" + AccessConstant.Enable.getName(dict.getEnable() ? "1" : "0") + "失败");
+			messageObject.error("删除数据字典异常");
 		}
 		return messageObject;
 	}
 
+	@RequestMapping(name = "新增数据字典页面", value = "/platform/access/dict/dictEdit.do", method = RequestMethod.GET)
+	public String dictEdit(String id, Model model) {
+		model.addAttribute("id", id);
+		List<Dict> dictTypeList = dictService.queryDictByParentNull();
+		model.addAttribute("dictTypeList", dictTypeList);
+		return "platform/access/dict/dictEdit";
+	}
+
 	@ResponseBody
-	@AccessAuthority(alias = "dict-edit", name = "修改数据字典")
-	@RequestMapping(value = "/platform/access/dict/dictEdit.json", method = RequestMethod.POST)
-	public MessageObject<Dict> dictEdit(String id) {
+	@RequestMapping(name = "查询数据字典详情", value = "/platform/access/dict/dictEditJson.json", method = RequestMethod.POST)
+	public MessageObject<Dict> dictEditJson(String id) {
 		MessageObject<Dict> messageObject = MessageObject.getDefaultInstance();
 		try {
 			Dict dict = dictService.get(id);
@@ -120,8 +111,31 @@ public class DictController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "dict-list", name = "数据字典列表")
-	@RequestMapping(value = "/platform/access/dict/dictList.json", method = { RequestMethod.POST })
+	@OperateLog(message = "保存数据字典信息", optType = DataType.OptType.INSERT, service = DictService.class)
+	@RequestMapping(name = "保存数据字典信息", value = "/platform/access/dict/dictEditUpdate.json", method = RequestMethod.POST)
+	public MessageObject<Dict> dictEditUpdate(Dict dict) {
+		MessageObject<Dict> messageObject = MessageObject.getDefaultInstance();
+		try {
+			if (StringUtils.isNotEmpty(dict.getPid())) {
+				dict.setDict(dictService.get(dict.getPid()));
+			}
+			dict.setStatus(IsDelete.NO);
+			dictService.saveEntity(dict);
+			messageObject.openTip("修改数据字典成功");
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.openTip("操作出现异常，请稍后.");
+		}
+		return messageObject;
+	}
+
+	@RequestMapping(name = "数据字典列表页面", value = "/platform/access/dict/dictList.do", method = RequestMethod.GET)
+	public String dictList() {
+		return "platform/access/dict/dictList";
+	}
+
+	@ResponseBody
+	@RequestMapping(name = "获取数据字典列表分页",value = "/platform/access/dict/dictList.json", method = { RequestMethod.POST })
 	public MessageObject<Dict> dictList(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
 		MessageObject<Dict> messageObject = MessageObject.getDefaultInstance();
@@ -135,9 +149,24 @@ public class DictController {
 		}
 		return messageObject;
 	}
-	
+
 	@ResponseBody
-	@AccessAuthority(alias = "dict-tree-list", name = "数据字典列表")
+	@OperateLog(message = "修改数据字典信息状态", optType = DataType.OptType.UPDATE, service = DictService.class)
+	@RequestMapping(name = "修改数据字典信息状态", value = "/platform/access/dict/dictStatusUpdate.json", method = RequestMethod.POST)
+	public MessageObject<Menu> dictStatusUpdate(Dict dict) {
+		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
+		try {
+			dictService.saveEntity(dict);
+			messageObject.openTip("数据字典" + AccessConstant.Enable.getName(dict.getEnable() ? "1" : "0") + "成功");
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.openTip("数据字典" + AccessConstant.Enable.getName(dict.getEnable() ? "1" : "0") + "失败");
+		}
+		return messageObject;
+	}
+
+	@ResponseBody
+	@AccessAuthority(alias = "dicttreelist", name = "数据字典列表")
 	@RequestMapping(value = "/platform/access/dict/dictTableList.json", method = { RequestMethod.POST })
 	public List<Dict> dictTableList(HttpServletRequest request) {
 		try {
@@ -148,30 +177,5 @@ public class DictController {
 			e.printStackTrace();
 		}
 		return Lists.newArrayList();
-	}
-
-	@ResponseBody
-	@AccessAuthority(alias = "dict-delete", name = "删除数据字典信息")
-	@OperateLog(message = "删除数据字典信息", method = "dictDelete", optType = DataType.OptType.DELETE, service = DictService.class)
-	@RequestMapping(value = "/platform/access/dict/dictDelete.json", method = RequestMethod.POST)
-	public MessageObject<Dict> dictDelete(String id) {
-		MessageObject<Dict> messageObject = MessageObject.getDefaultInstance();
-		try {
-			String[] ids = id.split(",");
-			if (ids.length > 0) {
-				List<Dict> dicts = Lists.newArrayList();
-				for (String string : ids) {
-					Dict dict = dictService.get(string);
-					dict.setStatus(IsDelete.YES);
-					dicts.add(dict);
-				}
-				dictService.saveBatch(dicts);
-				messageObject.openTip("删除数据字典成功", null);
-			}
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			messageObject.error("删除数据字典异常");
-		}
-		return messageObject;
 	}
 }

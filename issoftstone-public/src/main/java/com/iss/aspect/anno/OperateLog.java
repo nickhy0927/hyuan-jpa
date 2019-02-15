@@ -14,11 +14,9 @@ public @interface OperateLog {
 
 	String message();
 
-	String method() default "";
-
 	int optType();
 	
-	Class<?> service();
+	Class<?> service() default Object.class;
 	
 }
 

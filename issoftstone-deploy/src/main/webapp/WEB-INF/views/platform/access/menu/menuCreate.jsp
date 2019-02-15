@@ -35,7 +35,6 @@
                 templateResult: formatRepo,
                 templateSelection: formatRepoSelection,
                 escapeMarkup: function (markup) {
-                    console.log('escapeMarkup== ', markup)
                     return markup;
                 }
             })
@@ -61,7 +60,7 @@
                 form.on('submit(create-form)', function (data) {
                     console.log($('form').getForm());
                 	$.saveInfo({
-                		url: '${ctx}/platform/access/menu/menuSave.json',//发送请求
+                		url: '${ctx}/platform/access/menu/menuCreateSave.json',//发送请求
 				    	data: data.field,
 				    	success: function(result) {
 	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
@@ -76,7 +75,7 @@
                 });
                 $.ajax({
                 	type: "GET",
-                    url: "${ctx}/platform/access/menu/menuCreate.json",
+                    url: "${ctx}/platform/access/menu/menuCreateJson.json",
                     contentType: "application/json; charset=utf-8",
                     data: {},
                     success: function(res) {

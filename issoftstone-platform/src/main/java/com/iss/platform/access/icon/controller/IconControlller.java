@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.iss.aspect.anno.OperateLog;
-import com.iss.common.anno.AccessAuthority;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.PageSupport;
@@ -38,17 +38,21 @@ public class IconControlller {
 		this.iconService = iconService;
 	}
 
+	@RequestMapping(name = "图标新增页面", value = "/platform/access/icon/iconCreate.do", method = RequestMethod.GET)
+	public String iconCreate() {
+		return "platform/access/icon/create";
+	}
+
 	@ResponseBody
-	@AccessAuthority(alias = "icon-save", name = "新增图标信息")
-	@OperateLog(message = "新增图标信息", method = "iconSave", optType = DataType.OptType.INSERT, service = IconService.class)
-	@RequestMapping(value = "/platform/access/icon/iconSave.json", method = RequestMethod.POST)
-	public MessageObject<Icon> iconSave(Icon icon) {
+	@OperateLog(message = "保存图标请求", optType = DataType.OptType.INSERT, service = IconService.class)
+	@RequestMapping(name = "保存图标请求", value = "/platform/access/icon/iconCreateSave.json", method = RequestMethod.POST)
+	public MessageObject<Icon> iconCreateSave(Icon icon) {
 		MessageObject<Icon> messageObject = MessageObject.getDefaultInstance();
 		try {
 			icon.setIconClass("<i class=\"Hui-iconfont " + icon.getClassName() + "\"></i> ");
 			icon.setStatus(IsDelete.NO);
 			iconService.saveEntity(icon);
-			messageObject.openTip("新增图标信息成功", null);
+			messageObject.openTip("新增图标成功", null);
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
@@ -56,25 +60,86 @@ public class IconControlller {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "icon-update", name = "修改图标信息")
-	@OperateLog(message = "新增图标信息", method = "iconUpdate", optType = DataType.OptType.UPDATE, service = IconService.class)
-	@RequestMapping(value = "/platform/access/icon/iconUpdate.json", method = RequestMethod.POST)
-	public MessageObject<Icon> iconUpdate(Icon icon) {
+	@OperateLog(message = "删除图标", optType = DataType.OptType.DELETE, service = IconService.class)
+	@RequestMapping(name = "删除图标", value = "/platform/access/icon/iconDelete.json", method = RequestMethod.POST)
+	public MessageObject<Icon> iconDelete(String id) {
+		MessageObject<Icon> messageObject = MessageObject.getDefaultInstance();
+		try {
+			String[] ids = id.split(",");
+			List<Icon> icons = Lists.newArrayList();
+			for (String string : ids) {
+				Icon icon = iconService.get(string);
+				icon.setStatus(IsDelete.YES);
+				icons.add(icon);
+			}
+			iconService.saveBatch(icons);
+			messageObject.openTip("删除图标成功", null);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.error("删除图标异常");
+		}
+		return messageObject;
+	}
+
+	@RequestMapping(name = "图标修改页面", value = "/platform/access/icon/iconEdit.do", method = RequestMethod.GET)
+	public String iconEdit(String id, Model model) {
+		model.addAttribute("id", id);
+		return "platform/access/icon/edit";
+	}
+
+	@ResponseBody
+	@RequestMapping(name = "查询图标详情", value = "/platform/access/icon/iconEditJson.json", method = RequestMethod.POST)
+	public MessageObject<Icon> iconEditJson(String id) {
+		MessageObject<Icon> messageObject = MessageObject.getDefaultInstance();
+		try {
+			Icon icon = iconService.get(id);
+			messageObject.ok("修改查询图标成功", icon);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.error("修改查询图标异常");
+		}
+		return messageObject;
+	}
+
+	@ResponseBody
+	@OperateLog(message = "修改图标", optType = DataType.OptType.UPDATE, service = IconService.class)
+	@RequestMapping(value = "/platform/access/icon/iconEditUpdate.json", method = RequestMethod.POST)
+	public MessageObject<Icon> iconEditUpdate(Icon icon) {
 		MessageObject<Icon> messageObject = MessageObject.getDefaultInstance();
 		try {
 			icon.setIconClass("<i class=\"Hui-iconfont " + icon.getClassName() + "\"></i> ");
 			icon.setStatus(IsDelete.NO);
 			iconService.saveEntity(icon);
-			messageObject.openTip("修改图标信息成功");
+			messageObject.openTip("修改图标成功");
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
 		return messageObject;
 	}
 
+	@RequestMapping(name = "图标列表页面", value = "/platform/access/icon/iconList.do", method = RequestMethod.GET)
+	public String iconList() {
+		return "platform/access/icon/list";
+	}
+
 	@ResponseBody
-	@AccessAuthority(alias = "queryIconList", name = "获取所有图标信息")
-	@RequestMapping(value = "/platform/access/icon/queryIconList.json", method = RequestMethod.GET)
+	@RequestMapping(name = "获取图标列表分页", value = "/platform/access/icon/iconList.json", method = { RequestMethod.POST })
+	public MessageObject<Icon> iconList(HttpServletRequest request, PageSupport support) {
+		Map<String, Object> map = WebUtils.getRequestToMap(request);
+		MessageObject<Icon> messageObject = MessageObject.getDefaultInstance();
+		try {
+			map.put("status_eq", IsDelete.NO);
+			PagerInfo<Icon> tools = iconService.queryPageByMap(map, support);
+			messageObject.ok("查询图标成功", tools);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.error("查询图标异常");
+		}
+		return messageObject;
+	}
+
+	@ResponseBody
+	@RequestMapping(name = "获取所有的图标", value = "/platform/access/icon/queryIconList.json", method = RequestMethod.GET)
 	public Map<String, Object> queryIconList(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> paramMap = WebUtils.getRequestToMap(request);
 		Map<String, Object> maps = Maps.newConcurrentMap();
@@ -85,62 +150,5 @@ public class IconControlller {
 		maps.put("total_count", pagerInfo.getTotals());
 		maps.put("results", pagerInfo.getContent());
 		return maps;
-	}
-
-	@ResponseBody
-	@AccessAuthority(alias = "icon-edit", name = "修改图标信息")
-	@RequestMapping(value = "/platform/access/icon/edit.json", method = RequestMethod.POST)
-	public MessageObject<Icon> iconEdit(String id) {
-		MessageObject<Icon> messageObject = MessageObject.getDefaultInstance();
-		try {
-			Icon icon = iconService.get(id);
-			messageObject.ok("修改查询图标信息成功", icon);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			messageObject.error("修改查询图标信息异常");
-		}
-		return messageObject;
-	}
-
-	@ResponseBody
-	@AccessAuthority(alias = "icon-list", name = "图标列表")
-	@RequestMapping(value = "/platform/access/icon/list.json", method = { RequestMethod.POST })
-	public MessageObject<Icon> iconList(HttpServletRequest request, PageSupport support) {
-		Map<String, Object> map = WebUtils.getRequestToMap(request);
-		MessageObject<Icon> messageObject = MessageObject.getDefaultInstance();
-		try {
-			map.put("status_eq", IsDelete.NO);
-			PagerInfo<Icon> tools = iconService.queryPageByMap(map, support);
-			messageObject.ok("查询图标信息成功", tools);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			messageObject.error("查询图标信息异常");
-		}
-		return messageObject;
-	}
-
-	@ResponseBody
-	@AccessAuthority(alias = "icon-delete", name = "删除图标信息")
-	@OperateLog(message = "删除图标信息", method = "delete", optType = DataType.OptType.DELETE, service = IconService.class)
-	@RequestMapping(value = "/platform/access/icon/iconDelete.json", method = RequestMethod.POST)
-	public MessageObject<Icon> iconDelete(String id) {
-		MessageObject<Icon> messageObject = MessageObject.getDefaultInstance();
-		try {
-			String[] ids = id.split(",");
-			if (ids.length > 0) {
-				List<Icon> icons = Lists.newArrayList();
-				for (String string : ids) {
-					Icon icon = iconService.get(string);
-					icon.setStatus(IsDelete.YES);
-					icons.add(icon);
-				}
-				iconService.saveBatch(icons);
-				messageObject.openTip("删除图标信息成功", null);
-			}
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			messageObject.error("删除图标信息异常");
-		}
-		return messageObject;
 	}
 }

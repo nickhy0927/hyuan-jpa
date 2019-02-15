@@ -9,41 +9,39 @@
 </hy:extends>
 <hy:extends name="javascript">
 	<script type="text/javascript">
-		$(function () {
+		layui.use(['form', 'tree', 'laydate'], function () {
 			$("body").css({
 				'overflow':'auto'
 			})
-			layui.use(['form', 'tree', 'laydate'], function () {
-                var form = layui.form;
-                //监听提交
-                form.on('submit(create-form)', function (data) {    
-                	$.saveInfo({
-                		url: '${ctx}/platform/access/role/save.json',//发送请求
-				    	data: $('form').getForm(),
-				    	loadMsg: '正在保存角色信息，请稍等...', 
-				    	success: function (res) {
-				    		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-		    				parent.layer.close(index); //再执行关闭
-		    				window.parent.refresh();
-						}
-                	})
-                	return false;
-                });
-                $.ajax({
-			    	url: '${ctx}/platform/access/role/roleEdit.json',//发送请求
-			    	data: {id : '${id}'},
-			    	success: function(res) {
-			    		form.val("edit-form", {
-		    			  	"id": res.content['id'],
-		    			  	"name": res.content['name'],
-		    			  	"version": res.content['version'],
-		    			  	"code": res.content['code'],
-		    			  	"remark": res.content['remark'],
-		    			})
-			    	}
-                });
-            });
-		})
+	        var form = layui.form;
+	        //监听提交
+	        form.on('submit(create-form)', function (data) {    
+	        	$.saveInfo({
+	        		url: '${ctx}/platform/access/role/roleEditUpdate.json',//发送请求
+			    	data: $('form').getForm(),
+			    	loadMsg: '正在保存角色，请稍等...', 
+			    	success: function (res) {
+			    		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+	    				parent.layer.close(index); //再执行关闭
+	    				window.parent.refresh();
+					}
+	        	})
+	        	return false;
+	        });
+	        $.ajax({
+		    	url: '${ctx}/platform/access/role/roleEditJson.json',//发送请求
+		    	data: {id : '${id}'},
+		    	success: function(res) {
+		    		form.val("edit-form", {
+	    			  	"id": res.content['id'],
+	    			  	"name": res.content['name'],
+	    			  	"version": res.content['version'],
+	    			  	"code": res.content['code'],
+	    			  	"remark": res.content['remark'],
+	    			})
+		    	}
+	        });
+	    });
 		
 		function reset() {
             layui.use('form', function () {

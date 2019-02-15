@@ -13,7 +13,7 @@
                 var form = layui.form;
                 form.on('submit(create-form)', function (data) {    
                 	$.ajax({
-                		url: '${ctx}/platform/access/icon/iconSave.json',//发送请求
+                		url: '${ctx}/platform/access/icon/iconCreateSave.json',//发送请求
 				    	data: $('form').getForm(),
 				    	openType: 'alert',
 				    	success: function(result) {

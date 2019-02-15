@@ -1,5 +1,7 @@
 package com.iss.platform.access.role.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,13 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Lists;
 import com.iss.aspect.anno.OperateLog;
-import com.iss.common.anno.AccessAuthority;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.PageSupport;
@@ -37,87 +39,23 @@ import com.iss.platform.access.role.service.RoleService;
 public class RoleController {
 	private static Logger logger = LoggerFactory.getLogger(RoleController.class);
 
-	private final RoleService roleService;
-
 	private final MenuService menuService;
+
+	private final RoleService roleService;
 
 	@Autowired
 	public RoleController(RoleService roleService, MenuService menuService) {
 		this.roleService = roleService;
 		this.menuService = menuService;
 	}
-
-	@ResponseBody
-	@AccessAuthority(alias = "role-create", name = "新增角色")
-	@RequestMapping(value = "/platform/access/role/create.json", method = RequestMethod.GET)
-	public MessageObject<Role> roleCreate() {
-		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
-		try {
-			List<Role> list = roleService.findAll();
-			messageObject.ok("查询新增角色信息", list);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			messageObject.error("进入新增菜单异常");
-		}
-		return messageObject;
-	}
-
-	@ResponseBody
-	@AccessAuthority(alias = "role-save|role-edit", name = "保存角色")
-	@OperateLog(message = "新增角色信息", method = "save", optType = DataType.OptType.INSERT, service = RoleService.class)
-	@RequestMapping(value = "/platform/access/role/save.json", method = RequestMethod.POST)
-	public MessageObject<Role> roleSave(Role role) {
-		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
-		try {
-			String id = role.getId();
-			role.setStatus(IsDelete.NO);
-			roleService.saveEntity(role);
-			if (StringUtils.isEmpty(id)) {
-				messageObject.openTip("新增角色成功");
-			} else messageObject.openTip("修改角色成功");
-			
-		} catch (ServiceException e) {
-			e.printStackTrace();
-		}
-		return messageObject;
-	}
-	@ResponseBody
-	@AccessAuthority(alias = "role-menu-save", name = "保存角色")
-	@OperateLog(message = "新增角色信息", method = "save", optType = DataType.OptType.INSERT, service = RoleService.class)
-	@RequestMapping(value = "/platform/access/role/roleMenuSave.json", method = RequestMethod.POST)
-	public MessageObject<Role> roleMenuSave(String roleId, String menuIds) {
-		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
-		try {
-			Role role = roleService.get(roleId);
-			List<Menu> menus = Lists.newArrayList();
-			String[] split = menuIds.split(",");
-			for (String menuId : split) menus.add(menuService.get(menuId));
-			role.setMenus(menus);
-			roleService.saveEntity(role);
-			messageObject.openTip("保存权限信息成功");
-		} catch (ServiceException e) {
-			e.printStackTrace();
-		}
-		return messageObject;
-	}
-
-	@ResponseBody
-	@AccessAuthority(alias = "role-edit", name = "获取角色信息")
-	@RequestMapping(value = "/platform/access/role/roleEdit.json", method = RequestMethod.POST)
-	public MessageObject<Role> roleEdit(String id) {
-		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
-		try {
-			messageObject.ok("获取角色成功", roleService.get(id));
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			messageObject.error("获取角色异常");
-		}
-		return messageObject;
-	}
 	
+	@RequestMapping(name = "角色新增页面", value = "/platform/access/role/roleCreate.do", method = RequestMethod.GET)
+	public String create(Model model) {
+		model.addAttribute("code", new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()));
+		return "platform/access/role/roleCreate";
+	}
 	@ResponseBody
-	@AccessAuthority(alias = "role-edit", name = "获取菜单信息")
-	@RequestMapping(value = "/platform/access/menu/menuTreeList.json", method = RequestMethod.GET)
+	@RequestMapping(name = "获取菜单树", value = "/platform/access/menu/menuTreeList.json", method = RequestMethod.GET)
 	public List<Ztree> menuTreeList(String id) {
 		Role role = roleService.get(id);
 		List<Menu> menus = role != null ? role.getMenus() : Lists.newArrayList();
@@ -125,27 +63,42 @@ public class RoleController {
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "role-list", name = "角色列表")
-	@RequestMapping(value = "/platform/access/role/list.json", method = { RequestMethod.POST })
-	public MessageObject<Role> roleList(HttpServletRequest request, PageSupport support) {
-		Map<String, Object> map = WebUtils.getRequestToMap(request);
+	@RequestMapping(name = "新增角色", value = "/platform/access/role/roleCreate.json", method = RequestMethod.GET)
+	public MessageObject<Role> roleCreateJson() {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
 		try {
-			map.put("status_eq", IsDelete.NO);
-			PagerInfo<Role> pagerInfo = roleService.queryPageByMap(map, support);
-			messageObject.ok("查询角色成功", pagerInfo);
+			List<Role> list = roleService.findAll();
+			messageObject.ok("查询新增角色", list);
 		} catch (ServiceException e) {
 			e.printStackTrace();
-			messageObject.error("查询角色异常");
-			logger.error(e.getMessage());
+			messageObject.error("新增菜单异常");
 		}
 		return messageObject;
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "role-delete", name = "删除角色")
-	@OperateLog(message = "删除角色信息", method = "delete", optType = DataType.OptType.DELETE, service = RoleService.class)
-	@RequestMapping(value = "/platform/access/role/roleDetete.json", method = { RequestMethod.POST })
+	@OperateLog(message = "保存角色", optType = DataType.OptType.INSERT, service = RoleService.class)
+	@RequestMapping(value = "/platform/access/role/roleCreateSave.json", method = RequestMethod.POST)
+	public MessageObject<Role> roleCreateSave(Role role) {
+		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
+		try {
+			String id = role.getId();
+			role.setStatus(IsDelete.NO);
+			roleService.saveEntity(role);
+			if (StringUtils.isEmpty(id)) {
+				messageObject.openTip("新增角色成功");
+			} else
+				messageObject.openTip("修改角色成功");
+
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		return messageObject;
+	}
+
+	@ResponseBody
+	@OperateLog(message = "删除角色", optType = DataType.OptType.DELETE, service = RoleService.class)
+	@RequestMapping(name = "删除角色", value = "/platform/access/role/roleDetete.json", method = { RequestMethod.POST })
 	public MessageObject<Role> roleDetete(String id) {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -166,6 +119,82 @@ public class RoleController {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 			messageObject.error("删除角色异常");
+		}
+		return messageObject;
+	}
+
+	@RequestMapping(name = "角色修改页面", value = "/platform/access/role/roleEdit.do", method = RequestMethod.GET)
+	public String roleEdit(String id, Model model) {
+		model.addAttribute("id", id);
+		return "platform/access/role/roleEdit";
+	}
+
+	@ResponseBody
+	@RequestMapping(name = "获取角色", value = "/platform/access/role/roleEditJson.json", method = RequestMethod.POST)
+	public MessageObject<Role> roleEditJson(String id) {
+		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
+		try {
+			messageObject.ok("获取角色成功", roleService.get(id));
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.error("获取角色异常");
+		}
+		return messageObject;
+	}
+
+	@ResponseBody
+	@OperateLog(message = "修改角色", optType = DataType.OptType.UPDATE, service = RoleService.class)
+	@RequestMapping(value = "/platform/access/role/roleEditUpdate.json", method = RequestMethod.POST)
+	public MessageObject<Role> roleEditUpdate(Role role) {
+		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
+		try {
+			role.setStatus(IsDelete.NO);
+			roleService.saveEntity(role);
+			messageObject.openTip("修改角色成功");
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		return messageObject;
+	}
+
+	@RequestMapping(name = "角色列表页面", value = "/platform/access/role/roleList.do")
+	public String roleList() {
+		return "platform/access/role/roleList";
+	}
+
+	@ResponseBody
+	@RequestMapping(name = "获取角色列表分页", value = "/platform/access/role/roleList.json", method = { RequestMethod.POST })
+	public MessageObject<Role> roleList(HttpServletRequest request, PageSupport support) {
+		Map<String, Object> map = WebUtils.getRequestToMap(request);
+		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
+		try {
+			map.put("status_eq", IsDelete.NO);
+			PagerInfo<Role> pagerInfo = roleService.queryPageByMap(map, support);
+			messageObject.ok("查询角色成功", pagerInfo);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.error("查询角色异常");
+			logger.error(e.getMessage());
+		}
+		return messageObject;
+	}
+
+	@ResponseBody
+	@OperateLog(message = "保存角色菜单", optType = DataType.OptType.INSERT, service = RoleService.class)
+	@RequestMapping(name = "保存角色菜单", value = "/platform/access/role/roleMenuSave.json", method = RequestMethod.POST)
+	public MessageObject<Role> roleMenuSave(String roleId, String menuIds) {
+		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
+		try {
+			Role role = roleService.get(roleId);
+			List<Menu> menus = Lists.newArrayList();
+			String[] split = menuIds.split(",");
+			for (String menuId : split)
+				menus.add(menuService.get(menuId));
+			role.setMenus(menus);
+			roleService.saveEntity(role);
+			messageObject.openTip("保存权限成功");
+		} catch (ServiceException e) {
+			e.printStackTrace();
 		}
 		return messageObject;
 	}
