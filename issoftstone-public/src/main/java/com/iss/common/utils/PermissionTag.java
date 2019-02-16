@@ -1,5 +1,6 @@
 package com.iss.common.utils;
 
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.jsp.JspException;
@@ -22,13 +23,12 @@ public class PermissionTag extends BodyTagSupport {
 	@Override
 	public int doStartTag() throws JspException {
 		boolean result = false;
-		System.out.println(alias);
 		// 用户登录时，取出所属的按钮id，存放在session中
 		String loginName = InitEnvironment.getCurrentLoginName();
-		Set<String> operationCodes = InitEnvironment.getPermissionSet(loginName);
-		System.out.println(operationCodes.size());
-		for (String string : operationCodes) {
-			System.out.println(string);
+		Map<String, String> operationCodes = InitEnvironment.getPermissionSet(loginName);
+		Set<String> keys = operationCodes.keySet();
+		for (String key : keys) {
+			String string = operationCodes.get(key);
 			if (StringUtils.equals(alias, string)) {
 				result = true;
 				break;

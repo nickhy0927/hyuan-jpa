@@ -247,7 +247,33 @@ $(document).ready(function () {
 	    // 布尔值，表示浏览器是否缓存被请求页面。默认是 true。
 	    cache: false,
 	    // 规定请求的字符集。
-	    scriptCharset: "UTF-8"
+	    scriptCharset: "UTF-8",
+	    error: function(jqXHR, textStatus, errorThrown){  
+            switch (jqXHR.status){  
+                case(500):  
+	                $.openTip('服务器系统内部错误', function() {
+	    				_closeLoading();
+		    		});
+                    break;  
+                case(401):  
+                	$.openTip('未登录，刷新后重新登录', function() {
+	    				_closeLoading();
+		    		}); 
+                    break;  
+                case(403):  
+	                $.openTip('无权限执行此操作', function() {
+	    				_closeLoading();
+		    		});
+                    break;  
+                case(408):  
+                	$.openTip('请求超时，请稍后再试', function() {
+	    				_closeLoading();
+		    		});
+                    break;  
+                default:  
+                    alert("未知错误");  
+            }  
+        }
 	});
     $(document).ajaxStart(function () {
     }).ajaxSend(function(e,xhr,opt){
@@ -257,10 +283,7 @@ $(document).ready(function () {
     	if (res.code != 1 && res.code != 2) {
     		_closeLoading();
     	}
-    }).ajaxError(function () {
-        $.closeLoading();
-        console.log('全局错误处理...');
-    })
+    });
     $.extend({
 		openWindow : _openWindow,
 		openTip: _openTip,

@@ -11,6 +11,7 @@
     <security:http pattern="/static/**" security="none"/>
     <security:http pattern="/assets/**" security="none"/>
     <security:http pattern="/druid/**" security="none"/>
+    <security:http pattern="/unauth.do" security="none"/>
     <security:http pattern="/auth/authCode.image" security="none"/>
     <security:http pattern="/login.jsp" security="none"/>
     <security:http pattern="/user/login.json" security="none"/>
@@ -24,13 +25,12 @@
         <security:form-login
                 login-page="/login.jsp"
                 default-target-url="/index.do"
-                authentication-failure-url="/login.jsp?error=1"
                 password-parameter="password"
                 username-parameter="username"
                 always-use-default-target="true"/>
         <!-- 增加一个filter，这点与Acegi是不一样的，不能修改默认的filter了，这个filter位于FILTER_SECURITY_INTERCEPTOR之前 -->  
-		<security:custom-filter ref="interceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
-        <!-- <security:intercept-url pattern="/**" access="hasRole('ADMIN')"/> -->
+		<!-- <security:custom-filter ref="interceptor" before="FILTER_SECURITY_INTERCEPTOR"/> -->
+        <security:intercept-url pattern="/**" access="@rbacService.hasPermission(request, authentication)"/>
         <security:csrf disabled="true"/>
         <security:logout delete-cookies="JSESSIONID" invalidate-session="true"/>
         <security:expression-handler ref="webexpressionHandler"/>
@@ -65,18 +65,5 @@
     <!-- 盐值加密 salt对应数据库字段-->
     <bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
         <property name="userPropertyToUse" value="salt" />
-    </bean>
-    <bean id="accessDecisionManager" class="com.iss.oauth.user.UrlAccessDecisionManager" />
-    <bean id="interceptor" class="com.iss.oauth.user.UrlFilterSecurityInterceptor">
-    	<property name="authenticationManager" ref="authenticationManager" />
-    	<property name="accessDecisionManager" ref="accessDecisionManager" />
-    	<property name="securityMetadataSource" ref="securityMetadataSource" />
-    </bean>
-    <!--角色投票器 -->
-    <bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter">
-        <property name="rolePrefix" value=""/>
-    </bean>
-    <bean id="securityMetadataSource" class="com.iss.oauth.user.UrlFilterSecurityMetadataSource">
-    	<property name="userService" ref="userServiceImpl" />
     </bean>
 </beans>

@@ -34,6 +34,11 @@ public class JobLogController {
 		return "platform/system/joblog/jobLogList";
 	}
 	
+	@RequestMapping(name = "调度任务日志详情页面", value = "/platform/system/jobLog/jobLogView.do", method = RequestMethod.GET)
+	public String jobLogView() {
+		return "platform/system/joblog/jobLogView";
+	}
+	
 	@ResponseBody
 	@RequestMapping(name = "查看调度任务日志详情", value = "/platform/system/jobLog/jobLogView.json", method = RequestMethod.POST)
 	public MessageObject<JobLog> jobLogView(String id) {

@@ -11,7 +11,7 @@
                 //监听提交
                 form.on('submit(edit-form)', function (data) {
                 	$.saveInfo({
-                		url: '${ctx}/platform/access/dict/dictSave.json',//发送请求
+                		url: '${ctx}/platform/access/autoTask/autoTaskEditUpdate.json',//发送请求
 				    	data: $('form').getForm(),
 				    	success: function(result) {
 	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
@@ -22,7 +22,7 @@
                 	return false;
                 });
                 $.ajax({
-			    	url: '${ctx}/platform/access/dict/dictEdit.json',//发送请求
+			    	url: '${ctx}/platform/access/autoTask/autoTaskEditJson.json',//发送请求
 			    	data: {id : '${id}'},
 			    	success: function(res) {
 			    		form.val("edit-form", {
@@ -30,11 +30,7 @@
 		    			  	"dictCode": res.content['dictCode'],
 		    			  	"dictName": res.content['dictName'],
 		    			  	"dictType": res.content['dictType'],
-		    			  	"dictValue": res.content['dictValue'],
-		    			  	"pid": res.content['dict'] ? res.content['dict'].id : '',
-		    			  	"version": res.content['version'],
-		    			  	"enable": res.content['enable'],
-		    			  	"remarks": res.content['remarks'],
+		    			  	"dictValue": res.content['dictValue']
 		    			})
 			    	}
                 });

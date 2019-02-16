@@ -57,8 +57,6 @@ public class JobLogAspect {
 			result = point.proceed();
 			log.setExcuteStatus(Boolean.TRUE);
 		} catch (Throwable e) {
-			// 记录日志
-			System.out.println(methodName + "()方法异常：" + e);
 			// 打印堆栈信息
 			e.printStackTrace();
 			// 设置返回信息

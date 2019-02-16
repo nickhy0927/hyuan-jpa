@@ -61,7 +61,7 @@
 						return '<input data-v=' + d.version + ' ' + checked + ' data-id=' + d.id + ' type="checkbox" lay-skin="switch" lay-filter="enable" lay-text="停用|启用">';
 					}},
                     { field: "remarks",  title: "字典描述", align: "left", minWidth: 160},
-                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 120, unresize: true}
+                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 110, unresize: true}
                 ]],
                 operate: {
                 	editAction: function (tableInstance, data) {
@@ -130,7 +130,7 @@
 	    	{{# if(d.dict != null) { }}
     			<a class="btn btn-secondary-outline radius size-S" lay-event="editAction">
 		        	<i class="Hui-iconfont Hui-iconfont-edit"></i>
-		        </a>&nbsp;&nbsp;
+		        </a>
 		        <a class="btn btn-danger-outline radius size-S" lay-event="delAction">
 		        	<i class="Hui-iconfont Hui-iconfont-del2"></i>
 		        </a>

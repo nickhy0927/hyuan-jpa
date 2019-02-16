@@ -26,8 +26,7 @@ public class IndexController {
      * 进入首页
      * @return
      */
-    @AccessAuthority(alias = "index", name = "主页")
-    @RequestMapping(value = "index.do", method = RequestMethod.GET)
+    @RequestMapping(name = "主页", value = "index.do", method = RequestMethod.GET)
     public String index(Model model) {
     	List<MenuTree> menuTrees = menuService.queryMenuTree();
     	model.addAttribute("menus", menuTrees);
