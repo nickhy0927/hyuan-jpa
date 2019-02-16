@@ -17,13 +17,13 @@
                 url: "${ctx}/platform/access/menu/menuList.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
-                    { field: "name", title: '菜单名称', width: 200, fixed: "left", unresize: true},
+                    { field: "name", title: '菜单名称', width: 260, fixed: "left", unresize: true},
                     { field: "alias",  title: "菜单别名", width: 200, fixed: "left", unresize: true},
-                    { field: "parentName", title: "上级菜单", width: 120, unresize: true},
+                    { field: "parentName", title: "上级菜单", width: 220, unresize: true},
                     { title: "图标", width: 80, unresize: true, align: 'center', templet: function (d) {
 						return d.icon ? d.icon.iconClass : "";
 					}},
-                    { field: "url", title: "访问地址",minWidth: 200},
+                    { field: "url", title: "访问地址",minWidth: 380},
                     { field: "localCode", title: "国际化编码", minWidth: 160},
                     { field: "enable",  title: "启用", width: 110, align: 'center', templet: function (d) {
 						var checked = d.enable == 1 ? "checked='checked'" : "";
@@ -33,7 +33,7 @@
 						var checked = d.locked == 0 ? "checked='checked'" : "";
 						return '<input data-v=' + d.version + ' ' + checked+ ' data-id=' + d.id + ' type="checkbox" lay-skin="switch" lay-filter="locked" lay-text="锁定|解锁">';
 					}},
-                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 120, unresize: true}
+                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 130, unresize: true}
                 ]],
                 operate: {
                 	editAction: function (tableInstance, data) {
@@ -147,21 +147,20 @@
     	<table id="tableList" lay-filter="tableList"></table>
 	    <div style="display:none" class="layui-btn-container" id="tableBar">
 	        <button class="	btn btn-primary radius" lay-event="createAction">
-	        	<i class="Hui-iconfont Hui-iconfont-add2"></i>新增
+	        	<i class="Hui-iconfont Hui-iconfont-add2"></i>新增菜单
 	        </button>
 	        <button class="btn btn-danger radius" lay-event="deleteAction">
 	        	<i class="Hui-iconfont Hui-iconfont-del2"></i>批量删除
 	        </button>
 	        <button class="btn btn-success radius" lay-event="searchAction">
-	        	<i class="Hui-iconfont Hui-iconfont-search"></i>   
-        		搜索
+	        	<i class="Hui-iconfont Hui-iconfont-search"></i>搜索
         	</button>
 	    </div>
 	    <div style="display:none" id="operateBar">
-	        <a class="btn btn-secondary-outline radius size-S" lay-event="editAction">
+	        <a class="btn btn-secondary-outline radius" lay-event="editAction">
 	        	<i class="Hui-iconfont Hui-iconfont-edit"></i>
-	        </a>&nbsp;&nbsp;
-	        <a class="btn btn-danger-outline radius size-S" lay-event="delAction">
+	        </a>
+	        <a class="btn btn-danger-outline radius" lay-event="delAction">
 	        	<i class="Hui-iconfont Hui-iconfont-del2"></i>
 	        </a>
 	    </div>

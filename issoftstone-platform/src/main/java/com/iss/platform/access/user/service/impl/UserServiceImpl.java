@@ -118,8 +118,8 @@ public class UserServiceImpl extends BaseCustomService<User, String> implements 
 	}
 	
 	@Override
-	public List<Menu> queryMenuList(String id) {
-		return userDao.queryMenuList(id);
+	public List<Menu> queryMenuList(String username) {
+		return userDao.queryMenuList(username);
 	}
 
 	@Override

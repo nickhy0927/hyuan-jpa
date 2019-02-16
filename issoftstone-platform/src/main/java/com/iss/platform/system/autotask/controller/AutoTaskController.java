@@ -38,26 +38,10 @@ public class AutoTaskController {
 		return "platform/system/autotask/autoTaskCreate";
 	}
 
-	@RequestMapping(name = "修改调度任务页面", value = "/platform/system/autotask/autoTaskEdit.do", method = RequestMethod.GET)
-	public String autoTaskEdit(String id, Model model) {
-		model.addAttribute("id", id);
-		return "platform/system/autotask/autoTaskEdit";
-	}
-
-	@RequestMapping(name = "调度任务列表页面", value = "/platform/system/autotask/autoTaskList.do", method = RequestMethod.GET)
-	public String autoTaskList() {
-		return "platform/system/autotask/autoTaskList";
-	}
-
-	@RequestMapping(name = "查看调度任务详情", value = "/platform/system/autotask/autoTaskView.do", method = RequestMethod.GET)
-	public String autoTaskView() {
-		return "platform/system/autotask/autoTaskView";
-	}
-
 	@ResponseBody
 	@OperateLog(message = "保存调度任务", optType = DataType.OptType.INSERT, service = AutoTaskService.class)
-	@RequestMapping(name = "保存调度任务", value = "/platform/access/autoTask/autoTaskCraeteSave.json", method = RequestMethod.POST)
-	public MessageObject<AutoTask> autoTaskCraeteSave(AutoTask autoTask) {
+	@RequestMapping(name = "保存调度任务", value = "/platform/access/autoTask/autoTaskCreateSave.json", method = RequestMethod.POST)
+	public MessageObject<AutoTask> autoTaskCreateSave(AutoTask autoTask) {
 		MessageObject<AutoTask> messageObject = MessageObject.getDefaultInstance();
 		try {
 			autoTask.setStatus(IsDelete.NO);
@@ -65,67 +49,6 @@ public class AutoTaskController {
 			messageObject.openTip("新增调度任务成功");
 		} catch (ServiceException e) {
 			e.printStackTrace();
-		}
-		return messageObject;
-	}
-
-	@ResponseBody
-	@OperateLog(message = "修改调度任务", optType = DataType.OptType.UPDATE, service = AutoTaskService.class)
-	@RequestMapping(name = "修改调度任务", value = "/platform/access/autoTask/autoTaskEditUpdate.json", method = RequestMethod.POST)
-	public MessageObject<AutoTask> autoTaskEditUpdate(AutoTask autoTask) {
-		MessageObject<AutoTask> messageObject = MessageObject.getDefaultInstance();
-		try {
-			autoTask.setStatus(IsDelete.NO);
-			autoTaskService.saveEntity(autoTask);
-			messageObject.openTip("修改调度任务成功");
-		} catch (ServiceException e) {
-			e.printStackTrace();
-		}
-		return messageObject;
-	}
-
-	@ResponseBody
-	@RequestMapping(name = "获取调度任务列表分页", value = "/platform/access/autoTask/queryAutoTaskList.json", method = RequestMethod.POST)
-	public MessageObject<AutoTask> queryAutoTaskList(HttpServletRequest request, PageSupport support) {
-		MessageObject<AutoTask> messageObject = MessageObject.getDefaultInstance();
-		try {
-			Map<String, Object> paramMap = WebUtils.getRequestToMap(request);
-			paramMap.put("status_eq", IsDelete.NO);
-			PagerInfo<AutoTask> pagerInfo = autoTaskService.queryPageByMap(paramMap, support);
-			messageObject.ok("查询调度任务成功", pagerInfo);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			messageObject.error("查询调度任务失败");
-		}
-		return messageObject;
-	}
-
-	@ResponseBody
-	@RequestMapping(name = "获取调度任务详情", value = "/platform/access/autoTask/autoTaskEditJson.json", method = RequestMethod.POST)
-	public MessageObject<AutoTask> autoTaskEditJson(String id) {
-		MessageObject<AutoTask> messageObject = MessageObject.getDefaultInstance();
-		try {
-			AutoTask autoTask = autoTaskService.get(id);
-			messageObject.ok("修改查询调度任务成功", autoTask);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			messageObject.error("修改查询调度任务异常");
-		}
-		return messageObject;
-	}
-
-	@ResponseBody
-	@RequestMapping(name = "调度任务列表分页", value = "/platform/access/autoTask/autoTaskList.json", method = { RequestMethod.POST })
-	public MessageObject<AutoTask> autoTaskList(HttpServletRequest request, PageSupport support) {
-		Map<String, Object> map = WebUtils.getRequestToMap(request);
-		MessageObject<AutoTask> messageObject = MessageObject.getDefaultInstance();
-		try {
-			map.put("status_eq", IsDelete.NO);
-			PagerInfo<AutoTask> tools = autoTaskService.queryPageByMap(map, support);
-			messageObject.ok("查询调度任务成功", tools);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			messageObject.error("查询调度任务异常");
 		}
 		return messageObject;
 	}
@@ -150,6 +73,62 @@ public class AutoTaskController {
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			messageObject.error("删除调度任务异常");
+		}
+		return messageObject;
+	}
+
+	@RequestMapping(name = "修改调度任务页面", value = "/platform/system/autotask/autoTaskEdit.do", method = RequestMethod.GET)
+	public String autoTaskEdit(String id, Model model) {
+		model.addAttribute("id", id);
+		return "platform/system/autotask/autoTaskEdit";
+	}
+
+	@ResponseBody
+	@RequestMapping(name = "获取调度任务详情", value = "/platform/access/autoTask/autoTaskEditJson.json", method = RequestMethod.POST)
+	public MessageObject<AutoTask> autoTaskEditJson(String id) {
+		MessageObject<AutoTask> messageObject = MessageObject.getDefaultInstance();
+		try {
+			AutoTask autoTask = autoTaskService.get(id);
+			messageObject.ok("修改查询调度任务成功", autoTask);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.error("修改查询调度任务异常");
+		}
+		return messageObject;
+	}
+
+	@ResponseBody
+	@OperateLog(message = "修改调度任务", optType = DataType.OptType.UPDATE, service = AutoTaskService.class)
+	@RequestMapping(name = "修改调度任务", value = "/platform/access/autoTask/autoTaskEditUpdate.json", method = RequestMethod.POST)
+	public MessageObject<AutoTask> autoTaskEditUpdate(AutoTask autoTask) {
+		MessageObject<AutoTask> messageObject = MessageObject.getDefaultInstance();
+		try {
+			autoTask.setStatus(IsDelete.NO);
+			autoTaskService.saveEntity(autoTask);
+			messageObject.openTip("修改调度任务成功");
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		return messageObject;
+	}
+
+	@RequestMapping(name = "调度任务列表页面", value = "/platform/system/autotask/autoTaskList.do", method = RequestMethod.GET)
+	public String autoTaskList() {
+		return "platform/system/autotask/autoTaskList";
+	}
+
+	@ResponseBody
+	@RequestMapping(name = "调度任务列表分页", value = "/platform/access/autoTask/autoTaskList.json", method = { RequestMethod.POST })
+	public MessageObject<AutoTask> autoTaskList(HttpServletRequest request, PageSupport support) {
+		Map<String, Object> map = WebUtils.getRequestToMap(request);
+		MessageObject<AutoTask> messageObject = MessageObject.getDefaultInstance();
+		try {
+			map.put("status_eq", IsDelete.NO);
+			PagerInfo<AutoTask> tools = autoTaskService.queryPageByMap(map, support);
+			messageObject.ok("查询调度任务成功", tools);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.error("查询调度任务异常");
 		}
 		return messageObject;
 	}
@@ -179,6 +158,22 @@ public class AutoTaskController {
 			String msg = String.format("任务【%s】 %s失败.", autoTask.getTaskName(),
 					autoTask.getStartStatus() != IsStart.YES ? "启动" : "停止");
 			messageObject.error(msg);
+		}
+		return messageObject;
+	}
+
+	@ResponseBody
+	@RequestMapping(name = "获取调度任务列表分页", value = "/platform/access/autoTask/queryAutoTaskList.json", method = RequestMethod.POST)
+	public MessageObject<AutoTask> queryAutoTaskList(HttpServletRequest request, PageSupport support) {
+		MessageObject<AutoTask> messageObject = MessageObject.getDefaultInstance();
+		try {
+			Map<String, Object> paramMap = WebUtils.getRequestToMap(request);
+			paramMap.put("status_eq", IsDelete.NO);
+			PagerInfo<AutoTask> pagerInfo = autoTaskService.queryPageByMap(paramMap, support);
+			messageObject.ok("查询调度任务成功", pagerInfo);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.error("查询调度任务失败");
 		}
 		return messageObject;
 	}

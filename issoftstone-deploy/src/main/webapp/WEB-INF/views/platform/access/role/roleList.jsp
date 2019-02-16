@@ -86,7 +86,7 @@
                     { field: "code", title: '角色编号', width: 200, fixed: "left", unresize: true},
                     { field: "name", title: '角色名称', width: 160, fixed: "left", unresize: true},
                     { field: "remark", title: "备注", minWidth: 300},
-                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 145, unresize: true},
+                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 165, unresize: true},
                 ]],
                 operate: {
                 	editAction: function (tableInstance, data) {
@@ -187,24 +187,23 @@
 		</div>
 	    <div style="display:none" class="layui-btn-container" id="tableBar">
 	        <button class="	btn btn-primary radius" lay-event="createAction">
-	        	<i class="Hui-iconfont Hui-iconfont-add2"></i>新增
+	        	<i class="Hui-iconfont Hui-iconfont-add2"></i>新增角色
 	        </button>
 	        <button class="btn btn-danger radius" lay-event="deleteAction">
 	        	<i class="Hui-iconfont Hui-iconfont-del2"></i>批量删除
 	        </button>
 	        <button class="btn btn-success radius" lay-event="searchAction">
-	        	<i class="Hui-iconfont Hui-iconfont-search"></i>   
-        		搜索
+	        	<i class="Hui-iconfont Hui-iconfont-search"></i>搜索
         	</button>
 	    </div>
 	    <div style="display:none" id="operateBar">
-	         <a class="btn btn-secondary-outline radius size-S" lay-event="editAction">
+	         <a class="btn btn-secondary-outline radius" lay-event="editAction">
 	        	<i class="Hui-iconfont Hui-iconfont-edit"></i>
 	        </a>
-	        <a class="btn btn-danger-outline radius size-S" lay-event="delAction">
+	        <a class="btn btn-danger-outline radius" lay-event="delAction">
 	        	<i class="Hui-iconfont Hui-iconfont-del2"></i>
 	        </a>
-         	<a title="添加权限信息" class="btn btn-primary-outline radius size-S" lay-event="addMenuAction">
+         	<a title="添加权限信息" class="btn btn-primary-outline radius" lay-event="addMenuAction">
 	        	<i class="Hui-iconfont Hui-iconfont-add"></i>
 	        </a>
 	    </div>

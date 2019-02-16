@@ -15,14 +15,6 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
         	<mvc:mapping path="/**"/>
-        	<bean class="com.iss.interceptor.TimerInterceptor" />
-        </mvc:interceptor>
-		<mvc:interceptor>
-        	<mvc:mapping path="/**"/>
-        	<bean class="com.iss.interceptor.AuthorityInterceptor" />
-        </mvc:interceptor>
-		<mvc:interceptor>
-        	<mvc:mapping path="/**"/>
         	<bean class="com.iss.interceptor.OperateLogInterceptor" />
         </mvc:interceptor>
 	    <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>

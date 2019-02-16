@@ -112,7 +112,7 @@ public class UserController {
 
 	@ResponseBody
 	@OperateLog(message = "删除用户", optType = DataType.OptType.INSERT, service = UserService.class)
-	@RequestMapping(name = "删除用户",value = "/platform/access/user/userDelete.json", method = RequestMethod.POST)
+	@RequestMapping(name = "删除用户", value = "/platform/access/user/userDelete.json", method = RequestMethod.POST)
 	public MessageObject<User> userDelete(String id) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -131,8 +131,8 @@ public class UserController {
 		}
 		return messageObject;
 	}
-	
-	@RequestMapping(name = "用户修改页面",value = "/platform/access/user/userEdit.do")
+
+	@RequestMapping(name = "用户修改页面", value = "/platform/access/user/userEdit.do")
 	public String userEdit(String id, Model model) {
 		model.addAttribute("id", id);
 		return "platform/access/user/userEdit";
@@ -170,13 +170,13 @@ public class UserController {
 		return messageObject;
 	}
 
-	@RequestMapping(name = "用户修改页面", value = "/platform/access/user/list.do")
+	@RequestMapping(name = "用户列表页面", value = "/platform/access/user/userList.do", method = RequestMethod.GET)
 	public String userList() {
 		return "platform/access/user/userList";
 	}
 
 	@ResponseBody
-	@RequestMapping(name = "获取用户列表分页", value = "/platform/access/user/list.json", method = RequestMethod.POST)
+	@RequestMapping(name = "用户列表分页", value = "/platform/access/user/userList.json", method = RequestMethod.POST)
 	public MessageObject<User> userList(HttpServletRequest request, PageSupport support) {
 		logger.debug("查询用户");
 		MessageObject<User> message = MessageObject.getDefaultInstance();
@@ -200,6 +200,7 @@ public class UserController {
 			model.addAttribute("roles", new JsonMapper().toJson(user.getRoles()));
 		return "platform/access/user/roleList";
 	}
+
 	@ResponseBody
 	@OperateLog(message = "保存用户权限", optType = DataType.OptType.INSERT, service = UserService.class)
 	@RequestMapping(name = "保存用户权限", value = "/platform/access/user/userRoleSave.json", method = RequestMethod.POST)
@@ -244,6 +245,5 @@ public class UserController {
 		}
 		return messageObject;
 	}
-	
-	
+
 }

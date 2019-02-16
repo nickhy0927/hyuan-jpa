@@ -53,7 +53,7 @@ public interface UserService extends CustomService<User, String> {
 	 * @param id
 	 * @return
 	 */
-	List<Menu> queryMenuList(String id);
+	List<Menu> queryMenuList(String username);
 	
 	/**
 	 * 查询所有的菜单

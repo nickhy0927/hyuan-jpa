@@ -52,7 +52,7 @@
         	$("#tableList").dataTable({
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
-                url: "${ctx}/platform/access/user/list.json",
+                url: "${ctx}/platform/access/user/userList.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
                     { field: "nickName", title: '用户姓名', width: 160, fixed: "left", unresize: true},
@@ -147,14 +147,13 @@
     	</div>
 	    <div style="display:none" class="layui-btn-container" id="tableBar">
 	        <button class="	btn btn-primary radius" lay-event="createAction">
-	        	<i class="Hui-iconfont Hui-iconfont-add2"></i>新增
+	        	<i class="Hui-iconfont Hui-iconfont-add2"></i>新增用户
 	        </button>
 	        <button class="btn btn-danger radius" lay-event="deleteAction">
 	        	<i class="Hui-iconfont Hui-iconfont-del2"></i>批量删除
 	        </button>
 	        <button class="btn btn-success radius" lay-event="searchAction">
-	        	<i class="Hui-iconfont Hui-iconfont-search"></i>   
-        		搜索
+	        	<i class="Hui-iconfont Hui-iconfont-search"></i>搜索
         	</button>
 	    </div>
 	    <div style="display:none" id="operateBar">

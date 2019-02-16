@@ -43,12 +43,12 @@
                     { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 120, unresize: true}
                 ]],
                 operate: {
-                	editAction: function () {
+                	editAction: function (tableInstance, data) {
                 		$.openWindow({
 							title: '<i class="layui-icon layui-icon-form"></i>&nbsp;修改图标信息',
 							height: '240px',
 							width: '70%',
-							url: '${ctx}/platform/access/icon/edit.do?id=' + data[0].id 
+							url: '${ctx}/platform/access/icon/iconEdit.do?id=' + data[0].id 
 						})
 					},
 					delAction: function (tableInstance, data) {
@@ -61,7 +61,7 @@
                 			title: '<i class="layui-icon layui-icon-form"></i>&nbsp;新增图标信息',
 							height: '200px',
 							width: '70%',
-							url: '${ctx}/platform/access/icon/create.do'
+							url: '${ctx}/platform/access/icon/iconCreate.do'
 						})
 					},
 					deleteAction: function (tableInstance, data) {
@@ -106,10 +106,10 @@
         	</button>
 	    </div>
 	    <div style="display:none" id="operateBar">
-	        <a class="btn btn-secondary-outline radius size-S" lay-event="editAction">
+	        <a class="btn btn-secondary-outline radius" lay-event="editAction">
 	        	<i class="Hui-iconfont Hui-iconfont-edit"></i>
-	        </a>&nbsp;&nbsp;
-	        <a class="btn btn-danger-outline radius size-S" lay-event="delAction">
+	        </a>
+	        <a class="btn btn-danger-outline radius" lay-event="delAction">
 	        	<i class="Hui-iconfont Hui-iconfont-del2"></i>
 	        </a>
 	    </div>

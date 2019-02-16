@@ -78,12 +78,15 @@
 	</bean>
 	
 	<bean class="com.iss.interceptor.StaticResources" init-method="init" lazy-init="false">
+		<property name="loginUrl" value="redirect:/login.do" />
+		<property name="successUrl" value="/index.do" />
+		<property name="unauthUrl" value="/unauth.jsp"/>
 		<property name="urls">
 			<list>
 				<value>/static/**</value>
 				<value>/assets/**</value>
 				<value>/login.jsp</value>
-				<value>/login</value>
+				<value>/login/**</value>
 			</list>
 		</property>
 	</bean>

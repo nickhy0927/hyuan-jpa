@@ -1,11 +1,10 @@
 package com.iss.common.config;
 
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.google.common.collect.Sets;
+import com.google.common.collect.Maps;
 
 public class InitEnvironment {
 
@@ -14,7 +13,7 @@ public class InitEnvironment {
 	private static String initUsername;
 	private static String currentLoginName;
 
-	private static Map<String, Set<String>> permissionSet;
+	private static Map<String, Map<String, String>> permissionSet;
 	
 	public String getErrorPage() {
 		return errorPage;
@@ -40,13 +39,13 @@ public class InitEnvironment {
 		InitEnvironment.initUsername = initUsername;
 	}
 	
-	public static void setPermissionSet(Map<String, Set<String>> permissionSet) {
+	public static void setPermissionSet(Map<String, Map<String, String>> permissionSet) {
 		InitEnvironment.permissionSet = permissionSet;
 	}
 	
-	public static Set<String> getPermissionSet(String loginName) {
+	public static Map<String, String> getPermissionSet(String loginName) {
 		if (StringUtils.isEmpty(loginName)) {
-			return Sets.newConcurrentHashSet();
+			return Maps.newConcurrentMap();
 		}
 		return permissionSet.get(loginName);
 	}

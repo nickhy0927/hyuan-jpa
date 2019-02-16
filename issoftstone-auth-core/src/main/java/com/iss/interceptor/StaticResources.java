@@ -2,7 +2,6 @@ package com.iss.interceptor;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.quartz.Job;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,8 @@ import com.iss.common.exception.ServiceException;
 import com.iss.common.spring.SpringContextHolder;
 import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.SysContants.IsStart;
+import com.iss.platform.access.menu.entity.Menu;
+import com.iss.platform.access.menu.service.MenuService;
 import com.iss.platform.access.user.entity.User;
 import com.iss.platform.access.user.service.UserService;
 import com.iss.platform.system.autotask.entity.AutoTask;
@@ -25,47 +26,52 @@ public class StaticResources {
 	private UserService userService;
 	
 	@Autowired
+	private MenuService menuService;
+	
+	@Autowired
 	private AutoTaskService autoTaskService;
+	
+	public static Map<String, Map<String, String>> permissionSet = Maps.newConcurrentMap();
 
-	private List<String> urls;
-	private String loginUrl;
-	private String successUrl;
+	private static List<String> urls;
+	private static String loginUrl;
+	private static String successUrl;
 
-	private String unauthUrl;
+	private static String unauthUrl;
 
-	public String getUnauthUrl() {
+	public static String getUnauthUrl() {
 		return unauthUrl;
 	}
 
 	public void setUnauthUrl(String unauthUrl) {
-		this.unauthUrl = unauthUrl;
+		StaticResources.unauthUrl = unauthUrl;
 	}
 
-	public String getSuccessUrl() {
+	public static String getSuccessUrl() {
 		return successUrl;
 	}
 
 	public void setSuccessUrl(String successUrl) {
-		this.successUrl = successUrl;
+		StaticResources.successUrl = successUrl;
 	}
 
-	public String getLoginUrl() {
+	public static String getLoginUrl() {
 		return loginUrl;
 	}
 
 	public void setLoginUrl(String loginUrl) {
-		this.loginUrl = loginUrl;
+		StaticResources.loginUrl = loginUrl;
 	}
 
 	private StaticResources() {
 	}
 
-	public List<String> getUrls() {
+	public static List<String> getUrls() {
 		return urls;
 	}
 
 	public void setUrls(List<String> urls) {
-		this.urls = urls;
+		StaticResources.urls = urls;
 	}
 
 	public static StaticResources getStaticResourcesInstance() {
@@ -76,12 +82,20 @@ public class StaticResources {
 		Map<String, Object> paramMap = Maps.newConcurrentMap();
 		paramMap.put("status_eq", IsDelete.NO);
 		List<User> users = userService.queryByMap(paramMap);
-		Map<String, Set<String>> permissionSet = Maps.newConcurrentMap();
 		for (User user : users) {
-			Set<String> alias = userService.queryMenuAlias(user.getId());
-			permissionSet.put(user.getLoginName(), alias);
+			List<Menu> menus = userService.queryMenuList(user.getLoginName());
+			Map<String, String> map = Maps.newConcurrentMap();
+			for (Menu menu : menus) {
+				map.put(menu.getUrl(), menu.getAlias());
+			}
+			permissionSet.put(user.getLoginName(), map);
 		}
-		permissionSet.put("root", userService.queryAllMenuAlias());
+		List<Menu> menuList = menuService.queryByMap(paramMap);
+		Map<String, String> map = Maps.newConcurrentMap();
+		for (Menu menu : menuList) {
+			map.put(menu.getUrl(), menu.getAlias());
+		}
+		permissionSet.put(InitEnvironment.getInitUsername(), map);
 		InitEnvironment.setPermissionSet(permissionSet);
 		paramMap.put("startStatus_eq", IsStart.YES);
 		try {
