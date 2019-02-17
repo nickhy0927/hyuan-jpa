@@ -47,6 +47,40 @@ public class AccessConstant {
 			return new JsonMapper().toJson(selectMap);
 		}
 	}
+	public static class DataBaseType {
+		public static Integer MYSQL = 1;
+		public static Integer ORACLE = 2;
+		public static Integer SQLSERVER = 3;
+		
+		public static String getName(Integer code) {
+			if (code == 1) {
+				return "mysql";
+			} else if (ORACLE == 2){
+				return "ORACLE";
+			} else if (ORACLE == 3){
+				return "sqlserver";
+			}
+			return "mysql";
+		}
+		
+		public static String getSelectList() {
+			List<Map<String, Object>> mapList = Lists.newArrayList();
+			Map<String, Object> selectMap = Maps.newConcurrentMap();
+			selectMap = Maps.newConcurrentMap();
+			selectMap.put("name", "mysql");
+			selectMap.put("value", MYSQL);
+			mapList.add(selectMap);
+			selectMap = Maps.newConcurrentMap();
+			selectMap.put("name", "oracle");
+			selectMap.put("value", ORACLE);
+			mapList.add(selectMap);
+			selectMap = Maps.newConcurrentMap();
+			selectMap.put("name", "sqlserver");
+			selectMap.put("value", SQLSERVER);
+			mapList.add(selectMap);
+			return new JsonMapper().toJson(mapList);
+		}
+	}
 
     /**
      * 是否锁定

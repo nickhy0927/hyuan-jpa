@@ -1,8 +1,8 @@
 (function($, window, document) {
-	$.fn.select = function(option) {
+	$.fn.select = function(options) {
 		var _this = this;
 		var setting = $.extend({
-			data: [],
+			dataSource: [],
 			defaultValue: '', // 默认值
 			holder: '请选择',
 			fields: {
@@ -10,39 +10,39 @@
 				name: 'name' // name值的名称
 			},
 			syns: false // 是否异步
-		}, option || {})
-		if(option.syns) {
+		}, options || {})
+		console.log('setting==', setting);
+		var opts = '<option value="">' + setting.holder +'</option>';
+		if(typeof setting.dataSource == 'string') {
 			$.ajax({
            	 	type: "GET",
-                url: "${ctx}/platform/access/menu/create.json",
+                url: setting.dataSource,
                 contentType: "application/json; charset=utf-8",
                 success: function (res) {
                 	var data = res.data;
-                	var options = '<option value="">' + setting.holder +'</option>';
                 	if (data && data.length > 0) {
                 		$.each(data, function(index, item){
                 			if(setting.defaultValue == item[setting.fields.val]) 
-                				options += '<option selected="selected" value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
+                				opts += '<option selected="selected" value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
                 			else
-                				options += '<option value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
+                				opts += '<option value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
                 		})
                 	}
-                	_this.html(options)
+                	_this.html(opts)
                 },
                 error: function (message) {
                 }
            })
 		} else {
-			var options = '<option value="">' + setting.holder +'</option>';
-        	if (setting.data && setting.data.length > 0) {
-        		$.each(setting.data, function(index, item){
+        	if (setting.dataSource && setting.dataSource.length > 0) {
+        		$.each(setting.dataSource, function(index, item){
         			if(setting.defaultValue == item[setting.fields.val]) 
-        				options += '<option selected="selected" value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
+        				opts += '<option selected="selected" value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
         			else
-        				options += '<option value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
+        				opts += '<option value="' + item[setting.fields.val] +'">' + item[setting.fields.name] +'</option>';
         		})
         	}
-        	_this.html(options)
+        	_this.html(opts)
 		}
 	}
 	$.fn.getForm = function(){

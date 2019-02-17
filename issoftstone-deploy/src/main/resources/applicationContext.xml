@@ -23,6 +23,14 @@
 		factory-class="com.iss.orm.factory.DefaultRepositoryFactoryBean">
 	</jpa:repositories>
 
+	<bean id="dataSource" class="com.iss.CustomDynamicDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry key="1" value-ref="defaultDataSource" />
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="defaultDataSource" />
+	</bean>
 	<!-- JPA实体管理工厂的配置 -->
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -115,7 +123,7 @@
 		<!-- 配置监控统计拦截的filters -->
 		<property name="filters" value="stat" />
   	</bean>
-	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+	<bean id="defaultDataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
 		<constructor-arg ref="dataSourceSpied" />
 	</bean>
 	

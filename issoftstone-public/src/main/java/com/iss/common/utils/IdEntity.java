@@ -14,8 +14,8 @@ import javax.persistence.Version;
 
 import org.hibernate.annotations.GenericGenerator;
 
-@SuppressWarnings("serial")
 @MappedSuperclass
+@SuppressWarnings("serial")
 @Access(AccessType.PROPERTY)
 public class IdEntity extends PageSupport implements Serializable {
 	protected String id;// ID
