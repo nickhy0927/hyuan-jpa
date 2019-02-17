@@ -25,6 +25,7 @@ import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.SysContants.IsStart;
 import com.iss.common.utils.WebUtils;
 import com.iss.constant.DataType;
+import com.iss.constant.SpiderManager;
 import com.iss.platform.system.autotask.entity.AutoTask;
 import com.iss.platform.system.autotask.service.AutoTaskService;
 
@@ -145,6 +146,7 @@ public class AutoTaskController {
 			if (autoTask.getStartStatus() == SysContants.IsStart.YES) {
 				QuartzManager.removeJob(job_name);
 				autoTask.setStartStatus(IsStart.NO);
+				SpiderManager.removeSpider(clazz);
 			} else {
 				QuartzManager.addJob(job_name, clazz, autoTask.getScheduler());
 				autoTask.setStartStatus(IsStart.YES);

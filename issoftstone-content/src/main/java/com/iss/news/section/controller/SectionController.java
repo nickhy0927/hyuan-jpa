@@ -29,12 +29,8 @@ import com.iss.news.section.service.SectionService;
 @RequestMapping(value = "/content/news/section")
 public class SectionController {
 
-	private final SectionService sectionService;
-
 	@Autowired
-	public SectionController(SectionService sectionService) {
-		this.sectionService = sectionService;
-	}
+	private SectionService sectionService;
 
 	@RequestMapping(name = "新增版块页面", value = "/sectionCreate.do", method = RequestMethod.GET)
 	public String sectionCreate() {
@@ -131,7 +127,6 @@ public class SectionController {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
 		MessageObject<Section> messageObject = MessageObject.getDefaultInstance();
 		try {
-			map.put("status_eq", IsDelete.NO);
 			PagerInfo<Section> tools = sectionService.queryPageByMap(map, support);
 			messageObject.ok("查询版块成功", tools);
 		} catch (ServiceException e) {

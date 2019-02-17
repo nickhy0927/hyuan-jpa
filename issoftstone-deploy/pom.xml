@@ -30,6 +30,10 @@
 			<groupId>com.iss</groupId>
 			<artifactId>issoftstone-statistics</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.iss</groupId>
+			<artifactId>issoftstone-blog</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>issoftstone-deploy</finalName>

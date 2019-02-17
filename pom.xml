@@ -57,6 +57,12 @@
 				<artifactId>issoftstone-statistics</artifactId>
 				<version>${issoftstone.version}</version>
 			</dependency>
+			<!-- 博客 -->
+			<dependency>
+				<groupId>com.iss</groupId>
+				<artifactId>issoftstone-blog</artifactId>
+				<version>${issoftstone.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<build>
@@ -85,5 +91,6 @@
 		<module>issoftstone-job-core</module>
 		<module>xxl-job</module>
 		<module>issoftstone-statistics</module>
+		<module>issoftstone-blog</module>
 	</modules>
 </project>

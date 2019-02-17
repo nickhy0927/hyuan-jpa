@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.iss.common.utils.SysContants.IsDelete;
+
 public class WebUtils {
 
 	public static Map<String, Object> getRequestToMap(HttpServletRequest request) {
@@ -18,15 +20,21 @@ public class WebUtils {
 				String paramValue = paramValues[0];
 				if (paramValue.length() != 0) {
 					String[] str = paramName.split("_");
-					System.out.println(paramName + "==" + paramValue);
 					if (str.length > 1) {
 						map.put(paramName, paramValue);
 					}
 				}
 			}
 		}
+		map.put("status_eq", IsDelete.NO);
 		return map;
 	}
+	
+	/**
+	 * 转化为对象map
+	 * @param request
+	 * @return
+	 */
 	public static Map<String, Object> getRequestParamterToMap(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<>();
 		Enumeration<String> paramNames = request.getParameterNames();

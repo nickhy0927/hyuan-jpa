@@ -1429,3 +1429,12 @@ td {
 .select2-result-repository div i.Hui-iconfont{
    margin-right: 6px;
 }
+
+.tree-content {
+	border: 1px solid #ddd;
+	background: #ffffff;
+	z-index: 9999;
+    position: absolute;
+    width: 100%;
+    display: none;
+}

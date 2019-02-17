@@ -136,9 +136,11 @@
 	};
 	$.fn.dataTable = function(options) {
 		var _this = $(this);
-		var d = $(document).height();
-		var h = $('#search-form').height() + 25;
-		options.height = d - h;
+		try {
+			var d = $(document).height();
+			var h = $('#search-form').height() + 25;
+			options.height = d - h;
+		} catch(e){}
 		_init_table(options, _this);
 		$('body').css({
 			'overflow': 'hidden'
@@ -156,8 +158,124 @@
 	$(window).resize(function() {
 		document.execCommand('Refresh')
 	})
+	
+	var _init_select_tree = function(_this, setting) {
+		//id div 的id，isMultiple 是否多选，chkboxType 多选框类型{"Y": "ps", "N": "s"} 详细请看ztree官网
+		var chkboxType = setting.chkboxType;
+	    if (setting.isMultiple) {
+	        setting.check.enable = setting.isMultiple;
+	    }
+	    if (chkboxType !== undefined && chkboxType != null) {
+	        setting.check.chkboxType = chkboxType;
+	    }
+	    var html = '<div class = "layui-select-title" >' +
+    			       '<input id="' + $(_this).attr('id') + 'Show"' + 'type="text" placeholder="' + setting.placeholder + '" value="" class ="layui-input" readonly>' +
+    			       '<i class= "layui-edge" ></i>' +
+			       '</div>';
+	    $(_this).append(html);
+	    $(_this).parent().append('<div class="tree-content scrollbar">' +
+	        '<input hidden id="' + $(_this).attr('id') + 'Hide" name="' + $(".select-tree").attr("id") + '">' +
+	        '<ul id="' + $(_this).attr('id') + 'Tree" class="ztree scrollbar" style="margin-top:0;"></ul>' +
+	        '</div>');
+	    $(_this).bind("click", function () {
+	        if ($(this).parent().find(".tree-content").css("display") !== "none") {
+	            hideMenu()
+	        } else {
+	            $(this).addClass("layui-form-selected");
+	            $(this).parent().find(".tree-content").slideDown("fast");
+	            $("body").bind("mousedown", onBodyDown);
+	        }
+	    });
+	    $.fn.zTree.init($("#" + $(_this).attr('id') + "Tree"), setting, setting.zNodes);
+	}
+	// 初始化下拉树
+	$.fn.initSelectTree = function (options) {
+		var _this = this;
+		var setting = $.extend({
+			isMultiple: true,
+			dataSource: '',
+			placeholder: '请选择',
+			view: {
+	            dblClickExpand: false,
+	            showLine: true
+	        },
+	        data: {
+	            simpleData: {
+	                enable: true
+	            }
+	        },
+	        check: {
+	        	chkStyle: "radio",  //单选框
+	            radioType: "all",  //对所有节点设置单选
+	            enable: false,
+	            chkboxType: {"Y": "ps", "N": "s"}
+	        },
+	        callback: {
+	            onClick: onClick,
+	            onCheck: onCheck
+	        }
+		}, options || {});
+		if(!setting.dataSource) throw '没有数据资源，请配置dataSource';
+		if(typeof setting.dataSource == 'string') {
+			$.ajax({
+				 type: "POST",
+				 url: setting.dataSource,
+				 success: function(res) {
+					 console.log(res);
+					 console.log(res.content);
+					 setting.zNodes = res.content;
+					 _init_select_tree(_this, setting);
+				 }
+			})
+		} else {
+			setting.zNodes = setting.dataSource;
+			_init_select_tree(_this, setting);
+		}
+	}
 })(jQuery, window, document);
+function onClick(event, treeId, treeNode) {
+    var zTree = $.fn.zTree.getZTreeObj(treeId);
+    if (zTree.setting.check.enable == true) {
+        zTree.checkNode(treeNode, !treeNode.checked, false)
+        assignment(treeId, zTree.getCheckedNodes());
+    } else {
+        assignment(treeId, zTree.getSelectedNodes());
+    }
+    hideMenu();
+}
+function onCheck(event, treeId, treeNode) {
+    var zTree = $.fn.zTree.getZTreeObj(treeId);
+    assignment(treeId, zTree.getCheckedNodes());
+}
 
+function hideMenu() {
+    $(".select-tree").removeClass("layui-form-selected");
+    $(".tree-content").fadeOut("fast");
+    $("body").unbind("mousedown", onBodyDown);
+}
+
+function assignment(treeId, nodes) {
+    var names = "";
+    var ids = "";
+    for (var i = 0, l = nodes.length; i < l; i++) {
+        names += nodes[i].name + ",";
+        ids += nodes[i].id + ",";
+    }
+    if (names.length > 0) {
+        names = names.substring(0, names.length - 1);
+        ids = ids.substring(0, ids.length - 1);
+    }
+    treeId = treeId.substring(0, treeId.length - 4);
+    $("#" + treeId + "Show").attr("value", names);
+    $("#" + treeId + "Show").attr("title", names);
+    $("#" + treeId + "Hide").attr("value", ids);
+}
+
+function onBodyDown(event) {
+    if ($(event.target).parents(".tree-content").html() == null) {
+        hideMenu();
+    }
+}
 /**
  * 打开窗口
  * @param title 标题

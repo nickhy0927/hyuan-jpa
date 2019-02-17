@@ -54,6 +54,9 @@
 		a.btn, a.btn.size-M, span.btn, span.btn.size-M {
 		    line-height: 24px;
 		}
+		.layui-form {
+			height: 100%;
+		}
 	</style>
     <link rel="stylesheet" href="${basePath}/assets/lib/layui/css/layui.css" media="all">
    	<script src="${basePath}/assets/lib/layui/layui.js"></script>
