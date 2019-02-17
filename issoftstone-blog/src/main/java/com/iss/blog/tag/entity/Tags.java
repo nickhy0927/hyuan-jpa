@@ -15,6 +15,17 @@ public class Tags extends IdEntity {
 
 	private String remarks;
 
+	public Tags() {
+		super();
+	}
+
+	public Tags(String tag, String remarks, Boolean status) {
+		super();
+		this.tag = tag;
+		this.status = status;
+		this.remarks = remarks;
+	}
+
 	@Column(columnDefinition = "varchar(255) comment '博客标签'")
 	public String getTag() {
 		return tag;

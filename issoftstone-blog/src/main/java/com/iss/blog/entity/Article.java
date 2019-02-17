@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import com.iss.blog.tag.entity.Tags;
 import com.iss.common.utils.IdEntity;
+import com.iss.common.utils.SysContants.IsDelete;
 
 @Entity
 @Table(name = "t_b_article")
@@ -31,6 +32,17 @@ public class Article extends IdEntity {
 
 	// 标签
 	private List<Tags> tags;
+
+	public Article() {
+	}
+
+	public Article(String title, String profile, String content, List<Tags> tags) {
+		this.title = title;
+		this.profile = profile;
+		this.content = content;
+		this.tags = tags;
+		this.status = IsDelete.NO;
+	}
 
 	@Column(columnDefinition = "varchar(255) comment '文章标题'")
 	public String getTitle() {
@@ -62,11 +74,7 @@ public class Article extends IdEntity {
 	}
 
 	@ManyToMany
-	@JoinTable(name = "t_b_art_tags", 
-		joinColumns = 
-			@JoinColumn(name = "art_id", columnDefinition = "varchar(64) comment '博客ID'"), 
-		inverseJoinColumns = 
-			@JoinColumn(name = "tag_id", columnDefinition = "varchar(64) comment '标签ID'"))
+	@JoinTable(name = "t_b_art_tags", joinColumns = @JoinColumn(name = "art_id", columnDefinition = "varchar(64) comment '博客ID'"), inverseJoinColumns = @JoinColumn(name = "tag_id", columnDefinition = "varchar(64) comment '标签ID'"))
 	public List<Tags> getTags() {
 		return tags;
 	}
