@@ -65,7 +65,7 @@ public class PageSupport {
 	public int getPage() {
 		if (page <= 0) {
 			page = 1;
-		}
+		} else page = (page - 1) * limit;
 		return page;
 	}
 

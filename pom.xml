@@ -89,9 +89,15 @@
 		<module>issoftstone-deploy</module>
 		<module>issoftstone-content</module>
 		<module>issoftstone-job-core</module>
-		<module>xxl-job</module>
 		<module>issoftstone-statistics</module>
 		<module>issoftstone-blog</module>
 		<module>isoftstone-module</module>
 	</modules>
+	<distributionManagement>
+		<snapshotRepository>
+            <id>snapshots</id>
+            <name>snapshots</name>
+            <url>http://10.193.129.33:8081/repository/maven-snapshots</url>
+        </snapshotRepository>
+	</distributionManagement>
 </project>
