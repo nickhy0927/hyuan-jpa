@@ -1,4 +1,4 @@
-package com.iss;
+package com.iss.platform.init;
 
 public class DataSourceHolder {
 	// 线程本地环境

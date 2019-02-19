@@ -138,7 +138,7 @@
                 	<i>*</i>数据库字符集
                 </label>
                 <div class="layui-input-block">
-                    <input type="password" name="characterEncoding"
+                    <input type="text" name="characterEncoding"
                            lay-verify="required"
                            lay-verType="tips"
                            placeholder="请输入数据库字符集"

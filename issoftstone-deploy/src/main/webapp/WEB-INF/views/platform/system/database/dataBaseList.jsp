@@ -46,17 +46,23 @@
                 url: "${ctx}/platform/system/dataBase/dataBaseList.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
-                    { field: "dataBaseName", title: '名称', minWidth: 120, fixed: "left", unresize: true},
+                    { field: "dataBaseName", title: '数据库名称', minWidth: 120, fixed: "left", unresize: true},
+                    { field: "driverClassName",  title: "驱动名称", minWidth: 100},
                     { field: "ip",  title: "IP", width: 160},
                     { field: "port",  title: "端口", width: 90, align: 'center'},
                     { field: "username",  title: "用户名", minWidth: 100},
-                    { field: "username",  title: "密码", minWidth: 100},
-                    { field: "characterEncoding",  title: "字符集", minWidth: 100},
+                    { field: "password",  title: "密码", minWidth: 100},
+					{ field: "dataBaseType",  title: "数据库类型", width: 110, align: 'center', templet: function (d) {
+						var dataBaseType = d.dataBaseType;
+						var dataBaseTypeVal = dataBaseType == 1 ? 'mysql' : (dataBaseType == 2 ? 'oracle' : 'sqlserver');
+						return dataBaseTypeVal;
+					}},
 					{ field: "enable",  title: "启用", width: 110, align: 'center', templet: function (d) {
 						var checked = d.enable == 1 ? "checked='checked'" : "";
 						return '<input data-v=' + d.version + ' ' + checked + ' data-id=' + d.id + ' type="checkbox" lay-skin="switch" lay-filter="enable" lay-text="停用|启用">';
 					}},
-                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 110, unresize: true}
+                    { field: "characterEncoding",  title: "字符集",  minWidth: 160},
+                    { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 100, unresize: true}
                 ]],
                 operate: {
                 	editAction: function (tableInstance, data) {

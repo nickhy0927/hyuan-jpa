@@ -92,5 +92,6 @@
 		<module>xxl-job</module>
 		<module>issoftstone-statistics</module>
 		<module>issoftstone-blog</module>
+		<module>isoftstone-module</module>
 	</modules>
 </project>

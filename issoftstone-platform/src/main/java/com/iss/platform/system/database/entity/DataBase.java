@@ -72,7 +72,7 @@ public class DataBase extends IdEntity {
 		this.enable = enable;
 	}
 
-	@Column(columnDefinition = "varchar(10) comment '数据库字符集'")
+	@Column(columnDefinition = "varchar(256) comment '数据库字符集'")
 	public String getCharacterEncoding() {
 		return characterEncoding;
 	}
@@ -151,6 +151,14 @@ public class DataBase extends IdEntity {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Override
+	public String toString() {
+		return "DataBase [characterEncoding=" + characterEncoding + ", dataBaseName=" + dataBaseName
+				+ ", driverClassName=" + driverClassName + ", ip=" + ip + ", port=" + port + ", useUnicode="
+				+ useUnicode + ", dataBaseType=" + dataBaseType + ", username=" + username + ", password=" + password
+				+ ", enable=" + enable + "]";
 	}
 	
 }

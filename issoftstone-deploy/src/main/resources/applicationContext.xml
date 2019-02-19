@@ -23,14 +23,6 @@
 		factory-class="com.iss.orm.factory.DefaultRepositoryFactoryBean">
 	</jpa:repositories>
 
-	<bean id="dataSource" class="com.iss.CustomDynamicDataSource">
-		<property name="targetDataSources">
-			<map key-type="java.lang.String">
-				<entry key="1" value-ref="defaultDataSource" />
-			</map>
-		</property>
-		<property name="defaultTargetDataSource" ref="defaultDataSource" />
-	</bean>
 	<!-- JPA实体管理工厂的配置 -->
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -67,7 +59,6 @@
 			<list>
 				<!-- 这里支持多种寻址方式：classpath和file -->
 				<value>classpath*:/application.development.properties</value>
-				<!-- 推荐使用file的方式引入，这样可以将配置和代码分离 -->
 				<value>classpath*:/InitEnvironment.properties</value>
 				<value>classpath*:/config/job/xxl-job-executor.properties</value>
 			</list>
@@ -122,6 +113,14 @@
 		<property name="testOnReturn" value="false" />
 		<!-- 配置监控统计拦截的filters -->
 		<property name="filters" value="stat" />
+  	</bean>
+  	<bean id="initDataBase" class="com.iss.platform.init.InitDataBase">
+  		<property name="dataSource" ref="defaultDataSource" />
+  		<property name="querySql" value="select * from t_p_s_database where status = 0 and enable = 1" />
+  	</bean>
+  	<bean id="dataSource" class="com.iss.platform.init.DynamicDataSource" init-method="initDataSource">
+  		<property name="masterDataSource" ref="defaultDataSource" />
+  		<property name="initDataBase" ref="initDataBase" />
   	</bean>
 	<bean id="defaultDataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
 		<constructor-arg ref="dataSourceSpied" />
