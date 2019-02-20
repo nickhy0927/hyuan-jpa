@@ -127,5 +127,5 @@
 	</bean>
 	
 	<import resource="config/security/spring-security.xml"/>
-	<import resource="config/job/applicationcontext-xxl-job.xml"/>
+	<!-- <import resource="config/job/applicationcontext-xxl-job.xml"/> -->
 </beans>
