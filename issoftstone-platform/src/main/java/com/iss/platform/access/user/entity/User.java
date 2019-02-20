@@ -46,6 +46,8 @@ public class User extends IdEntity {
 	// 附加字段
 	private String enableName;// 是否显示 true 是 false 否
 	private String lockedName; // 是否锁定 true 是 false 否
+	
+	private String dataSourceId;
 
 	@Column(columnDefinition = "varchar(255) comment '手机端标识'")
 	public String getUserTag() {
@@ -172,5 +174,13 @@ public class User extends IdEntity {
 
 	public void setSalt(String salt) {
 		this.salt = salt;
+	}
+	
+	public String getDataSourceId() {
+		return dataSourceId;
+	}
+	
+	public void setDataSourceId(String dataSourceId) {
+		this.dataSourceId = dataSourceId;
 	}
 }

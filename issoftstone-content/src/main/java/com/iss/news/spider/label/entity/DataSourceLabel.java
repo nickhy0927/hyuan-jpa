@@ -9,7 +9,6 @@ import javax.persistence.Transient;
 
 import com.iss.common.utils.IdEntity;
 import com.iss.news.spider.source.entity.DataSource;
-import com.iss.platform.access.dict.entity.Dict;
 
 /**
  * 数据源标签
@@ -35,7 +34,7 @@ public class DataSourceLabel extends IdEntity {
 	/**
 	 * 标签类型 （1.新闻标题标签 2.新闻内容标签 3.新闻时间标签 4.列表标签 5.分页标签 6.搜索标签）
 	 */
-	private Dict labelType;
+	private String labelTypeId;
 
 	/**
 	 * 标签内容
@@ -70,7 +69,7 @@ public class DataSourceLabel extends IdEntity {
 	/**
 	 * 内容类型
 	 */
-	private Dict contentType;
+	private String contentTypeId;
 
 	/**
 	 * 层级
@@ -98,11 +97,6 @@ public class DataSourceLabel extends IdEntity {
 	 */
 	private String sourceId;
 
-	/**
-	 * 标签类型ID
-	 */
-	private String labelTypeId;
-
 	@ManyToOne
 	@JoinColumn(name = "source_id", columnDefinition = "varchar(64) comment '数据源ID'")
 	public DataSource getDataSource() {
@@ -122,15 +116,11 @@ public class DataSourceLabel extends IdEntity {
 		this.labelName = labelName;
 	}
 
-	@ManyToOne
 	@JoinColumn(name = "label_type_id", columnDefinition = "varchar(64) comment '标签类型'")
-	public Dict getLabelType() {
-		return labelType;
+	public String getLabelTypeId() {
+		return labelTypeId;
 	}
 
-	public void setLabelType(Dict labelType) {
-		this.labelType = labelType;
-	}
 
 	@Column(columnDefinition = "varchar(256) comment '标签名称'")
 	public String getLabelContent() {
@@ -186,15 +176,11 @@ public class DataSourceLabel extends IdEntity {
 		this.action = action;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "content_type", columnDefinition = "varchar(64) comment '内容类型'")
-	public Dict getContentType() {
-		return contentType;
+	@Column(name = "content_type_id", columnDefinition = "varchar(64) comment '内容类型'")
+	public String getContentTypeId() {
+		return contentTypeId;
 	}
 
-	public void setContentType(Dict contentType) {
-		this.contentType = contentType;
-	}
 
 	@Column(columnDefinition = "int(9) comment '标签层级'")
 	public Integer getLevels() {
@@ -241,13 +227,11 @@ public class DataSourceLabel extends IdEntity {
 		this.sourceId = sourceId;
 	}
 
-	@Transient
-	public String getLabelTypeId() {
-		return labelTypeId;
-	}
-
 	public void setLabelTypeId(String labelTypeId) {
 		this.labelTypeId = labelTypeId;
 	}
 
+	public void setContentTypeId(String contentTypeId) {
+		this.contentTypeId = contentTypeId;
+	}
 }

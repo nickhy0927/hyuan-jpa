@@ -2,13 +2,10 @@ package com.iss.news.spider.source.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.iss.common.utils.IdEntity;
-import com.iss.platform.access.dict.entity.Dict;
 
 /**
  * 数据源管理
@@ -32,7 +29,7 @@ public class DataSource extends IdEntity {
 	/**
 	 * 数据源类型
 	 */
-	private Dict sourceType;
+	private String sourceTypeId;
 
 	/**
 	 * 采集地址
@@ -47,7 +44,7 @@ public class DataSource extends IdEntity {
 	/**
 	 * 数据源来源
 	 */
-	private Dict originType;
+	private String originTypeId;
 
 	/**
 	 * 数据源保存文件名
@@ -69,8 +66,10 @@ public class DataSource extends IdEntity {
 	 */
 	private String remarks;
 
-	// 请求方式
-	private Dict requestType;
+	/**
+	 * 请求方式
+	 */
+	private String requestType;
 
 	/**
 	 * 层级
@@ -92,11 +91,6 @@ public class DataSource extends IdEntity {
 	 * 数据源类型名称
 	 */
 	private String sourceTypeName;
-
-	/**
-	 * 数据源类型ID
-	 */
-	private String sourceTypeId;
 
 	/**
 	 * 数据源来源名称
@@ -136,16 +130,11 @@ public class DataSource extends IdEntity {
 		this.sourceName = sourceName;
 	}
 
-	@ManyToOne
-	@JoinColumn(columnDefinition = "varchar(64) comment '数据源类型'")
-	public Dict getSourceType() {
-		return sourceType;
+	@Column(columnDefinition = "varchar(64) comment '数据源类型'")
+	public String getSourceTypeId() {
+		return sourceTypeId;
 	}
-
-	public void setSourceType(Dict sourceType) {
-		this.sourceType = sourceType;
-	}
-
+	
 	@Column(columnDefinition = "varchar(2) comment '采集地址'")
 	public String getUrl() {
 		return url;
@@ -164,14 +153,9 @@ public class DataSource extends IdEntity {
 		this.weight = weight;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "origin_id", columnDefinition = "varchar(64) comment '数据源来源'")
-	public Dict getOriginType() {
-		return originType;
-	}
-
-	public void setOriginType(Dict originType) {
-		this.originType = originType;
+	@Column(name = "origin_id", columnDefinition = "varchar(64) comment '数据源来源'")
+	public String getOriginTypeId() {
+		return originTypeId;
 	}
 
 	@Column(columnDefinition = "varchar(64) comment '文件名称'")
@@ -210,14 +194,9 @@ public class DataSource extends IdEntity {
 		this.remarks = remarks;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "request_id", columnDefinition = "varchar(64) comment '请求方式'")
-	public Dict getRequestType() {
+	@Column(name = "request_id", columnDefinition = "varchar(64) comment '请求方式'")
+	public String getRequestType() {
 		return requestType;
-	}
-
-	public void setRequestType(Dict requestType) {
-		this.requestType = requestType;
 	}
 
 	@Column(columnDefinition = "int(9) comment '爬取层级'")
@@ -283,21 +262,23 @@ public class DataSource extends IdEntity {
 		this.proxyName = proxyName;
 	}
 
-	@Transient
-	public String getSourceTypeId() {
-		return sourceTypeId;
-	}
-
-	public void setSourceTypeId(String sourceTypeId) {
-		this.sourceTypeId = sourceTypeId;
-	}
-
-	@Transient
 	public String getOriginNameId() {
 		return originNameId;
 	}
 
 	public void setOriginNameId(String originNameId) {
 		this.originNameId = originNameId;
+	}
+
+	public void setSourceTypeId(String sourceTypeId) {
+		this.sourceTypeId = sourceTypeId;
+	}
+
+	public void setOriginTypeId(String originTypeId) {
+		this.originTypeId = originTypeId;
+	}
+
+	public void setRequestType(String requestType) {
+		this.requestType = requestType;
 	}
 }

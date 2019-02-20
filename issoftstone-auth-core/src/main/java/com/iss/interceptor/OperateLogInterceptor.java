@@ -39,7 +39,7 @@ public class OperateLogInterceptor implements HandlerInterceptor {
             	log.setOptType(operateLog.optType());
             	User user = UserPrincipal.getContextUser();
             	if (!StringUtils.equals(InitEnvironment.getInitUsername(), user.getLoginName())) {
-            		log.setUser(user);
+            		log.setUserId(user.getId());
 				}
             	String methodName = handlerMethod.getMethod().getName();
             	log.setMethod(methodName);

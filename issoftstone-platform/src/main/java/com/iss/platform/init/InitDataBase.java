@@ -75,8 +75,7 @@ public class InitDataBase {
 		try {
 			conn = dataSource.getConnection();
 			stmt = conn.createStatement();
-			String sql = "SELECT COUNT(*) FROM information_schema.schemata WHERE schema_name=\"" + database + "\"";
-			System.out.println(sql);
+			String sql = "select count(*) from information_schema.schemata where schema_name=\"" + database + "\"";
 			rs = stmt.executeQuery(sql);
 			if (rs.next()) {
 				if (rs.getInt(1) == 0) {

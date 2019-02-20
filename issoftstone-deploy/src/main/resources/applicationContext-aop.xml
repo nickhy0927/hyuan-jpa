@@ -7,5 +7,14 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 	<bean id="jobLogAspect" class="com.iss.aspect.JobLogAspect" />
+	<bean id="dataSourceAspect" class="com.iss.aop.DataSourceAspect" />
 	<aop:aspectj-autoproxy />
+	<!-- <aop:config>
+		<aop:pointcut id="dataSourceAspect" expression="execution(* org.spring.ibatis.*.service.*.insert*(..))||
+					execution(* org.spring.common.service.impl.*.insert*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="fooServiceMethods" />
+		<aop:aspect id="loggerPointCut" ref="loggerProxy" >
+			<aop:around method="around" pointcut-ref="fooServiceMethods"/>
+		</aop:aspect>
+	</aop:config> -->
 </beans>

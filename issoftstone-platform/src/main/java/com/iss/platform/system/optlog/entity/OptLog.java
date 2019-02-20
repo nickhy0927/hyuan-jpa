@@ -3,13 +3,10 @@ package com.iss.platform.system.optlog.entity;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.iss.common.utils.IdEntity;
-import com.iss.platform.access.user.entity.User;
 
 /**
  * 操作日志
@@ -23,7 +20,7 @@ public class OptLog extends IdEntity {
 	private String clazz; // 操作类名称
 	private Integer optType; // 操作类型
 	private String data; // 操作数据
-	private User user;
+	private String userId;
 
 	public String getMessage() {
 		return message;
@@ -67,14 +64,11 @@ public class OptLog extends IdEntity {
 		this.data = data;
 	}
 	
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	public User getUser() {
-		return user;
+	public String getUserId() {
+		return userId;
 	}
 	
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-
 }

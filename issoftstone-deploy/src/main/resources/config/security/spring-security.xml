@@ -29,7 +29,6 @@
                 username-parameter="username"
                 always-use-default-target="true"/>
         <!-- 增加一个filter，这点与Acegi是不一样的，不能修改默认的filter了，这个filter位于FILTER_SECURITY_INTERCEPTOR之前 -->  
-		<!-- <security:custom-filter ref="interceptor" before="FILTER_SECURITY_INTERCEPTOR"/> -->
         <security:intercept-url pattern="/**" access="@rbacService.hasPermission(request, authentication)"/>
         <security:csrf disabled="true"/>
         <security:logout delete-cookies="JSESSIONID" invalidate-session="true"/>
