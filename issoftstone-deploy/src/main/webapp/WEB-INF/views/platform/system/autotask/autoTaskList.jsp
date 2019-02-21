@@ -43,7 +43,7 @@
         	$("#tableList").dataTable({
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
-                url: "${ctx}/platform/access/autoTask/queryAutoTaskList.json",
+                url: "${ctx}/platform/access/autoTask/autoTaskList.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
                     { field: "taskName", title: '任务名称', width: 160, fixed: "left", unresize: true},
