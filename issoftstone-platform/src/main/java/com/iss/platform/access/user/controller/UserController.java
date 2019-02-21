@@ -140,7 +140,7 @@ public class UserController {
 
 	@ResponseBody
 	@OperateLog(message = "获取用户", optType = DataType.OptType.UPDATE, service = UserService.class)
-	@RequestMapping(value = "/platform/access/user/userEditJson.json", method = RequestMethod.POST)
+	@RequestMapping(name = "获取用户详情", value = "/platform/access/user/userEditJson.json", method = RequestMethod.POST)
 	public MessageObject<User> userEditJson(String id) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -225,7 +225,7 @@ public class UserController {
 
 	@ResponseBody
 	@OperateLog(message = "更新用户状态", optType = DataType.OptType.UPDATE, service = UserService.class)
-	@RequestMapping(value = "/platform/access/user/userStatusUpdate.json", method = RequestMethod.POST)
+	@RequestMapping(name = "更新用户状态", value = "/platform/access/user/userStatusUpdate.json", method = RequestMethod.POST)
 	public MessageObject<User> userStatusUpdate(User user) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {

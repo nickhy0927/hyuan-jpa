@@ -6,8 +6,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
-	<bean id="jobLogAspect" class="com.iss.aspect.JobLogAspect" />
-	<bean id="dataSourceAspect" class="com.iss.aop.DataSourceAspect" />
+	<bean class="com.iss.aspect.JobLogAspect" />
+	<bean class="com.iss.aspect.DataSourceAspect">
+		<property name="componentScan" value="com.iss.platform" />
+	</bean>
 	<aop:aspectj-autoproxy />
 	<!-- <aop:config>
 		<aop:pointcut id="dataSourceAspect" expression="execution(* org.spring.ibatis.*.service.*.insert*(..))||

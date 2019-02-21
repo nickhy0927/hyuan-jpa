@@ -164,7 +164,7 @@ public class MenuController {
 
 	@ResponseBody
 	@AccessAuthority(alias = "MENULIST", name = "获取菜单列表分页")
-	@RequestMapping(value = "/platform/access/menu/menuList.json", method = { RequestMethod.POST })
+	@RequestMapping(name = "获取菜单列表分页", value = "/platform/access/menu/menuList.json", method = { RequestMethod.POST })
 	public MessageObject<Menu> menuList(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();

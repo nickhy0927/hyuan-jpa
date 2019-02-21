@@ -26,7 +26,7 @@ import com.iss.news.section.entity.Section;
 import com.iss.news.section.service.SectionService;
 
 @Controller
-@RequestMapping(value = "/content/news/section")
+@RequestMapping(name = "版块管理", value = "/content/news/section")
 public class SectionController {
 
 	@Autowired

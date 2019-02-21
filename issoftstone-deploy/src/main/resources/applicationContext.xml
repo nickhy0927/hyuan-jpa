@@ -113,13 +113,18 @@
 		<!-- 配置监控统计拦截的filters -->
 		<property name="filters" value="stat" />
   	</bean>
-  	<bean id="initDataBase" class="com.iss.platform.init.InitDataBase">
+  	<bean id="initDataBase" class="com.iss.init.InitDataBase">
   		<property name="dataSource" ref="defaultDataSource" />
   		<property name="querySql" value="select * from t_p_s_database where status = 0 and enable = 1" />
   	</bean>
-  	<bean id="dataSource" class="com.iss.platform.init.DynamicDataSource" init-method="initDataSource">
+  	<bean id="dataSource" class="com.iss.init.DynamicDataSource">
   		<property name="masterDataSource" ref="defaultDataSource" />
-  		<property name="initDataBase" ref="initDataBase" />
+  		<property name="querySql" value="select * from t_p_s_database where status = 0 and enable = 1" />
+  		<property name="targetDataSources">
+  			<map>
+  				<entry key="dataSource" value-ref="defaultDataSource" />
+  			</map>
+  		</property>
   	</bean>
 	<bean id="defaultDataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
 		<constructor-arg ref="dataSourceSpied" />

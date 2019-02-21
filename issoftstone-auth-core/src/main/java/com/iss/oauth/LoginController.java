@@ -30,7 +30,6 @@ import com.iss.platform.access.user.service.UserService;
  * @author Administrator
  */
 @Controller
-@RequestMapping(value = "/user")
 public class LoginController {
 	public static final String VALIDATE_CODE = "verifyCode";
 
@@ -42,7 +41,7 @@ public class LoginController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value = "/login.json", method = RequestMethod.POST)
+	@RequestMapping(name = "用户登录", value = "/user/login.json", method = RequestMethod.POST)
 	public MessageObject<UserDetails> login(String username, String password, HttpServletRequest request) {
 		MessageObject<UserDetails> messageObject = MessageObject.getDefaultInstance();
 		username = username.trim();

@@ -27,7 +27,7 @@ import com.iss.common.utils.WebUtils;
 import com.iss.constant.DataType.OptType;
 
 @Controller
-@RequestMapping(value = "/blog/classification")
+@RequestMapping(name = "分类管理",value = "/blog/classification")
 public class ClassificationController {
 
 	@Autowired

@@ -25,7 +25,7 @@ import com.iss.news.category.entity.Category;
 import com.iss.news.category.service.CategoryService;
 
 @Controller
-@RequestMapping(value = "/content/news/category")
+@RequestMapping(name = "栏目管理", value = "/content/news/category")
 public class CategoryController {
 
 	@Autowired

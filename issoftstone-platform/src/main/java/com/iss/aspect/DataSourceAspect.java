@@ -1,4 +1,4 @@
-package com.iss.aop;
+package com.iss.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -11,14 +11,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.iss.aspect.anno.ServiceMonitor;
-import com.iss.oauth.user.UserPrincipal;
-import com.iss.platform.init.DataSourceHolder;
+import com.iss.init.DataSourceHolder;
+import com.iss.platform.access.user.entity.User;
+import com.iss.user.UserPrincipal;
 
-@Component
 @Aspect
+@Component
 public class DataSourceAspect {
 
+	private String componentScan;
+
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
+
+	public String[] getPackages() {
+		return componentScan.split(",");
+	}
 
 	@Pointcut(value = "execution(* com.iss.*.service.*.*(..))")
 	private void pointcut() {
@@ -27,16 +34,33 @@ public class DataSourceAspect {
 
 	@Around(value = "pointcut()")
 	public Object around(ProceedingJoinPoint point) {
+		String dataSourceId = "dataSource";
 		// 方法返回结果
 		Object result = null;
 		try {
+			String classType = point.getTarget().getClass().getName();
+			Class<?> clazz = Class.forName(classType);
+			String clazzName = clazz.getName();
+			String[] packages = getPackages();
+			boolean flag = false;
+			for (String p : packages) {
+				if (clazzName.contains(p)) {
+					flag = true;
+					break;
+				}
+			}
+			LOG.debug("接口实现类是：" + clazzName);
+			if (!flag) {
+				User contextUser = UserPrincipal.getContextUser();
+				if (contextUser != null) {
+					dataSourceId = contextUser.getDataSourceId();
+					DataSourceHolder.DATASOURCEID = dataSourceId;
+				}
+				
+			}
+			LOG.debug("是否使用默认数据源：" + (flag));
 			// 执行方法（可以在方法前后添加前置和后置通知）
 			result = point.proceed();
-			String dataSourceId = "dataSource";
-			if (UserPrincipal.getContextUser() != null) {
-				dataSourceId = UserPrincipal.getContextUser().getDataSourceId();
-				DataSourceHolder.setDataSource(dataSourceId);
-			}
 			System.out.println(dataSourceId);
 		} catch (Throwable e) {
 			// 打印堆栈信息
@@ -57,9 +81,8 @@ public class DataSourceAspect {
 	 */
 	@AfterReturning(value = "pointcut() && @annotation(serviceMonitor)", returning = "result")
 	public Object afterReturning(JoinPoint joinPoint, ServiceMonitor serviceMonitor, Object result) {
-		System.out.println("----> afterReturning");
 		String methodName = joinPoint.getSignature().getName();
-		System.out.println("The method " + methodName + " return with " + result);
+		LOG.debug("The method " + methodName + " return with " + result);
 		if (result instanceof Boolean) {
 			if (!((Boolean) result)) {
 				result = "error----result is false";
@@ -70,6 +93,10 @@ public class DataSourceAspect {
 			}
 		}
 		return result;
+	}
+
+	public void setComponentScan(String componentScan) {
+		this.componentScan = componentScan;
 	}
 
 }

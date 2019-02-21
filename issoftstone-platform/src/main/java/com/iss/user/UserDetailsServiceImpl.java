@@ -1,4 +1,4 @@
-package com.iss.oauth.user;
+package com.iss.user;
 
 import java.util.ArrayList;
 import java.util.Collection;

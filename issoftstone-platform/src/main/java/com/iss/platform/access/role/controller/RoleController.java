@@ -78,7 +78,7 @@ public class RoleController {
 
 	@ResponseBody
 	@OperateLog(message = "保存角色", optType = DataType.OptType.INSERT, service = RoleService.class)
-	@RequestMapping(value = "/platform/access/role/roleCreateSave.json", method = RequestMethod.POST)
+	@RequestMapping(name = "保存角色", value = "/platform/access/role/roleCreateSave.json", method = RequestMethod.POST)
 	public MessageObject<Role> roleCreateSave(Role role) {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -144,7 +144,7 @@ public class RoleController {
 
 	@ResponseBody
 	@OperateLog(message = "修改角色", optType = DataType.OptType.UPDATE, service = RoleService.class)
-	@RequestMapping(value = "/platform/access/role/roleEditUpdate.json", method = RequestMethod.POST)
+	@RequestMapping(name = "修改保存角色",value = "/platform/access/role/roleEditUpdate.json", method = RequestMethod.POST)
 	public MessageObject<Role> roleEditUpdate(Role role) {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
 		try {

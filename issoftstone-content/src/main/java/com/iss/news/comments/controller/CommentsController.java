@@ -25,7 +25,7 @@ import com.iss.news.comments.entity.Comments;
 import com.iss.news.comments.service.CommentService;
 
 @Controller
-@RequestMapping(value = "/content/news/comments")
+@RequestMapping(name = "评论", value = "/content/news/comments")
 public class CommentsController {
 
 	@Autowired

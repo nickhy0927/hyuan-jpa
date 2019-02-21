@@ -167,7 +167,7 @@ public class DictController {
 
 	@ResponseBody
 	@AccessAuthority(alias = "dicttreelist", name = "数据字典列表")
-	@RequestMapping(value = "/platform/access/dict/dictTableList.json", method = { RequestMethod.POST })
+	@RequestMapping(name = "获取数据字典分页列表", value = "/platform/access/dict/dictTableList.json", method = { RequestMethod.POST })
 	public List<Dict> dictTableList(HttpServletRequest request) {
 		try {
 			Map<String, Object> map = WebUtils.getRequestToMap(request);

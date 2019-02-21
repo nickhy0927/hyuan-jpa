@@ -25,7 +25,7 @@ public class RbacServiceImpl implements RbacService {
 	@Override
 	public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
 		Object principal = authentication.getPrincipal();
-		boolean hasPermission = false;
+		boolean hasPermission = true;
 		String requestURI = request.getRequestURI().replace(request.getContextPath(), "");
 		if (principal instanceof UserDetails) {
 			String username = ((UserDetails) principal).getUsername();
