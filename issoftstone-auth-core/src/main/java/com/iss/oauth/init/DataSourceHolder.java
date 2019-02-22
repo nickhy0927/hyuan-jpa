@@ -1,4 +1,4 @@
-package com.iss.init;
+package com.iss.oauth.init;
 
 public class DataSourceHolder {
 	

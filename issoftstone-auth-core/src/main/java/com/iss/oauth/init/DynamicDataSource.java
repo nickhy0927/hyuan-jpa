@@ -1,4 +1,4 @@
-package com.iss.init;
+package com.iss.oauth.init;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

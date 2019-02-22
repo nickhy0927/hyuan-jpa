@@ -1,22 +1,18 @@
-package com.iss.aspect;
+package com.iss.oauth.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import com.iss.aspect.anno.ServiceMonitor;
-import com.iss.init.DataSourceHolder;
+import com.iss.oauth.init.DataSourceHolder;
+import com.iss.oauth.user.UserPrincipal;
 import com.iss.platform.access.user.entity.User;
-import com.iss.user.UserPrincipal;
 
-@Aspect
-@Component
 public class DataSourceAspect {
 
 	private String componentScan;

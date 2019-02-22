@@ -19,10 +19,10 @@ import com.iss.common.config.InitEnvironment;
 import com.iss.common.spring.SpringContextHolder;
 import com.iss.common.utils.JsonMapper;
 import com.iss.common.utils.WebUtils;
+import com.iss.oauth.user.UserPrincipal;
 import com.iss.platform.access.user.entity.User;
 import com.iss.platform.system.optlog.entity.OptLog;
 import com.iss.platform.system.optlog.service.OptLogService;
-import com.iss.user.UserPrincipal;
 
 public class OperateLogInterceptor implements HandlerInterceptor {
 

@@ -1,4 +1,4 @@
-package com.iss.init.anno;
+package com.iss.oauth.init.anno;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

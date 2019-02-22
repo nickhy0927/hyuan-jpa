@@ -60,7 +60,7 @@
         <property name="passwordEncoder" ref="passwordEncoder"/>
         <property name="saltSource" ref="saltSource"/>
     </bean>
-    <bean id="userDetailsService" class="com.iss.user.UserDetailsServiceImpl"/>
+    <bean id="userDetailsService" class="com.iss.oauth.user.UserDetailsServiceImpl"/>
     <!-- 盐值加密 salt对应数据库字段-->
     <bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
         <property name="userPropertyToUse" value="salt" />

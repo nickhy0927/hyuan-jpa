@@ -113,7 +113,7 @@
 		<!-- 配置监控统计拦截的filters -->
 		<property name="filters" value="stat" />
   	</bean>
-  	<bean id="dataSource" class="com.iss.init.DynamicDataSource">
+  	<bean id="dataSource" class="com.iss.oauth.init.DynamicDataSource">
   		<property name="masterDataSource" ref="defaultDataSource" />
   		<property name="querySql" value="select * from t_p_s_database where status = 0 and enable = 1" />
   		<property name="targetDataSources">

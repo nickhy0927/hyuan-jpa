@@ -15,10 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.iss.common.exception.ServiceException;
 import com.iss.constant.DataType;
+import com.iss.oauth.user.UserPrincipal;
 import com.iss.platform.access.user.entity.User;
 import com.iss.platform.system.exceptionlog.entity.ExceptionLog;
 import com.iss.platform.system.exceptionlog.service.ExceptionLogService;
-import com.iss.user.UserPrincipal;
 
 /**
  * 错误日志监控拦截器

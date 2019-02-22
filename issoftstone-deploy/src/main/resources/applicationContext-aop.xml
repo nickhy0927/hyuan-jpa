@@ -7,10 +7,9 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 	<bean class="com.iss.aspect.JobLogAspect" />
-	<bean class="com.iss.aspect.DataSourceAspect">
+	<bean class="com.iss.oauth.aop.DataSourceAspect">
 		<property name="componentScan" value="com.iss.platform" />
 	</bean>
-	<aop:aspectj-autoproxy proxy-target-class="true"/>
 	<!-- <aop:config>
 		<aop:pointcut id="dataSourceAspect" expression="execution(* org.spring.ibatis.*.service.*.insert*(..))||
 					execution(* org.spring.common.service.impl.*.insert*(..))" />
