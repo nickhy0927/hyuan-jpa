@@ -91,6 +91,15 @@
 		<servlet-name>ValidateCode</servlet-name>
 		<url-pattern>/auth/authCode.image</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>webSocket</servlet-name>
+		<servlet-class>com.iss.orm.log.WebSocketServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>webSocket</servlet-name>
+		<url-pattern>/webSocket</url-pattern>
+	</servlet-mapping>
+
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

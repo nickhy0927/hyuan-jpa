@@ -12,6 +12,7 @@
     <security:http pattern="/assets/**" security="none"/>
     <security:http pattern="/druid/**" security="none"/>
     <security:http pattern="/unauth.do" security="none"/>
+    <security:http pattern="/w/ws.do" security="none"/>
     <security:http pattern="/auth/authCode.image" security="none"/>
     <security:http pattern="/login.jsp" security="none"/>
     <security:http pattern="/user/login.json" security="none"/>

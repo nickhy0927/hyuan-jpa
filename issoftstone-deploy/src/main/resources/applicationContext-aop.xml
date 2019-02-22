@@ -10,12 +10,5 @@
 	<bean class="com.iss.oauth.aop.DataSourceAspect">
 		<property name="componentScan" value="com.iss.platform" />
 	</bean>
-	<!-- <aop:config>
-		<aop:pointcut id="dataSourceAspect" expression="execution(* org.spring.ibatis.*.service.*.insert*(..))||
-					execution(* org.spring.common.service.impl.*.insert*(..))" />
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="fooServiceMethods" />
-		<aop:aspect id="loggerPointCut" ref="loggerProxy" >
-			<aop:around method="around" pointcut-ref="fooServiceMethods"/>
-		</aop:aspect>
-	</aop:config> -->
+	<aop:aspectj-autoproxy />
 </beans>

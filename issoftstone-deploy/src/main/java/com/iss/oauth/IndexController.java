@@ -32,6 +32,10 @@ public class IndexController {
     	model.addAttribute("menus", menuTrees);
         return "index";
     }
+    @RequestMapping(name = "日志监控", value = "/tomcatLog.do", method = RequestMethod.GET)
+    public String tomcatLog() {
+    	return "/log/tomcatLog";
+    }
     
     @AccessAuthority(alias = "ztree", name = "树结构")
     @RequestMapping(value = "ztree.do", method = RequestMethod.GET)
