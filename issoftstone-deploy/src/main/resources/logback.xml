@@ -1,18 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>%d{HH:mm:ss.SSS} [%-5level] %logger{36} - %msg%n</pattern>
+			<pattern>
+				%d{YYYY-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
 		</encoder>
+		<!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
+        <filter class="com.iss.log.LogFilter" />
 	</appender>
 
-	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>d:/logs/deploy.log</file>
+	<!-- 日志生成位置 -->
+	<appender name="eventFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File><!-- ${catalina.base} -->d:/logs/deploy/deploy.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>logs/deploy.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- daily rollover 保存历史记录到这个文件夹一日起为后缀 -->
+			<FileNamePattern>
+				<!-- ${catalina.base}/logs/deploy/deploy.%d{yyyy-MM-dd}.log -->
+				d:/logs/deploy/deploy.%d{yyyyMMddHHmm}.log
+			</FileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder>
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+			<Pattern>%d{YYYY-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</Pattern>
+			<charset>UTF-8</charset> <!-- 此处设置字符集 -->
 		</encoder>
 	</appender>
 	<logger name="jdbc.audit" level="OFF"/>
@@ -32,8 +43,9 @@
 	<logger name="log4jdbc.debug" level="WARN" />
 	<!--log4jdbc -->
 	<logger name="jdbc.sqltiming" level="INFO"/>
+	<!-- 打印 日志级别 -->
 	<root level="DEBUG">
-		<appender-ref ref="console" />
-		<appender-ref ref="rollingFile" />
+		<appender-ref ref="eventFile" />
+		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>

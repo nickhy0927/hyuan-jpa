@@ -32,6 +32,11 @@ public class IndexController {
     	model.addAttribute("menus", menuTrees);
         return "index";
     }
+    
+    @RequestMapping(name = "日志监控log", value = "/log.do", method = RequestMethod.GET)
+    public String log() {
+    	return "/log/log";
+    }
     @RequestMapping(name = "日志监控", value = "/tomcatLog.do", method = RequestMethod.GET)
     public String tomcatLog() {
     	return "/log/tomcatLog";

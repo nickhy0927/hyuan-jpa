@@ -5,9 +5,14 @@
 <hy:extends name="title">ztree</hy:extends>
 <hy:extends name="css">
 	<style type="text/css">
+		body {
+			background: #000000;
+		}
 		#log-container div p {
 			font-family: Monaco;
-			font-size: 16px;
+			font-size: 25px;
+			color: green;
+			font-weight:bold;
 			line-height: 30px;
 		}
 		

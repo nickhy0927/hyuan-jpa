@@ -107,7 +107,6 @@ public class DataSourceAspect {
 			if (costTime > warnWhenOverTime) {
 				sb.append("开始时间：").append(format.format(new Date())).append("<br>\n");
 				sb.append("执行方法：").append(clazzName).append("_").append(m.getName()).append("<br>\n");
-				sb.append("执行参数： ").append(arrayToString(point.getArgs())).append("<br>\n");
 				sb.append("持续时间： ").append(costTime).append("ms.").append("<br>\n");
 				sb.append("结束时间：").append(format.format(new Date())).append("<br>\n");
 				sb.append("-------------------------------------------------------------------\n");
