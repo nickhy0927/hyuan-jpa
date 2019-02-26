@@ -27,7 +27,8 @@ public class Test1 implements PageProcessor {
 		for (String href : links) {
 			Spider spider = OOSpider.create(site, new OsChinaPageModelPipeline(), OsChianTitle.class)
 					.addUrl(href);
-			spider.thread(1).run();
+			spider.run();
+			spider.stop();
 		}
 	}
 
