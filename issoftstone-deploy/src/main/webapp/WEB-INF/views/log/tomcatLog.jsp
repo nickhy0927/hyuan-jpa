@@ -10,6 +10,7 @@
 		} */
 		#log-container div p {
 			font-family: Monaco;
+			font-weight: bold;
 			line-height: 30px;
 		}
 		
