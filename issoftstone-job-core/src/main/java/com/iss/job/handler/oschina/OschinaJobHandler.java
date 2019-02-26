@@ -21,6 +21,7 @@ public class OschinaJobHandler extends IJobHandler {
 	public ReturnT<String> execute(String param) throws Exception {
 		Spider spider = OOSpider.create(Site.me(), new OschinaPipeline(tagsService), OschinaBlog.class).addUrl("https://www.oschina.net/blog");
 		spider.run();
+		spider.stop();
 		return ReturnT.SUCCESS;
 	}
 
