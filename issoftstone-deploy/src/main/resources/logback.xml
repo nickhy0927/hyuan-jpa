@@ -6,7 +6,7 @@
 			</pattern>
 		</encoder>
 		<!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
-        <filter class="com.iss.log.LogFilter" />
+        <filter class="com.iss.orm.log.filter.LogFilter" />
 	</appender>
 
 	<!-- 日志生成位置 -->
