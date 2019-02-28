@@ -21,7 +21,9 @@
     <bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl"/>
 
     <!--配置web端使用权限控制-->
-    <bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
+    <bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler">
+    	<property name="defaultRolePrefix" value="" />
+    </bean>
     <security:http use-expressions="true" auto-config="true">
         <security:form-login
                 login-page="/login.jsp"
