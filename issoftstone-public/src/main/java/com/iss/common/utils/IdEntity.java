@@ -18,12 +18,12 @@ import org.hibernate.annotations.GenericGenerator;
 @SuppressWarnings("serial")
 @Access(AccessType.PROPERTY)
 public class IdEntity extends PageSupport implements Serializable {
-	protected String id;// ID
 	protected Date createTime = new Date();
-	protected Date updateTime;
+	protected String id;// ID
 	protected Boolean status; // 有效状态 true 有效 false 无效
-
 	protected String statusName;
+
+	protected Date updateTime;
 	
 	/**
 	 * 版本号
@@ -48,7 +48,7 @@ public class IdEntity extends PageSupport implements Serializable {
 		return getId().equals(other.getId());
 	}
 
-	@Column(updatable = false, columnDefinition = "datetime comment '创建时间'")
+	@Column(insertable = true, columnDefinition = "datetime comment '创建时间'")
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -61,9 +61,27 @@ public class IdEntity extends PageSupport implements Serializable {
 		return id;
 	}
 
-	@Column(columnDefinition = "datetime comment '修改时间'")
+	@Column(columnDefinition = "bit(1) comment '是否删除：0 否 1 是'")
+	public Boolean getStatus() {
+		String statusName = SysContants.IsDelete.getIsDeleteName(status);
+		setStatusName(statusName);
+		return status;
+	}
+
+	@Transient
+	public String getStatusName() {
+		return statusName;
+	}
+
+	@Column(updatable = true, columnDefinition = "datetime comment '修改时间'")
 	public Date getUpdateTime() {
 		return updateTime;
+	}
+
+	@Version
+	@Column(name = "version",columnDefinition = "int(11) default 0  comment '版本号,防重' ")
+	public int getVersion() {
+		return version;
 	}
 
 	public void setCreateTime(Date createTime) {
@@ -74,34 +92,16 @@ public class IdEntity extends PageSupport implements Serializable {
 		this.id = id;
 	}
 
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-
-	@Transient
-	public String getStatusName() {
-		return statusName;
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 
 	public void setStatusName(String statusName) {
 		this.statusName = statusName;
 	}
-
-	public void setStatus(Boolean status) {
-		this.status = status;
-	}
-
-	@Column(columnDefinition = "bit(1) comment '是否删除：0 否 1 是'")
-	public Boolean getStatus() {
-		String statusName = SysContants.IsDelete.getIsDeleteName(status);
-		setStatusName(statusName);
-		return status;
-	}
 	
-	@Version
-	@Column(name = "version",columnDefinition = "int(11) default 0  comment '版本号,防重' ")
-	public int getVersion() {
-		return version;
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 	
 	public void setVersion(int version) {
