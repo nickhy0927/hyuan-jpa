@@ -1,5 +1,7 @@
 package com.iss.oauth;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,8 +40,7 @@ public class LoginController {
 
 	@Autowired
 	private UserService userService;
-	
-	
+
 	@ResponseBody
 	@RequestMapping(name = "用户登录", value = "/user/login.json", method = RequestMethod.POST)
 	public MessageObject<UserDetails> login(String username, String password, HttpServletRequest request) {
@@ -51,7 +52,8 @@ public class LoginController {
 			if (verification == null || !captcha.contentEquals(verification)) {
 				throw new VerifyCodeException("验证码不匹配");
 			}
-			UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
+			UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username,
+					password);
 			// 调用loadUserByUsername
 			Authentication authentication = authenticationManager.authenticate(authRequest);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -78,7 +80,35 @@ public class LoginController {
 			} else if (ex instanceof UsernameNotFoundException) {
 				messageObject.error(ex.getMessage() + "，请重新输入");
 			}
-		} 
+		}
 		return messageObject;
+	}
+
+	@RequestMapping(name = "用户微信登录", value = "/three/user/wxLogin.do", method = RequestMethod.GET)
+	public String wxLogin(HttpServletRequest request) {
+		StringBuffer buffer = new StringBuffer("https://open.weixin.qq.com/connect/qrconnect?");
+		try {
+			buffer.append("appid=wxfd6965ab1fc6adb2");
+			buffer.append("&redirect_uri=")
+					.append(URLEncoder.encode("http://localhost:8081/issoftstone-deploy/wxIndex.do", "UTF-8"));
+			buffer.append("&response_type=code");
+			buffer.append("&scope=snsapi_userinfo");
+			buffer.append("&state=" + request.getSession().getId());
+			buffer.append("#wechat_redirect");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		String url = buffer.toString();
+		return "redirect:" + url;
+	}
+
+	@RequestMapping(name = "用户github登录", value = "/three/user/gitHubLogin.do", method = RequestMethod.GET)
+	public String gitHubLogin(HttpServletRequest request) {
+		StringBuffer buffer = new StringBuffer("https://github.com/login/oauth/authorize?");
+		buffer.append("client_id=1d768b44da64bde676df");
+		buffer.append("&state=").append(request.getSession().getId());
+		buffer.append("&redirect_uri=").append("http://localhost:8081/issoftstone-deploy/wxIndex.do");
+		String url = buffer.toString();
+		return "redirect:" + url;
 	}
 }

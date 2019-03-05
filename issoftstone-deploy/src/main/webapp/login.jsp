@@ -67,7 +67,9 @@
                     </div>
                 </div>
                 <div class="row cl">
-                    <label class="form-label col-xs-3"></label>
+                    <label class="form-label col-xs-3">
+                    	<i class="layui-icon layui-icon-vercode" style="font-size: 22px;margin-right: 0px;"></i> 
+                    </label>
                     <div class="formControls col-xs-8">
                         <input autocomplete="off"  class="input-text size-L" type="text" placeholder="请输入登录验证码"
                                value="" style="width:150px;" name="code">
@@ -88,6 +90,13 @@
                     <div class="formControls col-xs-8">
                         <input style="width: 90%" name="" type="button" id="doLogin" class="btn btn-success radius size-XL input-text"
                                value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
+                    </div>
+                </div>
+                <div class="row cl">
+                   	<label class="form-label col-xs-3"></label>
+                    <div class="formControls col-xs-8">
+                        <a href="${ctx}/user/wxLogin.do">微信授权</a>
+                        <a href="${ctx}/three/user/gitHubLogin.do">github授权</a>
                     </div>
                 </div>
                 <div class="row cl">

@@ -1,6 +1,9 @@
 package com.iss.oauth;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.iss.common.anno.AccessAuthority;
+import com.iss.common.utils.JsonMapper;
+import com.iss.common.utils.WebUtils;
 import com.iss.platform.access.menu.entity.MenuTree;
 import com.iss.platform.access.menu.service.MenuService;
 
@@ -37,6 +42,13 @@ public class IndexController {
     public String log() {
     	return "/log/log";
     }
+    @RequestMapping(name = "微信认证首页", value = "/wxIndex.do", method = RequestMethod.GET)
+    public String wxIndex(HttpServletRequest request) {
+    	Map<String, Object> requestToMap = WebUtils.getRequestParamterToMap(request);
+    	request.setAttribute("params", new JsonMapper().toJson(requestToMap));
+    	return "wxIndex";
+    }
+    
     @RequestMapping(name = "日志监控", value = "/tomcatLog.do", method = RequestMethod.GET)
     public String tomcatLog() {
     	return "/log/tomcatLog";
