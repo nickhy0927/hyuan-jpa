@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.iss.common.anno.AccessAuthority;
+import com.iss.common.config.InitEnvironment;
 import com.iss.common.utils.JsonMapper;
 import com.iss.common.utils.WebUtils;
 import com.iss.platform.access.menu.entity.MenuTree;
@@ -35,6 +36,7 @@ public class IndexController {
     public String index(Model model) {
     	List<MenuTree> menuTrees = menuService.queryMenuTree();
     	model.addAttribute("menus", menuTrees);
+    	model.addAttribute("username", InitEnvironment.getCurrentLoginName());
         return "index";
     }
     
@@ -42,6 +44,8 @@ public class IndexController {
     public String log() {
     	return "/log/log";
     }
+
+    
     @RequestMapping(name = "微信认证首页", value = "/wxIndex.do", method = RequestMethod.GET)
     public String wxIndex(HttpServletRequest request) {
     	Map<String, Object> requestToMap = WebUtils.getRequestParamterToMap(request);

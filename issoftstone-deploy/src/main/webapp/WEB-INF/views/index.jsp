@@ -18,6 +18,20 @@
 <hy:extends name="javascript">
     <script type="text/javascript" src="${basePath}/assets/lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
 	<script type="text/javascript">
+		$(document).ready(function() {
+	        // 指定websocket路径
+	        var websocket = new WebSocket('ws://localhost:8081/issoftstone-deploy/ws.do?uid=${username}');
+	        websocket.onmessage = function(event) {
+	        	try {
+	        		console.log(event.data);
+	        		var content = JSON.parse(JSON.parse(event.data));
+	        		console.log(content)
+	        		alert(content.msg);
+	        		window.location.href = "${basePath}/logout";
+				} catch (e) {
+				}
+	        };
+	    });
 		$(function () {
 	        $("body").Huitab({
 	            tabBar:".navbar-wrapper .navbar-levelone",

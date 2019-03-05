@@ -3,6 +3,7 @@ package com.iss.oauth;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,9 +23,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.collect.Maps;
 import com.iss.common.config.InitEnvironment;
 import com.iss.common.exception.VerifyCodeException;
+import com.iss.common.utils.JsonMapper;
 import com.iss.common.utils.MessageObject;
+import com.iss.orm.log.queue.LoggerQueue;
+import com.iss.orm.log.websocket.WebsocketHandler;
 import com.iss.platform.access.user.entity.User;
 import com.iss.platform.access.user.service.UserService;
 
@@ -66,6 +71,12 @@ public class LoginController {
 			User user = userService.findUserByLoginName(name);
 			user.setLastLoginTime(new Date());
 			userService.updateUser(user);
+			user.setPassword(null);
+			LoggerQueue.getInstance().push(user);
+			Map<String, Object> result = Maps.newConcurrentMap();
+			result.put("code", 4000);
+			result.put("msg", "你的账号在其他地方登录，非本人登录，请及时修改密码");
+			WebsocketHandler.sendMessageToUser(name, new JsonMapper().toJson(result));
 			return messageObject;
 		} catch (Exception ex) {
 			ex.printStackTrace();

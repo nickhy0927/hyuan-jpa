@@ -110,7 +110,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 				Entry<String, WebSocketSession> entry = it.next();
 				if (entry.getValue().getId().equals(session.getId())) {
 					websocketSessionsConcurrentHashMap.remove(entry.getKey());
-					System.out.println("Socket会话已经移除:用户ID" + entry.getKey());
+					System.out.println("Socket会话已经移除:用户ID:" + entry.getKey());
 					break;
 				}
 			}
@@ -138,7 +138,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 				Entry<String, WebSocketSession> entry = it.next();
 				if (entry.getValue().getId().equals(session.getId())) {
 					websocketSessionsConcurrentHashMap.remove(entry.getKey());
-					System.out.println("Socket会话已经移除:用户ID" + entry.getKey());
+					System.out.println("Socket会话已经移除:用户ID：" + entry.getKey());
 					break;
 				}
 			}
