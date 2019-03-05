@@ -75,7 +75,7 @@ public class LoginController {
 			LoggerQueue.getInstance().push(user);
 			Map<String, Object> result = Maps.newConcurrentMap();
 			result.put("code", 4000);
-			result.put("msg", "你的账号在其他地方登录，非本人登录，请及时修改密码");
+			result.put("msg", "你的账号在其他地方登录，如非本人操作，请及时修改密码");
 			WebsocketHandler.sendMessageToUser(name, new JsonMapper().toJson(result));
 			return messageObject;
 		} catch (Exception ex) {
