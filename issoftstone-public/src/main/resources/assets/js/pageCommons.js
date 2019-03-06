@@ -203,15 +203,12 @@
 	                enable: true
 	            }
 	        },
-	        check: {
-	        	chkStyle: "radio",  //单选框
-	            radioType: "all",  //对所有节点设置单选
-	            enable: false,
-	            chkboxType: {"Y": "ps", "N": "s"}
-	        },
 	        callback: {
 	            onClick: onClick,
-	            onCheck: onCheck
+	            onCheck: onCheck,
+	            onNodeCreated: function (event, treeId, treeNode) { },
+	            onNodeCreated: function (event, treeId, treeNode) { },
+	            onRightClick: function (event, treeId, treeNode) {}
 	        }
 		}, options || {});
 		if(!setting.dataSource) throw '没有数据资源，请配置dataSource';
@@ -220,8 +217,6 @@
 				 type: "POST",
 				 url: setting.dataSource,
 				 success: function(res) {
-					 console.log(res);
-					 console.log(res.content);
 					 setting.zNodes = res.content;
 					 _init_select_tree(_this, setting);
 				 }
