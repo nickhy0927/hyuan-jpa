@@ -11,7 +11,6 @@
 			},
 			syns: false // 是否异步
 		}, options || {})
-		console.log('setting==', setting);
 		var opts = '<option value="">' + setting.holder +'</option>';
 		if(typeof setting.dataSource == 'string') {
 			$.ajax({
@@ -367,6 +366,7 @@ $(document).ready(function () {
 	    // 规定请求的字符集。
 	    scriptCharset: "UTF-8",
 	    error: function(jqXHR, textStatus, errorThrown){  
+	    	console.log(jqXHR)
             switch (jqXHR.status){  
                 case(500):  
 	                $.openTip('服务器系统内部错误', function() {

@@ -40,7 +40,11 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 	        // 指定websocket路径
-	        var websocket = new WebSocket('ws://localhost:8081/issoftstone-deploy/ws.do?uid=log');
+	        var hostname = location.hostname;
+			var port = location.port;
+			var host = location.host;
+			var path = hostname + ":" + port + "${basePath}";
+	        var websocket = new WebSocket('ws://' + path + '/ws.do?uid=log');
 	        websocket.onmessage = function(event) {
 	        	try {
 	        		var content = JSON.parse(event.data);

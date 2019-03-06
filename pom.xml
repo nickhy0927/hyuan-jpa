@@ -95,9 +95,9 @@
 	</modules>
 	<distributionManagement>
 		<snapshotRepository>
-            <id>snapshots</id>
-            <name>snapshots</name>
-            <url>http://10.193.129.33:8081/repository/maven-snapshots</url>
-        </snapshotRepository>
+			<id>snapshots</id>
+			<name>snapshots</name>
+			<url>http://10.193.129.33:8081/repository/maven-snapshots</url>
+		</snapshotRepository>
 	</distributionManagement>
 </project>

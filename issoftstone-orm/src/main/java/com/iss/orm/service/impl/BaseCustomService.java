@@ -38,9 +38,9 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	
 	@Override
 	@Transactional(readOnly = false)
-	public void saveBatch(List<E> entities) throws ServiceException {
+	public Iterable<E> saveBatch(Iterable<E> entities) throws ServiceException {
 		try {
-			this.dao.save(entities);
+			return this.dao.save(entities);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new ServiceException("批量保存信息失败", e);

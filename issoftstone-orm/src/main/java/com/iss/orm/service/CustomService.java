@@ -40,5 +40,5 @@ public interface CustomService<E, ID extends Serializable> {
 
 	E saveEntity(E entity) throws ServiceException;
 	
-	void saveBatch(List<E> paramIterable) throws ServiceException;
+	Iterable<E> saveBatch(Iterable<E> paramIterable) throws ServiceException;
 }

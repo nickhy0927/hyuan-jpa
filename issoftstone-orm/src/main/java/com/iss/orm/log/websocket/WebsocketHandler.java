@@ -166,13 +166,12 @@ public class WebsocketHandler extends TextWebSocketHandler {
 	public static void broadcast(final TextMessage message) {
 		try {
 			Set<Entry<String,WebSocketSession>> entrySet = websocketSessionsConcurrentHashMap.entrySet();
-			for (Entry<String, WebSocketSession> entry : entrySet) {
+			for (final Entry<String, WebSocketSession> entry : entrySet) {
 				String key = entry.getKey();
 				System.out.println(key);
 				WebSocketSession socketSession = entry.getValue();
 				System.out.println(socketSession);
 				if (entry.getValue().isOpen()) {
-					// entry.getValue().sendMessage(message);
 					new Thread(new Runnable() {
 						public void run() {
 							try {

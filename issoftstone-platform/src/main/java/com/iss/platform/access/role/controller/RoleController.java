@@ -58,7 +58,8 @@ public class RoleController {
 	@RequestMapping(name = "获取菜单树", value = "/platform/access/menu/menuTreeList.json", method = RequestMethod.GET)
 	public List<Ztree> menuTreeList(String id) {
 		Role role = roleService.get(id);
-		List<Menu> menus = role != null ? role.getMenus() : Lists.newArrayList();
+		List<Menu> menus = Lists.newArrayList();
+		if (role != null) menus = role.getMenus(); 
 		return menuService.queryZtreeMenuTree(menus);
 	}
 
