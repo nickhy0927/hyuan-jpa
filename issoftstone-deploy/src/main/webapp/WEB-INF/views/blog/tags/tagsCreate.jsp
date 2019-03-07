@@ -10,7 +10,7 @@
                 var form = layui.form;
                 
                 $('#parentId').initSelectTree({
-        			dataSource: '${ctx}/blog/classification/querySelectTree.json'
+        			dataSource: '${ctx}/blog/tags/queryClassificationSelectTree.json'
                 })
                 //监听提交
                 form.on('submit(create-form)', function (data) {    

@@ -27,6 +27,8 @@ public @interface MenuMonitor {
 	 */
 	boolean enable() default true; 
 	
+	boolean shows() default true; 
+	
 	/**
 	 * 上级菜单别名
 	 * @return

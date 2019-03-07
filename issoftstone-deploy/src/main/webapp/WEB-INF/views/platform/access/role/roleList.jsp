@@ -44,7 +44,7 @@
 		}
     	function deleteInfo(tableInstance, data) {
     		$.deleteInfo({
-				url: '${ctx}/platform/access/role/delete.json',//发送请求
+				url: '${ctx}/platform/access/role/roleDetete.json',//发送请求
 		    	data: data,
 		    	loadMsg: '正在删除角色信息，请稍等...', 
 		    	success: function (res) {
@@ -67,7 +67,7 @@
 		}
         function initTree(roleId) {
         	$.ajax({
-        		url: '${ctx}/platform/access/menu/menuTreeList.json',
+        		url: '${ctx}/platform/access/role/menuTreeList.json',
         		method: 'GET',
         		data: {id: (roleId ? roleId : "")},
         		success: function (res) {

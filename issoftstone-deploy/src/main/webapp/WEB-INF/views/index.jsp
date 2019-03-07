@@ -111,8 +111,8 @@
 	   					<dl>
 			                <dt>
 			                	<c:if test="${not empty secord.iconClass}">${secord.iconClass}</c:if>
-			                	<c:if test="${empty secord.iconClass}"><i class="Hui-iconfont">&#xe616;</i> </c:if>
-			                	${secord.name}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			                	<c:if test="${empty secord.iconClass}"><i class="Hui-iconfont">&#xe616;</i>&nbsp;&nbsp;</c:if> ${secord.name}
+			                	<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			                <dd>
 			                    <ul>
 			                        <c:if test="${not empty secord.children}">

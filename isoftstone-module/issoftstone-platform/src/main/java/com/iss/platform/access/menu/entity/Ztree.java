@@ -15,7 +15,6 @@ public class Ztree {
 
 	public Ztree(Menu menu) {
 		this.id = menu.getId();
-		this.url = menu.getUrl();
 		this.alias = menu.getAlias();
 		this.name = menu.getName();
 		this.checked = menu.getChecked() == null ? false : menu.getChecked();
@@ -23,7 +22,6 @@ public class Ztree {
 	
 	public Ztree(Menu menu, List<Ztree> children) {
 		this.id = menu.getId();
-		this.url = menu.getUrl();
 		this.alias = menu.getAlias();
 		this.name = menu.getName();
 		this.checked = menu.getChecked() == null ? false : menu.getChecked();

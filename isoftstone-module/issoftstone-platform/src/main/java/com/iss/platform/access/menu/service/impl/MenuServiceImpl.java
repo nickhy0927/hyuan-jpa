@@ -29,6 +29,24 @@ public class MenuServiceImpl extends BaseCustomService<Menu, String> implements 
 	private MenuDao menuDao;
 	
 	@Override
+	public List<MenuTree> queryIndexMenuList() {
+		List<Menu> menuList = menuDao.queryTopMenuList(PlatformManageMenu.TOP);
+		return queryIndexMenuTree(menuList);
+	}
+	
+	private List<MenuTree> queryIndexMenuTree(List<Menu> menuList) {
+		List<MenuTree> menuTrees = Lists.newArrayList();
+		for (Menu menu : menuList) {
+			if (!menu.getShows()) {
+				continue;
+			}
+			List<Menu> children = menuDao.queryMenuListByParentAlias(menu.getAlias());
+			menuTrees.add(new MenuTree(menu, queryIndexMenuTree(children)));
+		}
+		return menuTrees;
+	}
+	
+	@Override
 	public List<MenuTree> queryMenuTree() {
 		List<Menu> menuList = menuDao.queryTopMenuList(PlatformManageMenu.TOP);
 		return queryMenuTree(menuList);

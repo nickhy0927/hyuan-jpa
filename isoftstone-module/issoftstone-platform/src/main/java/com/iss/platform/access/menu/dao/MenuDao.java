@@ -16,6 +16,9 @@ public interface MenuDao extends CustomRepostiory<Menu,String> {
 	List<Menu> queryTopMenuList(String parentAlias);
 	
 	@Query("select m from Menu m where m.parentAlias = ?1 and m.status = 0 and m.enable = 1 order by m.orders")
+	List<Menu> queryIndexMenuList(String parentAlias);
+	
+	@Query("select m from Menu m where m.parentAlias = ?1 and m.status = 0 and m.enable = 1 order by m.orders")
 	List<Menu> queryMenuListByParentAlias(String parentAlias);
 	
 	@Query("select m from Menu m where m.alias = ?1 and m.status = 0")

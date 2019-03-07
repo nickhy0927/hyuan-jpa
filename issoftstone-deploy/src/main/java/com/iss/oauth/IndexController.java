@@ -15,6 +15,8 @@ import com.iss.common.anno.AccessAuthority;
 import com.iss.common.config.InitEnvironment;
 import com.iss.common.utils.JsonMapper;
 import com.iss.common.utils.WebUtils;
+import com.iss.constant.PlatformManageMenu;
+import com.iss.orm.anno.MenuMonitor;
 import com.iss.platform.access.menu.entity.MenuTree;
 import com.iss.platform.access.menu.service.MenuService;
 
@@ -28,13 +30,18 @@ public class IndexController {
         this.menuService = menuService;
     }
 
+    @MenuMonitor(name = "首页", orders = 0, level = 1, paraentAlias = PlatformManageMenu.TOP, shows = false)
+	public void homeManage() {
+
+	}
     /**
      * 进入首页
      * @return
      */
-    @RequestMapping(name = "主页", value = "index.do", method = RequestMethod.GET)
+    @MenuMonitor(name = "首页", orders = 1, level = 2, paraentAlias = "homeManage", shows = false)
+    @RequestMapping(name = "主页", value = "/index.do", method = RequestMethod.GET)
     public String index(Model model) {
-    	List<MenuTree> menuTrees = menuService.queryMenuTree();
+    	List<MenuTree> menuTrees = menuService.queryIndexMenuList();
     	model.addAttribute("menus", menuTrees);
     	model.addAttribute("username", InitEnvironment.getCurrentLoginName());
         return "index";

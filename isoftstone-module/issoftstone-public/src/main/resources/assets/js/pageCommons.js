@@ -428,7 +428,9 @@ $(document).ready(function () {
             var data = options.data;
             for(var i in data) ids.push(data[i].id)
             if(ids.length == 0) {
-            	$.openTip('请选择一项进行删除');
+            	$.openTip('请选择一项进行删除', function() {
+            		$.closeLoading();
+            	});
             	return;
             }
 	    	layer.confirm("确定要删除信息吗？", {

@@ -29,6 +29,8 @@ public class Menu extends IdEntity {
 	private String url;// 访问地址
 	private String alias;// 别名
 	private Boolean enable;// 是否显示 true 显示 false 隐藏
+	
+	private Boolean shows;
 
 	private Integer level;
 	/**
@@ -192,5 +194,13 @@ public class Menu extends IdEntity {
 
 	public void setRequestType(String requestType) {
 		this.requestType = requestType;
+	}
+	
+	public Boolean getShows() {
+		return shows;
+	}
+	
+	public void setShows(Boolean shows) {
+		this.shows = shows;
 	}
 }

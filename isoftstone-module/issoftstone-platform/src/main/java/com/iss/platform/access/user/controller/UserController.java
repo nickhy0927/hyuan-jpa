@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Lists;
 import com.iss.aspect.anno.OperateLog;
-import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.JsonMapper;
 import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.PageSupport;
@@ -117,7 +116,7 @@ public class UserController {
 			User user = userService.get(id);
 			user.setPassword(null);
 			messageObject.ok("修改查询用户成功", user);
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			messageObject.error("修改查询用户异常");
 		}
@@ -158,7 +157,7 @@ public class UserController {
 			paramMap.put("status_eq", IsDelete.NO);
 			PagerInfo<User> users = userService.queryPageByMap(paramMap, support);
 			message.ok("查询用户成功", users);
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			message.error("查询用户异常");
 		}
@@ -185,7 +184,7 @@ public class UserController {
 			map.put("status_eq", IsDelete.NO);
 			PagerInfo<Role> pagerInfo = roleService.queryPageByMap(map, support);
 			messageObject.ok("查询角色成功", pagerInfo);
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			messageObject.error("查询角色异常");
 			logger.error(e.getMessage());
@@ -224,12 +223,12 @@ public class UserController {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
 			userService.updateUser(user);
-			if (StringUtils.isNoneEmpty(user.getEnable())) {
+			if (StringUtils.isNotEmpty(user.getEnable())) {
 				messageObject.openTip("用户" + AccessConstant.Enable.getName(user.getEnable()) + "成功");
 			} else {
 				messageObject.openTip("用户" + AccessConstant.Locked.getName(user.getLocked()) + "成功");
 			}
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			if (StringUtils.isNoneEmpty(user.getEnable())) {
 				messageObject.openTip("用户" + AccessConstant.Enable.getName(user.getEnable()) + "失败");

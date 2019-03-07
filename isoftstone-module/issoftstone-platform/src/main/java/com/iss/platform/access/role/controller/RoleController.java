@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Lists;
 import com.iss.aspect.anno.OperateLog;
-import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.PageSupport;
 import com.iss.common.utils.PagerInfo;
@@ -73,7 +72,7 @@ public class RoleController {
 		try {
 			List<Role> list = roleService.findAll();
 			messageObject.ok("查询新增角色", list);
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			messageObject.error("新增菜单异常");
 		}
@@ -95,7 +94,7 @@ public class RoleController {
 			} else
 				messageObject.openTip("修改角色成功");
 
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return messageObject;
@@ -121,7 +120,7 @@ public class RoleController {
 			} else {
 				messageObject.error("删除角色异常");
 			}
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 			messageObject.error("删除角色异常");
@@ -143,7 +142,7 @@ public class RoleController {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
 		try {
 			messageObject.ok("获取角色成功", roleService.get(id));
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			messageObject.error("获取角色异常");
 		}
@@ -160,7 +159,7 @@ public class RoleController {
 			role.setStatus(IsDelete.NO);
 			roleService.saveEntity(role);
 			messageObject.openTip("修改角色成功");
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return messageObject;
@@ -182,7 +181,7 @@ public class RoleController {
 			map.put("status_eq", IsDelete.NO);
 			PagerInfo<Role> pagerInfo = roleService.queryPageByMap(map, support);
 			messageObject.ok("查询角色成功", pagerInfo);
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			messageObject.error("查询角色异常");
 			logger.error(e.getMessage());
@@ -205,7 +204,7 @@ public class RoleController {
 			role.setMenus(menus);
 			roleService.saveEntity(role);
 			messageObject.openTip("保存权限成功");
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return messageObject;
@@ -213,7 +212,7 @@ public class RoleController {
 	
 	@ResponseBody
 	@MenuMonitor(name = "角色列表-获取菜单树", orders = 1, level = 5, paraentAlias = "roleList")
-	@RequestMapping(name = "获取菜单树", value = "/platform/access/menu/menuTreeList.json", method = RequestMethod.GET)
+	@RequestMapping(name = "获取菜单树", value = "/platform/access/role/menuTreeList.json", method = RequestMethod.GET)
 	public List<Ztree> menuTreeList(String id) {
 		Role role = roleService.get(id);
 		List<Menu> menus = Lists.newArrayList();

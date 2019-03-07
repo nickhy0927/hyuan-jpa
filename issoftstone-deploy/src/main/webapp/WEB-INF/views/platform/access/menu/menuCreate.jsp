@@ -58,7 +58,6 @@
                 var form = layui.form;
                 //监听提交
                 form.on('submit(create-form)', function (data) {
-                    console.log($('form').getForm());
                 	$.saveInfo({
                 		url: '${ctx}/platform/access/menu/menuCreateSave.json',//发送请求
 				    	data: data.field,
@@ -205,7 +204,9 @@
             </div>
             <div class="layui-form-item" style="text-align: right">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit lay-filter="create-form">立即提交</button>
+                    <button class="layui-btn" lay-submit lay-filter="create-form">
+                    	<i class="Hui-iconfont Hui-iconfont-save"></i>&nbsp;立即保存
+                    </button>
                     <button type="reset" onclick="reset()" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>

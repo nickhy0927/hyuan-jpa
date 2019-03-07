@@ -153,6 +153,9 @@ public class MenuController {
 			params.put("menuTrees", menuTrees);
 			params.put("icons", icons);
 			Menu menu = menuService.get(id);
+			Menu m = menuService.queryMenuByAlias(menu.getParentAlias());
+			menu.setParentId(m == null ? "" : m.getId());
+			menu.setParentName(m == null ? "" : m.getName());
 			params.put("menu", menu);
 			messageObject.ok("修改查询菜单成功", params);
 		} catch (ServiceException e) {
@@ -201,6 +204,12 @@ public class MenuController {
 		try {
 			map.put("status_eq", IsDelete.NO);
 			PagerInfo<Menu> tools = menuService.queryPageByMap(map, support);
+			List<Menu> content = tools.getContent();
+			for (Menu menu : content) {
+				Menu m = menuService.queryMenuByAlias(menu.getParentAlias());
+				menu.setParentName(m == null ? "" : m.getName());
+			}
+			tools.setContent(content);
 			messageObject.ok("查询菜单成功", tools);
 		} catch (ServiceException e) {
 			e.printStackTrace();

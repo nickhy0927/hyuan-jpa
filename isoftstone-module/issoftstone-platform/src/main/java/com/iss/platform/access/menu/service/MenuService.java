@@ -14,6 +14,8 @@ import com.iss.platform.access.menu.entity.Ztree;
 public interface MenuService extends CustomService<Menu, String> {
 
 	List<MenuTree> queryMenuTree();
+	
+	List<MenuTree> queryIndexMenuList();
 
 	List<Tree> queryLayerMenuTree(List<Menu> menus);
 

@@ -28,7 +28,7 @@
         	form.on('switch(enable)', function (data) {
 				var enable = this.checked ? '1' : '0';
 				$.saveInfo({
-					url: '${ctx}/platform/access/user/userStatusEdit.json',
+					url: '${ctx}/platform/access/user/userStatusUpdate.json',
 					data: {id: $(data.elem).attr('data-id'), enable: enable, version: $(data.elem).attr('data-v')},
 					success: function (res) {
 						$("#tableList").refreshTable({

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Lists;
 import com.iss.aspect.anno.OperateLog;
-import com.iss.common.anno.AccessAuthority;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.PageSupport;
@@ -150,7 +149,7 @@ public class DictController {
 	}
 
 	@ResponseBody
-	@MenuMonitor(name = "数据字典修改-查询数据详情", orders = 4, level = 4, paraentAlias = "dictEdit")
+	@MenuMonitor(name = "数据字典修改-获取数据详情", orders = 4, level = 4, paraentAlias = "dictEdit")
 	@RequestMapping(name = "查询数据字典详情", value = "/platform/access/dict/dictEditJson.json", method = RequestMethod.POST)
 	public MessageObject<Dict> dictEditJson(String id) {
 		MessageObject<Dict> messageObject = MessageObject.getDefaultInstance();
@@ -182,20 +181,5 @@ public class DictController {
 			messageObject.openTip("操作出现异常，请稍后.");
 		}
 		return messageObject;
-	}
-
-
-	@ResponseBody
-	@AccessAuthority(alias = "dicttreelist", name = "数据字典列表")
-	@RequestMapping(name = "获取数据字典分页列表", value = "/platform/access/dict/dictTableList.json", method = { RequestMethod.POST })
-	public List<Dict> dictTableList(HttpServletRequest request) {
-		try {
-			Map<String, Object> map = WebUtils.getRequestToMap(request);
-			map.put("status_eq", IsDelete.NO);
-			return dictService.queryByMap(map);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-		}
-		return Lists.newArrayList();
 	}
 }

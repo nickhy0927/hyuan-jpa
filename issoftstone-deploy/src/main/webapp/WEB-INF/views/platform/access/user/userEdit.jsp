@@ -23,7 +23,7 @@
                 //监听提交
                 form.on('submit(create-form)', function (data) {    
                 	$.saveInfo({
-                		url: '${ctx}/platform/access/user/userSave.json',//发送请求
+                		url: '${ctx}/platform/access/user/userEditUpdate.json',//发送请求
 				    	data: $('form').getForm(),
 				    	success: function (res) {
 				    		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
@@ -35,7 +35,7 @@
                 });
                 $.ajax({
     		    	type: 'POST',
-    		    	url: '${ctx}/platform/access/user/queryUserInfo.json',//发送请求
+    		    	url: '${ctx}/platform/access/user/userEditJson.json',//发送请求
     		    	data: {id : '${id}'},
     		    	dataType : "json",
     		    	success: function(res) {
@@ -136,9 +136,8 @@
             <div class="layui-form-item" style="text-align: right">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit lay-filter="create-form">
-                    	<i class="Hui-iconfont Hui-iconfont-save"></i>&nbsp;立即提交
+                    	<i class="Hui-iconfont Hui-iconfont-save"></i>&nbsp;立即保存
                     </button>
-                    <button type="reset" onclick="reset()" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
         </form>

@@ -65,6 +65,7 @@ public class InitMenu {
 		menu.setStatus(Boolean.FALSE);
 		menu.setOrders(monitor.orders());
 		menu.setName(monitor.name());
+		menu.setShows(monitor.shows());
 		menu.setLevel(monitor.level());
 		menu.setUrl(StringUtils.isNotEmpty(monitor.url()) ? monitor.url() : (mapping == null ? "#" : StringUtils.join(mapping.value())));
 		menu.setLocalCode(clazz.getName().toLowerCase() + "." + method.getName().toLowerCase());

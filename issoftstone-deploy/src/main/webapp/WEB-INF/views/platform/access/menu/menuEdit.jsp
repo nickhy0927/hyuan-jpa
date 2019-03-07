@@ -9,12 +9,55 @@
 			$("body").css({
 				'overflow':'auto'
 			})
+			
+			$("#iconId").select2({
+                placeholder: '请选择图标',
+                width: '100%',
+                ajax: {
+                    url: '${ctx}/platform/access/icon/queryIconList.json',
+                    dataType: 'json',
+                    data: function (params) {
+                        var query = {
+                            name_li: params.term,
+                            type: 'public'
+                        }
+                        return query;
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: data.results
+                        };
+                    },
+                    cache: true
+                },
+                templateResult: formatRepo,
+                templateSelection: formatRepoSelection,
+                escapeMarkup: function (markup) {
+                    return markup;
+                }
+            })
+
+
+            function formatRepo(repo) {
+                if (repo.loading) {
+                    return repo.text;
+                }
+                var markup = "<div class='select2-result-repository clearfix'>" +
+                            "<div class='select2-result-repository__avatar'>" + repo.iconClass + "</div>" +
+                            "<div class='select2-result-repository__meta'>" +
+                        "<div class='select2-result-repository__title'>" + repo.name + "</div>";
+                return markup;
+            }
+
+            function formatRepoSelection(repo) {
+                 return repo.name || repo.id;
+            }
 			layui.use(['form', 'tree'], function () {
                 var form = layui.form;
                 //监听提交
                 form.on('submit(create-form)', function (data) {
                 	$.openLoading('正在保存数据，请稍等...');
-                	$.ajax({
+                	$.saveInfo({
 				    	url: '${ctx}/platform/access/menu/menuEditUpdate.json',//发送请求
 				    	data: $('form').getForm(),
 				    	success: function (res) {
@@ -25,21 +68,18 @@
 			    	});
                 	return false;
                 });
-                form.verify({
-                    alias: [/^[a-zA-Z0-9_-]{4,16}$/, '别名由字母，数字，下划线，减号组成']
-                });
                 $.ajax({
 			    	type: 'POST',
 			    	url: '${ctx}/platform/access/menu/menuEditJson.json',//发送请求
 			    	data: {id : '${id}'},
 			    	dataType : "json",
 			    	success: function(res) {
-			    		res.content.menu.menu ? $("#treeclass").text(res.content.menu.menu.name) : ''
+			    		res.content.menu ? $("#treeclass").text(res.content.menu.parentName) : ''
 			    		form.val("edit-form", {		    			  	"id": res.content.menu['id'],
 		    			  	"name": res.content.menu['name'],
 		    			  	"alias": res.content.menu['alias'],
 		    			  	"url": res.content.menu['url'],
-		    			  	"parentId": res.content.menu['menu'] ? res.content.menu['menu']['id'] : "",
+		    			  	"parentId": res.content.menu['parentId'],
 		    			  	"enable": res.content.menu['enable'],
 		    			  	"version": res.content.menu['version'],
 		    			  	"locked": res.content.menu['locked'],
@@ -106,7 +146,7 @@
                 <label class="layui-form-label"><i>*</i>菜单别名</label>
                 <div class="layui-input-block">
                     <input type="text" name="alias"
-                    	lay-verType="tips"
+                    	lay-verType="tips" readonly="readonly"
                            required lay-verify="required|alias" placeholder="请输入菜单别名"
                            autocomplete="off" class="layui-input">
                 </div>
@@ -150,15 +190,15 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label"><i></i>是否显示</label>
+                <label class="layui-form-label"><i></i>是否启用</label>
                 <div class="layui-input-inline">
                     <input type="radio" name="enable" value="0" title="否">
                     <input type="radio" name="enable" value="1" title="是" checked>
                 </div>
-                <label class="layui-form-label"><i></i>是否锁定</label>
+                <label class="layui-form-label"><i></i>是否显示</label>
                 <div class="layui-input-inline">
-                    <input type="radio" name="locked" value="0" title="否" checked>
-                    <input type="radio" name="locked" value="1" title="是">
+                    <input type="radio" name="shows" value="0" title="否">
+                    <input type="radio" name="shows" value="1" title="是" checked>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -170,17 +210,16 @@
                            autocomplete="off" class="layui-input">
                 </div>
             </div>
-            <div class="layui-form-item">
+             <div class="layui-form-item">
                 <label class="layui-form-label"><i>*</i>选择图标</label>
-                <div class="layui-input-block">
-                    <select name="iconId" id="iconId" lay-verType="tips"></select>
+                <div class="layui-input-block search-select">
+                    <select name="iconId" class="select2" placeholder="请选择图标" id="iconId" lay-verType="tips"></select>
                 </div>
             </div>
             <div class="layui-form-item" style="text-align: right">
-                <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit lay-filter="create-form">立即提交</button>
-                    <button type="reset" onclick="reset()" class="layui-btn layui-btn-primary">重置</button>
-                </div>
+                <button class="layui-btn" lay-submit lay-filter="create-form">
+                    	<i class="Hui-iconfont Hui-iconfont-save"></i>&nbsp;立即保存
+                    </button>
             </div>
         </form>
     </div>
