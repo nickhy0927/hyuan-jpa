@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.iss.aspect.anno.OperateLog;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.MessageObject;
@@ -22,6 +21,8 @@ import com.iss.common.utils.PagerInfo;
 import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.WebUtils;
 import com.iss.constant.DataType;
+import com.iss.constant.PlatformManageMenu;
+import com.iss.orm.anno.MenuMonitor;
 import com.iss.platform.access.icon.entity.Icon;
 import com.iss.platform.access.icon.service.IconService;
 
@@ -31,6 +32,8 @@ import com.iss.platform.access.icon.service.IconService;
 @Controller
 public class IconControlller {
 
+	public final static String ICON_MANAGE = "iconManage";
+
 	private final IconService iconService;
 
 	@Autowired
@@ -38,12 +41,18 @@ public class IconControlller {
 		this.iconService = iconService;
 	}
 
+	@MenuMonitor(name = "图标管理", orders = 2, level = 3, url = "/platform/access/icon/iconList.do", paraentAlias = PlatformManageMenu.BASE_MANAGE)
+	public void iconManage() {
+	}
+
+	@MenuMonitor(name = "图标新增", orders = 1, level = 4, paraentAlias = ICON_MANAGE)
 	@RequestMapping(name = "图标新增页面", value = "/platform/access/icon/iconCreate.do", method = RequestMethod.GET)
 	public String iconCreate() {
 		return "platform/access/icon/create";
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "图标新增-保存新增数据", orders = 1, level = 5, paraentAlias = "iconCreate")
 	@OperateLog(message = "保存图标请求", optType = DataType.OptType.INSERT, service = IconService.class)
 	@RequestMapping(name = "保存图标请求", value = "/platform/access/icon/iconCreateSave.json", method = RequestMethod.POST)
 	public MessageObject<Icon> iconCreateSave(Icon icon) {
@@ -60,6 +69,7 @@ public class IconControlller {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "图标删除", orders = 2, level = 4, paraentAlias = ICON_MANAGE)
 	@OperateLog(message = "删除图标", optType = DataType.OptType.DELETE, service = IconService.class)
 	@RequestMapping(name = "删除图标", value = "/platform/access/icon/iconDelete.json", method = RequestMethod.POST)
 	public MessageObject<Icon> iconDelete(String id) {
@@ -81,6 +91,7 @@ public class IconControlller {
 		return messageObject;
 	}
 
+	@MenuMonitor(name = "图标修改", orders = 3, level = 4, paraentAlias = ICON_MANAGE)
 	@RequestMapping(name = "图标修改页面", value = "/platform/access/icon/iconEdit.do", method = RequestMethod.GET)
 	public String iconEdit(String id, Model model) {
 		model.addAttribute("id", id);
@@ -88,6 +99,7 @@ public class IconControlller {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "图标修改-查询图标详情", orders = 1, level = 5, paraentAlias = "iconEdit")
 	@RequestMapping(name = "查询图标详情", value = "/platform/access/icon/iconEditJson.json", method = RequestMethod.POST)
 	public MessageObject<Icon> iconEditJson(String id) {
 		MessageObject<Icon> messageObject = MessageObject.getDefaultInstance();
@@ -102,6 +114,7 @@ public class IconControlller {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "图标修改-保存修改数据", orders = 2, level = 5, paraentAlias = "iconEdit")
 	@OperateLog(message = "修改图标", optType = DataType.OptType.UPDATE, service = IconService.class)
 	@RequestMapping(value = "/platform/access/icon/iconEditUpdate.json", method = RequestMethod.POST)
 	public MessageObject<Icon> iconEditUpdate(Icon icon) {
@@ -117,14 +130,16 @@ public class IconControlller {
 		return messageObject;
 	}
 
+	@MenuMonitor(name = "图标列表", orders = 4, level = 4, paraentAlias = ICON_MANAGE)
 	@RequestMapping(name = "图标列表页面", value = "/platform/access/icon/iconList.do", method = RequestMethod.GET)
 	public String iconList() {
 		return "platform/access/icon/list";
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "图标列表-获取数据分页", orders = 1, level = 5, paraentAlias = "iconList")
 	@RequestMapping(name = "获取图标列表分页", value = "/platform/access/icon/iconList.json", method = { RequestMethod.POST })
-	public MessageObject<Icon> iconList(HttpServletRequest request, PageSupport support) {
+	public MessageObject<Icon> iconPage(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
 		MessageObject<Icon> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -137,18 +152,5 @@ public class IconControlller {
 		}
 		return messageObject;
 	}
-
-	@ResponseBody
-	@RequestMapping(name = "获取所有的图标", value = "/platform/access/icon/queryIconList.json", method = RequestMethod.GET)
-	public Map<String, Object> queryIconList(HttpServletRequest request, PageSupport support) {
-		Map<String, Object> paramMap = WebUtils.getRequestToMap(request);
-		Map<String, Object> maps = Maps.newConcurrentMap();
-		support.setLimit(20);
-		paramMap.put("status_eq", IsDelete.NO);
-		PagerInfo<Icon> pagerInfo = iconService.queryPageByMap(paramMap, support);
-		maps.put("incomplete_results", pagerInfo.getContent().size() > 0);
-		maps.put("total_count", pagerInfo.getTotals());
-		maps.put("results", pagerInfo.getContent());
-		return maps;
-	}
+	
 }

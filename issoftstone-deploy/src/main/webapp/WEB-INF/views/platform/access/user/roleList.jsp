@@ -11,7 +11,7 @@
                 searchForm: 'search-form',
                 limit: 20,
                 size : 'sm', // 小尺寸的表格
-                url: "${ctx}/platform/access/role/roleList.json",
+                url: "${ctx}/platform/access/user/roleList.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
                     { field: "code", title: '角色编号', width: 200, fixed: "left", unresize: true},

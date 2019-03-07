@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 import com.iss.common.utils.SysContants.IsDelete;
+import com.iss.constant.PlatformManageMenu;
 import com.iss.orm.service.impl.BaseCustomService;
 import com.iss.platform.access.menu.dao.MenuDao;
 import com.iss.platform.access.menu.entity.Menu;
@@ -29,14 +30,14 @@ public class MenuServiceImpl extends BaseCustomService<Menu, String> implements 
 	
 	@Override
 	public List<MenuTree> queryMenuTree() {
-		List<Menu> menuList = menuDao.queryTopMenuList();
+		List<Menu> menuList = menuDao.queryTopMenuList(PlatformManageMenu.TOP);
 		return queryMenuTree(menuList);
 	}
 	
 	private List<MenuTree> queryMenuTree(List<Menu> menuList) {
 		List<MenuTree> menuTrees = Lists.newArrayList();
 		for (Menu menu : menuList) {
-			List<Menu> children = menuDao.queryMenuListByParentId(menu.getId());
+			List<Menu> children = menuDao.queryMenuListByParentAlias(menu.getAlias());
 			menuTrees.add(new MenuTree(menu, queryMenuTree(children)));
 		}
 		return menuTrees;
@@ -44,14 +45,14 @@ public class MenuServiceImpl extends BaseCustomService<Menu, String> implements 
 	
 	@Override
 	public List<Tree> queryLayerMenuTree(List<Menu> src) {
-		List<Menu> menuList = menuDao.queryTopMenuList();
+		List<Menu> menuList = menuDao.queryTopMenuList(PlatformManageMenu.TOP);
 		return layerMenuTree(menuList, src);
 	}
 	
 	private List<Tree> layerMenuTree(List<Menu> menuList, List<Menu> src) {
 		List<Tree> trees = Lists.newArrayList();
 		for (Menu menu : menuList) {
-			List<Menu> children = menuDao.queryMenuListByParentId(menu.getId());
+			List<Menu> children = menuDao.queryMenuListByParentAlias(menu.getAlias());
 			for (Menu tree : src) {
 				if (StringUtils.equals(tree.getId(), menu.getId())) {
 					menu.setChecked(true);
@@ -81,8 +82,31 @@ public class MenuServiceImpl extends BaseCustomService<Menu, String> implements 
 				}
 			}
 			Ztree ztree = new Ztree(menu);
+			Menu alias = queryMenuByAlias(menu.getParentAlias());
+			ztree.setpId(alias != null ? alias.getId() : "");
 			trees.add(ztree);
 		}
 		return trees;
+	}
+
+	@Override
+	public Menu queryMenuByAlias(String alias) {
+		return menuDao.queryMenuByAlias(alias);
+	}
+
+	@Override
+	public List<Ztree> queryZtree(List<Menu> menus) {
+		List<Menu> menuList = menuDao.queryTopMenuList(PlatformManageMenu.TOP);
+		return queryChildren(menuList, menus);
+	}
+	
+	private List<Ztree> queryChildren(List<Menu> menuList, List<Menu> menus) {
+		List<Ztree> ztrees = Lists.newArrayList();
+		for (Menu menu : menuList) {
+			List<Menu> list = menuDao.queryMenuListByParentAlias(menu.getAlias());
+			for (Menu m : menus) if (StringUtils.equals(m.getId(), menu.getId())) menu.setChecked(true);
+			ztrees.add(new Ztree(menu, queryChildren(list, menus)));
+		}
+		return ztrees;
 	}
 }

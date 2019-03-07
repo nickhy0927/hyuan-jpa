@@ -26,6 +26,8 @@ import com.iss.common.utils.PagerInfo;
 import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.WebUtils;
 import com.iss.constant.DataType;
+import com.iss.constant.PlatformManageMenu;
+import com.iss.orm.anno.MenuMonitor;
 import com.iss.platform.access.menu.entity.Menu;
 import com.iss.platform.access.menu.entity.Ztree;
 import com.iss.platform.access.menu.service.MenuService;
@@ -37,8 +39,11 @@ import com.iss.platform.access.role.service.RoleService;
  */
 @Controller
 public class RoleController {
+	
 	private static Logger logger = LoggerFactory.getLogger(RoleController.class);
 
+	public final static String ROLE_MANAGE = "roleManage";
+	
 	private final MenuService menuService;
 
 	private final RoleService roleService;
@@ -49,21 +54,19 @@ public class RoleController {
 		this.menuService = menuService;
 	}
 	
+	@MenuMonitor(name = "角色管理", orders = 4, level = 3, url = "/platform/access/role/roleList.do", paraentAlias = PlatformManageMenu.BASE_MANAGE)
+	public void roleManage() {
+	}
+	
+	@MenuMonitor(name = "角色新增", orders = 1, level = 4, paraentAlias = ROLE_MANAGE)
 	@RequestMapping(name = "角色新增页面", value = "/platform/access/role/roleCreate.do", method = RequestMethod.GET)
-	public String create(Model model) {
+	public String roleCreate(Model model) {
 		model.addAttribute("code", new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()));
 		return "platform/access/role/roleCreate";
 	}
+	
 	@ResponseBody
-	@RequestMapping(name = "获取菜单树", value = "/platform/access/menu/menuTreeList.json", method = RequestMethod.GET)
-	public List<Ztree> menuTreeList(String id) {
-		Role role = roleService.get(id);
-		List<Menu> menus = Lists.newArrayList();
-		if (role != null) menus = role.getMenus(); 
-		return menuService.queryZtreeMenuTree(menus);
-	}
-
-	@ResponseBody
+	@MenuMonitor(name = "角色新增-获取数据集合", orders = 1, level = 5, paraentAlias = "roleCreate")
 	@RequestMapping(name = "新增角色", value = "/platform/access/role/roleCreate.json", method = RequestMethod.GET)
 	public MessageObject<Role> roleCreateJson() {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
@@ -76,8 +79,9 @@ public class RoleController {
 		}
 		return messageObject;
 	}
-
+	
 	@ResponseBody
+	@MenuMonitor(name = "角色新增-保存新增数据", orders = 2, level = 5, paraentAlias = "roleCreate")
 	@OperateLog(message = "保存角色", optType = DataType.OptType.INSERT, service = RoleService.class)
 	@RequestMapping(name = "保存角色", value = "/platform/access/role/roleCreateSave.json", method = RequestMethod.POST)
 	public MessageObject<Role> roleCreateSave(Role role) {
@@ -98,6 +102,7 @@ public class RoleController {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "角色删除", orders = 2, level = 4, paraentAlias = ROLE_MANAGE)
 	@OperateLog(message = "删除角色", optType = DataType.OptType.DELETE, service = RoleService.class)
 	@RequestMapping(name = "删除角色", value = "/platform/access/role/roleDetete.json", method = { RequestMethod.POST })
 	public MessageObject<Role> roleDetete(String id) {
@@ -124,6 +129,7 @@ public class RoleController {
 		return messageObject;
 	}
 
+	@MenuMonitor(name = "角色修改", orders = 3, level = 4, paraentAlias = ROLE_MANAGE)
 	@RequestMapping(name = "角色修改页面", value = "/platform/access/role/roleEdit.do", method = RequestMethod.GET)
 	public String roleEdit(String id, Model model) {
 		model.addAttribute("id", id);
@@ -131,6 +137,7 @@ public class RoleController {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "角色修改-获取数据详情", orders = 1, level = 5, paraentAlias = "roleEdit")
 	@RequestMapping(name = "获取角色", value = "/platform/access/role/roleEditJson.json", method = RequestMethod.POST)
 	public MessageObject<Role> roleEditJson(String id) {
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
@@ -144,6 +151,7 @@ public class RoleController {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "角色修改-保存修改数据", orders = 2, level = 5, paraentAlias = "roleEdit")
 	@OperateLog(message = "修改角色", optType = DataType.OptType.UPDATE, service = RoleService.class)
 	@RequestMapping(name = "修改保存角色",value = "/platform/access/role/roleEditUpdate.json", method = RequestMethod.POST)
 	public MessageObject<Role> roleEditUpdate(Role role) {
@@ -158,14 +166,16 @@ public class RoleController {
 		return messageObject;
 	}
 
+	@MenuMonitor(name = "角色列表", orders = 4, level = 4, paraentAlias = ROLE_MANAGE)
 	@RequestMapping(name = "角色列表页面", value = "/platform/access/role/roleList.do")
 	public String roleList() {
 		return "platform/access/role/roleList";
 	}
 
 	@ResponseBody
-	@RequestMapping(name = "获取角色列表分页", value = "/platform/access/role/roleList.json", method = { RequestMethod.POST })
-	public MessageObject<Role> roleList(HttpServletRequest request, PageSupport support) {
+	@MenuMonitor(name = "角色列表-获取数据分页", orders = 1, level = 5, paraentAlias = "roleList")
+	@RequestMapping(name = "获取角色数据分页", value = "/platform/access/role/roleList.json", method = { RequestMethod.POST })
+	public MessageObject<Role> rolePage(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
 		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -181,6 +191,7 @@ public class RoleController {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "角色列表-保存角色菜单", orders = 1, level = 5, paraentAlias = "roleList")
 	@OperateLog(message = "保存角色菜单", optType = DataType.OptType.INSERT, service = RoleService.class)
 	@RequestMapping(name = "保存角色菜单", value = "/platform/access/role/roleMenuSave.json", method = RequestMethod.POST)
 	public MessageObject<Role> roleMenuSave(String roleId, String menuIds) {
@@ -198,5 +209,15 @@ public class RoleController {
 			e.printStackTrace();
 		}
 		return messageObject;
+	}
+	
+	@ResponseBody
+	@MenuMonitor(name = "角色列表-获取菜单树", orders = 1, level = 5, paraentAlias = "roleList")
+	@RequestMapping(name = "获取菜单树", value = "/platform/access/menu/menuTreeList.json", method = RequestMethod.GET)
+	public List<Ztree> menuTreeList(String id) {
+		Role role = roleService.get(id);
+		List<Menu> menus = Lists.newArrayList();
+		if (role != null) menus = role.getMenus(); 
+		return menuService.queryZtree(menus);
 	}
 }

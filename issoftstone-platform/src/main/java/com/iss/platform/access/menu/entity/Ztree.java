@@ -1,5 +1,7 @@
 package com.iss.platform.access.menu.entity;
 
+import java.util.List;
+
 public class Ztree {
 
 	private String id;
@@ -9,14 +11,31 @@ public class Ztree {
 	private String pId;
 	private boolean open = true;
 	private Boolean checked;
+	private List<Ztree> children;
 
 	public Ztree(Menu menu) {
 		this.id = menu.getId();
 		this.url = menu.getUrl();
 		this.alias = menu.getAlias();
 		this.name = menu.getName();
-		this.pId = menu.getMenu() == null ? "" : menu.getMenu().getId();
 		this.checked = menu.getChecked() == null ? false : menu.getChecked();
+	}
+	
+	public Ztree(Menu menu, List<Ztree> children) {
+		this.id = menu.getId();
+		this.url = menu.getUrl();
+		this.alias = menu.getAlias();
+		this.name = menu.getName();
+		this.checked = menu.getChecked() == null ? false : menu.getChecked();
+		this.children = children;
+	}
+	
+	public List<Ztree> getChildren() {
+		return children;
+	}
+	
+	public void setChildren(List<Ztree> children) {
+		this.children = children;
 	}
 
 	public String getId() {
@@ -46,7 +65,7 @@ public class Ztree {
 	public Boolean getChecked() {
 		return checked;
 	}
-	
+
 	public boolean isOpen() {
 		return open;
 	}

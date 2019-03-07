@@ -18,5 +18,9 @@ public interface MenuService extends CustomService<Menu, String> {
 	List<Tree> queryLayerMenuTree(List<Menu> menus);
 
 	List<Ztree> queryZtreeMenuTree(List<Menu> menus);
+	
+	Menu queryMenuByAlias(String alias);
+	
+	List<Ztree> queryZtree(List<Menu> menus);
 
 }

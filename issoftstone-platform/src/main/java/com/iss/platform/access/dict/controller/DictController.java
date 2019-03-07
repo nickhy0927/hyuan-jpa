@@ -26,19 +26,69 @@ import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.WebUtils;
 import com.iss.constant.AccessConstant;
 import com.iss.constant.DataType;
+import com.iss.constant.PlatformManageMenu;
+import com.iss.orm.anno.MenuMonitor;
 import com.iss.platform.access.dict.entity.Dict;
 import com.iss.platform.access.dict.service.DictService;
 import com.iss.platform.access.menu.entity.Menu;
 
 @Controller
 public class DictController {
+	
 	private final DictService dictService;
+	
+	public final static String DICT_MANAGE = "dictManage";
 
 	@Autowired
 	public DictController(DictService dictService) {
 		this.dictService = dictService;
 	}
+	
+	@MenuMonitor(name = "数据字典", orders = 1, level = 3, url = "/platform/access/dict/dictList.do", paraentAlias = PlatformManageMenu.BASE_MANAGE)
+	public void dictManage() {
+		
+	}
+	
+	@MenuMonitor(name = "数据字典列表", level = 4, orders = 1, paraentAlias = DICT_MANAGE)
+	@RequestMapping(name = "数据字典列表页面", value = "/platform/access/dict/dictList.do", method = RequestMethod.GET)
+	public String dictList() {
+		return "platform/access/dict/dictList";
+	}
 
+	@ResponseBody
+	@MenuMonitor(name = "数据字典列表-获取数据分页", orders = 1, level = 5, paraentAlias = "dictList")
+	@RequestMapping(name = "获取数据字数据分页",value = "/platform/access/dict/dictList.json", method = { RequestMethod.POST })
+	public MessageObject<Dict> dictPage(HttpServletRequest request, PageSupport support) {
+		Map<String, Object> map = WebUtils.getRequestToMap(request);
+		MessageObject<Dict> messageObject = MessageObject.getDefaultInstance();
+		try {
+			map.put("status_eq", IsDelete.NO);
+			PagerInfo<Dict> tools = dictService.queryPageByMap(map, support);
+			messageObject.ok("查询数据字典成功", tools);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.error("查询数据字典异常");
+		}
+		return messageObject;
+	}
+	
+	@ResponseBody
+	@MenuMonitor(name = "数据字典列表-修改数据状态", orders = 2, level = 4, paraentAlias = "dictList")
+	@OperateLog(message = "修改数据字典信息状态", optType = DataType.OptType.UPDATE, service = DictService.class)
+	@RequestMapping(name = "修改数据字典信息状态", value = "/platform/access/dict/dictStatusUpdate.json", method = RequestMethod.POST)
+	public MessageObject<Menu> dictStatusUpdate(Dict dict) {
+		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
+		try {
+			dictService.saveEntity(dict);
+			messageObject.openTip("数据字典" + AccessConstant.Enable.getName(dict.getEnable() ? "1" : "0") + "成功");
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.openTip("数据字典" + AccessConstant.Enable.getName(dict.getEnable() ? "1" : "0") + "失败");
+		}
+		return messageObject;
+	}
+
+	@MenuMonitor(name = "数据字典新增", orders = 2, level = 3, paraentAlias = DICT_MANAGE)
 	@RequestMapping(name = "新增数据字典页面", value = "/platform/access/dict/dictCreate.do", method = RequestMethod.GET)
 	public String dictCreate(Model model) {
 		List<Dict> dictTypeList = dictService.queryDictByParentNull();
@@ -48,6 +98,7 @@ public class DictController {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "数据字典新增-保存新增数据", orders = 1, level = 4, paraentAlias = "dictCreate")
 	@OperateLog(message = "保存数据字典信息", optType = DataType.OptType.INSERT, service = DictService.class)
 	@RequestMapping(name = "保存数据字典信息", value = "/platform/access/dict/dictCreateSave.json", method = RequestMethod.POST)
 	public MessageObject<Dict> dictCreateSave(Dict dict) {
@@ -67,6 +118,7 @@ public class DictController {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "数据字典删除", orders = 2, level = 3, paraentAlias = DICT_MANAGE)
 	@OperateLog(message = "删除数据字典信息", optType = DataType.OptType.DELETE, service = DictService.class)
 	@RequestMapping(name = "删除数据字典信息", value = "/platform/access/dict/dictDelete.json", method = RequestMethod.POST)
 	public MessageObject<Dict> dictDelete(String id) {
@@ -88,7 +140,8 @@ public class DictController {
 		return messageObject;
 	}
 
-	@RequestMapping(name = "新增数据字典页面", value = "/platform/access/dict/dictEdit.do", method = RequestMethod.GET)
+	@MenuMonitor(name = "数据字典修改", orders = 3, level = 3, paraentAlias = DICT_MANAGE)
+	@RequestMapping(name = "修改数据字典页面", value = "/platform/access/dict/dictEdit.do", method = RequestMethod.GET)
 	public String dictEdit(String id, Model model) {
 		model.addAttribute("id", id);
 		List<Dict> dictTypeList = dictService.queryDictByParentNull();
@@ -97,6 +150,7 @@ public class DictController {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "数据字典修改-查询数据详情", orders = 4, level = 4, paraentAlias = "dictEdit")
 	@RequestMapping(name = "查询数据字典详情", value = "/platform/access/dict/dictEditJson.json", method = RequestMethod.POST)
 	public MessageObject<Dict> dictEditJson(String id) {
 		MessageObject<Dict> messageObject = MessageObject.getDefaultInstance();
@@ -111,6 +165,7 @@ public class DictController {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "数据字典修改-保存修改数据", orders = 4, level = 4, paraentAlias = "dictEdit")
 	@OperateLog(message = "保存数据字典信息", optType = DataType.OptType.INSERT, service = DictService.class)
 	@RequestMapping(name = "保存数据字典信息", value = "/platform/access/dict/dictEditUpdate.json", method = RequestMethod.POST)
 	public MessageObject<Dict> dictEditUpdate(Dict dict) {
@@ -129,41 +184,6 @@ public class DictController {
 		return messageObject;
 	}
 
-	@RequestMapping(name = "数据字典列表页面", value = "/platform/access/dict/dictList.do", method = RequestMethod.GET)
-	public String dictList() {
-		return "platform/access/dict/dictList";
-	}
-
-	@ResponseBody
-	@RequestMapping(name = "获取数据字典列表分页",value = "/platform/access/dict/dictList.json", method = { RequestMethod.POST })
-	public MessageObject<Dict> dictList(HttpServletRequest request, PageSupport support) {
-		Map<String, Object> map = WebUtils.getRequestToMap(request);
-		MessageObject<Dict> messageObject = MessageObject.getDefaultInstance();
-		try {
-			map.put("status_eq", IsDelete.NO);
-			PagerInfo<Dict> tools = dictService.queryPageByMap(map, support);
-			messageObject.ok("查询数据字典成功", tools);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			messageObject.error("查询数据字典异常");
-		}
-		return messageObject;
-	}
-
-	@ResponseBody
-	@OperateLog(message = "修改数据字典信息状态", optType = DataType.OptType.UPDATE, service = DictService.class)
-	@RequestMapping(name = "修改数据字典信息状态", value = "/platform/access/dict/dictStatusUpdate.json", method = RequestMethod.POST)
-	public MessageObject<Menu> dictStatusUpdate(Dict dict) {
-		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
-		try {
-			dictService.saveEntity(dict);
-			messageObject.openTip("数据字典" + AccessConstant.Enable.getName(dict.getEnable() ? "1" : "0") + "成功");
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			messageObject.openTip("数据字典" + AccessConstant.Enable.getName(dict.getEnable() ? "1" : "0") + "失败");
-		}
-		return messageObject;
-	}
 
 	@ResponseBody
 	@AccessAuthority(alias = "dicttreelist", name = "数据字典列表")

@@ -88,7 +88,9 @@
 			</list>
 		</property>
 	</bean>
-	
+	<bean id="initMenu" class="com.iss.constant.scan.InitMenu" init-method="initMenu" lazy-init="false">
+		<property name="controllerPackage" value="com.iss" />
+	</bean>
 	<!-- development 环境 -->
 	<bean id="dataSourceSpied" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<!-- 基本属性 url、user、password -->

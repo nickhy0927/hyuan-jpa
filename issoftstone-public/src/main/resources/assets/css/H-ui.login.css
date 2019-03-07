@@ -34,8 +34,8 @@ body {
 	bottom: 0;
 	right: 0;
 	z-index: 1;
-	background: #CBD6EA1A url(../images/admin-login-bg-new.jpg) no-repeat
-		center
+	background: #CBD6EA1A url(../images/admin-login-bg-new.jpg) no-repeat center;
+	background-size: 100% 100%;
 }
 
 .loginBox {
@@ -48,6 +48,21 @@ body {
 	top: 50%;
 	margin-top: -184px;
 	padding-top: 38px
+}
+
+@media screen and (min-width: 1600px) {
+	.loginBox {
+	    position: absolute;
+	    width: 617px;
+	    /* height: 330px; */
+	    background-color: rgba(255, 255, 255, 0.3);
+	    /* background: url(../images/admin-loginform-bg.png) no-repeat; */
+	    left: 37%;
+	    top: 50%;
+	    margin-top: -184px;
+	    padding-top: 38px;
+	}
+	
 }
 
 .mllg {

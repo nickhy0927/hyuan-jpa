@@ -1,6 +1,5 @@
 package com.iss.platform.access.user.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +26,8 @@ import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.WebUtils;
 import com.iss.constant.AccessConstant;
 import com.iss.constant.DataType;
+import com.iss.constant.PlatformManageMenu;
+import com.iss.orm.anno.MenuMonitor;
 import com.iss.platform.access.role.entity.Role;
 import com.iss.platform.access.role.service.RoleService;
 import com.iss.platform.access.user.entity.User;
@@ -41,76 +42,43 @@ public class UserController {
 
 	private final UserService userService;
 
+	public final static String USER_MANAGE = "userManage";
+
+	@MenuMonitor(name = "用户管理", orders = 5, level = 3, url = "/platform/access/user/userList.do", paraentAlias = PlatformManageMenu.BASE_MANAGE)
+	public void userManage() {
+	}
+
 	@Autowired
 	public UserController(RoleService roleService, UserService userService) {
 		this.roleService = roleService;
 		this.userService = userService;
 	}
-
-	@ResponseBody
-	@RequestMapping(name = "添加权限", value = "/platform/access/user/role.json", method = RequestMethod.POST)
-	@OperateLog(message = "添加权限", optType = DataType.OptType.INSERT, service = UserService.class)
-	public MessageObject<User> addRole(String id, HttpServletRequest request) {
-		MessageObject<User> message = MessageObject.getDefaultInstance();
-		try {
-			String roleIds = request.getParameter("roleIds");
-			List<Role> roles = new ArrayList<>();
-			if (StringUtils.isNotEmpty(roleIds)) {
-				String[] ids = roleIds.split(",");
-				for (String id1 : ids) {
-					Role role = roleService.get(id1);
-					if (role != null) {
-						roles.add(role);
-					}
-				}
-			}
-			if (StringUtils.isNotEmpty(id)) {
-				User user = userService.get(id);
-				if (user != null) {
-					user.setRoles(roles);
-					userService.saveEntity(user);
-					message.openTip("添加角色成功", null);
-				} else {
-					message.error("添加角色失败");
-				}
-			} else {
-				message.error("添加角色失败");
-			}
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			message.error("保存角色失败");
-		}
-		return message;
-	}
-
+	
+	@MenuMonitor(name = "用户新增", orders = 1, level = 4, paraentAlias = USER_MANAGE)
 	@RequestMapping(name = "用户新增页面", value = "/platform/access/user/userCreate.do")
 	public String userCreate() {
 		return "platform/access/user/userCreate";
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "用户新增-保存新增数据", orders = 1, level = 5, paraentAlias = "userCreate")
 	@OperateLog(message = "保存用户", optType = DataType.OptType.INSERT, service = UserService.class)
 	@RequestMapping(name = "保存用户", value = "/platform/access/user/userCreateSave.json", method = RequestMethod.POST)
 	public MessageObject<User> userCreateSave(User user) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
 		try {
-			String id = user.getId();
 			user.setStatus(IsDelete.NO);
-			if (StringUtils.isEmpty(id)) {
-				userService.saveEntity(user);
-				messageObject.openTip("保存用户成功");
-			} else {
-				userService.updateUser(user);
-				messageObject.openTip("修改用户成功");
-			}
+			userService.saveEntity(user);
+			messageObject.openTip("保存用户成功");
 		} catch (Exception e) {
 			e.printStackTrace();
 			messageObject.error("保存用户异常");
 		}
 		return messageObject;
 	}
-
+	
 	@ResponseBody
+	@MenuMonitor(name = "用户删除", orders = 2, level = 4, paraentAlias = USER_MANAGE)
 	@OperateLog(message = "删除用户", optType = DataType.OptType.INSERT, service = UserService.class)
 	@RequestMapping(name = "删除用户", value = "/platform/access/user/userDelete.json", method = RequestMethod.POST)
 	public MessageObject<User> userDelete(String id) {
@@ -131,7 +99,8 @@ public class UserController {
 		}
 		return messageObject;
 	}
-
+	
+	@MenuMonitor(name = "用户修改", orders = 3, level = 4, paraentAlias = USER_MANAGE)
 	@RequestMapping(name = "用户修改页面", value = "/platform/access/user/userEdit.do")
 	public String userEdit(String id, Model model) {
 		model.addAttribute("id", id);
@@ -139,7 +108,8 @@ public class UserController {
 	}
 
 	@ResponseBody
-	@OperateLog(message = "获取用户", optType = DataType.OptType.UPDATE, service = UserService.class)
+	@MenuMonitor(name = "用户修改-获取数据详情", orders = 1, level = 5, paraentAlias = "userEdit")
+	@OperateLog(message = "获取用户详情", optType = DataType.OptType.UPDATE, service = UserService.class)
 	@RequestMapping(name = "获取用户详情", value = "/platform/access/user/userEditJson.json", method = RequestMethod.POST)
 	public MessageObject<User> userEditJson(String id) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
@@ -155,7 +125,8 @@ public class UserController {
 	}
 
 	@ResponseBody
-	@OperateLog(message = "保存用户", optType = DataType.OptType.INSERT, service = UserService.class)
+	@MenuMonitor(name = "用户修改-保存修改数据", orders = 2, level = 5, paraentAlias = "userEdit")
+	@OperateLog(message = "保存用户", optType = DataType.OptType.UPDATE, service = UserService.class)
 	@RequestMapping(name = "保存用户", value = "/platform/access/user/userEditUpdate.json", method = RequestMethod.POST)
 	public MessageObject<User> userEditUpdate(User user) {
 		MessageObject<User> messageObject = MessageObject.getDefaultInstance();
@@ -170,14 +141,16 @@ public class UserController {
 		return messageObject;
 	}
 
+	@MenuMonitor(name = "用户列表", orders = 4, level = 4, paraentAlias = USER_MANAGE)
 	@RequestMapping(name = "用户列表页面", value = "/platform/access/user/userList.do", method = RequestMethod.GET)
 	public String userList() {
 		return "platform/access/user/userList";
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "用户列表-获取数据分页", orders = 1, level = 5, paraentAlias = "userList")
 	@RequestMapping(name = "用户列表分页", value = "/platform/access/user/userList.json", method = RequestMethod.POST)
-	public MessageObject<User> userList(HttpServletRequest request, PageSupport support) {
+	public MessageObject<User> userPage(HttpServletRequest request, PageSupport support) {
 		logger.debug("查询用户");
 		MessageObject<User> message = MessageObject.getDefaultInstance();
 		Map<String, Object> paramMap = WebUtils.getRequestToMap(request);
@@ -192,6 +165,7 @@ public class UserController {
 		return message;
 	}
 
+	@MenuMonitor(name = "用户列表-获取权限信息", orders = 2, level = 5, paraentAlias = "userList")
 	@RequestMapping(name = "获取用户权限信息", value = "/platform/access/user/userRoleList.do", method = RequestMethod.GET)
 	public String userRoleList(String userId, Model model) {
 		model.addAttribute("userId", userId);
@@ -200,8 +174,27 @@ public class UserController {
 			model.addAttribute("roles", new JsonMapper().toJson(user.getRoles()));
 		return "platform/access/user/roleList";
 	}
+	
+	@ResponseBody
+	@MenuMonitor(name = "用户列表-获取角色分页", orders = 3, level = 5, paraentAlias = "userList")
+	@RequestMapping(name = "获取角色数据分页", value = "/platform/access/user/roleList.json", method = { RequestMethod.POST })
+	public MessageObject<Role> userRolePage(HttpServletRequest request, PageSupport support) {
+		Map<String, Object> map = WebUtils.getRequestToMap(request);
+		MessageObject<Role> messageObject = MessageObject.getDefaultInstance();
+		try {
+			map.put("status_eq", IsDelete.NO);
+			PagerInfo<Role> pagerInfo = roleService.queryPageByMap(map, support);
+			messageObject.ok("查询角色成功", pagerInfo);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			messageObject.error("查询角色异常");
+			logger.error(e.getMessage());
+		}
+		return messageObject;
+	}
 
 	@ResponseBody
+	@MenuMonitor(name = "用户列表-保存用户权限", orders = 4, level = 5, paraentAlias = "userList")
 	@OperateLog(message = "保存用户权限", optType = DataType.OptType.INSERT, service = UserService.class)
 	@RequestMapping(name = "保存用户权限", value = "/platform/access/user/userRoleSave.json", method = RequestMethod.POST)
 	public MessageObject<User> userRoleSave(String userId, String roleIds) {
@@ -224,6 +217,7 @@ public class UserController {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "用户列表-更新用户状态", orders = 5, level = 5, paraentAlias = "userList")
 	@OperateLog(message = "更新用户状态", optType = DataType.OptType.UPDATE, service = UserService.class)
 	@RequestMapping(name = "更新用户状态", value = "/platform/access/user/userStatusUpdate.json", method = RequestMethod.POST)
 	public MessageObject<User> userStatusUpdate(User user) {
@@ -245,5 +239,5 @@ public class UserController {
 		}
 		return messageObject;
 	}
-
+	
 }

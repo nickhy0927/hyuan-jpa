@@ -24,6 +24,7 @@ import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.WebUtils;
 import com.iss.constant.AccessConstant;
 import com.iss.constant.DataType;
+import com.iss.orm.anno.MenuMonitor;
 import com.iss.platform.access.icon.entity.Icon;
 import com.iss.platform.access.icon.service.IconService;
 import com.iss.platform.access.menu.entity.Menu;
@@ -68,6 +69,21 @@ public class MenuController {
 		}
 		return messageObject;
 	}
+	
+	@ResponseBody
+	@MenuMonitor(name = "图标列表-查询图标集合", orders = 2, level = 5, paraentAlias = "iconList")
+	@RequestMapping(name = "获取所有的图标", value = "/platform/access/icon/queryIconList.json", method = RequestMethod.GET)
+	public Map<String, Object> queryIconList(HttpServletRequest request, PageSupport support) {
+		Map<String, Object> paramMap = WebUtils.getRequestToMap(request);
+		Map<String, Object> maps = Maps.newConcurrentMap();
+		support.setLimit(20);
+		paramMap.put("status_eq", IsDelete.NO);
+		PagerInfo<Icon> pagerInfo = iconService.queryPageByMap(paramMap, support);
+		maps.put("incomplete_results", pagerInfo.getContent().size() > 0);
+		maps.put("total_count", pagerInfo.getTotals());
+		maps.put("results", pagerInfo.getContent());
+		return maps;
+	}
 
 	@ResponseBody
 	@OperateLog(message = "保存菜单信息", optType = DataType.OptType.INSERT, service = MenuService.class)
@@ -77,7 +93,8 @@ public class MenuController {
 		try {
 			menu.setStatus(IsDelete.NO);
 			if (StringUtils.isNotEmpty(menu.getParentId())) {
-				menu.setMenu(menuService.get(menu.getParentId()));
+				Menu parent = menuService.get(menu.getParentId());
+				menu.setParentAlias(parent != null ? parent.getAlias() : "");
 			}
 			if (StringUtils.isNotEmpty(menu.getIconId())) {
 				menu.setIcon(iconService.get(menu.getIconId()));
@@ -143,7 +160,8 @@ public class MenuController {
 		try {
 			menu.setStatus(IsDelete.NO);
 			if (StringUtils.isNotEmpty(menu.getParentId())) {
-				menu.setMenu(menuService.get(menu.getParentId()));
+				Menu parent = menuService.get(menu.getParentId());
+				menu.setParentAlias(parent != null ? parent.getAlias() : "");
 			}
 			if (StringUtils.isNotEmpty(menu.getIconId())) {
 				menu.setIcon(iconService.get(menu.getIconId()));
@@ -186,18 +204,14 @@ public class MenuController {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
 		try {
 			menuService.saveEntity(menu);
-			if (StringUtils.isNoneEmpty(menu.getEnable())) {
-				messageObject.openTip("菜单" + AccessConstant.Enable.getName(menu.getEnable()) + "成功");
-			} else {
-				messageObject.openTip("菜单" + AccessConstant.Locked.getName(menu.getLocked()) + "成功");
-			}
+			if (menu.getEnable()) {
+				messageObject.openTip("菜单" + AccessConstant.Enable.getName(menu.getEnable() ? "1" : "0") + "成功");
+			} 
 		} catch (ServiceException e) {
 			e.printStackTrace();
-			if (StringUtils.isNoneEmpty(menu.getEnable())) {
-				messageObject.openTip("菜单" + AccessConstant.Enable.getName(menu.getEnable()) + "失败");
-			} else {
-				messageObject.openTip("菜单" + AccessConstant.Locked.getName(menu.getLocked()) + "失败");
-			}
+			if (menu.getEnable()) {
+				messageObject.openTip("菜单" + AccessConstant.Enable.getName(menu.getEnable() ? "1" : "0") + "失败");
+			} 
 		}
 		return messageObject;
 	}
@@ -210,7 +224,8 @@ public class MenuController {
 			map.put("status_eq", IsDelete.NO);
 			List<Menu> menus = menuService.queryByMap(map);
 			for (Menu menu : menus) {
-				menu.setParentId(menu.getMenu() == null ? "" : menu.getMenu().getId());
+				Menu alias = menuService.queryMenuByAlias(menu.getParentAlias());
+				menu.setParentId(alias == null ? "" : alias.getId());
 			}
 			map.put("code", 0);
 			map.put("msg", true);
