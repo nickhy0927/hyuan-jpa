@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Maps;
 import com.iss.aspect.anno.OperateLog;
-import com.iss.common.anno.AccessAuthority;
 import com.iss.common.exception.ServiceException;
 import com.iss.common.utils.MessageObject;
 import com.iss.common.utils.PageSupport;
@@ -24,6 +23,7 @@ import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.WebUtils;
 import com.iss.constant.AccessConstant;
 import com.iss.constant.DataType;
+import com.iss.constant.PlatformManageMenu;
 import com.iss.orm.anno.MenuMonitor;
 import com.iss.platform.access.icon.entity.Icon;
 import com.iss.platform.access.icon.service.IconService;
@@ -47,12 +47,18 @@ public class MenuController {
 		this.menuService = menuService;
 	}
 
+	public final static String MENU_MANAGE = "menuManage";
+	@MenuMonitor(name = "菜单管理", orders = 6, level = 3, url = "/platform/access/menu/menuList.do", paraentAlias = PlatformManageMenu.BASE_MANAGE)
+	public void menuManage() {
+	}
+	@MenuMonitor(name = "菜单新增", orders = 1, level = 4, paraentAlias = MENU_MANAGE)
 	@RequestMapping(name = "菜单新增页面", value = "/platform/access/menu/menuCreate.do", method = RequestMethod.GET)
 	public String menuCreate() {
 		return "platform/access/menu/menuCreate";
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "菜单新增-获取菜单树", orders = 1, level = 5, paraentAlias = "menuCreate")
 	@RequestMapping(name = "获取菜单信息", value = "/platform/access/menu/menuCreateJson.json", method = RequestMethod.GET)
 	public MessageObject<Menu> menuCreateJson() {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
@@ -71,7 +77,7 @@ public class MenuController {
 	}
 	
 	@ResponseBody
-	@MenuMonitor(name = "图标列表-查询图标集合", orders = 2, level = 5, paraentAlias = "iconList")
+	@MenuMonitor(name = "菜单新增-查询图标集合", orders = 2, level = 5, paraentAlias = "menuCreate")
 	@RequestMapping(name = "获取所有的图标", value = "/platform/access/icon/queryIconList.json", method = RequestMethod.GET)
 	public Map<String, Object> queryIconList(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> paramMap = WebUtils.getRequestToMap(request);
@@ -86,6 +92,7 @@ public class MenuController {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "菜单新增-保存新增数据", orders = 3, level = 5, paraentAlias = "menuCreate")
 	@OperateLog(message = "保存菜单信息", optType = DataType.OptType.INSERT, service = MenuService.class)
 	@RequestMapping(name = "保存菜单信息", value = "/platform/access/menu/menuCreateSave.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuCreateSave(Menu menu) {
@@ -109,6 +116,7 @@ public class MenuController {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "菜单删除", orders = 2, level = 4, paraentAlias = MENU_MANAGE)
 	@OperateLog(message = "删除菜单信息", optType = DataType.OptType.DELETE, service = MenuService.class)
 	@RequestMapping(name = "删除菜单信息", value = "/platform/access/menu/menuDelete.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuDelete(String id) {
@@ -126,6 +134,7 @@ public class MenuController {
 		return messageObject;
 	}
 
+	@MenuMonitor(name = "菜单修改", orders = 3, level = 4, paraentAlias = MENU_MANAGE)
 	@RequestMapping(name = "菜单修改页面", value = "/platform/access/menu/menuEdit.do", method = RequestMethod.GET)
 	public String menuEdit(String id, Model model) {
 		model.addAttribute("id", id);
@@ -133,6 +142,7 @@ public class MenuController {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "菜单修改-获取数据详情", orders = 1, level = 5, paraentAlias = "menuEdit")
 	@RequestMapping(name = "获取菜单信息", value = "/platform/access/menu/menuEditJson.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuEditJson(String id) {
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
@@ -153,6 +163,7 @@ public class MenuController {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "菜单修改-保存修改数据", orders = 2, level = 5, paraentAlias = "menuEdit")
 	@OperateLog(message = "修改菜单信息", optType = DataType.OptType.UPDATE, service = MenuService.class)
 	@RequestMapping(name = "修改菜单信息", value = "/platform/access/menu/menuEditUpdate.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuEditUpdate(Menu menu) {
@@ -175,15 +186,16 @@ public class MenuController {
 		return messageObject;
 	}
 
+	@MenuMonitor(name = "菜单列表", orders = 4, level = 4, paraentAlias = MENU_MANAGE)
 	@RequestMapping(name = "菜单列表页面", value = "/platform/access/menu/menuList.do", method = RequestMethod.GET)
 	public String menuList() {
 		return "platform/access/menu/menuList";
 	}
 
 	@ResponseBody
-	@AccessAuthority(alias = "MENULIST", name = "获取菜单列表分页")
+	@MenuMonitor(name = "菜单列表-获取分页数据", orders = 1, level = 5, paraentAlias = "menuList")
 	@RequestMapping(name = "获取菜单列表分页", value = "/platform/access/menu/menuList.json", method = { RequestMethod.POST })
-	public MessageObject<Menu> menuList(HttpServletRequest request, PageSupport support) {
+	public MessageObject<Menu> menuPage(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
 		MessageObject<Menu> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -198,6 +210,7 @@ public class MenuController {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "菜单列表-更新菜单状态", orders = 2, level = 5, paraentAlias = "menuList")
 	@OperateLog(message = "更新菜单状态", optType = DataType.OptType.UPDATE, service = MenuService.class)
 	@RequestMapping(name = "更新菜单状态", value = "/platform/access/menu/menuStatusUpdate.json", method = RequestMethod.POST)
 	public MessageObject<Menu> menuStatusUpdate(Menu menu) {
@@ -215,25 +228,4 @@ public class MenuController {
 		}
 		return messageObject;
 	}
-
-	@ResponseBody
-	@RequestMapping(name = "获取菜单树", value = "/platform/access/menu/menuTreeListToJson.json", method = { RequestMethod.GET })
-	public Map<String, Object> menuTreeList(HttpServletRequest request) {
-		Map<String, Object> map = WebUtils.getRequestToMap(request);
-		try {
-			map.put("status_eq", IsDelete.NO);
-			List<Menu> menus = menuService.queryByMap(map);
-			for (Menu menu : menus) {
-				Menu alias = menuService.queryMenuByAlias(menu.getParentAlias());
-				menu.setParentId(alias == null ? "" : alias.getId());
-			}
-			map.put("code", 0);
-			map.put("msg", true);
-			map.put("data", menus);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-		}
-		return map;
-	}
-
 }

@@ -6,6 +6,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -21,20 +22,20 @@ import com.iss.platform.access.icon.entity.Icon;
 @SuppressWarnings("serial")
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "t_p_a_menu")
+@Table(name = "t_p_a_menu", uniqueConstraints = { @UniqueConstraint(columnNames = "alias") })
 public class Menu extends IdEntity {
 
 	private String name;
 	private String url;// 访问地址
 	private String alias;// 别名
 	private Boolean enable;// 是否显示 true 显示 false 隐藏
-	
+
 	private Integer level;
 	/**
 	 * 国际化编码
 	 */
 	private String localCode;
-	
+
 	/**
 	 * 上级菜单别名
 	 */
@@ -42,10 +43,10 @@ public class Menu extends IdEntity {
 	/**
 	 * 菜单图标
 	 */
-	private Icon icon; 
-	
+	private Icon icon;
+
 	private Integer orders;
-	
+
 	private String requestType;
 
 	// 附加字段
@@ -53,7 +54,7 @@ public class Menu extends IdEntity {
 	private String parentName;
 	private String enableName;// 是否显示 true 显示 false 隐藏
 	private String iconId;
-	
+
 	private Boolean checked;
 
 	@ManyToOne
@@ -69,7 +70,7 @@ public class Menu extends IdEntity {
 	public Integer getLevel() {
 		return level;
 	}
-	
+
 	public void setLevel(Integer level) {
 		this.level = level;
 	}
@@ -156,40 +157,39 @@ public class Menu extends IdEntity {
 	public void setParentName(String parentName) {
 		this.parentName = parentName;
 	}
-	
+
 	@Column(columnDefinition = "int comment '菜单排序'")
 	public Integer getOrders() {
 		return orders;
 	}
-	
+
 	public void setOrders(Integer orders) {
 		this.orders = orders;
 	}
-	
+
 	@Transient
 	public Boolean getChecked() {
 		return checked;
 	}
-	
+
 	public void setChecked(Boolean checked) {
 		this.checked = checked;
 	}
-	
 
 	@Column(columnDefinition = "varchar(64) comment '上级菜单别名'")
 	public String getParentAlias() {
 		return parentAlias;
 	}
-	
+
 	public void setParentAlias(String parentAlias) {
 		this.parentAlias = parentAlias;
 	}
-	
+
 	@Column(columnDefinition = "varchar(32) comment '请求方式'")
 	public String getRequestType() {
 		return requestType;
 	}
-	
+
 	public void setRequestType(String requestType) {
 		this.requestType = requestType;
 	}

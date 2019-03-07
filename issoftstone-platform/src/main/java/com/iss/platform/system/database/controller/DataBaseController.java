@@ -25,7 +25,9 @@ import com.iss.common.utils.SysContants.IsDelete;
 import com.iss.common.utils.WebUtils;
 import com.iss.constant.AccessConstant;
 import com.iss.constant.AccessConstant.DataBaseType;
+import com.iss.orm.anno.MenuMonitor;
 import com.iss.constant.DataType;
+import com.iss.constant.PlatformManageMenu;
 import com.iss.platform.system.database.entity.DataBase;
 import com.iss.platform.system.database.service.DataBaseService;
 
@@ -34,7 +36,6 @@ import com.iss.platform.system.database.service.DataBaseService;
  *
  */
 @Controller
-@RequestMapping(value = "/platform/system/dataBase")
 public class DataBaseController {
 
 	private final DataBaseService dataBaseService;
@@ -44,15 +45,23 @@ public class DataBaseController {
 		this.dataBaseService = dataBaseService;
 	}
 
-	@RequestMapping(name = "新增数据库页面", value = "/dataBaseCreate.do", method = RequestMethod.GET)
+	public final static String DATABASEMANAGE = "dataBaseManage";
+
+	@MenuMonitor(name = "数据库管理", orders = 2, level = 3, url = "/platform/system/dataBase/dataBaseList.do", paraentAlias = PlatformManageMenu.SYSTEM_MANAGE)
+	public void dataBaseManage() {
+	}
+	
+	@MenuMonitor(name = "数据库新增", orders = 1, level = 4, paraentAlias = DATABASEMANAGE)
+	@RequestMapping(name = "新增数据库页面", value = "/platform/system/dataBase/dataBaseCreate.do", method = RequestMethod.GET)
 	public String dataBaseCreate(Model model) {
 		model.addAttribute("dataBaseType", DataBaseType.getSelectList());
 		return "platform/system/database/dataBaseCreate";
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "数据库新增", orders = 1, level = 5, paraentAlias = "dataBaseCreate")
 	@OperateLog(message = "保存数据库", optType = DataType.OptType.INSERT, service = DataBaseService.class)
-	@RequestMapping(name = "保存数据库", value = "/dataBaseCreateSave.json", method = RequestMethod.POST)
+	@RequestMapping(name = "保存数据库", value = "/platform/system/dataBase/dataBaseCreateSave.json", method = RequestMethod.POST)
 	public MessageObject<DataBase> dataBaseCreateSave(DataBase dataBase) {
 		MessageObject<DataBase> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -67,8 +76,9 @@ public class DataBaseController {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "数据库删除", orders = 2, level = 4, paraentAlias = DATABASEMANAGE)
 	@OperateLog(message = "删除数据库", optType = DataType.OptType.DELETE, service = DataBaseService.class)
-	@RequestMapping(name = "删除数据库", value = "/dataBaseDelete.json", method = RequestMethod.POST)
+	@RequestMapping(name = "删除数据库", value = "/platform/system/dataBase/dataBaseDelete.json", method = RequestMethod.POST)
 	public MessageObject<DataBase> dataBaseDelete(String id) {
 		MessageObject<DataBase> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -88,14 +98,16 @@ public class DataBaseController {
 		return messageObject;
 	}
 
-	@RequestMapping(name = "新增数据库页面", value = "/dataBaseEdit.do", method = RequestMethod.GET)
+	@MenuMonitor(name = "数据库修改", orders = 3, level = 4, paraentAlias = DATABASEMANAGE)
+	@RequestMapping(name = "新增数据库页面", value = "/platform/system/dataBase/dataBaseEdit.do", method = RequestMethod.GET)
 	public String dataBaseEdit(String id, Model model) {
 		model.addAttribute("id", id);
 		return "platform/system/database/dataBaseEdit";
 	}
 
 	@ResponseBody
-	@RequestMapping(name = "查询数据库详情", value = "/dataBaseEditJson.json", method = RequestMethod.POST)
+	@MenuMonitor(name = "数据库修改-获取数据详情", orders = 1, level = 5, paraentAlias = "dataBaseEdit")
+	@RequestMapping(name = "查询数据库详情", value = "/platform/system/dataBase/dataBaseEditJson.json", method = RequestMethod.POST)
 	public MessageObject<DataBase> dataBaseEditJson(String id) {
 		MessageObject<DataBase> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -109,8 +121,9 @@ public class DataBaseController {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "数据库修改-保存修改数据", orders = 1, level = 5, paraentAlias = "dataBaseEdit")
 	@OperateLog(message = "保存数据库", optType = DataType.OptType.INSERT, service = DataBaseService.class)
-	@RequestMapping(name = "保存数据库", value = "/dataBaseEditUpdate.json", method = RequestMethod.POST)
+	@RequestMapping(name = "保存数据库", value = "/platform/system/dataBase/dataBaseEditUpdate.json", method = RequestMethod.POST)
 	public MessageObject<DataBase> dataBaseEditUpdate(DataBase dataBase) {
 		MessageObject<DataBase> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -124,14 +137,16 @@ public class DataBaseController {
 		return messageObject;
 	}
 
-	@RequestMapping(name = "数据库列表页面", value = "/dataBaseList.do", method = RequestMethod.GET)
+	@MenuMonitor(name = "数据库新增", orders = 4, level = 4, paraentAlias = DATABASEMANAGE)
+	@RequestMapping(name = "数据库列表页面", value = "/platform/system/dataBase/dataBaseList.do", method = RequestMethod.GET)
 	public String dataBaseList() {
 		return "platform/system/database/dataBaseList";
 	}
 
 	@ResponseBody
-	@RequestMapping(name = "获取数据库列表分页",value = "/dataBaseList.json", method = { RequestMethod.POST })
-	public MessageObject<DataBase> dataBaseList(HttpServletRequest request, PageSupport support) {
+	@MenuMonitor(name = "数据库列表-获取分页数据", orders = 1, level = 5, paraentAlias = "dataBaseList")
+	@RequestMapping(name = "获取数据库列表分页",value = "/platform/system/dataBase/dataBaseList.json", method = { RequestMethod.POST })
+	public MessageObject<DataBase> dataBaseListPage(HttpServletRequest request, PageSupport support) {
 		Map<String, Object> map = WebUtils.getRequestToMap(request);
 		MessageObject<DataBase> messageObject = MessageObject.getDefaultInstance();
 		try {
@@ -146,8 +161,9 @@ public class DataBaseController {
 	}
 
 	@ResponseBody
+	@MenuMonitor(name = "数据库列表-修改数据状态", orders = 2, level = 5, paraentAlias = "dataBaseList")
 	@OperateLog(message = "修改数据库状态", optType = DataType.OptType.UPDATE, service = DataBaseService.class)
-	@RequestMapping(name = "修改数据库状态", value = "/dataBaseStatusUpdate.json", method = RequestMethod.POST)
+	@RequestMapping(name = "修改数据库状态", value = "/platform/system/dataBase/dataBaseStatusUpdate.json", method = RequestMethod.POST)
 	public MessageObject<DataBase> dataBaseStatusUpdate(DataBase dataBase) {
 		MessageObject<DataBase> messageObject = MessageObject.getDefaultInstance();
 		try {

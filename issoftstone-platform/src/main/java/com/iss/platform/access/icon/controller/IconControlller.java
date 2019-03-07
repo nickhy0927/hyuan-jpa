@@ -32,7 +32,6 @@ import com.iss.platform.access.icon.service.IconService;
 @Controller
 public class IconControlller {
 
-	public final static String ICON_MANAGE = "iconManage";
 
 	private final IconService iconService;
 
@@ -41,6 +40,7 @@ public class IconControlller {
 		this.iconService = iconService;
 	}
 
+	public final static String ICON_MANAGE = "iconManage";
 	@MenuMonitor(name = "图标管理", orders = 2, level = 3, url = "/platform/access/icon/iconList.do", paraentAlias = PlatformManageMenu.BASE_MANAGE)
 	public void iconManage() {
 	}
