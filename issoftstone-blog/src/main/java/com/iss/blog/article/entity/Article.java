@@ -1,4 +1,4 @@
-package com.iss.blog.entity;
+package com.iss.blog.article.entity;
 
 import java.util.List;
 
