@@ -3,7 +3,7 @@ package com.iss.job.handler.oschina;
 import java.util.List;
 
 import com.google.common.collect.Lists;
-import com.iss.blog.entity.Article;
+import com.iss.blog.article.entity.Article;
 import com.iss.blog.tag.entity.Tags;
 import com.iss.blog.tag.service.TagsService;
 import com.iss.common.utils.SysContants.IsDelete;
