@@ -14,7 +14,7 @@ public class BlogManageMenu {
 	/**
 	 * 基础设置
 	 */
-	public final static String BASE_MANAGE = "baseManage";
+	public final static String BASE_MANAGE = "blogBaseManage";
 	/**
 	 * 博客管理
 	 */
@@ -26,7 +26,7 @@ public class BlogManageMenu {
 	}
 
 	@MenuMonitor(name = "基础设置", orders = 1, level = 2, paraentAlias = "blogManage")
-	public void baseManage() {
+	public void blogBaseManage() {
 
 	}
 
