@@ -411,6 +411,10 @@
 					<exclude>/assets/**</exclude>
 				</excludes>
 			</resource>
+			<resource>
+				<directory>${project.basedir}/src/main/resources/templates</directory>
+				<targetPath>${project.build.outputDirectory}/META-INF/template</targetPath>
+			</resource>
 		</resources>
 	</build>
 </project>

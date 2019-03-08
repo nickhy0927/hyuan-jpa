@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.iss.common.utils.IdEntity;
-import com.iss.news.content.entity.News;
+import com.iss.news.news.entity.News;
 
 @Entity
 @SuppressWarnings("serial")

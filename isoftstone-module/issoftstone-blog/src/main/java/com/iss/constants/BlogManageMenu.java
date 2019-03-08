@@ -18,7 +18,7 @@ public class BlogManageMenu {
 	/**
 	 * 博客管理
 	 */
-	public final static String SYSTEM_MANAGE = "blogContentManage";
+	public final static String BLOG_CONTENT_MANAGE = "blogContentManage";
 
 	@MenuMonitor(name = "博客管理", orders = 2, level = 1, paraentAlias = TOP)
 	public void blogManage() {

@@ -1,4 +1,4 @@
-package com.iss.news.content.entity;
+package com.iss.news.news.entity;
 
 import java.util.Date;
 

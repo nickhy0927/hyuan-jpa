@@ -17,9 +17,9 @@ import com.iss.common.utils.IdEntity;
 import com.iss.common.utils.SysContants.IsDelete;
 
 @Entity
+@SuppressWarnings("serial")
 @Table(name = "t_b_article")
 public class Article extends IdEntity {
-	private static final long serialVersionUID = 1L;
 
 	// 文章标题
 	private String title;

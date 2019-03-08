@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<generatorConfig srcPath="src/main/java">
+	<config clazz="com.iss.news.category.entity.Category">
+		<pkgs>com.iss.news</pkgs>
+		<pathSuffix>content</pathSuffix>
+		<desc>栏目分类</desc>
+		<pagePath>src/main/webapp/WEB-INF/views/content</pagePath>
+	</config>
+	<config clazz="com.iss.news.comments.entity.Comments">
+		<pkgs>com.iss.news</pkgs>
+		<pathSuffix>content</pathSuffix>
+		<desc>栏目分类</desc>
+		<pagePath>src/main/webapp/WEB-INF/views/content</pagePath>
+	</config>
+	<config clazz="com.iss.news.content.entity.News">
+		<pkgs>com.iss.news</pkgs>
+		<pathSuffix>content</pathSuffix>
+		<desc>栏目分类</desc>
+		<pagePath>src/main/webapp/WEB-INF/views/content</pagePath>
+	</config>
+	<config clazz="com.iss.news.section.entity.Section">
+		<pkgs>com.iss.news</pkgs>
+		<pathSuffix>content</pathSuffix>
+		<desc>栏目分类</desc>
+		<pagePath>src/main/webapp/WEB-INF/views/content</pagePath>
+	</config>
+</generatorConfig>

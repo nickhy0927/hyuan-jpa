@@ -2,19 +2,16 @@
 <%@ taglib uri="http://www.hy.include" prefix="hy"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set value="${pageContext.request.contextPath}" var="ctx"></c:set>
-<hy:extends name="title">新增菜单</hy:extends>
+<hy:extends name="title">栏目分类修改</hy:extends>
 <hy:extends name="javascript">
 	<script type="text/javascript">
 		$(function () {
-			$("body").css({
-				'overflow':'auto'
-			})
-			layui.use(['form', 'tree'], function () {
+			layui.use(['form'], function () {
                 var form = layui.form;
                 //监听提交
-                form.on('submit(create-form)', function (data) {
+                form.on('submit(edit-form)', function (data) {
                 	$.saveInfo({
-                		url: '${ctx}/content/news/section/sectionSave.json',//发送请求
+                		url: '${ctx}/content/section/sectionEditUpdate.json',//发送请求
 				    	data: $('form').getForm(),
 				    	success: function(result) {
 	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
@@ -25,7 +22,7 @@
                 	return false;
                 });
                 $.ajax({
-			    	url: '${ctx}/content/news/section/sectionEdit.json',//发送请求
+			    	url: '${ctx}/content/section/sectionEditJson.json',//发送请求
 			    	data: {id : '${id}'},
 			    	success: function(res) {
 			    		form.val("edit-form", {
@@ -33,7 +30,6 @@
 		    			  	"sectionName": res.content['sectionName'],
 		    			  	"remarks": res.content['remarks'],
 		    			})
-                    	form.render('select');
 			    	}
                 });
             });
@@ -49,34 +45,38 @@
 </hy:extends>
 <hy:extends name="body">
 	<div class="create-form">
-        <form class="layui-form layui-form-pane" lay-filter="edit-form">
-        	<input name="id" type="hidden" id="id">
-            <div class="layui-form-item">
+        <form class="layui-form layui-form-pane">
+        	<input type="hidden" name="id" value="${section.id}">
+        	<div class="layui-form-item">
                 <label class="layui-form-label">
-                	<i>*</i>版块名称
+                	<i>*</i>sectionName
                 </label>
                 <div class="layui-input-block">
-                    <input type="text" name="sectionName" required="required"
+                    <input type="text" name="sectionName"
                            lay-verify="required"
                            lay-verType="tips"
-                           placeholder="请输入版块名称"
+                           placeholder="请输入sectionName"
                            autocomplete="off" class="layui-input">
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label"><i>*</i>版块描述</label>
+        	<div class="layui-form-item">
+                <label class="layui-form-label">
+                	<i>*</i>remarks
+                </label>
                 <div class="layui-input-block">
                     <input type="text" name="remarks"
-                    	lay-verType="tips"
-                        required lay-verify="required" placeholder="请输入版块描述
-                        autocomplete="on" class="layui-input">
+                           lay-verify="required"
+                           lay-verType="tips"
+                           placeholder="请输入remarks"
+                           autocomplete="off" class="layui-input">
                 </div>
             </div>
-            <div class="layui-form-item" style="text-align: right">
+            <div class="layui-form-item" style="text-align: right; bottom: 0;position: absolute; right: 0; margin-right: 10px;">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit lay-filter="create-form">
                     	<i class="Hui-iconfont Hui-iconfont-save"></i>&nbsp;立即保存
                     </button>
+                    <button type="reset" onclick="reset()" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
         </form>

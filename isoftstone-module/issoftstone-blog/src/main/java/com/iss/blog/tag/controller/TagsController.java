@@ -40,7 +40,7 @@ public class TagsController {
 	private ClassificationService classificationService;
 	
 	public final static String TAGSMANAGE = "tagsManage";
-	@MenuMonitor(name = "标签管理", orders = 1, level = 3, url = "/blog/tags/tagsList.do", paraentAlias = BlogManageMenu.BASE_MANAGE)
+	@MenuMonitor(name = "标签管理", orders = 2, level = 3, url = "/blog/tags/tagsList.do", paraentAlias = BlogManageMenu.BASE_MANAGE)
 	public void tagsManage() {
 	}
 	

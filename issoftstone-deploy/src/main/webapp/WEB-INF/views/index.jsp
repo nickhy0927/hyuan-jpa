@@ -70,6 +70,7 @@
 	                       	<li class="navbar-levelone <c:if test="${index.index ==0}">current</c:if>">
 		                           <a href="javascript:;">
 		                              	<c:if test="${not empty menu.iconClass}">${menu.iconClass}</c:if>
+		                              	<c:if test="${empty menu.iconClass}"><i class="layui-icon layui-icon-template-1"></i> </c:if>
 		                              	${menu.name}
 		                           </a>
 		                       	</li>
@@ -120,6 +121,7 @@
 			                        		<li>
 					                        	<a data-href="${basePath}${third.url}" data-title="${third.name}" href="javascript:void(0)">
 					                        		<c:if test="${not empty third.iconClass}">${third.iconClass}</c:if>
+					                        		<c:if test="${empty third.iconClass}"><i class="layui-icon layui-icon-tabs"></i> </c:if>
 					                        		${third.name}
 					                        	</a>
 					                        </li>

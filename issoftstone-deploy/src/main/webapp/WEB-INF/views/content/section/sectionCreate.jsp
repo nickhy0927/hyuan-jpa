@@ -2,7 +2,7 @@
 <%@ taglib uri="http://www.hy.include" prefix="hy"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set value="${pageContext.request.contextPath}" var="ctx"></c:set>
-<hy:extends name="title">新增图标</hy:extends>
+<hy:extends name="title">栏目分类新增</hy:extends>
 <hy:extends name="javascript">
 	<script type="text/javascript">
 		$(function () {
@@ -11,7 +11,7 @@
                 //监听提交
                 form.on('submit(create-form)', function (data) {    
                 	$.saveInfo({
-                		url: '${ctx}/content/news/section/sectionSave.json',//发送请求
+                		url: '${ctx}/content/section/sectionCreateSave.json',//发送请求
 				    	data: $('form').getForm(),
 				    	success: function(result) {
 	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
@@ -35,29 +35,31 @@
 <hy:extends name="body">
 	<div class="create-form">
         <form class="layui-form layui-form-pane">
-            <div class="layui-form-item">
+        	<div class="layui-form-item">
                 <label class="layui-form-label">
-                	<i>*</i>版块名称
+                	<i>*</i>sectionName
                 </label>
                 <div class="layui-input-block">
-                    <input type="text" name="sectionName" required="sectionName"
+                    <input type="text" name="sectionName"
                            lay-verify="required"
                            lay-verType="tips"
-                           placeholder="请输入版块名称"
+                           placeholder="请输入sectionName"
                            autocomplete="off" class="layui-input">
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label"><i>*</i>版块描述</label>
+        	<div class="layui-form-item">
+                <label class="layui-form-label">
+                	<i>*</i>remarks
+                </label>
                 <div class="layui-input-block">
-                    <input type="text" name="remarks" required="required"
+                    <input type="text" name="remarks"
                            lay-verify="required"
                            lay-verType="tips"
-                           placeholder="请输入版块描述"
+                           placeholder="请输入remarks"
                            autocomplete="off" class="layui-input">
                 </div>
             </div>
-            <div class="layui-form-item" style="text-align: right">
+            <div class="layui-form-item" style="text-align: right; bottom: 0;position: absolute; right: 0; margin-right: 10px;">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit lay-filter="create-form">
                     	<i class="Hui-iconfont Hui-iconfont-save"></i>&nbsp;立即保存
