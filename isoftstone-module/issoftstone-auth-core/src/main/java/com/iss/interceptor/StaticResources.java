@@ -32,6 +32,7 @@ public class StaticResources {
 	private AutoTaskService autoTaskService;
 	
 	public static Map<String, Map<String, String>> permissionSet = Maps.newConcurrentMap();
+	public static Map<String, User> userListSet = Maps.newConcurrentMap();
 
 	private static List<String> urls;
 	private static String loginUrl;
@@ -83,6 +84,7 @@ public class StaticResources {
 		paramMap.put("status_eq", IsDelete.NO);
 		List<User> users = userService.queryByMap(paramMap);
 		for (User user : users) {
+			userListSet.put(user.getLoginName(), user);
 			List<Menu> menus = userService.queryMenuList(user.getLoginName());
 			Map<String, String> map = Maps.newConcurrentMap();
 			for (Menu menu : menus) {
@@ -95,6 +97,7 @@ public class StaticResources {
 		for (Menu menu : menuList) {
 			map.put(menu.getUrl(), menu.getAlias());
 		}
+		userListSet.put(InitEnvironment.getInitUsername(), userService.findUserByLoginName(InitEnvironment.getInitUsername()));
 		permissionSet.put(InitEnvironment.getInitUsername(), map);
 		InitEnvironment.setPermissionSet(permissionSet);
 		paramMap.put("startStatus_eq", IsStart.YES);

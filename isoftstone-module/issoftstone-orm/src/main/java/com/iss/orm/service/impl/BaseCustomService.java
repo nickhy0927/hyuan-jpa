@@ -19,7 +19,6 @@ import com.iss.common.utils.PagerInfo;
 import com.iss.orm.repository.CustomRepostiory;
 import com.iss.orm.service.CustomService;
 
-@Transactional(readOnly = true)
 public abstract class BaseCustomService<E, ID extends Serializable> implements CustomService<E, ID> {
 
 	@Autowired
@@ -103,6 +102,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 
 	
 	@Override
+	@Transactional(readOnly = true)
 	public List<E> findAll() throws ServiceException {
 		try {
 			return dao.findAll();
@@ -114,6 +114,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 
 	
 	@Override
+	@Transactional(readOnly = true)
 	public E get(ID id) throws ServiceException {
 		try {
 			return this.dao.findOne(id);
@@ -125,6 +126,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 
 	
 	@Override
+	@Transactional(readOnly = true)
 	public List<E> queryByMap(Map<String, Object> map) throws ServiceException {
 		try {
 			return this.dao.queryByMap(map);
@@ -136,6 +138,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 
 	
 	@Override
+	@Transactional(readOnly = true)
 	public List<E> queryByMap(Map<String, Object> paramMap, Sort sort) throws ServiceException {
 		try {
 			return dao.queryByMap(paramMap, sort);
@@ -146,6 +149,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public PagerInfo<E> queryPageByMap(Map<String, Object> map, PageSupport support) throws ServiceException {
 		try {
 			support.setTotalRecord(queryByMap(map).size());

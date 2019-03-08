@@ -8,11 +8,14 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.iss.aspect.anno.ServiceMonitor;
+import com.iss.interceptor.StaticResources;
 import com.iss.oauth.init.DataSourceHolder;
-import com.iss.oauth.user.UserPrincipal;
 import com.iss.orm.log.websocket.WebsocketHandler;
 import com.iss.platform.access.user.entity.User;
 
@@ -53,12 +56,16 @@ public class DataSourceAspect {
 			}
 			LOG.debug("接口实现类是：" + clazzName);
 			if (!flag) {
-				User contextUser = UserPrincipal.getContextUser();
-				if (contextUser != null) {
-					dataSourceId = contextUser.getDataSourceId();
-					DataSourceHolder.DATASOURCEID = dataSourceId;
+				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+				Object principal = authentication.getPrincipal();
+				if (principal instanceof UserDetails) {
+					UserDetails userDetails = (UserDetails) principal;
+					User contextUser = StaticResources.userListSet.get(userDetails.getUsername());
+					if (contextUser != null) {
+						dataSourceId = contextUser.getDataSourceId();
+						DataSourceHolder.DATASOURCEID = dataSourceId;
+					}
 				}
-
 			}
 			LOG.debug("是否使用默认数据源：" + (flag));
 			// 执行方法（可以在方法前后添加前置和后置通知）

@@ -32,7 +32,7 @@ public class Menu extends IdEntity {
 	
 	private Boolean shows;
 
-	private Integer level;
+	private Integer levels;
 	/**
 	 * 国际化编码
 	 */
@@ -69,12 +69,12 @@ public class Menu extends IdEntity {
 		this.icon = icon;
 	}
 
-	public Integer getLevel() {
-		return level;
+	public Integer getLevels() {
+		return levels;
 	}
-
-	public void setLevel(Integer level) {
-		this.level = level;
+	
+	public void setLevels(Integer levels) {
+		this.levels = levels;
 	}
 
 	@Column(columnDefinition = "varchar(64) comment '菜单名称'")

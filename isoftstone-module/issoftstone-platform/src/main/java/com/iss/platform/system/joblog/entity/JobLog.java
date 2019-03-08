@@ -96,7 +96,7 @@ public class JobLog extends IdEntity {
 
 	@Lob
 	@Basic
-	@Column(columnDefinition = "text comment '执行结果'")
+	@Column(columnDefinition = "mediumtext comment '执行结果'")
 	public String getResult() {
 		return result;
 	}

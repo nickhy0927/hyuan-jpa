@@ -1,6 +1,7 @@
 package com.iss.platform.system.optlog.entity;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
@@ -56,6 +57,7 @@ public class OptLog extends IdEntity {
 
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
+	@Column(columnDefinition = "mediumtext comment '日志数据'")
 	public String getData() {
 		return data;
 	}
