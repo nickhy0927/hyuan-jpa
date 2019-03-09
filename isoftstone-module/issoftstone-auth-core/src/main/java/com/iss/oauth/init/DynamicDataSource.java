@@ -176,21 +176,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 			return false;
 		} catch (Exception e) {
 			throw new ServiceException(String.valueOf(HttpStatus.SC_INTERNAL_SERVER_ERROR), e.getMessage(), e);
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				throw new ServiceException(String.valueOf(HttpStatus.SC_INTERNAL_SERVER_ERROR), "mysql关闭连接失败：" + e.getMessage(), e);
-			}
-		}
+		} 
 	}
 
 	private List<DataBase> queryDataBaseList() {
@@ -205,21 +191,6 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 			return list;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if (resultSet != null) {
-					resultSet.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-				if (connection != null) {
-					connection.close();
-				}
-			} catch (SQLException e) {
-				throw new ServiceException(String.valueOf(HttpStatus.SC_INTERNAL_SERVER_ERROR),
-						"mysql关闭连接失败：" + e.getMessage(), e);
-			}
 		}
 		return Lists.newArrayList();
 	}

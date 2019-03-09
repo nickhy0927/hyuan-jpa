@@ -6,10 +6,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
-
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 import com.iss.common.utils.IdEntity;
 import com.iss.constant.AccessConstant;
@@ -20,9 +16,7 @@ import com.iss.platform.access.icon.entity.Icon;
  */
 @Entity
 @SuppressWarnings("serial")
-@DynamicInsert
-@DynamicUpdate
-@Table(name = "t_p_a_menu", uniqueConstraints = { @UniqueConstraint(columnNames = "alias") })
+@Table(name = "t_p_a_menu"/*, uniqueConstraints = { @UniqueConstraint(columnNames = "alias") }*/)
 public class Menu extends IdEntity {
 
 	private String name;

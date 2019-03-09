@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.iss.common.utils.IdEntity;
@@ -26,6 +27,8 @@ public class Role extends IdEntity {
 	private String code;
 	private String name;
 	private String remark;
+	
+	private Role role;
 
 	private List<Menu> menus = new ArrayList<Menu>();
 
@@ -55,6 +58,16 @@ public class Role extends IdEntity {
 		this.menus = menus;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "p_id", columnDefinition = "varchar(64) comment '上级角色'")
+	public Role getRole() {
+		return role;
+	}
+	
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	
 	public String getRemark() {
 		return remark;
 	}
