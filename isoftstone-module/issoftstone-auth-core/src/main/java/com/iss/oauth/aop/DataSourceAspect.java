@@ -63,10 +63,10 @@ public class DataSourceAspect {
 					User contextUser = StaticResources.userListSet.get(userDetails.getUsername());
 					if (contextUser != null) {
 						dataSourceId = contextUser.getDataSourceId();
-						DataSourceHolder.DATASOURCEID = dataSourceId;
 					}
 				}
 			}
+			DataSourceHolder.putDataSource(dataSourceId);
 			LOG.debug("是否使用默认数据源：" + (flag));
 			// 执行方法（可以在方法前后添加前置和后置通知）
 			result = point.proceed();

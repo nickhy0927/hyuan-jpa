@@ -133,7 +133,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
 	@Override
 	protected String determineCurrentLookupKey() {
-		String dataSourceName = DataSourceHolder.DATASOURCEID;
+		String dataSourceName = DataSourceHolder.getDataSource();
 		if (dataSourceName == null || dataSourceName == "dataSource") {
 			// 默认的数据源名字
 			dataSourceName = "dataSource";
@@ -188,8 +188,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 					conn.close();
 				}
 			} catch (SQLException e) {
-				throw new ServiceException(String.valueOf(HttpStatus.SC_INTERNAL_SERVER_ERROR),
-						"mysql关闭连接失败：" + e.getMessage(), e);
+				throw new ServiceException(String.valueOf(HttpStatus.SC_INTERNAL_SERVER_ERROR), "mysql关闭连接失败：" + e.getMessage(), e);
 			}
 		}
 	}
