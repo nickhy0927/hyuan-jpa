@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 
 import com.baidu.code.modal.GeneratorConfiguration;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -51,8 +52,9 @@ public class FileGenerator {
 		root.put("domainObjectName", domainObjectName);
 		root.put("pathSuffix", configuration.getPathSuffix());
 		root.put("desc", configuration.getDesc());
-		root.put("desc", configuration.getDesc());
 		root.put("packages", configuration.getPkg());
+		root.put("aliasPackage", "import " + configuration.getAliasPackage() + ";");
+		root.put("parentAlias", configuration.getParentAlilas());
 		createJavaFile(root, configuration, "Dao.java", "modalDao.ftl", "dao");
 		createJavaFile(root, configuration, "Service.java", "modalService.ftl", "service");
 		createJavaFile(root, configuration, "ServiceImpl.java", "modalServiceImpl.ftl", "service/impl");
@@ -84,8 +86,14 @@ public class FileGenerator {
 		String className = configuration.getClazz();
 		Class<?> clazz = Class.forName(className);
 		Field[] fields = clazz.getDeclaredFields();
-		List<String> fieldList = Lists.newArrayList();
-		for (Field field : fields) fieldList.add(field.getName());
+		List<Map<String, String>> fieldList = Lists.newArrayList();
+		for (Field field : fields) {
+			Map<String, String> map = Maps.newConcurrentMap();
+			com.baidu.code.anno.Field declaredField = field.getDeclaredAnnotation(com.baidu.code.anno.Field.class);
+			map.put("key", field.getName());
+			map.put("value", declaredField == null ? field.getName() : declaredField.fieldRemark());
+			fieldList.add(map);
+		}
 		root.put("columns", fieldList);
 		String uncapitalize = StringUtils.uncapitalize(configuration.getEntityName());
 		writeSingleFile(cfg, root, template, projectPath, uncapitalize, uncapitalize, suffix);

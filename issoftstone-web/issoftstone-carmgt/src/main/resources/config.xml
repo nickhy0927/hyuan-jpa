@@ -1,27 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <generatorConfig srcPath="src/main/java">
-	<config clazz="com.iss.news.category.entity.Category">
-		<pkgs>com.iss.news</pkgs>
-		<pathSuffix>content</pathSuffix>
-		<desc>栏目分类</desc>
-		<pagePath>src/main/webapp/WEB-INF/views/content</pagePath>
+	<config clazz="com.iss.sale.productmgt.product.entity.Product" pathSuffix="productmgt">
+		<parentAlilas alias="SaleManageMenu.PRODUCT_LEVELS_MANAGE">com.iss.constants.SaleManageMenu</parentAlilas>
+		<pkgs>com.iss.sale.productmgt</pkgs>
+		<pathSuffix>productmgt</pathSuffix>
+		<desc>产品</desc>
+		<pagePath>src/main/webapp/WEB-INF/views/productmgt</pagePath>
 	</config>
-	<config clazz="com.iss.news.comments.entity.Comments">
-		<pkgs>com.iss.news</pkgs>
-		<pathSuffix>content</pathSuffix>
-		<desc>栏目分类</desc>
-		<pagePath>src/main/webapp/WEB-INF/views/content</pagePath>
+	<config clazz="com.iss.sale.productmgt.productperiods.entity.ProductPeriods"  pathSuffix="productmgt">
+		<parentAlilas alias="SaleManageMenu.PRODUCT_LEVELS_MANAGE">com.iss.constants.SaleManageMenu</parentAlilas>
+		<pkgs>com.iss.sale.productmgt</pkgs>
+		<desc>生产周期</desc>
+		<pagePath>src/main/webapp/WEB-INF/views/productmgt</pagePath>
 	</config>
-	<config clazz="com.iss.news.content.entity.News">
-		<pkgs>com.iss.news</pkgs>
-		<pathSuffix>content</pathSuffix>
-		<desc>栏目分类</desc>
-		<pagePath>src/main/webapp/WEB-INF/views/content</pagePath>
+	<config clazz="com.iss.sale.productmgt.producttype.entity.ProductType" pathSuffix="productmgt">
+		<parentAlilas alias="SaleManageMenu.PRODUCT_LEVELS_MANAGE">com.iss.constants.SaleManageMenu</parentAlilas>
+		<pkgs>com.iss.sale.productmgt</pkgs>
+		<pathSuffix>producttype</pathSuffix>
+		<desc>产品类别</desc>
+		<pagePath>src/main/webapp/WEB-INF/views/productmgt</pagePath>
 	</config>
-	<config clazz="com.iss.news.section.entity.Section">
-		<pkgs>com.iss.news</pkgs>
-		<pathSuffix>content</pathSuffix>
-		<desc>栏目分类</desc>
-		<pagePath>src/main/webapp/WEB-INF/views/content</pagePath>
+	<config clazz="com.iss.sale.productmgt.productqulity.entity.ProductQulity" pathSuffix="productmgt">
+		<parentAlilas alias="SaleManageMenu.PRODUCT_LEVELS_MANAGE">com.iss.constants.SaleManageMenu</parentAlilas>
+		<pkgs>com.iss.sale.productmgt</pkgs>
+		<pathSuffix>productqulity</pathSuffix>
+		<desc>产品质量</desc>
+		<pagePath>src/main/webapp/WEB-INF/views/productmgt</pagePath>
+	</config>
+	<config clazz="com.iss.sale.productmgt.storereason.entity.StoreReason" pathSuffix="productmgt">
+		<parentAlilas alias="SaleManageMenu.PRODUCT_LEVELS_MANAGE">com.iss.constants.SaleManageMenu</parentAlilas>
+		<pkgs>com.iss.sale.productmgt</pkgs>
+		<pathSuffix>storereason</pathSuffix>
+		<desc>出/入库理由</desc>
+		<pagePath>src/main/webapp/WEB-INF/views/productmgt</pagePath>
+	</config>
+	<config clazz="com.iss.sale.productmgt.store.entity.Store" pathSuffix="productmgt">
+		<parentAlilas alias="SaleManageMenu.PRODUCT_LEVELS_MANAGE">com.iss.constants.SaleManageMenu</parentAlilas>
+		<pkgs>com.iss.sale.productmgt</pkgs>
+		<pathSuffix>store</pathSuffix>
+		<desc>产品出库</desc>
+		<pagePath>src/main/webapp/WEB-INF/views/productmgt</pagePath>
 	</config>
 </generatorConfig>

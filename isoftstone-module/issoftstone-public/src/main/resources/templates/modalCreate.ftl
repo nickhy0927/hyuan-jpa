@@ -12,7 +12,7 @@
                 //监听提交
                 form.on('submit(create-form)', function (data) {    
                 	$.saveInfo({
-                		url: '${r'${ctx}'}/${pathSuffix}/${domainObjectName?lower_case}/${domainObjectName?lower_case}CreateSave.json',//发送请求
+                		url: '${r'${ctx}'}/${pathSuffix}/${domainObjectName?uncap_first}/${domainObjectName?uncap_first}CreateSave.json',//发送请求
 				    	data: $('form').getForm(),
 				    	success: function(result) {
 	                		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
@@ -36,16 +36,16 @@
 <hy:extends name="body">
 	<div class="create-form">
         <form class="layui-form layui-form-pane">
-        	[#list columns as name]
+        	[#list columns as item]
         	<div class="layui-form-item">
                 <label class="layui-form-label">
-                	<i>*</i>${name}
+                	<i>*</i>${item.value}
                 </label>
                 <div class="layui-input-block">
-                    <input type="text" name="${name}"
+                    <input type="text" name="${item.key}"
                            lay-verify="required"
                            lay-verType="tips"
-                           placeholder="请输入${name}"
+                           placeholder="请输入${item.value}"
                            autocomplete="off" class="layui-input">
                 </div>
             </div>

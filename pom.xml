@@ -61,6 +61,12 @@
 				<artifactId>issoftstone-blog</artifactId>
 				<version>${issoftstone.version}</version>
 			</dependency>
+			<!-- 销售模块 -->
+			<dependency>
+				<groupId>com.iss</groupId>
+				<artifactId>issoftstone-sale</artifactId>
+				<version>${issoftstone.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<build>

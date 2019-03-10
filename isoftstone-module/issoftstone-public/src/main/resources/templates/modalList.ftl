@@ -15,7 +15,7 @@
     	
     	function deleteInfo(tableInstance, data) {
     		$.deleteInfo({
-				url: '${r'${ctx}'}/${pathSuffix}/${domainObjectName?lower_case}/${domainObjectName?lower_case}Delete.json',//发送请求
+				url: '${r'${ctx}'}/${pathSuffix}/${domainObjectName?uncap_first}/${domainObjectName?uncap_first}Delete.json',//发送请求
 		    	data: data,
 		    	loadMsg: '正在删除${desc}信息信息，请稍等...', 
 		    	success: function (res) {
@@ -28,7 +28,7 @@
         	form.on('switch(enable)', function (data) {
 				var enable = this.checked ? '1' : '0';
 				$.saveInfo({
-					url: '${r'${ctx}'}/${pathSuffix}/${domainObjectName?lower_case}/${domainObjectName?lower_case}StatusUpdate.json',
+					url: '${r'${ctx}'}/${pathSuffix}/${domainObjectName?uncap_first}/${domainObjectName?uncap_first}StatusUpdate.json',
 					data: {id: $(data.elem).attr('data-id'), enable: enable, version: $(data.elem).attr('data-v')},
 					success: function (res) {
 						$("#tableList").refreshTable({
@@ -40,12 +40,11 @@
         	$("#tableList").dataTable({
                 toolbar: "#tableBar",
                 searchForm: 'search-form',
-                url: "${r'${ctx}'}/${pathSuffix}/${domainObjectName?lower_case}/${domainObjectName?lower_case}List.json",
+                url: "${r'${ctx}'}/${pathSuffix}/${domainObjectName?uncap_first}/${domainObjectName?uncap_first}List.json",
                 cols: [[
                     { type: "checkbox", fixed: "left" },
-                    { field: "dictCode", title: '${desc}编号', minWidth: 200, fixed: "left", unresize: true},
-                    [#list columns as name]
-                    { field: "${name}",  title: "${name}", minWidth: 160},
+                    [#list columns as item]
+                    { field: "${item.key}",  title: "${item.value}", minWidth: 160},
     			  	[/#list]
                     { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 110, unresize: true}
                 ]],
@@ -55,7 +54,7 @@
                 			title: '<i class="layui-icon layui-icon-form"></i>&nbsp;修改${desc}信息',
 							height: '360px',
 							width: '60%',
-							url: '${r'${ctx}'}/${pathSuffix}/${domainObjectName?lower_case}/${domainObjectName?lower_case}Edit.do?id=' + data[0].id 
+							url: '${r'${ctx}'}/${pathSuffix}/${domainObjectName?uncap_first}/${domainObjectName?uncap_first}Edit.do?id=' + data[0].id 
 						})
 					},
 					delAction: function (tableInstance, data) {
@@ -68,7 +67,7 @@
 							title: '<i class="layui-icon layui-icon-form"></i>&nbsp;新增${desc}信息',
 							height: '360px',
 							width: '60%',
-							url: '${r'${ctx}'}/${pathSuffix}/${domainObjectName?lower_case}/${domainObjectName?lower_case}Create.do'
+							url: '${r'${ctx}'}/${pathSuffix}/${domainObjectName?uncap_first}/${domainObjectName?uncap_first}Create.do'
 						})
 					},
 					deleteAction: function (tableInstance, data) {
@@ -89,11 +88,11 @@
     	<div class="search-block">
 	        <form class="layui-form layui-form-pane" id="search-form" lay-filter="search-form">
 	            <div class="layui-form-item">
-	            	[#list columns as name]
+	            	[#list columns as item]
 				  	<div class="layui-inline">
-	                    <label class="layui-form-label">${name}</label>
+	                    <label class="layui-form-label">${item.value}</label>
 	                    <div class="layui-input-inline">
-	                        <input type="text" name="${name}" autocomplete="off" class="layui-input">
+	                        <input type="text" name="${item.key}_eq" autocomplete="off" class="layui-input">
 	                    </div>
 	                </div>
 				  	[/#list]

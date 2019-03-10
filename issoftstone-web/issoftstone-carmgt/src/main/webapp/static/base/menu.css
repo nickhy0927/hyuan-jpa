@@ -1,0 +1,168 @@
+* {
+	font-family: "Source Code Pro";
+}
+
+.container-top {
+	width: 100%;
+	position: fixed;
+	background: #5cb85c;
+	line-height: 50px;
+	height: 50px;
+}
+
+/* ul li以横排显示 */
+/* 所有class为menu的div中的ul样式 */
+div.menu ul {
+	list-style: none; /* 去掉ul前面的符号 */
+	margin: 0px; /* 与外界元素的距离为0 */
+	padding: 0px; /* 与内部元素的距离为0 */
+	width: auto; /* 宽度根据元素内容调整 */
+	line-height: 50px;
+	height: 50px;
+}
+
+/* 所有class为menu的div中的ul中的li样式 */
+div.menu ul li {
+	float: left; /* 向左漂移，将竖排变为横排 */
+}
+
+/* 所有class为menu的div中的ul中的a样式(包括尚未点击的和点击过的样式) */
+div.menu ul li a, div.menu ul li a:visited {
+	color: #dde4ec; /* 文字颜色 */
+	display: block; /* 此元素将显示为块级元素，此元素前后会带有换行符 */
+	line-height: 50px;
+	height: 50px;
+	font-weight: 600;
+	font-family: "Source Code Pro";
+	text-align: center;
+	padding: 0 10px;
+	min-width: 120px;
+	text-decoration: none; /* 不显示超链接下划线 */
+	white-space: nowrap; /* 对于文本内的空白处，不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。 */
+}
+
+/* 所有class为menu的div中的ul中的a样式(鼠标移动到元素中的样式) */
+div.menu ul li a:hover {
+	background-color: #f2f2f2; /* 背景色 */
+	color: #000000;
+	border-bottom: 1px seagreen solid;
+	text-decoration: none; /* 不显示超链接下划线 */
+}
+
+/* 所有class为menu的div中的ul中的a样式(鼠标点击元素时的样式) */
+div.menu ul li a:active {
+	text-decoration: none; /* 不显示超链接下划线 */
+}
+
+.current a {
+	background-color: #f2f2f2; /* 背景色 */
+	color: #000000 !important;
+	border-bottom: 1px seagreen solid;
+	text-decoration: none; /* 不显示超链接下划线 */
+}
+
+.main-menu-top {
+	height: 100%;
+	border-right: 1px silver solid;
+	position: fixed;
+	top: 50px;
+	left: 0;
+	padding: 0;
+	margin: 0;
+	width: 220px;
+}
+
+.main-menu {
+	height: 100%;
+	border-right: 1px silver solid;
+	position: fixed;
+	top: 90px;
+	left: 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+	display: block;
+	width: 220px;
+}
+
+.top {
+	line-height: 30px;
+	right: 0px;
+	padding: 5px;
+	width: 100%;
+	background: #b9def0;
+	text-shadow: 0 1px 0 #fff;
+	background-image: -webkit-linear-gradient(top, #fff 0, #e0e0e0 100%);
+	background-image: -o-linear-gradient(top, #fff 0, #e0e0e0 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#fff),
+		to(#e0e0e0));
+	background-image: linear-gradient(to bottom, #fff 0, #e0e0e0 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',
+		endColorstr='#ffe0e0e0', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+	background-repeat: repeat-x;
+	border-color: #ccc;
+}
+
+.top span {
+	float: right;
+	padding: 6px;
+	cursor: pointer;
+}
+
+.main-menu ul li {
+	list-style: none;
+}
+
+.main-menu-top ul {
+	padding: 0;
+	margin: 0;
+}
+
+.f-l-menu a:hover {
+	cursor: pointer;
+	text-decoration: none; /* 不显示超链接下划线 */
+}
+
+.f-l-menu .c-f-menu {
+	right: 0px;
+	padding: 7px;
+	width: 100%;
+	background: #b9def0;
+	text-shadow: 0 1px 0 #fff;
+	background-image: -webkit-linear-gradient(top, #fff 0, #e0e0e0 100%);
+	background-image: -o-linear-gradient(top, #fff 0, #e0e0e0 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#fff),
+		to(#e0e0e0));
+	background-image: linear-gradient(to bottom, #fff 0, #e0e0e0 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',
+		endColorstr='#ffe0e0e0', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+	background-repeat: repeat-x;
+	border-color: #dbdbdb;
+	display: block;
+	text-underline: none;
+}
+
+.f-l-menu ul li {
+	line-height: 20px;
+}
+
+.f-l-menu ul li a {
+	padding: 5px 0px 5px 30px;
+	display: block;
+	width: 100%;
+}
+
+.main-content {
+	width: 100%;
+	position: fixed;
+	top: 50px;
+	left: 220px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+a:hover, a:focus {
+	color: #23527c;
+	text-decoration: none !important;
+}

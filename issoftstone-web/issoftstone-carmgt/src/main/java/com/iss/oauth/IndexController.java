@@ -47,6 +47,14 @@ public class IndexController {
         return "index";
     }
     
+    @RequestMapping( value = "/taskList.do", method = RequestMethod.GET)
+    public String taskList(Model model) {
+    	List<MenuTree> menuTrees = menuService.queryIndexMenuList();
+    	model.addAttribute("menus", menuTrees);
+    	model.addAttribute("username", InitEnvironment.getCurrentLoginName());
+    	return "taskList";
+    }
+    
     @RequestMapping(name = "日志监控log", value = "/log.do", method = RequestMethod.GET)
     public String log() {
     	return "/log/log";

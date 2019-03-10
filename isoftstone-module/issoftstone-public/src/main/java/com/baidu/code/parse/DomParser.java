@@ -33,8 +33,13 @@ public class DomParser {
 			String pkgs = element.element("pkgs").getText();
 			String pagePath = element.element("pagePath").getText();
 			String desc = element.element("desc").getText();
-			String pathSuffix = element.element("pathSuffix").getText();
+			String pathSuffix = element.attribute("pathSuffix").getValue();
+			Element parentAlilasEle = element.element("parentAlilas");
+			String parentAlilas = parentAlilasEle.attribute("alias").getValue();
+			String aliasPackage = parentAlilasEle.getText();
 			configure.setClazz(clazz);
+			configure.setAliasPackage(aliasPackage);
+			configure.setParentAlilas(parentAlilas);
 			configure.setPathSuffix(pathSuffix);
 			configure.setPkg(pkgs);
 			configure.setPagePath(pagePath);

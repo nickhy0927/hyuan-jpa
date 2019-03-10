@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <c:set value="${pageContext.request.contextPath}" var="basePath" />
-<hy:extends name="title">新闻系统</hy:extends>
+<hy:extends name="title">汽车销售系统</hy:extends>
 <hy:extends name="css">
 	<style type="text/css">
 		.navbar {

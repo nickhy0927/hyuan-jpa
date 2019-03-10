@@ -399,6 +399,7 @@ $(document).ready(function () {
     });
     $.extend({
 		openWindow : _openWindow,
+		parentOpenWindow : _parentOpenWindow,
 		openTip: _openTip,
 	    openLoading: _openLoading,
 	    closeLoading: _closeLoading,

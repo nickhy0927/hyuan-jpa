@@ -3,7 +3,11 @@ package com.baidu.code.modal;
 public class GeneratorConfiguration {
 
 	private String pkg;
+	
+	private String parentAlilas;
 
+	private String aliasPackage;
+	
 	private String clazz;
 
 	private String pathSuffix;
@@ -70,5 +74,21 @@ public class GeneratorConfiguration {
 
 	public void setPathSuffix(String pathSuffix) {
 		this.pathSuffix = pathSuffix;
+	}
+	
+	public String getParentAlilas() {
+		return parentAlilas;
+	}
+	
+	public void setParentAlilas(String parentAlilas) {
+		this.parentAlilas = parentAlilas;
+	}
+	
+	public String getAliasPackage() {
+		return aliasPackage;
+	}
+	
+	public void setAliasPackage(String aliasPackage) {
+		this.aliasPackage = aliasPackage;
 	}
 }

@@ -23,7 +23,8 @@ public class WebUtils {
 					if (str.length > 1) {
 						map.put(paramName, paramValue);
 					}
-				}
+				} else map.put(paramName, paramValue);
+				
 			}
 		}
 		map.put("status_eq", IsDelete.NO);
