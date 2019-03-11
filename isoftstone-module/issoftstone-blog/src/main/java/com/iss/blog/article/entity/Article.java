@@ -11,6 +11,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.iss.blog.tag.entity.Tags;
 import com.iss.common.utils.IdEntity;
@@ -28,7 +29,9 @@ public class Article extends IdEntity {
 	private String profile;
 
 	// 文章内容
-	private String content;
+	private byte[] content;
+
+	private String contents;
 
 	// 标签
 	private List<Tags> tags;
@@ -36,7 +39,9 @@ public class Article extends IdEntity {
 	public Article() {
 	}
 
-	public Article(String title, String profile, String content, List<Tags> tags) {
+	private Integer hashCode;
+
+	public Article(String title, String profile, byte[] content, List<Tags> tags) {
 		this.title = title;
 		this.profile = profile;
 		this.content = content;
@@ -47,6 +52,14 @@ public class Article extends IdEntity {
 	@Column(columnDefinition = "varchar(255) comment '文章标题'")
 	public String getTitle() {
 		return title;
+	}
+
+	public Integer getHashCode() {
+		return hashCode;
+	}
+
+	public void setHashCode(Integer hashCode) {
+		this.hashCode = hashCode;
 	}
 
 	public void setTitle(String title) {
@@ -63,13 +76,13 @@ public class Article extends IdEntity {
 	}
 
 	@Lob
+	@Column
 	@Basic(fetch = FetchType.LAZY)
-	@Column(columnDefinition = "longtext comment '文章正文'")
-	public String getContent() {
+	public byte[] getContent() {
 		return content;
 	}
 
-	public void setContent(String content) {
+	public void setContent(byte[] content) {
 		this.content = content;
 	}
 
@@ -87,4 +100,48 @@ public class Article extends IdEntity {
 	public String toString() {
 		return "Article [title=" + title + ", profile=" + profile + ", tags=" + tags + "]";
 	}
+
+	public int hashCode() {
+		int result = getTitle().hashCode();
+		result = 29 * result;
+		return result;
+	}
+
+	@Transient
+	public String getContents() {
+		if (content.length > 0) {
+			contents = new String(content);
+		}
+		return contents;
+	}
+
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
+
+	public static String toHexString(byte[] byteArray) {
+		if (byteArray == null || byteArray.length < 1)
+			throw new IllegalArgumentException("this byteArray must not be null or empty");
+
+		final StringBuilder hexString = new StringBuilder();
+		for (int i = 0; i < byteArray.length; i++) {
+			if ((byteArray[i] & 0xff) < 0x10)// 0~F前面不零
+				hexString.append("0");
+			hexString.append(Integer.toHexString(0xFF & byteArray[i]));
+		}
+		return hexString.toString().toLowerCase();
+	}
+	
+	public static String stripHtml(String content) { 
+	    // <p>段落替换为换行 
+	    content = content.replaceAll("<p .*?>", "\r\n"); 
+	    // <br><br/>替换为换行 
+	    content = content.replaceAll("<br\\s*/?>", "\r\n"); 
+	    // 去掉其它的<>之间的东西 
+	    content = content.replaceAll("\\<.*?>", ""); 
+	    // 去掉空格 
+	    content = content.replaceAll(" ", ""); 
+	    return content;   
+	}
+
 }

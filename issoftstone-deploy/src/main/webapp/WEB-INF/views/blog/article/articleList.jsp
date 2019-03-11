@@ -45,7 +45,6 @@
                     { field: "dictCode", title: '文章编号', minWidth: 200, fixed: "left", unresize: true},
                     { field: "title",  title: "title", minWidth: 160},
                     { field: "profile",  title: "profile", minWidth: 160},
-                    { field: "content",  title: "content", minWidth: 160},
                     { field: "tags",  title: "tags", minWidth: 160},
                     { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 110, unresize: true}
                 ]],

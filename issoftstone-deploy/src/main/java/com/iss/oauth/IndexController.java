@@ -16,6 +16,7 @@ import com.iss.common.config.InitEnvironment;
 import com.iss.common.utils.JsonMapper;
 import com.iss.common.utils.WebUtils;
 import com.iss.constant.PlatformManageMenu;
+import com.iss.job.spider.OschainService;
 import com.iss.orm.anno.MenuMonitor;
 import com.iss.platform.access.menu.entity.MenuTree;
 import com.iss.platform.access.menu.service.MenuService;
@@ -24,6 +25,9 @@ import com.iss.platform.access.menu.service.MenuService;
 public class IndexController {
 
     private final MenuService menuService;
+    
+    @Autowired
+    private OschainService oschainService;
 
     @Autowired
     public IndexController(MenuService menuService) {
@@ -44,6 +48,7 @@ public class IndexController {
     	List<MenuTree> menuTrees = menuService.queryIndexMenuList();
     	model.addAttribute("menus", menuTrees);
     	model.addAttribute("username", InitEnvironment.getCurrentLoginName());
+    	oschainService.init();
         return "index";
     }
     

@@ -57,12 +57,14 @@ public class DataSourceAspect {
 			LOG.debug("接口实现类是：" + clazzName);
 			if (!flag) {
 				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-				Object principal = authentication.getPrincipal();
-				if (principal instanceof UserDetails) {
-					UserDetails userDetails = (UserDetails) principal;
-					User contextUser = StaticResources.userListSet.get(userDetails.getUsername());
-					if (contextUser != null) {
-						dataSourceId = contextUser.getDataSourceId();
+				if (authentication != null) {
+					Object principal = authentication.getPrincipal();
+					if (principal instanceof UserDetails) {
+						UserDetails userDetails = (UserDetails) principal;
+						User contextUser = StaticResources.userListSet.get(userDetails.getUsername());
+						if (contextUser != null) {
+							dataSourceId = contextUser.getDataSourceId();
+						}
 					}
 				}
 			}

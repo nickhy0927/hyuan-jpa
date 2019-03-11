@@ -162,4 +162,36 @@ public class ArticleController {
 		}
 		return messageObject;
 	}
+	
+	
+	@ResponseBody
+	@RequestMapping(name = "获取数据分页", value = "/blog/article/queryArticlePage.json", method = { RequestMethod.POST })
+	public MessageObject<Article> queryArticlePage(HttpServletRequest request, PageSupport support) {
+		Map<String, Object> map = WebUtils.getRequestToMap(request);
+		MessageObject<Article> messageObject = MessageObject.getDefaultInstance();
+		try {
+			map.put("status_eq", IsDelete.NO);
+			PagerInfo<Article> pagerInfo = articleService.queryPageByMap(map, support);
+			messageObject.ok("查询文章分页成功", pagerInfo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			messageObject.error("查询文章分页异常");
+			logger.error(e.getMessage());
+		}
+		return messageObject;
+	}
+	
+	@ResponseBody
+	@RequestMapping(name = "获取数据分页", value = "/blog/article/queryArticleDetail.json", method = { RequestMethod.GET })
+	public MessageObject<Article> queryArticleDetail(String id) {
+		MessageObject<Article> messageObject = MessageObject.getDefaultInstance();
+		try {
+			messageObject.ok("查询文章分页成功", articleService.get(id));
+		} catch (Exception e) {
+			e.printStackTrace();
+			messageObject.error("查询文章分页异常");
+			logger.error(e.getMessage());
+		}
+		return messageObject;
+	}
 }

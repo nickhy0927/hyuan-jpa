@@ -37,7 +37,7 @@ public class OschinaPipeline implements PageModelPipeline<OschinaBlog> {
 		}
 		article.setTags(tagsList);
 		article.setTitle(t.getTitle());
-		article.setContent(t.getContent());
+		article.setContent(t.getContent().getBytes());
 		System.out.println(article);
 	}
 }
