@@ -1,5 +1,9 @@
 package com.iss.common.utils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,4 +53,33 @@ public class WebUtils {
 		}
 		return map;
 	}
+
+	/**
+	 * 流转换为字符串
+	 * @param inputStream
+	 * @return
+	 */
+	public static String convertToString(InputStream inputStream){
+		InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+		StringBuilder result = new StringBuilder();
+		String line = null;
+		try {
+			while(!(line = bufferedReader.readLine()).equals("")){
+				result.append(line + "\n");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try{
+				inputStreamReader.close();
+				inputStream.close();
+				bufferedReader.close();
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+		}
+		return result.toString();
+	}
+
 }

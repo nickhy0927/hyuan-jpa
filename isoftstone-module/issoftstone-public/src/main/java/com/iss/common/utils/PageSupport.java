@@ -2,82 +2,109 @@ package com.iss.common.utils;
 
 import javax.persistence.Transient;
 
+/**
+ * @author Hyuan
+ */
 public class PageSupport {
-	public enum Sortable {
-		ASC, /**
-		 * DESC 倒序 ASC 顺序
-		 */
-		DESC
-	}
-	private int limit = 10; // 分页大小
-	private String order = "createTime";
-	private int page = 1;// 当前页
-	private String sort = Sortable.DESC.toString().toLowerCase();
-	private int totalPage;// 总页数
+    /**
+     * DESC 倒序 ASC 正序
+     */
+    public enum Sortable {
+        /**
+         * 正序
+         */
+        ASC,
 
-	private int totals;// 总记录数
+        /**
+         * 倒序
+         */
+        DESC
+    }
 
-	public PageSupport() {
-	}
+    /**
+     * 分页大小
+     */
+    private int limit = 10;
+    /**
+     * 排序字段
+     */
+    private String order = "createTime";
+    /**
+     * 当前页
+     */
+    private int page = 1;
+    private String sort = Sortable.DESC.toString().toLowerCase();
+    /**
+     * 总页数
+     */
+    private int totalPage;
 
-	@Transient
-	public int getLimit() {
-		return limit;
-	}
+    /**
+     * 总记录数
+     */
+    private int totals;
 
-	@Transient
-	public String getOrder() {
-		return order;
-	}
+    public PageSupport() {
+    }
 
-	@Transient
-	public int getPage() {
-		if (page <= 0) {
-			page = 1;
-		} 
-		return page;
-	}
+    @Transient
+    public int getLimit() {
+        return limit;
+    }
 
-	@Transient
-	public String getSort() {
-		return sort;
-	}
+    @Transient
+    public String getOrder() {
+        return order;
+    }
 
-	@Transient
-	public int getTotalPage() {
-		return totalPage;
-	}
+    @Transient
+    public int getPage() {
+        if (page <= 0) {
+            page = 1;
+        }
+        return page;
+    }
 
-	@Transient
-	public int getTotals() {
-		return totals;
-	}
+    @Transient
+    public String getSort() {
+        return sort;
+    }
 
-	public void setLimit(int limit) {
-		this.limit = limit;
-	}
+    @Transient
+    public int getTotalPage() {
+        return totalPage;
+    }
 
-	public void setOrder(String order) {
-		this.order = order;
-	}
+    @Transient
+    public int getTotals() {
+        return totals;
+    }
 
-	public void setPage(int page) {
-		this.page = page;
-	}
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
 
-	public void setSort(String sort) {
-		this.sort = sort;
-	}
+    public void setOrder(String order) {
+        this.order = order;
+    }
 
-	public void setTotalPage(int totalPage) {
-		this.totalPage = totalPage;
-	}
+    public void setPage(int page) {
+        this.page = page;
+    }
 
-	public void setTotalRecord(int totalRecord) {
-		if (totalRecord > 0) {
-			boolean bool = totalRecord % this.limit > 0;
-			this.totalPage = (bool ? (totalRecord / this.limit + 1) : (totalRecord / this.limit));
-		}
-		this.totals = totalRecord;
-	}
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
+
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
+    }
+
+    public void setTotalRecord(int totalRecord) {
+        if (totalRecord > 0) {
+            boolean bool = totalRecord % this.limit > 0;
+            this.totalPage = (bool ? (totalRecord / this.limit + 1) : (totalRecord / this.limit));
+        }
+        this.totals = totalRecord;
+    }
 }
