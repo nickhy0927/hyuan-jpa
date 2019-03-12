@@ -21,6 +21,9 @@ import com.iss.orm.anno.MenuMonitor;
 import com.iss.platform.access.menu.entity.MenuTree;
 import com.iss.platform.access.menu.service.MenuService;
 
+/**
+ * @author Hyuan
+ */
 @Controller
 public class IndexController {
 
@@ -52,13 +55,7 @@ public class IndexController {
     	oschainService.init();
         return "index";
     }
-    
-    @RequestMapping(name = "日志监控log", value = "/log.do", method = RequestMethod.GET)
-    public String log() {
-    	return "/log/log";
-    }
 
-    
     @RequestMapping(name = "微信认证首页", value = "/wxIndex.do", method = RequestMethod.GET)
     public String wxIndex(HttpServletRequest request) {
     	Map<String, Object> requestToMap = WebUtils.getRequestParamterToMap(request);
