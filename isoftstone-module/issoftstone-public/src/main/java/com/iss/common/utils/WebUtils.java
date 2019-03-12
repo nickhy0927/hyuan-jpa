@@ -27,7 +27,9 @@ public class WebUtils {
 					if (str.length > 1) {
 						map.put(paramName, paramValue);
 					}
-				} else map.put(paramName, paramValue);
+				} else {
+					map.put(paramName, paramValue);
+				}
 				
 			}
 		}
