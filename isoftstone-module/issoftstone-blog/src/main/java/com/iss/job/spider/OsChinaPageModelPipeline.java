@@ -74,36 +74,37 @@ public class OsChinaPageModelPipeline implements PageModelPipeline<OsChianBlog> 
                 article.setTags(tagsList);
             }
             Integer hashCode = article.hashCode();
-            Map<String, Object> params = Maps.newConcurrentMap();
-            params.put("hashCode_eq", hashCode);
-            System.out.println(article);
-            List<Article> list = articleService.queryByMap(params);
-            if (list.size() == 0) {
-                article.setHashCode(hashCode);
-                articles.add(article);
+            if (StringUtils.isNotEmpty(blog.getContent())) {
+                Map<String, Object> params = Maps.newConcurrentMap();
+                params.put("hashCode_eq", hashCode);
+                System.out.println(article);
+                List<Article> list = articleService.queryByMap(params);
+                if (list.size() == 0) {
+                    article.setHashCode(hashCode);
+                    articles.add(article);
+                    File file = new File("d:/blog-text/");
+                    if (!file.exists()) {
+                        file.mkdirs();
+                    }
+                    String path = file.getAbsolutePath() + "/" + blog.getTitle().trim() + ".txt";
+                    File f = new File(path);
+                    FileWriter fw;
+                    BufferedWriter bw;
+                    try {
+                        if (!f.exists()) {
+                            f.createNewFile();
+                        }
+                        // true表示可以追加新内容
+                        fw = new FileWriter(f.getAbsoluteFile(), true);
+                        bw = new BufferedWriter(fw);
+                        bw.write(blog.getContent());
+                        bw.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
-            File file = new File("d:/blog-text/");
-            if (!file.exists()) {
-                file.mkdirs();
-            }
-            String path = file.getAbsolutePath() + "/" + blog.getTitle().trim() + ".txt";
-            File f = new File(path);
-            FileWriter fw;
-            BufferedWriter bw;
-            bw = null;
-            try {
-                if (!f.exists()) {
-                    f.createNewFile();
-                }
-                // true表示可以追加新内容
-                fw = new FileWriter(f.getAbsoluteFile(), true);
-                bw = new BufferedWriter(fw);
-                bw.write(blog.getContent());
-                bw.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         } catch (ServiceException e) {
         }
     }
