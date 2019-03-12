@@ -30,14 +30,10 @@ public class IndexController {
     private final MenuService menuService;
     
     @Autowired
-    private OschainService oschainService;
-
-    @Autowired
     public IndexController(MenuService menuService) {
         this.menuService = menuService;
     }
 
-    @RequestMapping
     @MenuMonitor(name = "首页", orders = 0, level = 1, paraentAlias = PlatformManageMenu.TOP, shows = false)
 	public void homeManage() {
 
@@ -52,7 +48,6 @@ public class IndexController {
     	List<MenuTree> menuTrees = menuService.queryIndexMenuList();
     	model.addAttribute("menus", menuTrees);
     	model.addAttribute("username", InitEnvironment.getCurrentLoginName());
-    	oschainService.init();
         return "index";
     }
 

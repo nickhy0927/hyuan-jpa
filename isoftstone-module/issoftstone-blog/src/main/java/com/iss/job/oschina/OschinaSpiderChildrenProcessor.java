@@ -15,6 +15,9 @@ import us.codecraft.webmagic.model.OOSpider;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Selectable;
 
+/**
+ * @author Hyuan
+ */
 public class OschinaSpiderChildrenProcessor implements PageProcessor {
 
 	private TagsService tagsService;
@@ -28,11 +31,12 @@ public class OschinaSpiderChildrenProcessor implements PageProcessor {
 		Selectable selectable = page.getHtml().xpath("//div[@class='left-channel']/div[@class='menu']/a/@href");
 		List<String> list = selectable.all();
 		List<String> links = Lists.newArrayList();
-		for (String link : list)
+		for (String link : list) {
 			if (isValidation(link)) {
 				System.out.println("link:" + link);
 				links.add(link);
 			}
+		}
 		for (String string : links) {
 			OschinaSpiderChildrenProcessor processor = new OschinaSpiderChildrenProcessor(tagsService);
 			Spider spider = OOSpider.create(processor).addUrl(string).addPipeline(new OschinaChildrenPipeline(tagsService));

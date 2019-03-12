@@ -34,7 +34,7 @@
                 cols: [[
                     { type: "checkbox", fixed: "left" },
                     { field: "name", title: '分类名称', minWidth: 200, fixed: "left", unresize: true},
-                    { field: "parentName", title: '分类名称', minWidth: 160},
+                    { field: "parentName", title: '上级分类名称', minWidth: 160},
                     { field: "remarks",  title: "博客分类描述"},
                     { fixed: "right", title: "操作", align: "center",  toolbar: "#operateBar",  width: 120, unresize: true}
                 ]],
@@ -42,7 +42,7 @@
                 	editAction: function (tableInstance, data) {
                 		$.openWindow({
 							title: '修改博客分类',
-							height: '340px',
+							headeright: '340px',
 							width: '50%',
 							url: '${ctx}/blog/classification/classificationEdit.do?id=' + data[0].id 
 						})

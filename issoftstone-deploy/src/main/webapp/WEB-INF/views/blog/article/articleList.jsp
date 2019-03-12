@@ -40,11 +40,15 @@
                 cols: [[
                     {type: "checkbox", fixed: "left"},
                     {field: "title", title: "博客标题", minWidth: 160},
-                    {field: "profile", title: "博客简介", minWidth: 160},
-                    {
-                        field: "tags", title: "tags", minWidth: 160, templet: function (d) {
+                    {field: "profile", title: "博客简介", minWidth: 160, templet: function (d) {
+                            return d.profile.replace(/\s+/g,"")
+                        }
+                    },
+                    {field: "tags", title: "标签", minWidth: 160, templet: function (d) {
                             console.log('tags', d);
-                            return "";
+                            var tags = [];
+                            for(var i in d.tags) tags[i] = d.tags[i].tag;
+                            return tags.join(",");
                         }
                     },
                     {fixed: "right", title: "操作", align: "center", toolbar: "#operateBar", width: 140, unresize: true}
@@ -139,7 +143,7 @@
             <a class="btn btn-danger-outline radius size-S" lay-event="delAction">
                 <i class="Hui-iconfont Hui-iconfont-del2"></i>
             </a>
-            <a class="btn btn-danger-outline radius size-S" lay-event="delAction">
+            <a class="btn btn-danger-outline radius size-S" lay-event="viewAction">
                 <i class="Hui-iconfont Hui-iconfont-del2"></i>
             </a>
         </div>

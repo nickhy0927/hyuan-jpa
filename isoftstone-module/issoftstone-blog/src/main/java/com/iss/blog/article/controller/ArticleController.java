@@ -31,14 +31,16 @@ import com.iss.blog.article.entity.Article;
 import com.iss.blog.article.service.ArticleService;
 
 /**
- * Created by Hyuan on 2015/9/21.
+ *
+ * @author Hyuan
+ * @date 2015/9/21
  */
 @Controller
 public class ArticleController {
 	
 	private static Logger logger = LoggerFactory.getLogger(ArticleController.class);
 
-	public final static String ARTICLE_MANAGE = "ArticleManage";
+	private final static String ARTICLE_MANAGE = "ArticleManage";
 	
 	private final ArticleService articleService;
 
@@ -171,6 +173,7 @@ public class ArticleController {
 		MessageObject<Article> messageObject = MessageObject.getDefaultInstance();
 		try {
 			map.put("status_eq", IsDelete.NO);
+			Map<String, Object> paramterToMap = WebUtils.getRequestParamterToMap(request);
 			PagerInfo<Article> pagerInfo = articleService.queryPageByMap(map, support);
 			messageObject.ok("查询文章分页成功", pagerInfo);
 		} catch (Exception e) {

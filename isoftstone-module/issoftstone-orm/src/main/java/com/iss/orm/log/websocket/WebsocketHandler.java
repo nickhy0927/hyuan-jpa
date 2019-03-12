@@ -39,11 +39,12 @@ public class WebsocketHandler extends TextWebSocketHandler {
 	/**
 	 * 建立连接后
 	 */
+	@Override
 	public void afterConnectionEstablished(WebSocketSession session) {
 		try {
 			String uid = (String) session.getAttributes().get("uid");
-			if (!(uid == null)) {
-				if (uid.equals("log")) {
+			if (uid != null) {
+				if ("log".equals(uid)) {
 					if (websocketSessionsConcurrentHashMapForLog.get(uid) == null) {
 						websocketSessionsConcurrentHashMapForLog.put(uid + Math.random(), session);
 					} else {
@@ -74,14 +75,15 @@ public class WebsocketHandler extends TextWebSocketHandler {
 	/**
 	 * 消息处理，在客户端通过Websocket API发送的消息会经过这里，然后进行相应的处理
 	 */
+	@Override
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) {
 		try {
-			if (message.getPayloadLength() == 0)
+			if (message.getPayloadLength() == 0) {
 				return;
+			}
 			Message msg = new Gson().fromJson(message.getPayload().toString(), Message.class);
 			msg.setDate(new Date());
-			sendMessageToUser(msg.getTo(),
-					new TextMessage(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create().toJson(msg)));
+			sendMessageToUser(msg.getTo(), new TextMessage(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create().toJson(msg)));
 
 			LOG.info("======websocket消息处理完成======");
 		} catch (Exception e) {
@@ -98,6 +100,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 	/**
 	 * 消息传输错误处理
 	 */
+	@Override
 	public void handleTransportError(WebSocketSession session, Throwable exception) {
 		try {
 			if (session.isOpen()) {
@@ -128,6 +131,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 	/**
 	 * 关闭连接后
 	 */
+	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) {
 		try {
 			LOG.info("Websocket:" + session.getId() + "已经关闭");
@@ -153,6 +157,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 	}
 
+	@Override
 	public boolean supportsPartialMessages() {
 		return false;
 	}
@@ -173,6 +178,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 				System.out.println(socketSession);
 				if (entry.getValue().isOpen()) {
 					new Thread(new Runnable() {
+						@Override
 						public void run() {
 							try {
 								if (entry.getValue().isOpen()) {
@@ -200,10 +206,8 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 	/**
 	 * 给某个用户发送消息
-	 * 
-	 * @param userName
+	 * @param uid
 	 * @param message
-	 * @throws IOException
 	 */
 	public static void sendMessageToUser(Object uid, TextMessage message) {
 		try {
@@ -251,7 +255,8 @@ public class WebsocketHandler extends TextWebSocketHandler {
 	public static void broadcastLog(final String log) {
 		try {
 			Iterator<Entry<String, WebSocketSession>> it = websocketSessionsConcurrentHashMapForLog.entrySet().iterator();
-			// 多线程群发 LOG.info("开始websocket群发:" + log);
+			// 多线程群发
+			LOG.info("开始websocket群发:" + log);
 			while (it.hasNext()) {
 				final Entry<String, WebSocketSession> entry = it.next();
 				Object uid = entry.getKey();
@@ -289,9 +294,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 				final Entry<String, WebSocketSession> entry = it.next();
 
 				if (entry.getValue().isOpen()) {
-					// entry.getValue().sendMessage(message);
 					new Thread(new Runnable() {
 
+						@Override
 						public void run() {
 							if (entry.getValue().isOpen()) {
 								sendMessageToUser(entry.getValue(), message);

@@ -67,7 +67,7 @@ public class OsChinaPageModelPipeline implements PageModelPipeline<OsChianBlog> 
                 if (StringUtils.isNotEmpty(blog.getContent())) {
                     content = blog.getContent().replaceAll("<div class=\"ad-wrap\"(([\\s\\S])*?)<\\/div>", "");
                 }
-                article.setProfile(Article.stripHtml(content).substring(0, 100) + "...");
+                article.setProfile(Article.stripHtml(content).substring(0, 100).replaceAll("/\\s+/g","") + "...");
                 article.setContent(!StringUtils.isNotEmpty(content) ? new byte[0] : content.getBytes());
                 article.setStatus(IsDelete.NO);
                 article.setAuthor(blog.getAuthor());

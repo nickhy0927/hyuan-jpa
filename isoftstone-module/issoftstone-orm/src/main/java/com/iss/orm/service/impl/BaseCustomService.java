@@ -19,13 +19,16 @@ import com.iss.common.utils.PagerInfo;
 import com.iss.orm.repository.CustomRepostiory;
 import com.iss.orm.service.CustomService;
 
+/**
+ * @author Hyuan
+ */
 public abstract class BaseCustomService<E, ID extends Serializable> implements CustomService<E, ID> {
 
 	@Autowired
 	private CustomRepostiory<E, ID> dao;
 
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional(rollbackFor = Exception.class)
 	public E saveEntity(E entity) throws ServiceException {
 		try {
 			return this.dao.saveEntity(entity);
@@ -36,7 +39,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	}
 	
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional(rollbackFor = Exception.class)
 	public Iterable<E> saveBatch(Iterable<E> entities) throws ServiceException {
 		try {
 			return this.dao.save(entities);
@@ -47,7 +50,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	}
 	
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional(rollbackFor = Exception.class)
 	public void delete(ID id) throws ServiceException {
 		try {
 			E t = get(id);
@@ -62,7 +65,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 
 	
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional(rollbackFor = Exception.class)
 	public void delete(Iterable<E> entities) throws ServiceException {
 		try {
 			this.dao.delete(entities);
@@ -73,7 +76,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	}
 
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional(rollbackFor = Exception.class)
 	public void deleteAll() throws ServiceException {
 		try {
 			this.dao.deleteAll();
@@ -85,12 +88,11 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 
 	
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional(rollbackFor = Exception.class)
 	public void deleteBatch(ID[] ids) throws ServiceException {
 		try {
 			if (ids != null && ids.length > 0) {
-				for (int i = 0; i < ids.length; i++) {
-					ID id = ids[i];
+				for (ID id : ids) {
 					delete(id);
 				}
 			}
@@ -102,7 +104,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 
 	
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public List<E> findAll() throws ServiceException {
 		try {
 			return dao.findAll();
@@ -114,7 +116,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 
 	
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public E get(ID id) throws ServiceException {
 		try {
 			return this.dao.findOne(id);
@@ -126,7 +128,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 
 	
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public List<E> queryByMap(Map<String, Object> map) throws ServiceException {
 		try {
 			return this.dao.queryByMap(map);
@@ -138,7 +140,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 
 	
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public List<E> queryByMap(Map<String, Object> paramMap, Sort sort) throws ServiceException {
 		try {
 			return dao.queryByMap(paramMap, sort);
@@ -149,7 +151,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public PagerInfo<E> queryPageByMap(Map<String, Object> map, PageSupport support) throws ServiceException {
 		try {
 			support.setTotalRecord(queryByMap(map).size());
@@ -159,8 +161,7 @@ public abstract class BaseCustomService<E, ID extends Serializable> implements C
 			}
 			PageRequest pageable = new PageRequest(support.getPage() - 1, support.getLimit(), sort);
 			Page<E> pageInfo = this.dao.queryPageByMap(map, pageable);
-			PagerInfo<E> pagerInfo = new PagerInfo<E>(support, pageInfo.getContent());
-			return pagerInfo;
+			return new PagerInfo<>(support, pageInfo.getContent());
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new ServiceException("查询数据分页信息失败", e);
