@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.hy.include" prefix="hy"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set value="${pageContext.request.contextPath}" var="ctx"></c:set>
+<c:set value="${pageContext.request.contextPath}" var="ctx"/>
 <hy:extends name="title">ztree</hy:extends>
 <hy:extends name="css">
 	<style type="text/css">
@@ -9,7 +9,7 @@
 			background: #000000;
 		} */
 		#log-container div p {
-			font-family: Monaco;
+			font-family: Monaco, serif;
 			font-weight: bold;
 			line-height: 30px;
 		}
@@ -24,10 +24,10 @@
 			color: maroon;
 		}
 		
-		.WARN {
+		.warntext {
 			color: orange;
 		}
-		.ERROR {
+		.errortext {
 			color: red;
 		}
 		
@@ -42,8 +42,8 @@
 	        // 指定websocket路径
 	        var hostname = location.hostname;
 			var port = location.port;
-			var host = location.host;
-			var path = hostname + ":" + port + "${basePath}";
+			var path = hostname + ":" + port + "${ctx}";
+			console.log("path==>>>", path);
 	        var websocket = new WebSocket('ws://' + path + '/ws.do?uid=log');
 	        websocket.onmessage = function(event) {
 	        	try {

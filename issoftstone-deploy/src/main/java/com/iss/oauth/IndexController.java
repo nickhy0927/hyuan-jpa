@@ -34,6 +34,7 @@ public class IndexController {
         this.menuService = menuService;
     }
 
+    @RequestMapping
     @MenuMonitor(name = "首页", orders = 0, level = 1, paraentAlias = PlatformManageMenu.TOP, shows = false)
 	public void homeManage() {
 

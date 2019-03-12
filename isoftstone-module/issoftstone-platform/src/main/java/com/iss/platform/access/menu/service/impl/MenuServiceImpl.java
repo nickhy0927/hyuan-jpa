@@ -20,7 +20,9 @@ import com.iss.platform.access.menu.entity.Ztree;
 import com.iss.platform.access.menu.service.MenuService;
 
 /**
- * Created by Curtain on 2015/9/15.
+ *
+ * @author Hyuan
+ * @date 2019/03/12
  */
 @Service
 public class MenuServiceImpl extends BaseCustomService<Menu, String> implements MenuService {
@@ -37,7 +39,7 @@ public class MenuServiceImpl extends BaseCustomService<Menu, String> implements 
 	private List<MenuTree> queryIndexMenuTree(List<Menu> menuList) {
 		List<MenuTree> menuTrees = Lists.newArrayList();
 		for (Menu menu : menuList) {
-			if (!menu.getShows()) {
+			if (menu == null || !menu.getShows()) {
 				continue;
 			}
 			List<Menu> children = menuDao.queryMenuListByParentAlias(menu.getAlias());
@@ -122,7 +124,11 @@ public class MenuServiceImpl extends BaseCustomService<Menu, String> implements 
 		List<Ztree> ztrees = Lists.newArrayList();
 		for (Menu menu : menuList) {
 			List<Menu> list = menuDao.queryMenuListByParentAlias(menu.getAlias());
-			for (Menu m : menus) if (StringUtils.equals(m.getId(), menu.getId())) menu.setChecked(true);
+			for (Menu m : menus) {
+				if (StringUtils.equals(m.getId(), menu.getId())) {
+					menu.setChecked(true);
+				}
+			}
 			ztrees.add(new Ztree(menu, queryChildren(list, menus)));
 		}
 		return ztrees;

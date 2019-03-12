@@ -5,6 +5,9 @@ import java.util.List;
 import us.codecraft.webmagic.model.annotation.ExtractBy;
 import us.codecraft.webmagic.model.annotation.TargetUrl;
 
+/**
+ * @author Hyuan
+ */
 @TargetUrl("https://my.oschina.net/**/blog/\\d+")
 public class OschinaBlog {
 

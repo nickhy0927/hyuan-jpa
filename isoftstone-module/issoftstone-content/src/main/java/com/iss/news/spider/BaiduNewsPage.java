@@ -9,6 +9,9 @@ import us.codecraft.webmagic.pipeline.ConsolePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Selectable;
 
+/**
+ * @author Hyuan
+ */
 public class BaiduNewsPage implements PageProcessor {
 
 	@Override

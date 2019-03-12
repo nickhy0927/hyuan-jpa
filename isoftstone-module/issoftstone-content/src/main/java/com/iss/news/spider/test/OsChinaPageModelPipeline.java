@@ -7,6 +7,9 @@ import java.io.FileWriter;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.PageModelPipeline;
 
+/**
+ * @author Hyuan
+ */
 public class OsChinaPageModelPipeline implements PageModelPipeline<OsChianTitle> {
 
 	@Override
@@ -23,7 +26,8 @@ public class OsChinaPageModelPipeline implements PageModelPipeline<OsChianTitle>
 			if (!f.exists()) {
 				f.createNewFile();
 			}
-			fw = new FileWriter(f.getAbsoluteFile(), true); // true表示可以追加新内容
+			// true表示可以追加新内容
+			fw = new FileWriter(f.getAbsoluteFile(), true);
 			bw = new BufferedWriter(fw);
 			bw.write(t.toString());
 			bw.close();

@@ -1,38 +1,36 @@
 package com.iss.blog;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import java.io.*;
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
-    }
+public class AppTest extends TestCase {
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+    public static void main(String[] args) {
+        File file = new File("D:\\blog-text\\jvm优化必知系列——监控工具.txt");
+        System.out.println("文件路径===>>>" + file.getAbsolutePath());
+        StringBuffer buffer = new StringBuffer();
+        try {
+            FileInputStream stream = new FileInputStream(file);
+            if (stream != null) {
+                InputStreamReader inputreader = new InputStreamReader(stream);
+                BufferedReader buffreader = new BufferedReader(inputreader);
+                String line;
+                //分行读取
+                while ((line = buffreader.readLine()) != null) {
+                    buffer.append(line);
+                }
+                stream.close();
+                String content = buffer.toString().replaceAll("<div class=\"ad-wrap\"(([\\s\\S])*?)<\\/div>", "");
+                System.out.println(content);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

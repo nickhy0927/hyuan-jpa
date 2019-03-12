@@ -46,16 +46,4 @@ public class OschainService implements PageProcessor {
 		endTime = System.currentTimeMillis();
 		System.out.println("爬取结束，耗时约" + ((endTime - startTime) / 1000) + "秒");
 	}
-	
-	public static void main(String[] args) {
-		OschainService my = new OschainService();
-		long startTime, endTime;
-		System.out.println("开始爬取...");
-		startTime = System.currentTimeMillis();
-		spider = Spider.create(my).addUrl("https://www.oschina.net/blog").thread(1);
-		spider.run();
-		spider.stop();
-		endTime = System.currentTimeMillis();
-		System.out.println("爬取结束，耗时约" + ((endTime - startTime) / 1000) + "秒");
-	}
 }

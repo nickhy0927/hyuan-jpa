@@ -9,7 +9,9 @@ import com.iss.platform.access.menu.entity.Tree;
 import com.iss.platform.access.menu.entity.Ztree;
 
 /**
- * Created by Curtain on 2015/9/15.
+ *
+ * @author Curtain
+ * @date 2015/9/15
  */
 public interface MenuService extends CustomService<Menu, String> {
 

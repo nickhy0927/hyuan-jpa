@@ -1,147 +1,142 @@
 package com.iss.blog.article.entity;
 
-import java.util.List;
-
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import com.iss.blog.tag.entity.Tags;
 import com.iss.common.utils.IdEntity;
-import com.iss.common.utils.SysContants.IsDelete;
 
+import javax.persistence.*;
+import java.util.List;
+
+/**
+ * @author Hyuan
+ */
 @Entity
 @SuppressWarnings("serial")
 @Table(name = "t_b_article")
 public class Article extends IdEntity {
 
-	// 文章标题
-	private String title;
+    /**
+     * 文章标题
+     */
+    private String title;
 
-	// 简介
-	private String profile;
+    /**
+     * 简介
+     */
+    private String profile;
 
-	// 文章内容
-	private byte[] content;
+    /**
+     * 文章内容
+     */
+    private byte[] content;
 
-	private String contents;
+    private String contents;
 
-	// 标签
-	private List<Tags> tags;
+    /**
+     * 标签
+     */
+    private List<Tags> tags;
 
-	public Article() {
-	}
+    /**
+     * 作者
+     */
+    private String author;
 
-	private Integer hashCode;
+    public Article() {
+    }
 
-	public Article(String title, String profile, byte[] content, List<Tags> tags) {
-		this.title = title;
-		this.profile = profile;
-		this.content = content;
-		this.tags = tags;
-		this.status = IsDelete.NO;
-	}
+    private Integer hashCode;
 
-	@Column(columnDefinition = "varchar(255) comment '文章标题'")
-	public String getTitle() {
-		return title;
-	}
+    @Column(columnDefinition = "varchar(255) comment '文章标题'")
+    public String getTitle() {
+        return title;
+    }
 
-	public Integer getHashCode() {
-		return hashCode;
-	}
+    public Integer getHashCode() {
+        return hashCode;
+    }
 
-	public void setHashCode(Integer hashCode) {
-		this.hashCode = hashCode;
-	}
+    public void setHashCode(Integer hashCode) {
+        this.hashCode = hashCode;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	@Column(columnDefinition = "varchar(512) comment '文章简介'")
-	public String getProfile() {
-		return profile;
-	}
+    @Column(columnDefinition = "varchar(512) comment '文章简介'")
+    public String getProfile() {
+        return profile;
+    }
 
-	public void setProfile(String profile) {
-		this.profile = profile;
-	}
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
 
-	@Lob
-	@Column
-	@Basic(fetch = FetchType.LAZY)
-	public byte[] getContent() {
-		return content;
-	}
+    @Lob
+    @Column
+    @Basic(fetch = FetchType.LAZY)
+    public byte[] getContent() {
+        return content;
+    }
 
-	public void setContent(byte[] content) {
-		this.content = content;
-	}
+    public void setContent(byte[] content) {
+        this.content = content;
+    }
 
-	@ManyToMany
-	@JoinTable(name = "t_b_art_tags", joinColumns = @JoinColumn(name = "art_id", columnDefinition = "varchar(64) comment '博客ID'"), inverseJoinColumns = @JoinColumn(name = "tag_id", columnDefinition = "varchar(64) comment '标签ID'"))
-	public List<Tags> getTags() {
-		return tags;
-	}
+    @ManyToMany
+    @JoinTable(name = "t_b_art_tags", joinColumns = @JoinColumn(name = "art_id", columnDefinition = "varchar(64) comment '博客ID'"), inverseJoinColumns = @JoinColumn(name = "tag_id", columnDefinition = "varchar(64) comment '标签ID'"))
+    public List<Tags> getTags() {
+        return tags;
+    }
 
-	public void setTags(List<Tags> tags) {
-		this.tags = tags;
-	}
+    public void setTags(List<Tags> tags) {
+        this.tags = tags;
+    }
 
-	@Override
-	public String toString() {
-		return "Article [title=" + title + ", profile=" + profile + ", tags=" + tags + "]";
-	}
+    @Override
+    public String toString() {
+        return "Article [title=" + title + ", profile=" + profile + ", tags=" + tags + "]";
+    }
 
-	public int hashCode() {
-		int result = getTitle().hashCode();
-		result = 29 * result;
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        int result = getTitle().hashCode();
+        result = 29 * result;
+        return result;
+    }
 
-	@Transient
-	public String getContents() {
-		if (content.length > 0) {
-			contents = new String(content);
-		}
-		return contents;
-	}
+    @Transient
+    public String getContents() {
+        if (content.length > 0) {
+            contents = new String(content);
+        }
+        return contents;
+    }
 
-	public void setContents(String contents) {
-		this.contents = contents;
-	}
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
 
-	public static String toHexString(byte[] byteArray) {
-		if (byteArray == null || byteArray.length < 1)
-			throw new IllegalArgumentException("this byteArray must not be null or empty");
+    @Column(columnDefinition = "varchar(64) comment '博客作者'")
+    public String getAuthor() {
+        return author;
+    }
 
-		final StringBuilder hexString = new StringBuilder();
-		for (int i = 0; i < byteArray.length; i++) {
-			if ((byteArray[i] & 0xff) < 0x10)// 0~F前面不零
-				hexString.append("0");
-			hexString.append(Integer.toHexString(0xFF & byteArray[i]));
-		}
-		return hexString.toString().toLowerCase();
-	}
-	
-	public static String stripHtml(String content) { 
-	    // <p>段落替换为换行 
-	    content = content.replaceAll("<p .*?>", "\r\n"); 
-	    // <br><br/>替换为换行 
-	    content = content.replaceAll("<br\\s*/?>", "\r\n"); 
-	    // 去掉其它的<>之间的东西 
-	    content = content.replaceAll("\\<.*?>", ""); 
-	    // 去掉空格 
-	    content = content.replaceAll(" ", ""); 
-	    return content;   
-	}
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public static String stripHtml(String content) {
+        // <p>段落替换为换行
+        content = content.replaceAll("<p .*?>", "\r\n");
+        // <br><br/>替换为换行
+        content = content.replaceAll("<br\\s*/?>", "\r\n");
+        // 去掉其它的<>之间的东西
+        content = content.replaceAll("\\<.*?>", "");
+        // 去掉空格
+        content = content.replaceAll(" ", "");
+        content = content.replaceAll("&nbsp;", "");
+        return content;
+    }
 
 }
